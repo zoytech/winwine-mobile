@@ -12,46 +12,46 @@ const Typography = {
   },
   headline: {
     large: {
-      fontSize: 57,
+      fontSize: 35,
     },
     medium: {
-      fontSize: 45,
+      fontSize: 30,
     },
     small: {
-      fontSize: 36,
+      fontSize: 25,
     },
   },
   title: {
     large: {
-      fontSize: 57,
+      fontSize: 24,
     },
     medium: {
-      fontSize: 45,
+      fontSize: 22,
     },
     small: {
-      fontSize: 36,
+      fontSize: 20,
     },
   },
   label: {
     large: {
-      fontSize: 57,
+      fontSize: 20,
     },
     medium: {
-      fontSize: 45,
+      fontSize: 12,
     },
     small: {
-      fontSize: 36,
+      fontSize: 11,
     },
   },
   body: {
     large: {
-      fontSize: 57,
+      fontSize: 16,
     },
     medium: {
-      fontSize: 45,
+      fontSize: 14,
     },
     small: {
-      fontSize: 36,
+      fontSize: 10,
     },
   },
 };
