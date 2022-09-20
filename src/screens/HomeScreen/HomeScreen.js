@@ -1,5 +1,12 @@
 import React from 'react';
 
+import {FilledButton} from 'src/components';
+import {View} from 'react-native';
+
 export default function HomeScreen() {
-  return null;
+  return (
+    <View>
+      <FilledButton content={'test'} />
+    </View>
+  );
 }
