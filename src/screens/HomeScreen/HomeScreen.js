@@ -8,9 +8,6 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
       <FilledButton colorVariant={ColorVariant.primary} content={'test'} />
-      <Pressable style={{backgroundColor: 'blue'}} onPress={() => {}}>
-        <Text>I'm pressable!</Text>
-      </Pressable>
     </View>
   );
 }
