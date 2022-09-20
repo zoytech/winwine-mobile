@@ -7,7 +7,13 @@ import {ColorVariant} from '../../themes/color';
 export default function HomeScreen() {
   return (
     <View style={styles.container}>
-      <FilledButton colorVariant={ColorVariant.primary} content={'test'} />
+      <FilledButton
+        colorVariant={ColorVariant.primary}
+        content={'test'}
+        onPress={() => {
+          alert('Test');
+        }}
+      />
     </View>
   );
 }
