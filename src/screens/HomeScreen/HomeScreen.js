@@ -1,12 +1,20 @@
 import React from 'react';
-
+import {View, StyleSheet} from 'react-native';
 import {FilledButton} from '../../components';
-import {View} from 'react-native';
+
+import {ColorVariant} from '../../themes/color';
 
 export default function HomeScreen() {
   return (
-    <View>
-      <FilledButton content={'test'} />
+    <View style={styles.container}>
+      <FilledButton colorVariant={ColorVariant.primary} content={'test'} />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'red',
+  },
+});

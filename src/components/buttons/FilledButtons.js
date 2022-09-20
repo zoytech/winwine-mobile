@@ -6,16 +6,16 @@ import {Color} from 'src/themes';
 export default function FilledButton(props) {
   const {
     content,
-    color = ColorVariant.primary,
+    colorVariant = ColorVariant.primary,
     children,
     ...otherProps
   } = props;
-
-  const backgroundColor = Color.light[color];
-
+  const {onBase, base} = Color.light[colorVariant];
   return (
-    <Pressable {...otherProps} style={[styles.container, {backgroundColor}]}>
-      {content && <Text style={styles.text}>{content}</Text>}
+    <Pressable
+      {...otherProps}
+      style={[styles.container, {backgroundColor: base}]}>
+      {content && <Text style={[styles.text, {color: onBase}]}>{content}</Text>}
       {children}
     </Pressable>
   );
