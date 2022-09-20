@@ -4,7 +4,15 @@ module.exports = {
     [
       'module-resolver',
       {
-        root: ['.'],
+        root: ['./src'],
+        alias: {
+          // define aliases to shorten the import paths
+          'src/components': './src/components',
+          'src/constants': './src/constants',
+          'src/navigations': './src/navigations',
+          'src/services': './src/services',
+          'src/themes': './src/themes',
+        },
         extensions: [
           '.ios.ts',
           '.android.ts',

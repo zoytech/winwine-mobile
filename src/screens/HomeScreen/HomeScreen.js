@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {FilledButton} from 'src/components';
+import {FilledButton} from '../../components';
 import {View} from 'react-native';
 
 export default function HomeScreen() {
