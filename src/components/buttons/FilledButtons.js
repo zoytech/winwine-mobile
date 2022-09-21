@@ -34,9 +34,6 @@ export default function FilledButton(props) {
 
 const styles = StyleSheet.create({
     container: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignSelf: 'flex-end',
         borderRadius: 100,
         paddingVertical: 10,
         paddingHorizontal: 24,

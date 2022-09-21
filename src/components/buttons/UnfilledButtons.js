@@ -28,9 +28,6 @@ export default function UnfilledButtons(props) {
 }
 const styles = StyleSheet.create({
     container: {
-        display: "flex",
-        flexDirection: "row",
-        alignSelf: "flex-start",
         borderRadius: 100,
         paddingHorizontal: 24,
         paddingVertical: 10,

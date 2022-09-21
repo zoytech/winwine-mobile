@@ -33,30 +33,23 @@ export default function TextContent(props) {
 const styles = StyleSheet.create({
     container: {
         display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
         padding: 16,
         gap: 8,
-        width: 360,
-        height: 252,
-
-        // flex: "none",
-        // order: 1,
-        // alignSelf: "stretch",
-        // flexGrow: 0,
+        height: "100%",
+        width: "100%",
+        backgroundColor: "blue",
     },
     text: {
-        flex: 1,
-        flexWrap: "wrap",
-        width: 328,
-        height: 220,
-        lineHeight: 20,
-        letterSpacing: 0.25,
-        //
-        // flex: "none",
-        // order: 1,
-        // alignSelf: "stretch",
-        // flexGrow: 0,
+        // flexWrap: "wrap",
+        // alignSelf: "center",
+        textAlign: "center",
+        textAlignVertical: "center",
+        height: "100%",
+        width: "100%",
+
+        lineHeight: 30,
+        letterSpacing: 0.5,
+        backgroundColor: "skyblue",
     },
 
 })
