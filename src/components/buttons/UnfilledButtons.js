@@ -32,5 +32,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 24,
         paddingVertical: 10,
     },
-    text: {}
+    text: {
+        textTransform: "uppercase",
+    }
 })

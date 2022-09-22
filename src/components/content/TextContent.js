@@ -31,28 +31,17 @@ export default function TextContent(props) {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        display: "flex",
-        padding: 16,
-        gap: 8,
-        height: "100%",
-        width: "100%",
-        backgroundColor: "blue",
-    },
+    container: {},
     text: {
-        // flexWrap: "wrap",
-        // alignSelf: "center",
+        height: "100%",
         textAlign: "center",
         textAlignVertical: "center",
-        height: "100%",
-        width: "100%",
-
         lineHeight: 30,
         letterSpacing: 0.5,
-        backgroundColor: "skyblue",
     },
 
 })
+
 
 /* supporting-text */
 

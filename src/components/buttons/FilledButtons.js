@@ -34,9 +34,11 @@ export default function FilledButton(props) {
 
 const styles = StyleSheet.create({
     container: {
-        borderRadius: 100,
+        borderRadius: 20,
         paddingVertical: 10,
         paddingHorizontal: 24,
     },
-    text: {},
+    text: {
+        textTransform: "uppercase",
+    },
 });

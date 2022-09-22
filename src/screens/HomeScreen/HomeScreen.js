@@ -1,13 +1,25 @@
 import React from 'react';
 import {Dimensions, SafeAreaView, StyleSheet, View} from 'react-native';
-import {FilledButton, TextContent, UnfilledButtons, GameCards} from '../../components';
+import {
+    FilledButton,
+    TextContent,
+    UnfilledButtons,
+    GameCards,
+    ReviewCards,
+    HeadlineInfo,
+    SmallButtons, GamePackages
+} from '../../components';
 
 import {ColorVariant} from '../../themes/color';
+import {Color} from "../../themes";
+import PreviewInfo from "../../components/headers/PreviewInfo";
 
 export default function HomeScreen() {
+    const {base} = Color.light[ColorVariant.surface];
+    const screenStyle = [styles.container, {backgroundColor: base}];
     return (
-        <SafeAreaView style={styles.container}>
-            <GameCards/>
+        <SafeAreaView style={screenStyle}>
+            <GamePackages/>
         </SafeAreaView>
     );
 }
@@ -15,7 +27,6 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'red',
         width: Dimensions.get('window').width,
         height: Dimensions.get('window').height,
 

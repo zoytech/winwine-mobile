@@ -1,30 +1,35 @@
-import {FilledButton, SmallButtons, UnfilledButtons} from "../buttons";
-import {Text, View, StyleSheet, Dimensions} from "react-native";
+import {FilledButton, UnfilledButtons} from "../buttons";
+import {StyleSheet, View} from "react-native";
 import {ColorVariant} from "../../themes/color";
 import React from "react";
-import {Color, Typography} from "../../themes";
+import {Color} from "../../themes";
 import {TextContent} from "../content";
+import {HeadlineInfo} from "../headers";
 
-export default function GameCards() {
-    // const {
-    //     content,
-    //     colorVariant = ColorVariant.primary,
-    //     typographyVariant = Typography.title.medium,
-    //     ...otherProps
-    // } = props;
-    // const {container, onContainer} = Color.light[colorVariant];
-    const content = Content;
+
+export default function GameCards(props) {
+    const {
+        colorSurfaceVariant = ColorVariant.surfaceVariant,
+        ...otherProps
+    } = props;
+    const textContent = Content;
+    const {base: cardBase} = Color.light[colorSurfaceVariant]
     const containerStyle = [
         styles.container,
-    ]
+        {backgroundColor: cardBase},
+    ];
+    // const displayHeadline = [styles.displayHeadline];
     const displayButtonsStyle = [styles.displayButton];
+    const displayContent = [styles.displayContent];
 
     return (
-        <View style={containerStyle}>
-            <TextContent
-                content={Content}
-                colorVariant={ColorVariant.primary}
-            />
+        <View {...otherProps} style={containerStyle}>
+            <View style={displayContent}>
+                <TextContent
+                    content={textContent}
+                    colorVariant={ColorVariant.primary}
+                />
+            </View>
             <View style={displayButtonsStyle}>
                 <FilledButton
                     colorVariant={ColorVariant.primary}
@@ -50,14 +55,11 @@ export default function GameCards() {
 }
 
 const Content = "Bạn đã bao giờ yêu cùng lúc hai người chưa? Lúc đó câu chuyện diễn tiến thế nào? a a/n" +
-    "aff a f" +
-    " a af" +
-    " afgajfhi2u4 989j 989v8v ajfi ai iahriahijfo  jrijaiji ha h uraiha 4ui88vjrrhairarhhva H Jhc fa kan ka kaj kf kahfk akfhk kh IEU FH" +
-    " AKF HJKF H KA" +
-    " HAFK " +
-    " AIKFJFJGJJJGJGOJJFOJFJOFWJJFJFJFJFJFJFJFJFJFJFJFJFQJOEQDDDKDKDKKDKDKDKDKDKDKDKDKDKD" +
-    "DKDKDKDKDKDKDDKDK DKDKDKD" +
-    "FKFFKFKFKFKFFK";
+    "aff a ffkfaaf" +
+    "kalfkl laklf " +
+    "afkaj aj" +
+    "afjk " +
+    "ajfkjk jafjljl";
 
 const styles = StyleSheet.create({
     container: {
@@ -66,20 +68,36 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         marginHorizontal: 26,
         marginBottom: 84,
-        marginTop: 95,
-        height: "75%",
-        width: "75%",
+        // marginTop: 95,
+
+        width: 274,
+        height: 450,
         borderRadius: 12,
+        overflow: "hidden",
+
+        //ratio: 1.64 width, height of card
+    },
+    displayHeadline: {
+        flex: 3,
+    },
+
+    displayContent: {
+        flex: 5,
+        marginVertical: 10,
+        marginHorizontal: 40,
     },
 
     displayButton: {
+        flex: 1,
+
         display: "flex",
         flexDirection: "row-reverse",
         justifyContent: "space-around",
+        alignItems: "center",
 
         width: "100%",
         padding: 0,
-        backgroundColor: "yellow",
+
     },
 })
 

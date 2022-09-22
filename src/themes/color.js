@@ -45,8 +45,8 @@ const Color = {
             onBase: '#1D1B1A',
         },
         [ColorVariant.surfaceVariant]: {
-            base: '#FFFBFF',
-            onBase: '#4F4539',
+            base: '#E8E1DD',
+            onBase: '#4A4643',
         },
         [ColorVariant.outline]: {base: '#817568'},
     },
