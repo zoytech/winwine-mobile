@@ -3,6 +3,7 @@ import {Color, Typography} from "../../themes";
 import {ColorVariant} from "../../themes/color";
 import React from "react";
 import useButtonStyle from "./buttonStyle";
+import TextItem from "../content/TextItem";
 
 export default function UnfilledButtons(props) {
     const buttonStyle = useButtonStyle.big;
@@ -41,10 +42,14 @@ export default function UnfilledButtons(props) {
     ];
     return (
         <Pressable {...otherProps} style={containerStyle}>
-            <View style={textContainerStyle}>
-                {Contentt && <Text style={textStyle}>{Contentt}</Text>}
-                {children}
-            </View>
+
+            {content &&
+                <TextItem
+                    content={content}
+                    contentStyle={textStyle}
+                    containerStyle={textContainerStyle}
+                />
+            }
         </Pressable>
     )
 }

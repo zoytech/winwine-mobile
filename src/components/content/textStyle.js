@@ -1,8 +1,9 @@
+import {Text, View} from "react-native";
+
 const useTextStyle = {
     textContainer: {
         display: 'flex',
         justifyContent: 'center',
-        backgroundColor: 'coral',
         alignItems: 'center',
     },
     text: {

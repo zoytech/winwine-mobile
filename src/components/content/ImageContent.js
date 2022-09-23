@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     image: {
+        // resizeMode: 'contain',
         maxWidth: '100%',
         maxHeight: '100%',
         aspectRatio: 1,

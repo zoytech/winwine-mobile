@@ -4,6 +4,7 @@ import {ColorVariant} from 'src/themes/color';
 import {Color} from 'src/themes';
 import {Typography} from '../../themes';
 import useButtonStyle from "./buttonStyle";
+import TextItem from "../content/TextItem";
 
 export default function FilledButton(props) {
     const buttonStyle = useButtonStyle.big;
@@ -29,10 +30,13 @@ export default function FilledButton(props) {
 
     return (
         <Pressable {...otherProps} style={containerStyle}>
-            <View style={textContainerStyle}>
-                {Contentt && <Text style={textStyle}>{Contentt}</Text>}
-                {children}
-            </View>
+            {content &&
+                <TextItem
+                    content={content}
+                    contentStyle={textStyle}
+                    containerStyle={textContainerStyle}
+                />
+            }
         </Pressable>
     );
 }

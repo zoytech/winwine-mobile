@@ -1,9 +1,12 @@
 import {Color, Typography} from "../../themes";
 import {ColorVariant} from "../../themes/color";
-import {StyleSheet, Text, View} from "react-native";
+import {StyleSheet, View} from "react-native";
 import AvatarDefault from "../icons/AvatarDefault";
+import useTextStyle from "../content/textStyle";
+import TextItem from "../content/TextItem";
 
 export default function HeadlineInfo(props) {
+    const textStyle = useTextStyle;
     const {
         headerTypo = Typography.title.medium,
         tagNameTypo = Typography.body.medium,
@@ -21,11 +24,11 @@ export default function HeadlineInfo(props) {
     const {base, onBase} = Color.light[colorText];
     const containerStyle = [styles.container, {backgroundColor: base}];
     const avatarStyle = [styles.avatar];
-    const informationStyle = [styles.information];
+    const contentBlockStyle = [styles.contentBlockStyle];
     const headerStyle = [styles.header];
     const subHeaderStyle = [styles.subHeader];
-    const textHeaderStyle = [headerTypo];
-    const textSubHeaderStyle = [tagNameTypo];
+    const textHeaderStyle = [headerTypo, textStyle.text];
+    const textSubHeaderStyle = [tagNameTypo, textStyle.text];
 
 
     return (
@@ -37,16 +40,29 @@ export default function HeadlineInfo(props) {
                     colorVariantBackground={ColorVariant.primary}
                 />
             </View>
-            <View style={informationStyle}>
-                <View style={headerStyle}>
-                    {name && <Text style={textHeaderStyle}>{name}</Text>}
-                </View>
+            <View style={contentBlockStyle}>
+                {name &&
+                    <TextItem
+                        content={name}
+                        contentStyle={textHeaderStyle}
+                        containerStyle={headerStyle}
+                    />
+                }
                 <View style={subHeaderStyle}>
-                    {label && <Text style={textSubHeaderStyle}>{label}</Text>}
-                    {total && <Text style={textSubHeaderStyle}>{`Tổng số ${total} lá`}</Text>}
+                    {label &&
+                        <TextItem
+                            content={label}
+                            contentStyle={textSubHeaderStyle}
+                        />
+                    }
+                    {total &&
+                        <TextItem
+                            content={`Tổng số ${total} lá`}
+                            contentStyle={textSubHeaderStyle}
+                        />
+                    }
                 </View>
             </View>
-
         </View>)
 
 }
@@ -62,18 +78,23 @@ const styles = StyleSheet.create({
         width: 360,
         height: 82,
         backgroundColor: "#f0f8ff",
-    }, avatar: {
+    },
+    avatar: {
         flex: 1, alignSelf: "center"
-
-
-    }, information: {
+    },
+    contentBlockStyle: {
         flex: 4,
         display: "flex", flexDirection: "column"
 
-    }, header: {
+    },
+    header: {
         flex: 1,
 
-    }, subHeader: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+    },
+    subHeader: {
         flex: 1,
         display: "flex",
         flexDirection: "row",

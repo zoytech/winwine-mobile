@@ -13,10 +13,10 @@ const ButtonVariant = {
 const useButtonStyle = {
     [ButtonVariant.big]: {
         buttonContainer: {
-            paddingVertical: 10,
-            paddingHorizontal: 10,
-            // maxWidth: "auto",
-            // maxHeight: 'auto',
+            minWidth: 110,
+            minHeight: 40,
+            paddingVertical: 5,
+            paddingHorizontal: 5,
             borderRadius: 20,
 
             display: "flex",
@@ -45,6 +45,9 @@ const useButtonStyle = {
             display: "flex",
             justifyContent: 'center',
             alignItems: 'center',
+
+            minWidth: 80,
+            minHeight: 30,
         },
         textContainer: {
             ...textContainer,

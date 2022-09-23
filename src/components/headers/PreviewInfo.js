@@ -1,9 +1,11 @@
 import {Color, Typography} from "../../themes";
 import {ColorVariant} from "../../themes/color";
-import {StyleSheet, Text, View} from "react-native";
-import AvatarDefault from "../icons/AvatarDefault";
+import {StyleSheet, View} from "react-native";
+import useTextStyle from "../content/textStyle";
+import TextItem from "../content/TextItem";
 
 export default function PreviewInfo(props) {
+    const textStyle = useTextStyle;
     const {
         typography = Typography.label.medium,
         colorText = ColorVariant.surface,
@@ -17,19 +19,22 @@ export default function PreviewInfo(props) {
 
     const {onBase} = Color.light[colorText];
     const containerStyle = [styles.container];
-    const headerStyle = [styles.headerText];
-    const subHeaderStyle = [styles.subHeaderText];
-    const textHeaderStyle = [typography, onBase];
-    const textSubHeaderStyle = [typography, onBase];
+    const contentStyle = [typography, onBase];
 
     return (
         <View style={containerStyle}>
-            <View style={headerStyle}>
-                {name && <Text style={textHeaderStyle}>{name}</Text>}
-            </View>
-            <View style={subHeaderStyle}>
-                {label && <Text style={textSubHeaderStyle}>{label}</Text>}
-            </View>
+            {name &&
+                <TextItem
+                    content={name}
+                    contentStyle={contentStyle}
+                />
+            }
+            {label &&
+                <TextItem
+                    content={label}
+                    contentStyle={contentStyle}
+                />
+            }
         </View>)
 
 }
@@ -38,7 +43,9 @@ const styles = StyleSheet.create({
     container: {
         display: "flex",
         flexDirection: "column",
-        justifyContent: "space-evenly",
+        justifyContent: "center",
+        alignItems: 'flex-start',
+        padding: 7,
         // backgroundColor: "#f0f8ff",
 
         height: '100%',
