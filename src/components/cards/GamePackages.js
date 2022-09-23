@@ -1,9 +1,9 @@
-import {FilledButton, SmallButtons, UnfilledButtons} from "../buttons";
+import {SmallButtons} from "../buttons";
 import {StyleSheet, View} from "react-native";
 import {ColorVariant} from "../../themes/color";
 import React from "react";
 import {Color} from "../../themes";
-import {ImageContent, TextContent} from "../content";
+import {ImageContent} from "../content";
 import {PreviewInfo} from "../headers";
 
 export default function GamePackages(props) {
@@ -20,20 +20,14 @@ export default function GamePackages(props) {
         {backgroundColor: cardBase},
     ]
 
-    const displayButtonsStyle = [styles.displayButton];
     const contentStyle = [styles.displayContent];
     const headerStyle = [styles.displayHeader];
     const buttonStyle = [styles.displayButton];
 
     return (
         <View {...otherProps} style={containerStyle}>
-            <View style={contentStyle}>
-                <ImageContent/>
-            </View>
-            <View style={headerStyle}>
-                <PreviewInfo/>
-            </View>
-
+            <ImageContent containerStyle={contentStyle}/>
+            <PreviewInfo style={headerStyle}/>
             <View style={buttonStyle}>
                 <SmallButtons
                     colorVariant={ColorVariant.primary}
@@ -64,17 +58,21 @@ const styles = StyleSheet.create({
 
     },
     displayHeader: {
-        flex: 3,
+        flex: 2,
+        // backgroundColor: 'coral',
     },
 
     displayButton: {
         flex: 2,
-        margin: 6,
-        backgroundColor: 'blue',
+        // padding: 5,
+        paddingBottom: 5,
+        paddingHorizontal: 5,
+
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
+
     },
 })
 
