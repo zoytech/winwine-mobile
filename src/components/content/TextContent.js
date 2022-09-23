@@ -2,8 +2,11 @@ import {Text, View, StyleSheet} from "react-native";
 import {ColorVariant} from "../../themes/color";
 import React from "react";
 import {Color, Typography} from "../../themes";
+import textStyle from "./textStyle";
+import useTextStyle from "./textStyle";
 
 export default function TextContent(props) {
+    const basicTextStyle = useTextStyle;
     const {
         content,
         colorVariant = ColorVariant.primary,
@@ -14,10 +17,11 @@ export default function TextContent(props) {
         ...otherProps
     } = props;
     const {onContainer} = Color.light[colorVariant];
-    const containerStyle = [styles.container, style];
+    const containerStyle = [styles.container, basicTextStyle.textContainer, style];
     const textStyle = [
         typographyVariant,
         {color: onContainer},
+        basicTextStyle.text,
         styles.text,
         style,
     ];
@@ -33,11 +37,7 @@ export default function TextContent(props) {
 const styles = StyleSheet.create({
     container: {},
     text: {
-        height: "100%",
-        textAlign: "center",
-        textAlignVertical: "center",
-        lineHeight: 30,
-        letterSpacing: 0.5,
+        fontWeight: 'normal'
     },
 
 })

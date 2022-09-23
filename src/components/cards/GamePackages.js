@@ -1,4 +1,4 @@
-import {FilledButton, UnfilledButtons} from "../buttons";
+import {FilledButton, SmallButtons, UnfilledButtons} from "../buttons";
 import {StyleSheet, View} from "react-native";
 import {ColorVariant} from "../../themes/color";
 import React from "react";
@@ -14,7 +14,6 @@ export default function GamePackages(props) {
 
         ...otherProps
     } = props;
-    const textContent = Content;
     const {base: cardBase} = Color.light[colorSurfaceVariant]
     const containerStyle = [
         styles.container,
@@ -36,9 +35,9 @@ export default function GamePackages(props) {
             </View>
 
             <View style={buttonStyle}>
-                <FilledButton
+                <SmallButtons
                     colorVariant={ColorVariant.primary}
-                    content={'Kế tiếp'}
+                    content={'Play'}
                     onPress={() => {
                         alert('Chuyển qua lá tiếp theo');
                     }}
@@ -48,45 +47,34 @@ export default function GamePackages(props) {
     )
 }
 
-const Content = "Bạn đã bao giờ yêu cùng lúc hai người chưa? Lúc đó câu chuyện diễn tiến thế nào? a a/n" +
-    "aff a ffkfaaf" +
-    "kalfkl laklf " +
-    "afkaj aj" +
-    "afjk " +
-    "ajfkjk jafjljl";
 
 const styles = StyleSheet.create({
     container: {
         display: "flex",
         flexDirection: "column",
         alignSelf: "center",
-        width: 197,
-        height: 147,
+        width: 147,
+        height: 197,
         borderRadius: 12,
         overflow: "hidden",
-
-        //ratio: 1.64 width, height of card
     },
 
     displayContent: {
-        flex: 3,
+        flex: 6,
 
     },
     displayHeader: {
-        flex: 2,
+        flex: 3,
     },
 
     displayButton: {
-        flex: 1,
-
-        display: "flex",
-        flexDirection: "row-reverse",
-        justifyContent: "space-around",
-        alignItems: "center",
-
-        // width: "100%",
-        // padding: 0,
-
+        flex: 2,
+        margin: 6,
+        backgroundColor: 'blue',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 })
 

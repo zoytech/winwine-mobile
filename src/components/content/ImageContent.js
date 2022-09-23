@@ -15,17 +15,13 @@ export default function ImageContent() {
 }
 const styles = StyleSheet.create({
     container: {
-        height: 120,
-        width: 170,
-        left: 0,
-        top: 0,
-        borderRadius: 12,
-
+        display: "flex",
+        flexWrap: 'nowrap',
+        alignItems: 'center',
     },
     image: {
-        // resizeMode: "contain",
-        width: '100%',
-        height: undefined,
+        maxWidth: '100%',
+        maxHeight: '100%',
         aspectRatio: 1,
     }
 })

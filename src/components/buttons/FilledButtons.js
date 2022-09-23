@@ -1,10 +1,12 @@
 import React from 'react';
-import {Text, StyleSheet, Pressable} from 'react-native';
+import {Text, StyleSheet, Pressable, View} from 'react-native';
 import {ColorVariant} from 'src/themes/color';
 import {Color} from 'src/themes';
 import {Typography} from '../../themes';
+import useButtonStyle from "./buttonStyle";
 
 export default function FilledButton(props) {
+    const buttonStyle = useButtonStyle.big;
     const {
         content,
         colorVariant = ColorVariant.primary,
@@ -16,29 +18,24 @@ export default function FilledButton(props) {
     } = props;
 
     const {onBase, base} = Color.light[colorVariant];
-    const containerStyle = [styles.container, {backgroundColor: base}, style];
+    const containerStyle = [{backgroundColor: base}, buttonStyle.buttonContainer, style];
+    const textContainerStyle = [buttonStyle.textContainer]
     const textStyle = [
-        styles.text,
         typographyVariant,
         {color: onBase},
+        buttonStyle.text,
         contentStyle,
     ];
 
     return (
         <Pressable {...otherProps} style={containerStyle}>
-            {content && <Text style={textStyle}>{content}</Text>}
-            {children}
+            <View style={textContainerStyle}>
+                {Contentt && <Text style={textStyle}>{Contentt}</Text>}
+                {children}
+            </View>
         </Pressable>
     );
 }
 
-const styles = StyleSheet.create({
-    container: {
-        borderRadius: 20,
-        paddingVertical: 10,
-        paddingHorizontal: 24,
-    },
-    text: {
-        textTransform: "uppercase",
-    },
-});
+const Contentt = "Play now"
+

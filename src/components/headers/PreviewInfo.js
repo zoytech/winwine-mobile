@@ -17,8 +17,8 @@ export default function PreviewInfo(props) {
 
     const {onBase} = Color.light[colorText];
     const containerStyle = [styles.container];
-    const headerStyle = [styles.header];
-    const subHeaderStyle = [styles.subHeader];
+    const headerStyle = [styles.headerText];
+    const subHeaderStyle = [styles.subHeaderText];
     const textHeaderStyle = [typography, onBase];
     const textSubHeaderStyle = [typography, onBase];
 
@@ -38,18 +38,12 @@ const styles = StyleSheet.create({
     container: {
         display: "flex",
         flexDirection: "column",
-        justifyContent: "space-around",
+        justifyContent: "space-evenly",
+        // backgroundColor: "#f0f8ff",
 
-        backgroundColor: "#f0f8ff",
-
-        height: 50,
-        width: 147,
-    }, header: {
-        flex: 1, backgroundColor: "#ff7f50", fontWeight: "bold",
-
-    }, subHeader: {
-        flex: 1, fontWeight: "normal",
-    }
+        height: '100%',
+        width: '100%',
+    },
 });
 
 const CardInformation = {
