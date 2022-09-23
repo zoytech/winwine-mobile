@@ -1,18 +1,19 @@
 import {StyleSheet} from "react-native";
 import React from "react";
-import useTextStyle from "../content/textStyle";
+import useTextStyle, {TextContentVariant} from "../content/textStyle";
+import TextContent from "../content/textStyle";
 
-const text = useTextStyle.text;
-const textContainer = useTextStyle.textContainer;
+const textContentVariant = TextContentVariant.short;
+const {base, onBase} = TextContent[textContentVariant]
 const ButtonVariant = {
     big: 'big',
     small: 'small',
 }
 
 
-const useButtonStyle = {
+const ButtonStyle = {
     [ButtonVariant.big]: {
-        buttonContainer: {
+        container: {
             minWidth: 110,
             minHeight: 40,
             paddingVertical: 5,
@@ -23,17 +24,17 @@ const useButtonStyle = {
             justifyContent: 'center',
             alignItems: 'center',
         },
-        textContainer: {
-            ...textContainer,
+        base: {
+            ...base,
             alignSelf: 'center'
         },
-        text: {
-            ...text,
+        onBase: {
+            ...onBase,
             textTransform: 'uppercase'
         },
     },
     [ButtonVariant.small]: {
-        buttonContainer: {
+        container: {
             // maxWidth: 135,
             // maxHeight: 35,
 
@@ -49,12 +50,12 @@ const useButtonStyle = {
             minWidth: 80,
             minHeight: 30,
         },
-        textContainer: {
-            ...textContainer,
+        base: {
+            ...base,
             alignSelf: 'center'
         },
-        text: {
-            ...text,
+        onBase: {
+            ...onBase,
             textTransform: 'uppercase'
         },
     },
@@ -63,6 +64,7 @@ const useButtonStyle = {
 }
 
 
-export default useButtonStyle;
+export default ButtonStyle;
+export {ButtonVariant}
 
 

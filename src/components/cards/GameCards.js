@@ -5,9 +5,11 @@ import React from "react";
 import {Color} from "../../themes";
 import {GameScript} from "../content";
 import {HeadlineInfo} from "../headers";
+import useCardStyle from "./cardStyles";
 
 
 export default function GameCards(props) {
+    const cardStyle = useCardStyle.gameCard;
     const {
         colorSurfaceVariant = ColorVariant.surfaceVariant,
         ...otherProps
@@ -16,10 +18,11 @@ export default function GameCards(props) {
     const containerStyle = [
         styles.container,
         {backgroundColor: cardBase},
+        cardStyle.container
     ];
     // const displayHeadline = [styles.displayHeadline];
-    const displayButtonsStyle = [styles.displayButton];
-    const displayContent = [styles.displayContent];
+    const displayButtonsStyle = [styles.displayButton, cardStyle.button];
+    const displayContent = [styles.displayContent, cardStyle.content];
 
     return (
         <View {...otherProps} style={containerStyle}>
@@ -54,45 +57,12 @@ export default function GameCards(props) {
 
 
 const styles = StyleSheet.create({
-    container: {
-        display: "flex",
-        flexDirection: "column",
-        alignSelf: "center",
-        marginHorizontal: 26,
-        marginBottom: 84,
-        // marginTop: 95,
+    container: {},
+    displayHeadline: {},
 
-        width: 274,
-        height: 450,
-        borderRadius: 12,
-        overflow: "hidden",
+    displayContent: {},
 
-        //ratio: 1.64 width, height of card
-    },
-    displayHeadline: {
-        flex: 3,
-    },
-
-    displayContent: {
-        flex: 5,
-        marginVertical: 10,
-        marginHorizontal: 40,
-
-        justifyContent: "center"
-    },
-
-    displayButton: {
-        flex: 1,
-
-        display: "flex",
-        flexDirection: "row-reverse",
-        justifyContent: "space-around",
-        alignItems: "center",
-
-        width: "100%",
-        padding: 0,
-
-    },
+    displayButton: {},
 })
 
 // backgroundCard: {

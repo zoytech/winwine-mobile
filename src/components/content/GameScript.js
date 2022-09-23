@@ -1,13 +1,13 @@
-import {Text, View, StyleSheet} from "react-native";
+import {StyleSheet} from "react-native";
 import {ColorVariant} from "../../themes/color";
 import React from "react";
 import {Color, Typography} from "../../themes";
-import textStyle from "./textStyle";
-import useTextStyle from "./textStyle";
+import useTextStyle, {TextContentVariant} from "./textStyle";
 import TextItem from "./TextItem";
+import TextContent from "./textStyle";
 
 export default function GameScript(props) {
-    const basicTextStyle = useTextStyle;
+    const textVariant = TextContentVariant.paragraph;
     const {
         colorVariant = ColorVariant.primary,
         typographyVariant = Typography.title.medium,
@@ -16,45 +16,24 @@ export default function GameScript(props) {
         children,
         ...otherProps
     } = props;
+    const {base, onBase} = TextContent[textVariant];
     const content = Content;
     const {onContainer} = Color.light[colorVariant];
-    const containerStyle = [styles.container, basicTextStyle.textContainer, style];
-    const textStyle = [
-        typographyVariant,
-        {color: onContainer},
-        basicTextStyle.text,
-        styles.text,
-        style,
-    ];
+
+    const containerStyle = [base, style];
+    const textStyle = [typographyVariant, {color: onContainer}, onBase, style];
 
     return (
-        <View>
-            {content &&
-                <TextItem
-                    {...otherProps}
-                    containerStyle={containerStyle}
-                    contentStyle={textStyle}
-                    content={content}
-                />
-            }
-            {children}
-        </View>
+        <TextItem
+            {...otherProps}
+            containerStyle={containerStyle}
+            contentStyle={textStyle}
+            content={content}
+        />
     )
 }
 
-const styles = StyleSheet.create({
-    container: {},
-    text: {
-        fontWeight: 'normal'
-    },
-
-});
-const Content = "Bạn đã bao giờ yêu cùng lúc hai người chưa? Lúc đó câu chuyện diễn tiến thế nào? a a/n" +
-    "aff a ffkfaaf" +
-    "kalfkl laklf " +
-    "afkaj aj" +
-    "afjk " +
-    "ajfkjk jafjljl";
+const Content = "Bạn đã bao giờ yêu cùng lúc hai người chưa? Lúc đó câu chuyện diễn tiến thế nào? a a/n" + "aff a ffkfaaf" + "kalfkl laklf " + "afkaj aj" + "afjk " + "ajfkjk jafjljl";
 
 
 /* supporting-text */

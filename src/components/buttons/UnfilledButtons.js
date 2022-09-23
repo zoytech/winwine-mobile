@@ -2,11 +2,12 @@ import {Pressable, Text, StyleSheet, View} from "react-native";
 import {Color, Typography} from "../../themes";
 import {ColorVariant} from "../../themes/color";
 import React from "react";
-import useButtonStyle from "./buttonStyle";
+import useButtonStyle, {ButtonVariant} from "./buttonStyle";
 import TextItem from "../content/TextItem";
+import ButtonStyle from "./buttonStyle";
 
 export default function UnfilledButtons(props) {
-    const buttonStyle = useButtonStyle.big;
+    const buttonVariant = ButtonVariant.big;
     const {
         colorText = ColorVariant.primary,
         colorOutline = ColorVariant.outline,
@@ -18,13 +19,15 @@ export default function UnfilledButtons(props) {
         style,
         ...otherProps
     } = props;
+    const {container: buttonType, base: textBox, onBase: text} = ButtonStyle[buttonVariant]
+
 
     const {base: baseText} = Color.light[colorText];
     const {base: baseOutline} = Color.light[colorOutline];
     const {base: baseBackground} = Color.light[colorSurface];
 
     const containerStyle = [
-        buttonStyle.buttonContainer,
+        buttonType,
         {
             borderColor: baseOutline,
             borderWidth: 1,
@@ -33,10 +36,10 @@ export default function UnfilledButtons(props) {
         style,
     ];
     const textContainerStyle = [
-        buttonStyle.textContainer,
+        textBox,
     ]
     const textStyle = [
-        buttonStyle.text,
+        text,
         {color: baseText},
         typography, style
     ];
