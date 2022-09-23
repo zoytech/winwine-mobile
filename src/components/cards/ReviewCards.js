@@ -3,7 +3,7 @@ import {Text, View, StyleSheet, Dimensions} from "react-native";
 import {ColorVariant} from "../../themes/color";
 import React from "react";
 import {Color, Typography} from "../../themes";
-import {TextContent} from "../content";
+import {GameScript} from "../content";
 
 export default function ReviewCards(props) {
     const {
@@ -30,7 +30,7 @@ export default function ReviewCards(props) {
     return (
         <View {...otherProps} style={containerStyle}>
             <View style={displayContent}>
-                <TextContent
+                <GameScript
                     content={textContent}
                     colorVariant={ColorVariant.primary}
                 />

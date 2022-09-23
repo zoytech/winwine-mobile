@@ -5,6 +5,7 @@ const useTextStyle = {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: 'coral',
     },
     text: {
         fontWeight: 'bold',

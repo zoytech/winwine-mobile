@@ -3,7 +3,7 @@ import {StyleSheet, View} from "react-native";
 import {ColorVariant} from "../../themes/color";
 import React from "react";
 import {Color} from "../../themes";
-import {TextContent} from "../content";
+import {GameScript} from "../content";
 import {HeadlineInfo} from "../headers";
 
 
@@ -12,7 +12,6 @@ export default function GameCards(props) {
         colorSurfaceVariant = ColorVariant.surfaceVariant,
         ...otherProps
     } = props;
-    const textContent = Content;
     const {base: cardBase} = Color.light[colorSurfaceVariant]
     const containerStyle = [
         styles.container,
@@ -25,8 +24,7 @@ export default function GameCards(props) {
     return (
         <View {...otherProps} style={containerStyle}>
             <View style={displayContent}>
-                <TextContent
-                    content={textContent}
+                <GameScript
                     colorVariant={ColorVariant.primary}
                 />
             </View>
@@ -54,12 +52,6 @@ export default function GameCards(props) {
     )
 }
 
-const Content = "Bạn đã bao giờ yêu cùng lúc hai người chưa? Lúc đó câu chuyện diễn tiến thế nào? a a/n" +
-    "aff a ffkfaaf" +
-    "kalfkl laklf " +
-    "afkaj aj" +
-    "afjk " +
-    "ajfkjk jafjljl";
 
 const styles = StyleSheet.create({
     container: {
@@ -85,6 +77,8 @@ const styles = StyleSheet.create({
         flex: 5,
         marginVertical: 10,
         marginHorizontal: 40,
+
+        justifyContent: "center"
     },
 
     displayButton: {

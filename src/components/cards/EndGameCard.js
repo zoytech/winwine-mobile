@@ -3,7 +3,7 @@ import {StyleSheet, View} from "react-native";
 import {ColorVariant} from "../../themes/color";
 import React from "react";
 import {Color} from "../../themes";
-import {TextContent} from "../content";
+import {GameScript} from "../content";
 
 export default function EndGameCard(props) {
     const {
@@ -23,7 +23,7 @@ export default function EndGameCard(props) {
     return (
         <View {...otherProps} style={containerStyle}>
             <View style={displayContent}>
-                <TextContent
+                <GameScript
                     content={textContent}
                     colorVariant={ColorVariant.primary}
                 />

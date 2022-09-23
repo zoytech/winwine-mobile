@@ -4,11 +4,11 @@ import React from "react";
 import {Color, Typography} from "../../themes";
 import textStyle from "./textStyle";
 import useTextStyle from "./textStyle";
+import TextItem from "./TextItem";
 
-export default function TextContent(props) {
+export default function GameScript(props) {
     const basicTextStyle = useTextStyle;
     const {
-        content,
         colorVariant = ColorVariant.primary,
         typographyVariant = Typography.title.medium,
         style,
@@ -16,6 +16,7 @@ export default function TextContent(props) {
         children,
         ...otherProps
     } = props;
+    const content = Content;
     const {onContainer} = Color.light[colorVariant];
     const containerStyle = [styles.container, basicTextStyle.textContainer, style];
     const textStyle = [
@@ -27,8 +28,15 @@ export default function TextContent(props) {
     ];
 
     return (
-        <View {...otherProps} style={containerStyle}>
-            {content && <Text style={textStyle}>{content}</Text>}
+        <View>
+            {content &&
+                <TextItem
+                    {...otherProps}
+                    containerStyle={containerStyle}
+                    contentStyle={textStyle}
+                    content={content}
+                />
+            }
             {children}
         </View>
     )
@@ -40,7 +48,13 @@ const styles = StyleSheet.create({
         fontWeight: 'normal'
     },
 
-})
+});
+const Content = "Bạn đã bao giờ yêu cùng lúc hai người chưa? Lúc đó câu chuyện diễn tiến thế nào? a a/n" +
+    "aff a ffkfaaf" +
+    "kalfkl laklf " +
+    "afkaj aj" +
+    "afjk " +
+    "ajfkjk jafjljl";
 
 
 /* supporting-text */
