@@ -4,8 +4,11 @@ import {ColorVariant} from "../../themes/color";
 import React from "react";
 import {Color, Typography} from "../../themes";
 import {GameScript} from "../content";
+import useCardStyle from "./cardStyles";
 
 export default function ReviewCards(props) {
+    const cardStyle = useCardStyle.gameCard;
+    const {button, container, headline, content} = cardStyle;
     const {
         colorSurfaceVariant = ColorVariant.surfaceVariant,
         colorSurface = ColorVariant.surface,
@@ -20,12 +23,13 @@ export default function ReviewCards(props) {
         styles.container,
         {
             backgroundColor: contentBase,
-            borderColor: borderBase
+            borderColor: borderBase,
         },
+        container
     ]
 
-    const displayButtonsStyle = [styles.displayButton, {backgroundColor: buttonBase}];
-    const displayContent = [styles.displayContent];
+    const displayButtonsStyle = [{backgroundColor: buttonBase}, button];
+    const displayContent = [content];
 
     return (
         <View {...otherProps} style={containerStyle}>
@@ -40,9 +44,7 @@ export default function ReviewCards(props) {
                 <FilledButton
                     colorVariant={ColorVariant.primary}
                     content={'Chơi ngay'}
-                    onPress={() => {
-                        alert('Enter to game screen');
-                    }}
+                    message={'Enter to game screen'}
                 />
             </View>
         </View>
@@ -58,36 +60,11 @@ const Content = "Bạn đã bao giờ yêu cùng lúc hai người chưa? Lúc �
 
 const styles = StyleSheet.create({
     container: {
-        display: "flex",
-        flexDirection: "column",
-        alignSelf: "center",
-        marginHorizontal: 26,
-        // marginTop: 140,
+        marginHorizontal: 23,
+        marginTop: 140,
         width: 314,
-        height: 394,
-        borderRadius: 12,
-        borderWidth: 0.5,
-        overflow: "hidden",
+        height: 386,
     },
-
-    displayContent: {
-        flex: 5,
-        marginVertical: 10,
-        marginHorizontal: 40,
-    },
-
-    displayButton: {
-        flex: 1,
-
-        display: "flex",
-        flexDirection: "row-reverse",
-        justifyContent: "space-around",
-        alignItems: "center",
-
-        width: "100%",
-        paddingVertical: 10,
-    },
-    button: {}
 })
 
 

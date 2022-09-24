@@ -1,36 +1,37 @@
-import React from 'react';
-import {Text, StyleSheet, Pressable, View, Button} from 'react-native';
-import {ColorVariant} from 'src/themes/color';
-import {Color} from 'src/themes';
-import {Typography} from '../../themes';
+import {Pressable, Text, StyleSheet, View} from "react-native";
+import {Color, Typography} from "../../themes";
+import {ColorVariant} from "../../themes/color";
+import React from "react";
+import useButtonStyle, {ButtonVariant} from "./buttonStyle";
 import TextItem from "../content/TextItem";
-import ButtonStyle, {ButtonVariant} from "./buttonStyle";
+import ButtonStyle from "./buttonStyle";
 
-export default function FilledButton(props) {
+export default function ButtonItem(props) {
     const buttonVariant = ButtonVariant.big;
     const {
-        content,
-        colorVariant = ColorVariant.primary,
-        typographyVariant = Typography.label.large,
-        children,
         style,
-        contentStyle,
+        content,
+        message,
         ...otherProps
     } = props;
-
-    const {container: buttonType, base: textBox, onBase: text} = ButtonStyle[buttonVariant]
-    const {onBase, base} = Color.light[colorVariant];
-    const containerStyle = [{backgroundColor: base}, buttonType, style];
-    const textContainerStyle = [textBox]
-    const textStyle = [
-        typographyVariant,
-        {color: onBase},
-        text,
-        contentStyle,
+    const {shape, textArea, text} = ButtonStyle[buttonVariant]
+    const containerStyle = [
+        shape,
+        style.button,
+        style,
     ];
-
+    const textContainerStyle = [
+        textArea,
+        style.textArea
+    ]
+    const textStyle = [
+        text,
+        style.text
+    ];
     return (
-        <Pressable {...otherProps} style={containerStyle}>
+        <Pressable {...otherProps} style={containerStyle} onPress={() => {
+            alert(JSON.stringify(message))
+        }}>
             {content &&
                 <TextItem
                     content={content}
@@ -39,8 +40,7 @@ export default function FilledButton(props) {
                 />
             }
         </Pressable>
-    );
+    )
 }
 
-const Contentt = "Play now"
 

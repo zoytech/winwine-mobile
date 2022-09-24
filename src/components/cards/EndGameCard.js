@@ -2,15 +2,19 @@ import {FilledButton, UnfilledButtons} from "../buttons";
 import {StyleSheet, View} from "react-native";
 import {ColorVariant} from "../../themes/color";
 import React from "react";
-import {Color} from "../../themes";
-import {GameScript} from "../content";
+import {Color, Typography} from "../../themes";
+import {GameScript, ImageContent} from "../content";
+import useCardStyle from "./cardStyles";
+import TextItem from "../content/TextItem";
 
 export default function EndGameCard(props) {
+    const cardStyle = useCardStyle.previewLarge;
     const {
         colorSurfaceVariant = ColorVariant.surfaceVariant,
+        typography = Typography,
+        content,
         ...otherProps
     } = props;
-    const textContent = Content;
     const {base: cardBase} = Color.light[colorSurfaceVariant]
     const containerStyle = [
         styles.container,
@@ -22,33 +26,37 @@ export default function EndGameCard(props) {
 
     return (
         <View {...otherProps} style={containerStyle}>
-            <View style={displayContent}>
-                <GameScript
-                    content={textContent}
-                    colorVariant={ColorVariant.primary}
-                />
-            </View>
+            {/*<ImageContent*/}
+            {/*    containerStyle*/}
+            {/*/>*/}
+            {/*<View>*/}
+            {/*    <TextItem*/}
+            {/*        content={}*/}
+            {/*        contentStyle={}*/}
+            {/*        containerStyle={}*/}
+            {/*    />*/}
+            {/*</View>*/}
 
-            <View style={displayButtonsStyle}>
-                <FilledButton
-                    colorVariant={ColorVariant.primary}
-                    content={'Kế tiếp'}
-                    onPress={() => {
-                        alert('Chuyển qua lá tiếp theo');
-                    }}
-                />
-                <UnfilledButtons
-                    colorVariant={ColorVariant.primary}
-                    colorOutline={ColorVariant.outline}
-                    colorSurface={ColorVariant.surface}
-                    content={'Lá trước'}
-                    onPress={() => {
-                        alert('Xem lại lá trước đó')
-                    }}
-                />
+            {/*<View style={displayButtonsStyle}>*/}
+            {/*    <FilledButton*/}
+            {/*        colorVariant={ColorVariant.primary}*/}
+            {/*        content={'Bộ khác'}*/}
+            {/*        onPress={() => {*/}
+            {/*            alert('Chuyển qua giao diện album bài');*/}
+            {/*        }}*/}
+            {/*    />*/}
+            {/*    <UnfilledButtons*/}
+            {/*        colorVariant={ColorVariant.primary}*/}
+            {/*        colorOutline={ColorVariant.outline}*/}
+            {/*        colorSurface={ColorVariant.surface}*/}
+            {/*        content={'Chơi lại'}*/}
+            {/*        onPress={() => {*/}
+            {/*            alert('Trở lại bộ bài vừa chơi')*/}
+            {/*        }}*/}
+            {/*    />*/}
 
 
-            </View>
+            {/*</View>*/}
         </View>
     )
 }

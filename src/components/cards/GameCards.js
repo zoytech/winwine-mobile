@@ -14,15 +14,15 @@ export default function GameCards(props) {
         colorSurfaceVariant = ColorVariant.surfaceVariant,
         ...otherProps
     } = props;
-    const {base: cardBase} = Color.light[colorSurfaceVariant]
+    const {base: cardBase} = Color.light[colorSurfaceVariant];
+    const {button, container, content, headline} = cardStyle;
     const containerStyle = [
-        styles.container,
         {backgroundColor: cardBase},
-        cardStyle.container
+        container
     ];
     // const displayHeadline = [styles.displayHeadline];
-    const displayButtonsStyle = [styles.displayButton, cardStyle.button];
-    const displayContent = [styles.displayContent, cardStyle.content];
+    const displayButtonsStyle = [button];
+    const displayContent = [content];
 
     return (
         <View {...otherProps} style={containerStyle}>
@@ -35,18 +35,14 @@ export default function GameCards(props) {
                 <FilledButton
                     colorVariant={ColorVariant.primary}
                     content={'Kế tiếp'}
-                    onPress={() => {
-                        alert('Chuyển qua lá tiếp theo');
-                    }}
+                    message={'Chuyen qua la tiep theo'}
                 />
                 <UnfilledButtons
                     colorVariant={ColorVariant.primary}
                     colorOutline={ColorVariant.outline}
                     colorSurface={ColorVariant.surface}
                     content={'Lá trước'}
-                    onPress={() => {
-                        alert('Xem lại lá trước đó')
-                    }}
+                    message={'Xem lại lá trước đó'}
                 />
 
 
@@ -55,15 +51,6 @@ export default function GameCards(props) {
     )
 }
 
-
-const styles = StyleSheet.create({
-    container: {},
-    displayHeadline: {},
-
-    displayContent: {},
-
-    displayButton: {},
-})
 
 // backgroundCard: {
 //     background: "linear-gradient(0deg, rgba(108, 92, 71, 0.05), rgba(108, 92, 71, 0.05)), #FFFBFF",

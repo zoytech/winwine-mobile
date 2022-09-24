@@ -13,7 +13,7 @@ const ButtonVariant = {
 
 const ButtonStyle = {
     [ButtonVariant.big]: {
-        container: {
+        shape: {
             minWidth: 110,
             minHeight: 40,
             paddingVertical: 5,
@@ -24,24 +24,20 @@ const ButtonStyle = {
             justifyContent: 'center',
             alignItems: 'center',
         },
-        base: {
+        textArea: {
             ...base,
             alignSelf: 'center'
         },
-        onBase: {
+        text: {
             ...onBase,
             textTransform: 'uppercase'
         },
     },
     [ButtonVariant.small]: {
-        container: {
-            // maxWidth: 135,
-            // maxHeight: 35,
-
+        shape: {
             borderRadius: 20,
             paddingVertical: 4,
             paddingHorizontal: 10,
-
 
             display: "flex",
             justifyContent: 'center',
@@ -50,11 +46,11 @@ const ButtonStyle = {
             minWidth: 80,
             minHeight: 30,
         },
-        base: {
+        textArea: {
             ...base,
             alignSelf: 'center'
         },
-        onBase: {
+        text: {
             ...onBase,
             textTransform: 'uppercase'
         },

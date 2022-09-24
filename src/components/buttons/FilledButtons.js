@@ -5,40 +5,38 @@ import {Color} from 'src/themes';
 import {Typography} from '../../themes';
 import TextItem from "../content/TextItem";
 import ButtonStyle, {ButtonVariant} from "./buttonStyle";
+import ButtonItem from "./ButtonItem";
 
 export default function FilledButton(props) {
-    const buttonVariant = ButtonVariant.big;
     const {
         content,
+        message,
         colorVariant = ColorVariant.primary,
         typographyVariant = Typography.label.large,
         children,
         style,
-        contentStyle,
         ...otherProps
     } = props;
 
-    const {container: buttonType, base: textBox, onBase: text} = ButtonStyle[buttonVariant]
     const {onBase, base} = Color.light[colorVariant];
-    const containerStyle = [{backgroundColor: base}, buttonType, style];
-    const textContainerStyle = [textBox]
+    const containerStyle = [{backgroundColor: base}, style];
+    const textContainerStyle = [style]
     const textStyle = [
         typographyVariant,
         {color: onBase},
-        text,
-        contentStyle,
     ];
 
     return (
-        <Pressable {...otherProps} style={containerStyle}>
-            {content &&
-                <TextItem
-                    content={content}
-                    contentStyle={textStyle}
-                    containerStyle={textContainerStyle}
-                />
-            }
-        </Pressable>
+        <ButtonItem
+            {...otherProps}
+            style={{
+                button: containerStyle,
+                textArea: textContainerStyle,
+                text: textStyle,
+            }}
+            content={content}
+            message={message}
+        />
     );
 }
 

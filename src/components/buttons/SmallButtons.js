@@ -1,12 +1,12 @@
 import {Color, Typography} from "../../themes";
-import {Pressable, Text, StyleSheet, View} from "react-native";
 import {ColorVariant} from "../../themes/color";
-import useButtonStyle from "./buttonStyle";
+import ButtonItem from "./ButtonItem";
+import {StyleSheet} from "react-native";
 
 export default function SmallButtons(props) {
-    const buttonStyle = useButtonStyle.small;
     const {
         content,
+        message,
         colorVariant = ColorVariant.primary,
         typographyVariant = Typography.body.medium,
         children,
@@ -14,28 +14,45 @@ export default function SmallButtons(props) {
         contentStyle,
         ...otherProps
     } = props;
+
     const {onBase, base} = Color.light[colorVariant];
+
     const containerStyle = [
-        buttonStyle.buttonContainer,
+        styles.shape,
         {backgroundColor: base},
         style
     ];
-    const textContainerStyle = [buttonStyle.textContainer]
     const textStyle = [
-        buttonStyle.text,
         typographyVariant,
         contentStyle,
         {color: onBase}
     ]
 
     return (
-        <Pressable {...otherProps} style={containerStyle}>
-            <View style={textContainerStyle}>
-                {Contentt && <Text style={textStyle}>{Contentt}</Text>}
-                {children}
-            </View>
-        </Pressable>
+        <ButtonItem
+            {...otherProps}
+            content={content}
+            style={{
+                text: textStyle,
+                button: containerStyle,
+            }}
+            message={message}
+        />
     )
 }
+
+const styles = StyleSheet.create({
+    shape: {
+        paddingVertical: 4,
+        paddingHorizontal: 10,
+
+        display: "flex",
+        justifyContent: 'center',
+        alignItems: 'center',
+
+        minWidth: 80,
+        minHeight: 30,
+    }
+})
 
 const Contentt = 'Play';

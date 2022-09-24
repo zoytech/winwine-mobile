@@ -7,7 +7,7 @@ import {
     GameCards,
     ReviewCards,
     HeadlineInfo,
-    SmallButtons, GamePackages
+    SmallButtons, GamePackages, EndGameCard
 } from '../../components';
 
 import {ColorVariant} from '../../themes/color';
@@ -34,7 +34,7 @@ export default function HomeScreen() {
             {/*</View>*/}
             {/*<ScrollView style={stackCardsColumnStyle}>*/}
             {/*</ScrollView>*/}
-            <GameCards/>
+            <GamePackages/>
 
         </SafeAreaView>
     );

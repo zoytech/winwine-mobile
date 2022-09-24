@@ -32,9 +32,7 @@ export default function GamePackages(props) {
                 <SmallButtons
                     colorVariant={ColorVariant.primary}
                     content={'Play'}
-                    onPress={() => {
-                        alert('Chuyển qua lá tiếp theo');
-                    }}
+                    message={'Chuyển qua lá tiếp theo'}
                 />
             </View>
         </View>
