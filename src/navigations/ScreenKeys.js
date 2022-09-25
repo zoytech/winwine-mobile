@@ -1,10 +1,10 @@
 import React from 'react';
 
 const ScreenKeys = {
-  HOME: 'HOME',
+    HOME: 'HOME',
 
-  GAME: 'GAME',
-  GAME_PLAY: 'GAME/PLAY',
+    GAME: 'GAME',
+    GAME_PLAY: 'GAME/PLAY',
 };
 
 export {ScreenKeys};

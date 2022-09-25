@@ -3,7 +3,7 @@ import {StyleSheet, View} from "react-native";
 import {ColorVariant} from "../../themes/color";
 import React from "react";
 import {Color, Typography} from "../../themes";
-import {GameScript, ImageContent} from "../content";
+import {ImageContent} from "../content";
 import useCardStyle from "./cardStyles";
 import TextItem from "../content/TextItem";
 
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-around",
         alignItems: "center",
         backgroundColor: 'yellow',
-        
+
     },
 
 })

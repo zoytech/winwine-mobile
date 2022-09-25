@@ -1,10 +1,8 @@
-import {StyleSheet} from "react-native";
 import {ColorVariant} from "../../themes/color";
 import React from "react";
 import {Color, Typography} from "../../themes";
-import useTextStyle, {TextContentVariant} from "./textStyle";
+import TextContent, {TextContentVariant} from "./textStyle";
 import TextItem from "./TextItem";
-import TextContent from "./textStyle";
 
 export default function GameScript(props) {
     const textVariant = TextContentVariant.paragraph;

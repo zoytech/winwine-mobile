@@ -56,7 +56,7 @@ const CardInformation = {
 
 import {Color, Typography} from "../../themes";
 import {ColorVariant} from "../../themes/color";
-import {StyleSheet, View} from "react-native";
+import {View} from "react-native";
 import useTextStyle from "../content/textStyle";
 import TextItem from "../content/TextItem";
 import useHeadlineStyle from "./headlineStyle";

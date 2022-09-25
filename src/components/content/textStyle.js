@@ -1,5 +1,3 @@
-import {Text, View} from "react-native";
-
 const TextContentVariant = {
     short: 'short',
     paragraph: 'paragraph',

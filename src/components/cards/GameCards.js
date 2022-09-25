@@ -1,5 +1,5 @@
-import {FilledButton, SmallButtons, UnfilledButtons} from "../buttons";
-import {Text, View, StyleSheet, Dimensions} from "react-native";
+import {FilledButton, UnfilledButtons} from "../buttons";
+import {View} from "react-native";
 import React from "react";
 import {GameScript} from "../content";
 import useCardStyle from "./cardStyles";

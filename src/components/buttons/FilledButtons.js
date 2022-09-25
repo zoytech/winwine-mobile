@@ -1,10 +1,7 @@
 import React from 'react';
-import {Text, StyleSheet, Pressable, View, Button} from 'react-native';
 import {ColorVariant} from 'src/themes/color';
 import {Color} from 'src/themes';
 import {Typography} from '../../themes';
-import TextItem from "../content/TextItem";
-import ButtonStyle, {ButtonVariant} from "./buttonItem/buttonStyle";
 import ButtonItem from "./buttonItem/ButtonItem";
 
 export default function FilledButton(props) {

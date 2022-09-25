@@ -1,10 +1,7 @@
-import {Pressable, Text, StyleSheet, View} from "react-native";
-import {Color, Typography} from "../../../themes";
-import {ColorVariant} from "../../../themes/color";
+import {Pressable} from "react-native";
 import React from "react";
-import useButtonStyle, {ButtonVariant} from "./buttonStyle";
+import ButtonStyle, {ButtonVariant} from "./buttonStyle";
 import TextItem from "../../content/TextItem";
-import ButtonStyle from "./buttonStyle";
 
 export default function ButtonItem(props) {
     const buttonVariant = ButtonVariant.big;

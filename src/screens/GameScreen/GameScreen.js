@@ -1,18 +1,9 @@
 import React from 'react';
-import {Dimensions, SafeAreaView, StyleSheet, View} from 'react-native';
-import {
-    FilledButton,
-    GameScript,
-    UnfilledButtons,
-    GameCards,
-    ReviewCards,
-    HeadlineInfo,
-    SmallButtons, GamePackages
-} from '../../components';
+import {Dimensions, SafeAreaView, StyleSheet} from 'react-native';
+import {GameCards} from '../../components';
 
 import {ColorVariant} from '../../themes/color';
 import {Color} from "../../themes";
-import PreviewInfo from "../../components/headers/PreviewInfo";
 
 export default function GameScreen() {
     const {base} = Color.light[ColorVariant.surface];
