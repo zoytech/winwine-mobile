@@ -10,8 +10,8 @@ export default function TextItem(props) {
         ...otherProps
     } = props;
     const {base, onBase} = TextContent[textStyle]
-    const container = [onBase, containerStyle];
-    const text = [base, contentStyle];
+    const container = [base, containerStyle];
+    const text = [onBase, contentStyle];
     return (
         <View {...otherProps} style={container}>
             {content && <Text style={text}>{content}</Text>}

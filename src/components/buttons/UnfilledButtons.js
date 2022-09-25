@@ -2,10 +2,10 @@ import {Pressable, Text, StyleSheet, View} from "react-native";
 import {Color, Typography} from "../../themes";
 import {ColorVariant} from "../../themes/color";
 import React from "react";
-import useButtonStyle, {ButtonVariant} from "./buttonStyle";
+import useButtonStyle, {ButtonVariant} from "./buttonItem/buttonStyle";
 import TextItem from "../content/TextItem";
-import ButtonStyle from "./buttonStyle";
-import ButtonItem from "./ButtonItem";
+import ButtonStyle from "./buttonItem/buttonStyle";
+import ButtonItem from "./buttonItem/ButtonItem";
 
 export default function UnfilledButtons(props) {
     const {

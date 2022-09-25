@@ -34,7 +34,7 @@ export default function HomeScreen() {
             {/*</View>*/}
             {/*<ScrollView style={stackCardsColumnStyle}>*/}
             {/*</ScrollView>*/}
-            <GamePackages/>
+            <EndGameCard/>
 
         </SafeAreaView>
     );

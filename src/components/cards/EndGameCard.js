@@ -19,44 +19,36 @@ export default function EndGameCard(props) {
     const containerStyle = [
         styles.container,
         {backgroundColor: cardBase},
-    ]
-
-    const displayButtonsStyle = [styles.displayButton];
-    const displayContent = [styles.displayContent];
+    ];
+    const imageAreaStyle = [styles.imageArea];
+    const buttonStyle = [styles.buttonArea];
+    const contentStyle = [styles.contentArea];
 
     return (
         <View {...otherProps} style={containerStyle}>
-            {/*<ImageContent*/}
-            {/*    containerStyle*/}
-            {/*/>*/}
-            {/*<View>*/}
-            {/*    <TextItem*/}
-            {/*        content={}*/}
-            {/*        contentStyle={}*/}
-            {/*        containerStyle={}*/}
-            {/*    />*/}
-            {/*</View>*/}
+            <ImageContent
+                containerStyle={imageAreaStyle}
+            />
+            <View style={contentStyle}>
+                <TextItem
+                    content={'Bạn đã chơi hết bài'}
+                />
+            </View>
 
-            {/*<View style={displayButtonsStyle}>*/}
-            {/*    <FilledButton*/}
-            {/*        colorVariant={ColorVariant.primary}*/}
-            {/*        content={'Bộ khác'}*/}
-            {/*        onPress={() => {*/}
-            {/*            alert('Chuyển qua giao diện album bài');*/}
-            {/*        }}*/}
-            {/*    />*/}
-            {/*    <UnfilledButtons*/}
-            {/*        colorVariant={ColorVariant.primary}*/}
-            {/*        colorOutline={ColorVariant.outline}*/}
-            {/*        colorSurface={ColorVariant.surface}*/}
-            {/*        content={'Chơi lại'}*/}
-            {/*        onPress={() => {*/}
-            {/*            alert('Trở lại bộ bài vừa chơi')*/}
-            {/*        }}*/}
-            {/*    />*/}
-
-
-            {/*</View>*/}
+            <View style={buttonStyle}>
+                <FilledButton
+                    colorVariant={ColorVariant.primary}
+                    content={'Bộ khác'}
+                    message={'Chuyển qua giao diện album bài'}
+                />
+                <UnfilledButtons
+                    colorVariant={ColorVariant.primary}
+                    colorOutline={ColorVariant.outline}
+                    colorSurface={ColorVariant.surface}
+                    content={'Chơi lại'}
+                    message={'Trở lại bộ bài vừa chơi'}
+                />
+            </View>
         </View>
     )
 }
@@ -73,36 +65,34 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "column",
         alignSelf: "center",
-        marginHorizontal: 26,
-        marginBottom: 84,
-        marginTop: 95,
 
-        width: 274,
-        height: 450,
+        width: 266,
+        height: 254,
         borderRadius: 12,
         overflow: "hidden",
-
-        //ratio: 1.64 width, height of card
     },
+    imageArea: {
+        flex: 6,
+        backgroundColor: 'tomato'
 
-    displayContent: {
-        flex: 5,
-        marginVertical: 10,
-        marginHorizontal: 40,
     },
-
-    displayButton: {
-        flex: 1,
+    contentArea: {
+        flex: 2,
+        alignSelf: 'center',
+        backgroundColor: 'tan',
+        justifyContent: 'center'
+    },
+    buttonArea: {
+        flex: 2,
 
         display: "flex",
         flexDirection: "row-reverse",
         justifyContent: "space-around",
         alignItems: "center",
-
-        width: "100%",
-        padding: 0,
-
+        backgroundColor: 'yellow',
+        
     },
+
 })
 
 // backgroundCard: {

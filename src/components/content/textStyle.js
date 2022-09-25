@@ -11,7 +11,7 @@ const TextContent = {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            // backgroundColor: 'coral',
+            backgroundColor: 'coral',
         },
         onBase: {
             fontWeight: 'bold',

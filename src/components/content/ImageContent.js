@@ -3,13 +3,14 @@ import {Image, View, StyleSheet} from "react-native";
 export default function ImageContent(props) {
     const {
         containerStyle,
+        imageStyle,
     } = props;
     const container = [styles.container, containerStyle]
-    const imageStyle = [styles.image]
+    const image = [styles.image, imageStyle]
     return (
         <View style={container}>
             <Image
-                style={imageStyle}
+                style={image}
                 source={require('../../assets/images/preview-package/member1.jpg')}
             />
         </View>
@@ -21,7 +22,7 @@ const styles = StyleSheet.create({
         display: "flex",
         flexWrap: 'nowrap',
         alignItems: 'center',
-        backgroundColor: 'coral',
+        backgroundColor: 'blue',
     },
     image: {
         // resizeMode: 'contain',

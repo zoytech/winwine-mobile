@@ -23,10 +23,14 @@ export default function GamePackages(props) {
     const contentStyle = [styles.displayContent];
     const headerStyle = [styles.displayHeader];
     const buttonStyle = [styles.displayButton];
+    const imageStyle = [styles.image]
 
     return (
         <View {...otherProps} style={containerStyle}>
-            <ImageContent containerStyle={contentStyle}/>
+            <ImageContent
+                containerStyle={contentStyle}
+                imageStyle={imageStyle}
+            />
             <PreviewInfo style={headerStyle}/>
             <View style={buttonStyle}>
                 <SmallButtons
@@ -53,7 +57,6 @@ const styles = StyleSheet.create({
 
     displayContent: {
         flex: 6,
-
     },
     displayHeader: {
         flex: 2,
@@ -72,6 +75,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
 
     },
+    // image: {
+    //     resizeMode: 'contain',
+    //
+    // }
 })
 
 //ratio: height/width of preview card = 1.34

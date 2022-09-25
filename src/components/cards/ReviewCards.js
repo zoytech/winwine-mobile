@@ -1,24 +1,22 @@
-import {FilledButton, SmallButtons, UnfilledButtons} from "../buttons";
-import {Text, View, StyleSheet, Dimensions} from "react-native";
+import {FilledButton} from "../buttons";
+import {StyleSheet, View} from "react-native";
 import {ColorVariant} from "../../themes/color";
 import React from "react";
-import {Color, Typography} from "../../themes";
+import {Color} from "../../themes";
 import {GameScript} from "../content";
 import useCardStyle from "./cardStyles";
 
 export default function ReviewCards(props) {
     const cardStyle = useCardStyle.gameCard;
-    const {button, container, headline, content} = cardStyle;
+    const {container, headline, content, button} = cardStyle;
     const {
-        colorSurfaceVariant = ColorVariant.surfaceVariant,
-        colorSurface = ColorVariant.surface,
-        colorBorder = ColorVariant.outline,
+        colorBackgroundVariant = ColorVariant.surfaceVariant,
+        // colorSurface = ColorVariant.surface,
+        colorBorderVariant = ColorVariant.outline,
         ...otherProps
     } = props;
-    const textContent = Content;
-    const {base: contentBase} = Color.light[colorSurfaceVariant];
-    const {base: buttonBase} = Color.light[colorSurface];
-    const {base: borderBase} = Color.light[colorBorder];
+    const {base: contentBase} = Color.light[colorBackgroundVariant];
+    const {base: borderBase} = Color.light[colorBorderVariant];
     const containerStyle = [
         styles.container,
         {
@@ -26,25 +24,26 @@ export default function ReviewCards(props) {
             borderColor: borderBase,
         },
         container
-    ]
+    ];
 
-    const displayButtonsStyle = [{backgroundColor: buttonBase}, button];
-    const displayContent = [content];
+
+    const mainContentStyle = [
+        content
+    ]
+    const buttonLayoutStyle = [
+        button
+    ]
 
     return (
         <View {...otherProps} style={containerStyle}>
-            <View style={displayContent}>
-                <GameScript
-                    content={textContent}
-                    colorVariant={ColorVariant.primary}
-                />
+            <View style={mainContentStyle}>
+                <GameScript/>
             </View>
 
-            <View style={displayButtonsStyle}>
+            <View style={buttonLayoutStyle}>
                 <FilledButton
-                    colorVariant={ColorVariant.primary}
-                    content={'Chơi ngay'}
-                    message={'Enter to game screen'}
+                    content={'Choi ngay'}
+                    message={'Chuyen vao main game'}
                 />
             </View>
         </View>
@@ -66,5 +65,4 @@ const styles = StyleSheet.create({
         height: 386,
     },
 })
-
 
