@@ -51,60 +51,60 @@
 // });
 
 const CardInformation = {
-    id: '123', title: 'Bai cua Nam', tag: 'Thieu nhi', totalCards: '30', avatar: 'N'
-}
+  id: '123',
+  title: 'Bai cua Nam',
+  tag: 'Thieu nhi',
+  totalCards: '30',
+  avatar: 'N',
+};
 
-import {Color, Typography} from "../../themes";
-import {ColorVariant} from "../../themes/color";
-import {View} from "react-native";
-import useTextStyle from "../content/textStyle";
-import TextItem from "../content/TextItem";
-import useHeadlineStyle from "./headlineStyle";
+import {Color, Typography} from '../../themes';
+import {ColorVariant} from '../../themes/color';
+import {View} from 'react-native';
+import useTextStyle from '../content/textStyle';
+import TextItem from '../content/TextItem';
+import useHeadlineStyle from './headlineStyle';
 
 export default function HeadlineInfo(props) {
-    const textStyle = useTextStyle;
-    const headlineStyle = useHeadlineStyle;
-    const {
-        typography = Typography.label.medium,
-        colorText = ColorVariant.surface,
-        info,
-        styleContent,
-        style,
-        children,
-    } = props;
-    const {
-        id: id, title: name, tag: label, totalCards: total, avatar: avatar
-    } = CardInformation;
+  const textStyle = useTextStyle;
+  const headlineStyle = useHeadlineStyle;
+  const {
+    typography = Typography.label.medium,
+    colorText = ColorVariant.surface,
+    info,
+    styleContent,
+    style,
+    children,
+  } = props;
+  const {
+    id: id,
+    title: name,
+    tag: label,
+    totalCards: total,
+    avatar: avatar,
+  } = CardInformation;
 
+  const {base, onBase} = Color.light[colorText];
+  const contentBlockStyle = [headlineStyle.contentBlockStyle, style];
+  const headerStyle = [headlineStyle.header];
+  const subHeaderStyle = [headlineStyle.subHeader];
+  const textContentStyle = [typography, textStyle.text, {color: onBase}];
 
-    const {base, onBase} = Color.light[colorText];
-    const contentBlockStyle = [headlineStyle.contentBlockStyle, style];
-    const headerStyle = [headlineStyle.header];
-    const subHeaderStyle = [headlineStyle.subHeader];
-    const textContentStyle = [typography, textStyle.text, {color: onBase}];
-
-
-    return (
-        <View style={contentBlockStyle}>
-            {name &&
-                <TextItem
-                    content={name}
-                    contentStyle={textContentStyle}
-                    containerStyle={headerStyle}
-                />
-            }
-            <View style={subHeaderStyle}>
-                {label &&
-                    <TextItem
-                        content={label}
-                        contentStyle={textContentStyle}
-                    />
-                }
-            </View>
-        </View>
-    )
+  return (
+    <View style={contentBlockStyle}>
+      {name && (
+        <TextItem
+          content={name}
+          contentStyle={textContentStyle}
+          containerStyle={headerStyle}
+        />
+      )}
+      <View style={subHeaderStyle}>
+        {label && <TextItem content={label} contentStyle={textContentStyle} />}
+      </View>
+    </View>
+  );
 }
-
 
 /*
 {
@@ -120,5 +120,3 @@ export default function HeadlineInfo(props) {
         totalCards: '30',
     }
  */
-
-

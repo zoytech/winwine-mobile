@@ -1,4 +1,4 @@
-import HeadlineInfo from "./HeadlineInfo";
-import PreviewInfo from "./PreviewInfo";
+import HeadlineInfo from './HeadlineInfo';
+import PreviewInfo from './PreviewInfo';
 
 export {HeadlineInfo, PreviewInfo};

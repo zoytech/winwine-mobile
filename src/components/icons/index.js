@@ -1,3 +1,3 @@
-import AvatarDefault from "./AvatarDefault";
+import AvatarDefault from './AvatarDefault';
 
 export {AvatarDefault};
