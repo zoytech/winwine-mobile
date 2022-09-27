@@ -1,14 +1,14 @@
 import React from 'react';
-import {Dimensions, SafeAreaView, StyleSheet, View} from 'react-native';
-import {Surface1} from '../../components/elevations/SurfacesColor';
+import {Dimensions, SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import {
   Elevation1,
   Elevation2,
   Elevation3,
   Elevation4,
   Elevation5,
-  Elevation51,
+  TextArea,
 } from '../../components/elevations/Elevation';
+import BoxShadow from '../../components/elevations/BoxShadow';
 
 export default function HomeScreen(props) {
   const screenStyle = [styles.container, {backgroundColor: 'white'}];
@@ -35,7 +35,8 @@ export default function HomeScreen(props) {
       <Elevation3 />
       <Elevation4 />
       <Elevation5 />
-      <Elevation51 />
+      <TextArea />
+      <BoxShadow />
       {/*<View style={styles.square} />*/}
     </SafeAreaView>
   );
@@ -45,12 +46,13 @@ const styles = StyleSheet.create({
   container: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
+    display: 'flex',
+    flexWrap: 'wrap',
   },
   square: {
     width: 200,
     height: 200,
-    margin: 30,
-    // backgroundColor: '#845400',
+    margin: 30, // backgroundColor: '#845400',
     backgroundColor: 'rgba(132, 84, 0, 0.5)',
     shadowColor: 'rgba(0, 0, 0, 0.15)',
     elevation: 1,

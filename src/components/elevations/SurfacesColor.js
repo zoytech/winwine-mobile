@@ -1,9 +1,8 @@
 import Surfaces, {SurfacesVariant} from '../../themes/surfaces';
 import LinearGradient from 'react-native-linear-gradient';
-import {StyleSheet} from 'react-native';
 
 function SurfaceBase(props) {
-  const {surfacesVariant, style} = props;
+  const {surfacesVariant, style, children, ...otherProps} = props;
   const {first, second, third} = Surfaces.light[surfacesVariant];
   const boxStyle = [style];
 
@@ -14,14 +13,18 @@ function SurfaceBase(props) {
       angle={45}
       angleCenter={{x: 0.5, y: 0.5}}
       style={boxStyle}
-    />
+      {...otherProps}>
+      {children}
+    </LinearGradient>
   );
 }
 
 function Surface1(props) {
-  const {style} = props;
+  const {style, children} = props;
   return (
-    <SurfaceBase surfacesVariant={SurfacesVariant.surface1} style={style} />
+    <SurfaceBase surfacesVariant={SurfacesVariant.surface1} style={style}>
+      {children}
+    </SurfaceBase>
   );
 }
 

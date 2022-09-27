@@ -1,4 +1,4 @@
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {
   Surface1,
   Surface2,
@@ -7,14 +7,19 @@ import {
   Surface5,
 } from './SurfacesColor';
 
-function Elevation1() {
+function TextArea() {
+  return (
+    <Elevation1>
+      <Text>Wrap me pls</Text>
+    </Elevation1>
+  );
+}
+
+function Elevation1(props) {
+  const {children} = props;
   const elevationStyle = [styles.boxStyle, styles.elevation1];
   const styleWhat = [styles.frame];
-  return (
-    <View style={styleWhat}>
-      <Surface1 style={elevationStyle} />
-    </View>
-  );
+  return <Surface1 style={elevationStyle}>{children}</Surface1>;
 }
 
 function Elevation2() {
@@ -40,11 +45,6 @@ function Elevation5() {
   return <Surface5 style={elevationStyle} />;
 }
 
-function Elevation51() {
-  const elevationStyle = [styles.elevation51, styles.boxStyle];
-  return <View style={elevationStyle} />;
-}
-
 const white80 = 'rgba(0, 0, 0, 0.8)';
 const white60 = 'rgba(0, 0, 0, 0.6)';
 const white30 = 'rgba(0, 0, 0, 0.3)';
@@ -53,18 +53,16 @@ const white07 = 'rgba(0, 0, 0, 0.07)';
 
 const styles = StyleSheet.create({
   frame: {
-    // borderRadius: 20,
-    // backgroundColor: 'yellow',
-    // width: 100,
-    // height: 100,
+    backgroundColor: 'yellow',
+    margin: 10,
+    width: 100,
+    height: 100,
   },
   boxStyle: {
     width: 100,
     height: 100,
-    borderRadius: 10,
     margin: 10,
-    shadowColor: 'coral',
-
+    shadowColor: white15,
     // shadowColor: white15,
   },
   elevation1: {
@@ -81,20 +79,14 @@ const styles = StyleSheet.create({
   },
   elevation5: {
     elevation: 5,
+    // borderWidth: 1,
   },
   elevation51: {
-    elevation: 8,
-    backgroundColor: 'coral',
-    borderRadius: 20,
+    elevation: 5,
+    backgroundColor: 'rgba(255, 127, 80, 0.2)',
+    borderRadius: 40,
     // backgroundColor: Surface5,
   },
 });
 
-export {
-  Elevation1,
-  Elevation2,
-  Elevation3,
-  Elevation4,
-  Elevation5,
-  Elevation51,
-};
+export {Elevation1, Elevation2, Elevation3, Elevation4, Elevation5, TextArea};
