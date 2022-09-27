@@ -1,4 +1,4 @@
-import {FilledButton, UnfilledButtons} from '../buttons';
+import {FilledButton, OutlinedButton} from '../buttons';
 import {StyleSheet, View} from 'react-native';
 import {ColorVariant} from '../../themes/color';
 import React from 'react';
@@ -34,7 +34,7 @@ export default function EndGameCard(props) {
           content={'Bộ khác'}
           message={'Chuyển qua giao diện album bài'}
         />
-        <UnfilledButtons
+        <OutlinedButton
           colorVariant={ColorVariant.primary}
           colorOutline={ColorVariant.outline}
           colorSurface={ColorVariant.surface}

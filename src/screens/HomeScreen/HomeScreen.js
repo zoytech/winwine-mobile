@@ -1,13 +1,10 @@
 import React from 'react';
-import {Dimensions, SafeAreaView, StyleSheet} from 'react-native';
-import {SurfacesVariant} from '../../themes/surfaces';
-import SurfaceItem from '../../components/elevations/ElevationVariant';
+import {Dimensions, SafeAreaView, StyleSheet, View} from 'react-native';
+import {Surface1} from '../../components/elevations/SurfacesColor';
+import {Elevation1, Elevation5} from '../../components/elevations/Elevation';
 
 export default function HomeScreen(props) {
-  const screenStyle = [
-    styles.container,
-    {backgroundColor: 'rgba(52, 52, 52, 0.2)'},
-  ];
+  const screenStyle = [styles.container, {backgroundColor: 'white'}];
   // const labelSelectionStyle = [styles.labelSelection]
   // const title1Style = [styles.title1]
   // const stackCardsRowStyle = [styles.stackCardsRow]
@@ -25,7 +22,10 @@ export default function HomeScreen(props) {
       {/*</View>*/}
       {/*<ScrollView style={stackCardsColumnStyle}>*/}
       {/*</ScrollView>*/}
-      <SurfaceItem surfaceVariant={SurfacesVariant.surface5} />
+      {/*<Surface1 />*/}
+      <Elevation1 />
+      <Elevation5 />
+      {/*<View style={styles.square} />*/}
     </SafeAreaView>
   );
 }
@@ -38,7 +38,13 @@ const styles = StyleSheet.create({
   square: {
     width: 200,
     height: 200,
-    margin: 30, // shadowColor: '#000',
+    margin: 30,
+    // backgroundColor: '#845400',
+    backgroundColor: 'rgba(132, 84, 0, 0.5)',
+    shadowColor: 'rgba(0, 0, 0, 0.15)',
+    elevation: 1,
+
+    // shadowColor: '#000',
     // shadowOffset: {width: 0, height: 2},
     // shadowOpacity: 0.5,
     // shadowRadius: 2,

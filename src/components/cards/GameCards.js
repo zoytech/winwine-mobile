@@ -1,4 +1,4 @@
-import {FilledButton, UnfilledButtons} from '../buttons';
+import {FilledButton, OutlinedButton} from '../buttons';
 import {View} from 'react-native';
 import React from 'react';
 import {GameScript} from '../content';
@@ -25,10 +25,8 @@ export default function GameCardItem(props) {
 
       <View style={buttonLayoutStyle}>
         <FilledButton content={'Kế tiếp'} message={'Chuyen qua la tiep theo'} />
-        <UnfilledButtons content={'Lá trước'} message={'Xem lại lá trước'} />
+        <OutlinedButton content={'Lá trước'} message={'Xem lại lá trước'} />
       </View>
     </View>
   );
 }
-
-

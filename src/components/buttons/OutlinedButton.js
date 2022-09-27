@@ -3,7 +3,7 @@ import {ColorVariant} from '../../themes/color';
 import React from 'react';
 import ButtonItem from './buttonItem/ButtonItem';
 
-export default function UnfilledButtons(props) {
+export default function OutlinedButton(props) {
   const {
     content,
     message,
@@ -43,5 +43,4 @@ export default function UnfilledButtons(props) {
   );
 }
 
-const Contentt = "Play now"
-
+const Contentt = 'Play now';

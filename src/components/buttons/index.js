@@ -1,5 +1,5 @@
 import FilledButton from './FilledButtons';
 import SmallButtons from './SmallButtons';
-import UnfilledButtons from './UnfilledButtons';
+import OutlinedButton from './OutlinedButton';
 
-export {FilledButton, SmallButtons, UnfilledButtons};
+export {FilledButton, SmallButtons, OutlinedButton};
