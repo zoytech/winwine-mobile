@@ -1,7 +1,14 @@
 import React from 'react';
 import {Dimensions, SafeAreaView, StyleSheet, View} from 'react-native';
 import {Surface1} from '../../components/elevations/SurfacesColor';
-import {Elevation1, Elevation5} from '../../components/elevations/Elevation';
+import {
+  Elevation1,
+  Elevation2,
+  Elevation3,
+  Elevation4,
+  Elevation5,
+  Elevation51,
+} from '../../components/elevations/Elevation';
 
 export default function HomeScreen(props) {
   const screenStyle = [styles.container, {backgroundColor: 'white'}];
@@ -24,7 +31,11 @@ export default function HomeScreen(props) {
       {/*</ScrollView>*/}
       {/*<Surface1 />*/}
       <Elevation1 />
+      <Elevation2 />
+      <Elevation3 />
+      <Elevation4 />
       <Elevation5 />
+      <Elevation51 />
       {/*<View style={styles.square} />*/}
     </SafeAreaView>
   );

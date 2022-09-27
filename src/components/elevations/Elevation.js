@@ -19,6 +19,8 @@ function Elevation1() {
 
 function Elevation2() {
   const elevationStyle = [styles.elevation2, styles.boxStyle];
+  // return <Surface2 style={elevationStyle} />;
+
   return <Surface2 style={elevationStyle} />;
 }
 
@@ -35,11 +37,12 @@ function Elevation4() {
 function Elevation5() {
   const elevationStyle = [styles.elevation5, styles.boxStyle];
   const styleWhat = [styles.frame];
-  return (
-    <View style={styleWhat}>
-      <Surface5 style={elevationStyle} />
-    </View>
-  );
+  return <Surface5 style={elevationStyle} />;
+}
+
+function Elevation51() {
+  const elevationStyle = [styles.elevation51, styles.boxStyle];
+  return <View style={elevationStyle} />;
 }
 
 const white80 = 'rgba(0, 0, 0, 0.8)';
@@ -50,16 +53,19 @@ const white07 = 'rgba(0, 0, 0, 0.07)';
 
 const styles = StyleSheet.create({
   frame: {
-    borderRadius: 20,
-    backgroundColor: 'yellow',
-    width: 100,
-    height: 100,
+    // borderRadius: 20,
+    // backgroundColor: 'yellow',
+    // width: 100,
+    // height: 100,
   },
   boxStyle: {
     width: 100,
     height: 100,
-    borderRadius: 5,
+    borderRadius: 10,
     margin: 10,
+    shadowColor: 'coral',
+
+    // shadowColor: white15,
   },
   elevation1: {
     elevation: 1,
@@ -76,6 +82,19 @@ const styles = StyleSheet.create({
   elevation5: {
     elevation: 5,
   },
+  elevation51: {
+    elevation: 8,
+    backgroundColor: 'coral',
+    borderRadius: 20,
+    // backgroundColor: Surface5,
+  },
 });
 
-export {Elevation1, Elevation2, Elevation3, Elevation4, Elevation5};
+export {
+  Elevation1,
+  Elevation2,
+  Elevation3,
+  Elevation4,
+  Elevation5,
+  Elevation51,
+};
