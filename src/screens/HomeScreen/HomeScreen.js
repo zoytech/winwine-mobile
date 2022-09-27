@@ -1,13 +1,13 @@
 import React from 'react';
 import {Dimensions, SafeAreaView, StyleSheet} from 'react-native';
-import {EndGameCard} from '../../components';
+import {SurfacesVariant} from '../../themes/surfaces';
+import SurfaceItem from '../../components/elevations/ElevationVariant';
 
-import {ColorVariant} from '../../themes/color';
-import {Color} from '../../themes';
-
-export default function HomeScreen() {
-  const {base} = Color.light[ColorVariant.surface];
-  const screenStyle = [styles.container, {backgroundColor: base}];
+export default function HomeScreen(props) {
+  const screenStyle = [
+    styles.container,
+    {backgroundColor: 'rgba(52, 52, 52, 0.2)'},
+  ];
   // const labelSelectionStyle = [styles.labelSelection]
   // const title1Style = [styles.title1]
   // const stackCardsRowStyle = [styles.stackCardsRow]
@@ -25,7 +25,7 @@ export default function HomeScreen() {
       {/*</View>*/}
       {/*<ScrollView style={stackCardsColumnStyle}>*/}
       {/*</ScrollView>*/}
-      <EndGameCard />
+      <SurfaceItem surfaceVariant={SurfacesVariant.surface5} />
     </SafeAreaView>
   );
 }
@@ -35,6 +35,15 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
   },
+  square: {
+    width: 200,
+    height: 200,
+    margin: 30, // shadowColor: '#000',
+    // shadowOffset: {width: 0, height: 2},
+    // shadowOpacity: 0.5,
+    // shadowRadius: 2,
+  },
+
   // screenView: {
   //     display: 'flex',
   //     flex: 1
