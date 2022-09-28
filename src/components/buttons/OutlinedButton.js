@@ -1,45 +1,40 @@
-import {Color, Typography} from '../../themes';
-import {ColorVariant} from '../../themes/color';
 import React from 'react';
-import ButtonItem from './buttonItem/ButtonItem';
+import {ColorVariant} from 'src/themes/color';
+import {Color} from 'src/themes';
+import {Typography} from '../../themes';
+import {Pressable} from 'react-native';
+import {TextContent} from '../content';
+import buttonStyle from './buttonStyle';
 
 export default function OutlinedButton(props) {
   const {
     content,
-    message,
-    colorText = ColorVariant.primary,
+    onPress = () => {},
+    colorPrimary = ColorVariant.primary,
     colorOutline = ColorVariant.outline,
-    colorSurface = ColorVariant.surface,
-    typography = Typography.label.large,
-    children,
+    typographyVariant = Typography.label.large,
+    contentStyle,
     style,
     ...otherProps
   } = props;
 
-  const {base: baseText} = Color.light[colorText];
-  const {base: baseOutline} = Color.light[colorOutline];
-  const {base: baseBackground} = Color.light[colorSurface];
-
-  const containerStyle = [
+  const {onBase, base} = Color.light[colorPrimary];
+  const {base: border} = Color.light[colorOutline];
+  const bodyButton = [
     {
-      borderColor: baseOutline,
+      backgroundColor: onBase,
+      borderColor: border,
       borderWidth: 1,
-      backgroundColor: baseBackground,
     },
+    buttonStyle.shape,
     style,
   ];
+  const labelStyle = [typographyVariant, {color: base}, contentStyle];
 
-  const textStyle = [{color: baseText}, typography, style];
   return (
-    <ButtonItem
-      {...otherProps}
-      style={{
-        button: containerStyle,
-        text: textStyle,
-      }}
-      content={content}
-      message={message}
-    />
+    <Pressable {...otherProps} style={bodyButton} onPress={onPress}>
+      {content && <TextContent content={content} contentStyle={labelStyle} />}
+    </Pressable>
   );
 }
 

@@ -3,7 +3,7 @@ import {StyleSheet, View} from 'react-native';
 import {ColorVariant} from '../../themes/color';
 import React from 'react';
 import {Color} from '../../themes';
-import {GameScript} from '../content';
+import {ParagraphContent} from '../content';
 import useCardStyle from './cardStyles';
 
 export default function ReviewCards(props) {
@@ -32,7 +32,7 @@ export default function ReviewCards(props) {
   return (
     <View {...otherProps} style={containerStyle}>
       <View style={mainContentStyle}>
-        <GameScript />
+        <ParagraphContent />
       </View>
 
       <View style={buttonLayoutStyle}>
@@ -58,4 +58,3 @@ const styles = StyleSheet.create({
     height: 386,
   },
 });
-

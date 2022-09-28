@@ -1,59 +1,33 @@
-import TextContent, {TextContentVariant} from '../../content/textStyle';
-import {ColorVariant} from '../../../themes/color';
+// import {ColorVariant} from '../../../themes/color';
 
-const textContentVariant = TextContentVariant.short;
-const {base, onBase} = TextContent[textContentVariant];
-const ButtonVariant = {
-  big: 'big',
-  small: 'small',
-};
+// const buttonStyles = [size, color, shape, microcopy, placement];
 
-const ButtonStyle = {
-  [ButtonVariant.big]: {
-    shape: {
-      minWidth: 110,
-      minHeight: 40,
-      paddingVertical: 5,
-      paddingHorizontal: 5,
-      borderRadius: 20,
-
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    textArea: {
-      ...base,
-      alignSelf: 'center',
-    },
-    text: {
-      ...onBase,
-      textTransform: 'uppercase',
-    },
-  },
-  [ButtonVariant.small]: {
-    shape: {
-      borderRadius: 20,
-      paddingVertical: 4,
-      paddingHorizontal: 10,
-
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-
-      minWidth: 80,
-      minHeight: 30,
-    },
-    textArea: {
-      ...base,
-      alignSelf: 'center',
-    },
-    text: {
-      ...onBase,
-      textTransform: 'uppercase',
-    },
+const buttonStyle = {
+  shape: {
+    minWidth: 70,
+    minHeight: 25,
+    paddingVertical: 10,
+    paddingHorizontal: 24,
+    borderRadius: 100,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 };
-const colorPrimary = ColorVariant.primary;
+export default buttonStyle;
+
+// const size = {
+//     big: {
+//         minWidth: 110,
+//         minHeight: 40,
+//     },
+//     small: {
+//         minWidth: 80,
+//         minHeight: 30,
+//     }
+// }
+
+// const colorPrimary = ColorVariant.primary;
 
 // const ButtonVariant = {
 //     text: 'text',
@@ -147,5 +121,3 @@ const colorPrimary = ColorVariant.primary;
 //     }
 //
 // }
-export default ButtonStyle;
-export {ButtonVariant};

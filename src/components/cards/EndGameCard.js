@@ -5,7 +5,7 @@ import React from 'react';
 import {Color, Typography} from '../../themes';
 import {ImageContent} from '../content';
 import useCardStyle from './cardStyles';
-import TextItem from '../content/TextItem';
+import TextContent from '../content/TextContent';
 
 export default function EndGameCard(props) {
   const cardStyle = useCardStyle.previewLarge;
@@ -25,7 +25,7 @@ export default function EndGameCard(props) {
     <View {...otherProps} style={containerStyle}>
       <ImageContent containerStyle={imageAreaStyle} />
       <View style={contentStyle}>
-        <TextItem content={'Bạn đã chơi hết bài'} />
+        <TextContent content={'Bạn đã chơi hết bài'} />
       </View>
 
       <View style={buttonStyle}>
@@ -34,13 +34,13 @@ export default function EndGameCard(props) {
           content={'Bộ khác'}
           message={'Chuyển qua giao diện album bài'}
         />
-        <OutlinedButton
-          colorVariant={ColorVariant.primary}
-          colorOutline={ColorVariant.outline}
-          colorSurface={ColorVariant.surface}
-          content={'Chơi lại'}
-          message={'Trở lại bộ bài vừa chơi'}
-        />
+        {/*<OutlinedButton*/}
+        {/*  colorVariant={ColorVariant.primary}*/}
+        {/*  colorOutline={ColorVariant.outline}*/}
+        {/*  colorSurface={ColorVariant.surface}*/}
+        {/*  content={'Chơi lại'}*/}
+        {/*  message={'Trở lại bộ bài vừa chơi'}*/}
+        {/*/>*/}
       </View>
     </View>
   );

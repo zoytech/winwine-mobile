@@ -1,12 +1,13 @@
 import {FilledButton, OutlinedButton} from '../buttons';
 import {View} from 'react-native';
 import React from 'react';
-import {GameScript} from '../content';
+import {ParagraphContent} from '../content';
 import useCardStyle from './cardStyles';
 import {Color} from '../../themes';
 import {ColorVariant} from '../../themes/color';
+import TextButton from '../buttons/TextButton';
 
-export default function GameCardItem(props) {
+export default function GameCards(props) {
   const cardStyle = useCardStyle.gameCard;
   const {colorSurfaceVariant = ColorVariant.surfaceVariant, ...otherProps} =
     props;
@@ -16,16 +17,21 @@ export default function GameCardItem(props) {
   const containerStyle = [{backgroundColor: cardBase}, container];
   const mainContentStyle = [content];
   const buttonLayoutStyle = [button];
+  const handlePressFilledButton = () => {
+    alert('move to new card');
+  };
+  const handlePressOutlinedButton = () => {
+    alert('move to previous card');
+  };
 
   return (
     <View {...otherProps} style={containerStyle}>
       <View style={mainContentStyle}>
-        <GameScript />
+        <ParagraphContent />
       </View>
-
       <View style={buttonLayoutStyle}>
-        <FilledButton content={'Kế tiếp'} message={'Chuyen qua la tiep theo'} />
-        <OutlinedButton content={'Lá trước'} message={'Xem lại lá trước'} />
+        <FilledButton content={'Lá khác'} onPress={handlePressFilledButton} />
+        <TextButton content={'Lá trước'} onPress={handlePressOutlinedButton} />
       </View>
     </View>
   );

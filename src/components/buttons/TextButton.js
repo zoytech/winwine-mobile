@@ -6,10 +6,10 @@ import {Pressable} from 'react-native';
 import {TextContent} from '../content';
 import buttonStyle from './buttonStyle';
 
-export default function FilledButton(props) {
+export default function TextButton(props) {
   const {
     content,
-    onPress = () => {},
+    onPress,
     colorVariant = ColorVariant.primary,
     typographyVariant = Typography.label.large,
     contentStyle,
@@ -18,8 +18,8 @@ export default function FilledButton(props) {
   } = props;
 
   const {onBase, base} = Color.light[colorVariant];
-  const bodyButton = [{backgroundColor: base}, buttonStyle.shape, style];
-  const labelStyle = [typographyVariant, {color: onBase}, contentStyle];
+  const bodyButton = [{backgroundColor: onBase}, buttonStyle.shape, style];
+  const labelStyle = [typographyVariant, {color: base}, contentStyle];
 
   return (
     <Pressable {...otherProps} style={bodyButton} onPress={onPress}>

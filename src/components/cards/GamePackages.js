@@ -1,16 +1,17 @@
-import {SmallButtons} from '../buttons';
+import {FilledButton} from '../buttons';
 import {StyleSheet, View} from 'react-native';
 import {ColorVariant} from '../../themes/color';
 import React from 'react';
-import {Color} from '../../themes';
+import {Color, Typography} from '../../themes';
 import {ImageContent} from '../content';
 import {PreviewInfo} from '../headers';
 
 export default function GamePackages(props) {
   const {
     colorSurfaceVariant = ColorVariant.surfaceVariant,
-    colorPrimaryVariant = ColorVariant.primary,
-    colorOutlineVariant = ColorVariant.outline,
+    typography = Typography.label.small,
+    // colorPrimaryVariant = ColorVariant.primary,
+    // colorOutlineVariant = ColorVariant.outline,
 
     ...otherProps
   } = props;
@@ -21,16 +22,21 @@ export default function GamePackages(props) {
   const headerStyle = [styles.displayHeader];
   const buttonStyle = [styles.displayButton];
   const imageStyle = [styles.image];
+  const textStyle = [typography];
+
+  const handlePressButton = () => {
+    alert('Move to card package');
+  };
 
   return (
     <View {...otherProps} style={containerStyle}>
       <ImageContent containerStyle={contentStyle} imageStyle={imageStyle} />
       <PreviewInfo style={headerStyle} />
       <View style={buttonStyle}>
-        <SmallButtons
-          colorVariant={ColorVariant.primary}
-          content={'Play'}
-          message={'Chuyển qua lá tiếp theo'}
+        <FilledButton
+          content={'Chơi ngay'}
+          onPress={handlePressButton}
+          contentStyle={textStyle}
         />
       </View>
     </View>
@@ -52,13 +58,11 @@ const styles = StyleSheet.create({
     flex: 6,
   },
   displayHeader: {
-    flex: 2,
-    // backgroundColor: 'coral',
+    flex: 2, // backgroundColor: 'coral',
   },
 
   displayButton: {
-    flex: 2,
-    // padding: 5,
+    flex: 2, // padding: 5,
     paddingBottom: 5,
     paddingHorizontal: 5,
 
@@ -66,13 +70,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  // image: {
+  }, // image: {
   //     resizeMode: 'contain',
   //
   // }
 });
 
 //ratio: height/width of preview card = 1.34
-
-
