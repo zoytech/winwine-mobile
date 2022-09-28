@@ -1,4 +1,4 @@
-import {FilledButton, OutlinedButton} from '../buttons';
+import {FilledButton} from '../buttons';
 import {View} from 'react-native';
 import React from 'react';
 import {ParagraphContent} from '../content';
@@ -23,11 +23,13 @@ export default function GameCards(props) {
   const handlePressOutlinedButton = () => {
     alert('move to previous card');
   };
+  const questionDemo =
+    'Để có được 10 đồng tiền vàng, một ông lão đã phải nhảy xuống biển nhặt nó. Vậy hỏi đồng tiền vàng đó nặng bao nhiêu?';
 
   return (
     <View {...otherProps} style={containerStyle}>
       <View style={mainContentStyle}>
-        <ParagraphContent />
+        <ParagraphContent content={questionDemo} />
       </View>
       <View style={buttonLayoutStyle}>
         <FilledButton content={'Lá khác'} onPress={handlePressFilledButton} />

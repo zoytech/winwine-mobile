@@ -1,20 +1,18 @@
 const textTypeStyle = {
-  text: {
+  label: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'coral',
     fontWeight: 'bold',
+    letterSpacing: 0.5,
   },
   paragraph: {
     display: 'flex',
-    marginHorizontal: 27,
-    backgroundColor: 'coral',
     fontWeight: 'normal',
     textAlign: 'center',
     textAlignVertical: 'center',
     lineHeight: 30,
-    letterSpacing: 0.25,
+    letterSpacing: 0.5,
   },
 };
 export default textTypeStyle;

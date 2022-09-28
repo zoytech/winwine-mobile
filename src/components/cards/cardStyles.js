@@ -27,8 +27,7 @@ const useCardStyle = {
     content: {
       flex: 5,
       justifyContent: 'center',
-      backgroundColor: 'cyan',
-      paddingHorizontal: 20,
+      paddingHorizontal: 47,
     },
 
     button: {
@@ -65,8 +64,7 @@ const useCardStyle = {
     content: {
       flex: 5,
       justifyContent: 'center',
-      backgroundColor: 'cyan',
-      paddingHorizontal: 20,
+      paddingHorizontal: 47,
     },
 
     button: {

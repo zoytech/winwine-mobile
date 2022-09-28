@@ -1,19 +1,17 @@
 import {ColorVariant} from '../../themes/color';
 import React from 'react';
 import {Color, Typography} from '../../themes';
-import {Text, View} from 'react-native';
+import {Text} from 'react-native';
 import textTypeStyle from './textTypeStyle';
 
 export default function ParagraphContent(props) {
   const {
+    content,
     colorVariant = ColorVariant.primary,
-    typographyVariant = Typography.title.medium,
-    style,
+    typographyVariant = Typography.body.large,
     contentStyle,
-    children,
     ...otherProps
   } = props;
-  const content = Content;
   const {onContainer} = Color.light[colorVariant];
   const textStyle = [
     typographyVariant,
@@ -23,16 +21,8 @@ export default function ParagraphContent(props) {
   ];
 
   return (
-    <View {...otherProps}>
-      {content && <Text style={textStyle}>{content}</Text>}
-    </View>
+    <Text style={textStyle} {...otherProps}>
+      {content ? content : 'require paragraph here ...'}
+    </Text>
   );
 }
-
-const Content =
-  'Bạn đã bao giờ yêu cùng lúc hai người chưa? Lúc đó câu chuyện diễn tiến thế nào? a a/n' +
-  'aff a ffkfaaf' +
-  'kalfkl laklf ' +
-  'afkaj aj' +
-  'afjk ' +
-  'ajfkjk jafjljl';

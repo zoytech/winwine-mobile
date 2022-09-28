@@ -1,14 +1,15 @@
-import {Text, View} from 'react-native';
+import {Text} from 'react-native';
 import textTypeStyle from './textTypeStyle';
+import React from 'react';
 
 export default function TextContent(props) {
   const {content, contentStyle, ...otherProps} = props;
-  const textStyle = [textTypeStyle.text, contentStyle];
+  const textStyle = [textTypeStyle.label, contentStyle];
   // const text = [onBase, contentStyle];
   return (
-    <View {...otherProps}>
-      {content && <Text style={textStyle}>{content}</Text>}
-    </View>
+    <Text style={textStyle} {...otherProps}>
+      {content ? content : 'require label text here ...'}
+    </Text>
   );
 }
 
