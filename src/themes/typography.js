@@ -12,29 +12,29 @@ const Typography = {
   },
   headline: {
     large: {
-      fontSize: 35,
+      fontSize: 32,
     },
     medium: {
-      fontSize: 30,
+      fontSize: 28,
     },
     small: {
-      fontSize: 25,
+      fontSize: 24,
     },
   },
   title: {
     large: {
-      fontSize: 24,
-    },
-    medium: {
       fontSize: 22,
     },
+    medium: {
+      fontSize: 16,
+    },
     small: {
-      fontSize: 20,
+      fontSize: 14,
     },
   },
   label: {
     large: {
-      fontSize: 20,
+      fontSize: 14,
     },
     medium: {
       fontSize: 12,
@@ -51,7 +51,7 @@ const Typography = {
       fontSize: 14,
     },
     small: {
-      fontSize: 10,
+      fontSize: 12,
     },
   },
 };
