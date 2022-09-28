@@ -1,4 +1,5 @@
-import GameScript from './GameScript';
+import ParagraphContent from './ParagraphContent';
 import ImageContent from './ImageContent';
+import TextContent from './TextContent';
 
-export {GameScript, ImageContent};
+export {ParagraphContent, ImageContent, TextContent};

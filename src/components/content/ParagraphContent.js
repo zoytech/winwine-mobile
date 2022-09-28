@@ -1,11 +1,10 @@
 import {ColorVariant} from '../../themes/color';
 import React from 'react';
 import {Color, Typography} from '../../themes';
-import TextContent, {TextContentVariant} from './textStyle';
-import TextItem from './TextItem';
+import {Text, View} from 'react-native';
+import textTypeStyle from './textTypeStyle';
 
-export default function GameScript(props) {
-  const textVariant = TextContentVariant.paragraph;
+export default function ParagraphContent(props) {
   const {
     colorVariant = ColorVariant.primary,
     typographyVariant = Typography.title.medium,
@@ -14,20 +13,19 @@ export default function GameScript(props) {
     children,
     ...otherProps
   } = props;
-  const {base, onBase} = TextContent[textVariant];
   const content = Content;
   const {onContainer} = Color.light[colorVariant];
-
-  const containerStyle = [base, style];
-  const textStyle = [typographyVariant, {color: onContainer}, onBase, style];
+  const textStyle = [
+    typographyVariant,
+    {color: onContainer},
+    textTypeStyle.paragraph,
+    contentStyle,
+  ];
 
   return (
-    <TextItem
-      {...otherProps}
-      containerStyle={containerStyle}
-      contentStyle={textStyle}
-      content={content}
-    />
+    <View {...otherProps}>
+      {content && <Text style={textStyle}>{content}</Text>}
+    </View>
   );
 }
 
@@ -38,5 +36,3 @@ const Content =
   'afkaj aj' +
   'afjk ' +
   'ajfkjk jafjljl';
-
-
