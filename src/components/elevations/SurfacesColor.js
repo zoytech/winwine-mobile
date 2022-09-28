@@ -29,30 +29,38 @@ function Surface1(props) {
 }
 
 function Surface2(props) {
-  const {style} = props;
+  const {style, children} = props;
   return (
-    <SurfaceBase surfacesVariant={SurfacesVariant.surface2} style={style} />
+    <SurfaceBase surfacesVariant={SurfacesVariant.surface2} style={style}>
+      {children}
+    </SurfaceBase>
   );
 }
 
 function Surface3(props) {
-  const {style} = props;
+  const {style, children} = props;
   return (
-    <SurfaceBase surfacesVariant={SurfacesVariant.surface3} style={style} />
+    <SurfaceBase surfacesVariant={SurfacesVariant.surface3} style={style}>
+      {children}
+    </SurfaceBase>
   );
 }
 
 function Surface4(props) {
-  const {style} = props;
+  const {style, children} = props;
   return (
-    <SurfaceBase surfacesVariant={SurfacesVariant.surface4} style={style} />
+    <SurfaceBase surfacesVariant={SurfacesVariant.surface4} style={style}>
+      {children}
+    </SurfaceBase>
   );
 }
 
 function Surface5(props) {
-  const {style} = props;
+  const {style, children} = props;
   return (
-    <SurfaceBase surfacesVariant={SurfacesVariant.surface5} style={style} />
+    <SurfaceBase surfacesVariant={SurfacesVariant.surface5} style={style}>
+      {children}
+    </SurfaceBase>
   );
 }
 
