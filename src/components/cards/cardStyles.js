@@ -1,84 +1,43 @@
-// const CardSizeVariant = {
-//     game: 'game',
-//     preview: 'preview',
-//     end: 'end',
-// };
-//
-
-const useCardStyle = {
-  gameCard: {
-    container: {
-      display: 'flex',
-      flexDirection: 'column',
-      alignSelf: 'center',
-
-      width: 274,
-      height: 450,
-      borderRadius: 12,
-      overflow: 'hidden',
-      borderWidth: 0.5,
-
-      //ratio: 1.64 width, height of card
+const gameCard = {
+  size: {
+    medium: {
+      width: 249,
+      height: 334,
     },
-    headline: {
-      flex: 3,
-    },
-
-    content: {
-      flex: 5,
-      justifyContent: 'center',
-      paddingHorizontal: 47,
-    },
-
-    button: {
-      flex: 1,
-
-      display: 'flex',
-      flexDirection: 'row-reverse',
-      justifyContent: 'space-around',
-      alignItems: 'center',
-
-      width: '100%',
-      padding: 0,
+    large: {
+      width: 249,
+      height: 408,
     },
   },
-  previewSmall: {},
-  previewLarge: {
-    container: {
-      display: 'flex',
-      flexDirection: 'column',
-      alignSelf: 'center',
+  base: {
+    margin: 10,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    overflow: 'hidden',
+    paddingHorizontal: 47,
+    borderRadius: 16,
+  },
+};
 
-      width: 266,
-      height: 254,
-      borderRadius: 12,
-      overflow: 'hidden',
-      borderWidth: 0.5,
+const previewSmall = {};
+const previewLarge = {
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignSelf: 'center',
 
-      //ratio: 1.64 width, height of card
-    },
-    headline: {
-      flex: 3,
-    },
-
+    width: 266,
+    height: 254,
+    borderRadius: 12,
+    overflow: 'hidden',
+    borderWidth: 0.5,
     content: {
       flex: 5,
       justifyContent: 'center',
       paddingHorizontal: 47,
-    },
-
-    button: {
-      flex: 1,
-
-      display: 'flex',
-      flexDirection: 'row-reverse',
-      justifyContent: 'space-around',
-      alignItems: 'center',
-
-      width: '100%',
-      padding: 0,
     },
   },
 };
 
-export default useCardStyle;
+export {gameCard, previewSmall, previewLarge};
