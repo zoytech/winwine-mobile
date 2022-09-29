@@ -2,12 +2,11 @@ import React from 'react';
 import {SafeAreaView, StyleSheet, View} from 'react-native';
 import {
   FilledButton,
-  GameCard,
   HeadlineBase,
   HeadlineInfo,
   MonoGram,
-  OutlinedButton,
   ReviewCard,
+  TextContent,
 } from '../../components';
 
 import {ColorVariant} from '../../themes/color';
@@ -15,10 +14,11 @@ import {Color, Typography} from '../../themes';
 import {gameCardLayout} from './layoutScreen';
 import {Header, SubHeader} from '../../components/headline/HeadlineInfo';
 
-export default function GameScreen(props) {
+export default function PreviewScreen(props) {
   const {
     typoHeader = Typography.title.large,
     typoSubHeader = Typography.label.large,
+    typoSupportingText = Typography.title.medium,
     typoBody = Typography.body.large,
     colorVariant = ColorVariant.surface,
   } = props;
@@ -26,19 +26,18 @@ export default function GameScreen(props) {
   const {
     container: containerStyle,
     headline: headlineStyle,
+    supportingText: supportingTextStyle,
     mainContent: mainContentStyle,
     action: actionStyle,
   } = gameCardLayout;
   const screenStyle = [{backgroundColor: base}, containerStyle];
   const bodyTextStyle = [typoBody, styles.content];
-  const {id, title, currentCard, totalCards, avatar} = cardInfo;
+  const {id, title, tag, totalCards, avatar} = cardInfo;
 
   const handlePressFilledButton = () => {
-    alert('move to new card');
+    alert('move to game screen');
   };
-  const handlePressOutlinedButton = () => {
-    alert('move to previous card');
-  };
+
   return (
     <SafeAreaView style={screenStyle}>
       <HeadlineBase style={headlineStyle}>
@@ -46,23 +45,23 @@ export default function GameScreen(props) {
         <HeadlineInfo>
           <Header content={title} contentStyle={typoHeader} />
           <SubHeader
-            contentLeft={`Lá thứ ${currentCard}/${totalCards}`}
+            contentLeft={tag}
+            contentRight={`Tổng số ${totalCards} lá`}
             contentStyle={typoSubHeader}
           />
         </HeadlineInfo>
       </HeadlineBase>
+      <View style={supportingTextStyle}>
+        <TextContent
+          content={'Xem trước 10 lá bài'}
+          contentStyle={typoSupportingText}
+        />
+      </View>
       <View style={mainContentStyle}>
-        <GameCard contentStyle={bodyTextStyle} />
+        <ReviewCard contentStyle={bodyTextStyle} />
       </View>
       <View style={actionStyle}>
-        <OutlinedButton
-          content={'Lá trước'}
-          onPress={handlePressOutlinedButton}
-        />
-        <FilledButton
-          content={'Lá kế tiếp'}
-          onPress={handlePressFilledButton}
-        />
+        <FilledButton content={'Chơi ngay'} onPress={handlePressFilledButton} />
       </View>
     </SafeAreaView>
   );
@@ -75,6 +74,7 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center',
   },
 });
+
 const cardInfo = {
   id: '123',
   title: 'Bai cua Nam',
