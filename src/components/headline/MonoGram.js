@@ -1,29 +1,38 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
+import {TextContent} from '../content';
 import {Color, Typography} from '../../themes';
 import {ColorVariant} from '../../themes/color';
 
-export default function AvatarDefault(props) {
+function MonoGram(props) {
   const {
+    initial,
     typography = Typography.title.medium,
     colorVariant = ColorVariant.primary,
-    children,
-    content,
-    ...otherComponent
   } = props;
 
   const {base, onBase} = Color.light[colorVariant];
-  const containerStyle = [styles.container, {backgroundColor: base}];
+  const containerStyle = [styles.shape, {backgroundColor: base}];
   const textStyle = [styles.text, {color: onBase}, typography];
   return (
-    <View {...otherComponent} style={containerStyle}>
-      {content && <Text style={textStyle}>{content}</Text>}
-      {children}
+    <View style={styles.container}>
+      <View style={containerStyle}>
+        {initial ? (
+          <TextContent content={initial} contentStyle={textStyle} />
+        ) : (
+          <TextContent content={'?'} contentStyle={textStyle} />
+        )}
+      </View>
     </View>
   );
 }
 
+export default MonoGram;
+
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+  },
+  shape: {
     width: 44,
     height: 44,
     borderRadius: 44 / 2,
