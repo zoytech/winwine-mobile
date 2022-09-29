@@ -16,9 +16,6 @@ const Surfaces = {
       first: 'rgba(132, 84, 0, 0.05)',
       second: 'rgba(132, 84, 0, 0.05)',
       third: '#FFFBFF',
-      // first: '#8454000d',
-      // second: '#8454000d',
-      // third: '#FFFBFF',
     },
     [SurfacesVariant.surface2]: {
       first: 'rgba(132, 84, 0, 0.08)',

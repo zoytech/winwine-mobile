@@ -10,7 +10,6 @@ export default function ParagraphContent(props) {
     colorVariant = ColorVariant.primary,
     typographyVariant = Typography.body.large,
     contentStyle,
-    ...otherProps
   } = props;
   const {onContainer} = Color.light[colorVariant];
   const textStyle = [
@@ -21,7 +20,7 @@ export default function ParagraphContent(props) {
   ];
 
   return (
-    <Text style={textStyle} {...otherProps}>
+    <Text style={textStyle}>
       {content ? content : 'require paragraph here ...'}
     </Text>
   );
