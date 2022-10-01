@@ -4,17 +4,32 @@
 
 const buttonStyle = {
   shape: {
-    minWidth: 70,
-    minHeight: 25,
-    paddingVertical: 10,
-    paddingHorizontal: 24,
+    // paddingVertical: 10,
+    // paddingHorizontal: 24,
+    minWidth: 100,
+    minHeight: 30,
     borderRadius: 100,
-    display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
   },
+  // large: {
+  //   width: 70,
+  //   height: 25,
+  // },
+  // small: {
+  //   width: 70,
+  //   height: 25,
+  // },
 };
 export default buttonStyle;
+
+//   size: {
+//     large: {},
+//   },
+//   small: {
+//     width: 70,
+//     height: 25,
+//   },
 
 // const size = {
 //     big: {
