@@ -1,7 +1,7 @@
 import React from 'react';
 import {ParagraphContent} from '../../../content';
 import {Elevation3} from '../../../elevations/Elevation';
-import {ColorVariant} from '../../../../themes/color';
+import {ColorVariant} from 'src/themes';
 import {Color} from '../../../../themes';
 import gameCardStyle from './gameCardStyle';
 

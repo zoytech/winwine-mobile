@@ -1,3 +1,4 @@
+//TODO: remove this definition
 const textTypeStyle = {
   label: {
     fontWeight: 'bold',

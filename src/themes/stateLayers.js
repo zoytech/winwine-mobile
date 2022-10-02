@@ -1,15 +1,18 @@
 const StateLayers = {
-  hover: {
+  hovered: {
     opacity: 0.92,
   },
-  focus: {
+  focused: {
     opacity: 0.88,
   },
-  press: {
+  pressed: {
     opacity: 0.88,
   },
-  drag: {
+  dragged: {
     opacity: 0.84,
+  },
+  disabled: {
+    opacity: 0.38,
   },
 };
 

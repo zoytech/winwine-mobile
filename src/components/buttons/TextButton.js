@@ -3,7 +3,7 @@ import {ColorVariant} from 'src/themes/color';
 import {Color} from 'src/themes';
 import {Typography} from '../../themes';
 import {TextContent} from '../content';
-import buttonStyle from './buttonStyle';
+import DefaultButtonStyle from './defaultButtonStyle';
 import StateLayers from '../../themes/stateLayers';
 import {TouchableHighlight} from 'react-native';
 
@@ -20,17 +20,17 @@ export default function TextButton(props) {
   } = props;
 
   const {onBase, base} = Color.light[colorVariant];
-  const bodyButton = [buttonStyle.shape, style];
+  const bodyButton = [DefaultButtonStyle.shape, style];
   const labelStyle = [typographyVariant, {color: base}, contentStyle];
 
   const [isPress, setIsPress] = useState(false);
-  const {press} = stateLayers;
+  const {pressed} = stateLayers;
 
   const enabledButton = [{backgroundColor: onBase}, bodyButton];
-  const pressedButton = [press, enabledButton];
+  const pressedButton = [pressed, enabledButton];
 
   const touchProps = {
-    activeOpacity: press,
+    activeOpacity: pressed,
     underlayColor: onBase,
     style: isPress ? pressedButton : enabledButton,
     onHideUnderlay: () => setIsPress(false),

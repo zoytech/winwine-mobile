@@ -1,13 +1,6 @@
 import React from 'react';
 import {Dimensions, SafeAreaView, StyleSheet} from 'react-native';
 import GamePackageItem from '../../components/cards/cardVariant/GamePackageItem';
-import {OutlinedButton} from '../../components';
-import TextButton from '../../components/buttons/TextButton';
-import CardBase from '../../components/cards/cardVariant/CardBase';
-import EndGameCard from '../../components/cards/cardVariant/EndGameCard';
-import MainGameCard from '../../components/cards/cardVariant/MainGameCard';
-import ReviewGameCard from '../../components/cards/cardVariant/ReviewGameCard';
-import SuggestionChipBase from '../../components/chips/SuggestionChips';
 
 export default function HomeScreen() {
   const screenStyle = [styles.container];

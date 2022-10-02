@@ -2,6 +2,7 @@ import {Text} from 'react-native';
 import textTypeStyle from './textTypeStyle';
 import React from 'react';
 
+//TODO: remove text content
 export default function TextContent(props) {
   const {content, contentStyle} = props;
   const textStyle = [textTypeStyle.label, contentStyle];
@@ -12,5 +13,3 @@ export default function TextContent(props) {
     </Text>
   );
 }
-
-const contentttt = 'alalooa';
