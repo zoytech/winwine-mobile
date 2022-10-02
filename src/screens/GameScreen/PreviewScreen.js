@@ -5,14 +5,17 @@ import {
   HeadlineBase,
   HeadlineInfo,
   MonoGram,
-  ReviewCard,
+  MediumGameCard,
   TextContent,
 } from '../../components';
 
 import {ColorVariant} from '../../themes/color';
 import {Color, Typography} from '../../themes';
 import {gameCardLayout} from './layoutScreen';
-import {Header, SubHeader} from '../../components/headline/HeadlineInfo';
+import {
+  Header,
+  SubHeader,
+} from '../../components/cards/cardComponents/Headline';
 
 export default function PreviewScreen(props) {
   const {
@@ -58,7 +61,7 @@ export default function PreviewScreen(props) {
         />
       </View>
       <View style={mainContentStyle}>
-        <ReviewCard contentStyle={bodyTextStyle} />
+        <MediumGameCard contentStyle={bodyTextStyle} />
       </View>
       <View style={actionStyle}>
         <FilledButton content={'Chơi ngay'} onPress={handlePressFilledButton} />
