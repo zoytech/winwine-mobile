@@ -50,15 +50,8 @@ const Color = {
       onBase: '#4A4643',
     },
     [ColorVariant.outline]: {base: '#817568'},
-    [ColorVariant.stateLayer]: {
-      hover: 'rgba(255, 255, 255, 0.08)',
-      focus: 'rgba(255, 255, 255, 0.12)',
-      press: 'rgba(255, 255, 255, 0.12)',
-      drag: 'rgba(255, 255, 255, 0.16)',
-    },
   },
 };
-
 
 export {ColorVariant};
 export default Color;
