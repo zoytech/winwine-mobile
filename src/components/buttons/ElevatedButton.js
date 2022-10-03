@@ -17,6 +17,7 @@ export default function ElevatedButton(props) {
     stateLayers = StateLayers,
     contentStyle,
     style,
+    children,
     ...otherProps
   } = props;
 
@@ -43,6 +44,7 @@ export default function ElevatedButton(props) {
   return (
     <Elevation1 containerStyle={elevationStyle}>
       <TouchableHighlight {...otherProps} {...touchProps}>
+        {children}
         {content && <TextContent content={content} contentStyle={labelStyle} />}
       </TouchableHighlight>
     </Elevation1>

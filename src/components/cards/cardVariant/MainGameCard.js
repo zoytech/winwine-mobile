@@ -7,6 +7,8 @@ import {FilledButton, OutlinedButton} from '../../buttons';
 import {ColorVariant} from '../../../themes/color';
 import {LargeGameCard} from '../cardComponents/GameCardVariant';
 import {StyleSheet} from 'react-native';
+import TextButton from '../../buttons/TextButton';
+import ElevatedButton from '../../buttons/ElevatedButton';
 
 export default function MainGameCard(props) {
   const {
@@ -62,7 +64,7 @@ export default function MainGameCard(props) {
       </Header>
       <LargeGameCard style={styles.gameCard} contentStyle={typoDescription} />
       <Action style={actionStyles}>
-        <OutlinedButton
+        <ElevatedButton
           content={'Lá trước'}
           onPress={handlePressOutlinedButton}
         />
@@ -89,7 +91,6 @@ const styles = StyleSheet.create({
   },
   action: {
     flex: 2,
-    backgroundColor: 'red',
   },
 });
 

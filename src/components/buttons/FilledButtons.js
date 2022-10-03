@@ -1,93 +1,45 @@
-import React from 'react';
-import {Pressable, Text} from 'react-native';
-import {Color, ColorVariant, Typography, StateLayers} from 'src/themes';
-import DefaultButtonStyle from './defaultButtonStyle';
+import React, {useState} from 'react';
+import {ColorVariant} from 'src/themes/color';
+import {Color} from 'src/themes';
+import {Typography} from '../../themes';
+import {TouchableHighlight} from 'react-native';
+import {TextContent} from '../content';
+import buttonStyle from './buttonStyle';
+import StateLayers from '../../themes/stateLayers';
 
 export default function FilledButton(props) {
   const {
     content,
-    style,
-    contentStyle: rawContentStyle,
+    onPress = () => {},
     colorVariant = ColorVariant.primary,
+    stateLayers = StateLayers,
     typographyVariant = Typography.label.large,
-    disabled,
-    children,
+    contentStyle,
+    style,
     ...otherProps
   } = props;
+  const {onBase, base} = Color.light[colorVariant];
+  const [isPress, setIsPress] = useState(false);
+  const {press} = stateLayers;
+  const bodyButton = [buttonStyle.shape, style];
+  const labelStyle = [typographyVariant, {color: onBase}, contentStyle];
+  const enabledButton = [{backgroundColor: base}, bodyButton];
+  const pressedButton = [press, enabledButton];
 
-  function generateStateStyles(pressed, isDisabled) {
-    const defaultContainerStyle = DefaultButtonStyle.container;
-    const defaultContentStyle = typographyVariant;
-
-    if (isDisabled) {
-      const surFaceColor = Color.light[ColorVariant.surface]?.onBase;
-      return {
-        containerStyle: [
-          defaultContainerStyle,
-          {backgroundColor: surFaceColor},
-          StateLayers.pressed,
-          style,
-        ],
-        contentStyle: [
-          defaultContentStyle,
-          {color: surFaceColor},
-          StateLayers.disabled,
-          rawContentStyle,
-        ],
-      };
-    }
-
-    const {onBase: onBaseColor, base: baseColor} = Color.light[colorVariant];
-    if (pressed) {
-      return {
-        containerStyle: [
-          defaultContainerStyle,
-          {backgroundColor: baseColor},
-          StateLayers.pressed,
-          style,
-        ],
-        contentStyle: [
-          defaultContentStyle,
-          {color: onBaseColor},
-          StateLayers.pressed,
-          rawContentStyle,
-        ],
-      };
-    }
-    return {
-      containerStyle: [
-        defaultContainerStyle,
-        {backgroundColor: baseColor},
-        style,
-      ],
-      contentStyle: [
-        defaultContentStyle,
-        {color: onBaseColor},
-        rawContentStyle,
-      ],
-    };
-  }
-
-  function getContainerStyle({pressed}) {
-    return generateStateStyles(pressed, disabled)?.containerStyle;
-  }
-
-  function renderContent({pressed}) {
-    const contentStyle = generateStateStyles(pressed, disabled)?.contentStyle;
-    return (
-      <>
-        {children}
-        {content && (
-          //TODO: use typography for text
-          <Text style={contentStyle}>{content}</Text>
-        )}
-      </>
-    );
-  }
+  const touchProps = {
+    activeOpacity: press,
+    underlayColor: base,
+    style: isPress ? pressedButton : enabledButton,
+    onHideUnderlay: () => setIsPress(false),
+    onShowUnderlay: () => setIsPress(true),
+    onPress: onPress ? onPress : 'No action navigator',
+  };
 
   return (
-    <Pressable {...otherProps} style={getContainerStyle}>
-      {renderContent}
-    </Pressable>
+    <TouchableHighlight {...otherProps} {...touchProps}>
+      {content && <TextContent content={content} contentStyle={labelStyle} />}
+    </TouchableHighlight>
   );
 }
+
+const Contentt = 'Play now';

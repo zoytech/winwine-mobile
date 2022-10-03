@@ -16,6 +16,7 @@ export default function TextButton(props) {
     stateLayers = StateLayers,
     contentStyle,
     style,
+    children,
     ...otherProps
   } = props;
 
@@ -40,6 +41,7 @@ export default function TextButton(props) {
 
   return (
     <TouchableHighlight {...otherProps} {...touchProps}>
+      {children}
       {content && <TextContent content={content} contentStyle={labelStyle} />}
     </TouchableHighlight>
   );

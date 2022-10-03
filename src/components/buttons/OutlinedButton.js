@@ -17,6 +17,7 @@ export default function OutlinedButton(props) {
     typographyVariant = Typography.label.large,
     contentStyle,
     style,
+    children,
     ...otherProps
   } = props;
 
@@ -48,6 +49,7 @@ export default function OutlinedButton(props) {
 
   return (
     <TouchableHighlight {...otherProps} {...touchProps}>
+      {children}
       {content && <TextContent content={content} contentStyle={labelStyle} />}
     </TouchableHighlight>
   );
