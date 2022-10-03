@@ -25,7 +25,6 @@ function SubHeading(props) {
 function Content(props) {
   const {children, style} = props;
   const containerStyle = [styles.container, style];
-  console.log('inside content', children);
   return <View style={containerStyle}>{children}</View>;
 }
 
