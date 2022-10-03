@@ -13,7 +13,6 @@ const gameCardStyle = {
     display: 'flex',
     flexDirection: 'column',
     alignSelf: 'center',
-    margin: 10,
     justifyContent: 'center',
     overflow: 'hidden',
     borderRadius: 16,

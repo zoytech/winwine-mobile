@@ -1,38 +1,20 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet, View} from 'react-native';
-import {
-  FilledButton,
-  HeadlineBase,
-  HeadlineInfo,
-  LargeGameCard,
-  MonoGram,
-  OutlinedButton,
-} from '../../components';
-
-import {ColorVariant} from '../../themes/color';
-import {Color, Typography} from '../../themes';
-import {gameCardLayout} from './layoutScreen';
-import {
-  Header,
-  SubHeader,
-} from '../../components/cards/cardComponents/Headline';
+import {StyleSheet, View} from 'react-native';
+import ElevatedCard from '../../components/cards/ElevatedCard';
 
 export default function GameScreen(props) {
-  return <SafeAreaView style={screenStyle} />;
+  return (
+    <View style={styles.container}>
+      <ElevatedCard />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-  content: {
-    alignSelf: 'center',
-    textAlign: 'center',
-    textAlignVertical: 'center',
+  container: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'red',
   },
 });
-const cardInfo = {
-  id: '123',
-  title: 'Bai cua Nam',
-  tag: 'Thieu nhi',
-  totalCards: '30',
-  avatar: 'N',
-  currentCard: '28',
-};

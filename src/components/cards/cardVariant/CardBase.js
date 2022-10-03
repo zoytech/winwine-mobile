@@ -67,6 +67,7 @@ export default function CardBase(props) {
       </Header>
       <Media
         style={mediaStyle}
+        //TODO: refactor import image
         source={require('../../../assets/images/preview-package/member1.jpg')}
       />
       <Headline style={headlineStyle}>

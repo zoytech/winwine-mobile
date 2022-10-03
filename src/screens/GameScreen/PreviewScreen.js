@@ -16,6 +16,7 @@ import {
   Header,
   SubHeader,
 } from '../../components/cards/cardComponents/Headline';
+import PreviewCard from './components/PreviewCard';
 
 export default function PreviewScreen(props) {
   const {
@@ -40,6 +41,12 @@ export default function PreviewScreen(props) {
   const handlePressFilledButton = () => {
     alert('move to game screen');
   };
+
+  function renderItemPreviewCard(item) {
+    return (
+      <PreviewCard style={styles.previewCardItem} content={item?.content} />
+    );
+  }
 
   return (
     <SafeAreaView style={screenStyle}>
@@ -75,6 +82,10 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     textAlign: 'center',
     textAlignVertical: 'center',
+  },
+  previewCardItem: {
+    width: 100,
+    height: 300,
   },
 });
 
