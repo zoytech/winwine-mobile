@@ -1,6 +1,6 @@
 import React from 'react';
 import {Pressable, Text} from 'react-native';
-import {Color, ColorVariant, Typography, StateLayers} from 'src/themes';
+import {Color, ColorVariant, StateLayers, Typography} from 'src/themes';
 import DefaultButtonStyle from './defaultButtonStyle';
 
 export default function FilledButton(props) {
@@ -8,7 +8,8 @@ export default function FilledButton(props) {
     content,
     style,
     contentStyle: rawContentStyle,
-    colorVariant = ColorVariant.primary,
+    colorPrimary = ColorVariant.primary,
+    colorSurface = ColorVariant.surface,
     typographyVariant = Typography.label.large,
     disabled,
     children,
@@ -20,24 +21,24 @@ export default function FilledButton(props) {
     const defaultContentStyle = typographyVariant;
 
     if (isDisabled) {
-      const surFaceColor = Color.light[ColorVariant.surface]?.onBase;
+      const surfaceColor = Color.light[colorSurface]?.onBase;
       return {
         containerStyle: [
           defaultContainerStyle,
-          {backgroundColor: surFaceColor},
+          {backgroundColor: surfaceColor},
           StateLayers.pressed,
           style,
         ],
         contentStyle: [
           defaultContentStyle,
-          {color: surFaceColor},
+          {color: surfaceColor},
           StateLayers.disabled,
           rawContentStyle,
         ],
       };
     }
 
-    const {onBase: onBaseColor, base: baseColor} = Color.light[colorVariant];
+    const {onBase: onBaseColor, base: baseColor} = Color.light[colorPrimary];
     if (pressed) {
       return {
         containerStyle: [
@@ -77,10 +78,7 @@ export default function FilledButton(props) {
     return (
       <>
         {children}
-        {content && (
-          //TODO: use typography for text
-          <Text style={contentStyle}>{content}</Text>
-        )}
+        {content && <Text style={contentStyle}>{content}</Text>}
       </>
     );
   }

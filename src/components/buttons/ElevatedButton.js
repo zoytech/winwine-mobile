@@ -1,54 +1,91 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {ColorVariant} from 'src/themes/color';
-import {Color} from 'src/themes';
-import {Typography} from '../../themes';
-import {TouchableHighlight} from 'react-native';
-import {TextContent} from '../content';
+import {Color, Elevations} from 'src/themes';
+import {StateLayers, Typography} from '../../themes';
+import {Pressable, Text} from 'react-native';
 import DefaultButtonStyle from './defaultButtonStyle';
-import {Elevation1} from '../elevations/Elevation';
-import StateLayers from '../../themes/stateLayers';
+import Surfaces from '../utils/elevationWithLinearGradient/surfaces';
 
 export default function ElevatedButton(props) {
   const {
     content,
-    onPress = () => {},
-    colorVariant = ColorVariant.primary,
-    typographyVariant = Typography.label.large,
-    stateLayers = StateLayers,
-    contentStyle,
     style,
+    contentStyle: rawContentStyle,
+    colorPrimary = ColorVariant.primary,
+    elevation = Elevations.light.elevation1,
+    surfacesVariant = Surfaces.light,
+    typographyVariant = Typography.label.large,
+    disabled,
     children,
     ...otherProps
   } = props;
 
-  const {base} = Color.light[colorVariant];
-  const bodyButton = [style];
-  const labelStyle = [typographyVariant, {color: base}, contentStyle];
+  function generateStateStyles(pressed, isDisabled) {
+    const defaultContainerStyle = DefaultButtonStyle.container;
+    const defaultContentStyle = typographyVariant;
+    const {base: baseColor, onBase: onBaseColor} = Color.light[colorPrimary];
+    if (isDisabled) {
+      return {
+        containerStyle: [
+          defaultContainerStyle,
+          {backgroundColor: onBaseColor},
+          StateLayers.pressed,
+          style,
+        ],
+        contentStyle: [
+          defaultContentStyle,
+          {color: onBaseColor},
+          StateLayers.disabled,
+          rawContentStyle,
+        ],
+      };
+    }
+    const surfaceColor = surfacesVariant?.surface2;
+    if (pressed) {
+      return {
+        containerStyle: [
+          defaultContainerStyle,
+          elevation,
+          {backgroundColor: surfaceColor},
+          StateLayers.pressed,
+          style,
+        ],
+        contentStyle: [
+          defaultContentStyle,
+          {color: baseColor},
+          StateLayers.pressed,
+          rawContentStyle,
+        ],
+      };
+    }
+    return {
+      containerStyle: [
+        defaultContainerStyle,
+        elevation,
+        {backgroundColor: surfaceColor},
+        style,
+      ],
+      contentStyle: [defaultContentStyle, {color: baseColor}, rawContentStyle],
+    };
+  }
 
-  const [isPress, setIsPress] = useState(false);
-  const {pressed} = stateLayers;
+  function getContainerStyle({pressed}) {
+    return generateStateStyles(pressed, disabled)?.containerStyle;
+  }
 
-  const enabledButton = [{backgroundColor: 'transparent'}, bodyButton];
-  const pressedButton = [pressed, enabledButton];
-  const elevationStyle = [DefaultButtonStyle.shape, pressed];
-
-  const touchProps = {
-    activeOpacity: pressed,
-    underlayColor: 'transparent',
-    style: isPress ? pressedButton : enabledButton,
-    onHideUnderlay: () => setIsPress(false),
-    onShowUnderlay: () => setIsPress(true),
-    onPress: onPress ? onPress : 'No action navigator',
-  };
+  function renderContent({pressed}) {
+    const contentStyle = generateStateStyles(pressed, disabled)?.contentStyle;
+    return (
+      <>
+        {children}
+        {content && <Text style={contentStyle}>{content}</Text>}
+      </>
+    );
+  }
 
   return (
-    <Elevation1 containerStyle={elevationStyle}>
-      <TouchableHighlight {...otherProps} {...touchProps}>
-        {children}
-        {content && <TextContent content={content} contentStyle={labelStyle} />}
-      </TouchableHighlight>
-    </Elevation1>
+    <Pressable {...otherProps} style={getContainerStyle}>
+      {renderContent}
+    </Pressable>
   );
 }
-
-const Contentt = 'Play now';

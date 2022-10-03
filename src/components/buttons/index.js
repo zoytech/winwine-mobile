@@ -1,5 +1,6 @@
 import FilledButton from './FilledButtons';
-import SmallButtons from './TextButton';
-import OutlinedButton from './OutlinedButton';
+import TextButton from './TextButton';
+import ElevatedButton from './ElevatedButton';
+import OutlinedButton from './ElevatedButton';
 
-export {FilledButton, SmallButtons, OutlinedButton};
+export {FilledButton, TextButton, ElevatedButton, OutlinedButton};
