@@ -1,4 +1,5 @@
 import React from 'react';
+import {Pressable, Text} from 'react-native';
 import {
   Color,
   ColorVariant,
@@ -6,7 +7,6 @@ import {
   StateLayersVariant,
   Typography,
 } from 'src/themes';
-import {Pressable, Text} from 'react-native';
 import DefaultButtonStyle from './defaultButtonStyle';
 
 export default function OutlinedButton(props) {

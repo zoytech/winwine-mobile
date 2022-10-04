@@ -1,8 +1,14 @@
 import React from 'react';
-import {ColorVariant} from 'src/themes/color';
-import {Color, Elevations, StateLayersVariant} from 'src/themes';
-import {StateLayers, SurfacesColor, Typography} from '../../themes';
 import {Pressable, Text} from 'react-native';
+import {
+  Color,
+  ColorVariant,
+  Elevations,
+  StateLayers,
+  StateLayersVariant,
+  SurfacesColor,
+  Typography,
+} from 'src/themes';
 import DefaultButtonStyle from './defaultButtonStyle';
 
 export default function ElevatedButton(props) {
@@ -12,7 +18,6 @@ export default function ElevatedButton(props) {
     contentStyle: rawContentStyle,
     colorPrimary = ColorVariant.primary,
     elevation = Elevations.light.elevation1,
-    stateLayersOnPrimary = StateLayersVariant.onPrimary,
     stateLayersOnSurface = StateLayersVariant.onSurface,
     stateLayersPrimary = StateLayersVariant.primary,
     typographyVariant = Typography.label.large,
