@@ -1,7 +1,11 @@
 import React from 'react';
-import {ColorVariant} from 'src/themes/color';
-import {Color} from 'src/themes';
-import {StateLayers, Typography} from '../../themes';
+import {
+  Color,
+  ColorVariant,
+  StateLayers,
+  StateLayersVariant,
+  Typography,
+} from 'src/themes';
 import {Pressable, Text} from 'react-native';
 import DefaultButtonStyle from './defaultButtonStyle';
 
@@ -11,7 +15,8 @@ export default function TextButton(props) {
     style,
     contentStyle: rawContentStyle,
     colorPrimary = ColorVariant.primary,
-    colorSurface = ColorVariant.surface,
+    stateLayersPrimary = StateLayersVariant.primary,
+    stateLayersOnSurface = StateLayersVariant.onSurface,
     typographyVariant = Typography.label.large,
     disabled,
     children,
@@ -22,25 +27,28 @@ export default function TextButton(props) {
     const defaultContainerStyle = DefaultButtonStyle.container;
     const defaultContentStyle = typographyVariant;
     if (isDisabled) {
-      const onSurfaceColor = Color.light[colorSurface]?.onBase;
+      const {level_032} = StateLayers.light[stateLayersOnSurface];
       return {
         containerStyle: [defaultContainerStyle, style],
         contentStyle: [
           defaultContentStyle,
-          {color: onSurfaceColor},
-          StateLayers.disabled,
+          {color: level_032},
           rawContentStyle,
         ],
       };
     }
     const {base: baseColor} = Color.light[colorPrimary];
     if (pressed) {
+      const {level_012} = StateLayers.light[stateLayersPrimary];
       return {
-        containerStyle: [defaultContainerStyle, StateLayers.pressed, style],
+        containerStyle: [
+          defaultContainerStyle,
+          {backgroundColor: level_012},
+          style,
+        ],
         contentStyle: [
           defaultContentStyle,
           {color: baseColor},
-          StateLayers.pressed,
           rawContentStyle,
         ],
       };

@@ -14,8 +14,8 @@ export default function FilledButton(props) {
     content,
     style,
     contentStyle: rawContentStyle,
-    colorPrimary = ColorVariant.primary,
-    stateLayersOnPrimary = StateLayersVariant.onPrimary,
+    colorSecondary = ColorVariant.secondary,
+    stateLayersOnSecondary = StateLayersVariant.onSecondary,
     stateLayersOnSurface = StateLayersVariant.onSurface,
     typographyVariant = Typography.label.large,
     disabled,
@@ -42,9 +42,9 @@ export default function FilledButton(props) {
       };
     }
 
-    const {onBase: onBaseColor, base: baseColor} = Color.light[colorPrimary];
+    const {container, onContainer} = Color.light[colorSecondary];
     if (pressed) {
-      const {level_012} = StateLayers.light[stateLayersOnPrimary];
+      const {level_012, level_032} = StateLayers.light[stateLayersOnSecondary];
       return {
         containerStyle: [
           defaultContainerStyle,
@@ -53,7 +53,7 @@ export default function FilledButton(props) {
         ],
         contentStyle: [
           defaultContentStyle,
-          {color: onBaseColor},
+          {color: onContainer},
           rawContentStyle,
         ],
       };
@@ -61,12 +61,12 @@ export default function FilledButton(props) {
     return {
       containerStyle: [
         defaultContainerStyle,
-        {backgroundColor: baseColor},
+        {backgroundColor: container},
         style,
       ],
       contentStyle: [
         defaultContentStyle,
-        {color: onBaseColor},
+        {color: onContainer},
         rawContentStyle,
       ],
     };

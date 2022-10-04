@@ -1,7 +1,11 @@
 import React from 'react';
-import {ColorVariant} from 'src/themes/color';
-import {Color} from 'src/themes';
-import {StateLayers, Typography} from '../../themes';
+import {
+  Color,
+  ColorVariant,
+  StateLayers,
+  StateLayersVariant,
+  Typography,
+} from 'src/themes';
 import {Pressable, Text} from 'react-native';
 import DefaultButtonStyle from './defaultButtonStyle';
 
@@ -11,8 +15,9 @@ export default function OutlinedButton(props) {
     style,
     contentStyle: rawContentStyle,
     colorPrimary = ColorVariant.primary,
-    colorOutline = ColorVariant.outline,
-    colorSurface = ColorVariant.surface,
+    colorOutline = ColorVariant.outline, // stateLayersPrimary = StateLayersVariant.primary,
+    stateLayersPrimary = StateLayersVariant.primary,
+    stateLayersOnSurface = StateLayersVariant.onSurface,
     typographyVariant = Typography.label.large,
     disabled,
     children,
@@ -23,18 +28,16 @@ export default function OutlinedButton(props) {
     const defaultContainerStyle = DefaultButtonStyle.container;
     const defaultContentStyle = typographyVariant;
     if (isDisabled) {
-      const onSurfaceColor = Color.light[colorSurface]?.onBase;
+      const {level_012, level_032} = StateLayers.light[stateLayersOnSurface];
       return {
         containerStyle: [
           defaultContainerStyle,
-          {borderColor: onSurfaceColor},
-          StateLayers.pressed,
+          {borderColor: level_012, borderWidth: 0.5},
           style,
         ],
         contentStyle: [
           defaultContentStyle,
-          {color: onSurfaceColor},
-          StateLayers.disabled,
+          {color: level_032},
           rawContentStyle,
         ],
       };
@@ -42,20 +45,20 @@ export default function OutlinedButton(props) {
     const {base: baseColor, onBase: onBaseColor} = Color.light[colorPrimary];
     const {base: baseOutline} = Color.light[colorOutline];
     if (pressed) {
+      const {level_012} = StateLayers.light[stateLayersPrimary];
       return {
         containerStyle: [
           defaultContainerStyle,
           {
-            backgroundColor: onBaseColor,
+            backgroundColor: level_012,
             borderColor: baseOutline,
+            borderWidth: 0.5,
           },
-          StateLayers.pressed,
           style,
         ],
         contentStyle: [
           defaultContentStyle,
           {color: baseColor},
-          StateLayers.pressed,
           rawContentStyle,
         ],
       };
@@ -66,6 +69,7 @@ export default function OutlinedButton(props) {
         {
           backgroundColor: onBaseColor,
           borderColor: baseOutline,
+          borderWidth: 0.5,
         },
         style,
       ],

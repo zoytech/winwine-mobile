@@ -1,10 +1,9 @@
 import React from 'react';
 import {ColorVariant} from 'src/themes/color';
-import {Color, Elevations} from 'src/themes';
-import {StateLayers, Typography} from '../../themes';
+import {Color, Elevations, StateLayersVariant} from 'src/themes';
+import {StateLayers, SurfacesColor, Typography} from '../../themes';
 import {Pressable, Text} from 'react-native';
 import DefaultButtonStyle from './defaultButtonStyle';
-import Surfaces from '../utils/elevationWithLinearGradient/surfaces';
 
 export default function ElevatedButton(props) {
   const {
@@ -13,7 +12,9 @@ export default function ElevatedButton(props) {
     contentStyle: rawContentStyle,
     colorPrimary = ColorVariant.primary,
     elevation = Elevations.light.elevation1,
-    surfacesVariant = Surfaces.light,
+    stateLayersOnPrimary = StateLayersVariant.onPrimary,
+    stateLayersOnSurface = StateLayersVariant.onSurface,
+    stateLayersPrimary = StateLayersVariant.primary,
     typographyVariant = Typography.label.large,
     disabled,
     children,
@@ -23,37 +24,35 @@ export default function ElevatedButton(props) {
   function generateStateStyles(pressed, isDisabled) {
     const defaultContainerStyle = DefaultButtonStyle.container;
     const defaultContentStyle = typographyVariant;
-    const {base: baseColor, onBase: onBaseColor} = Color.light[colorPrimary];
+    const {base: baseColor} = Color.light[colorPrimary];
     if (isDisabled) {
+      const {level_012, level_032} = StateLayers.light[stateLayersOnSurface];
       return {
         containerStyle: [
           defaultContainerStyle,
-          {backgroundColor: onBaseColor},
-          StateLayers.pressed,
+          {backgroundColor: level_012},
           style,
         ],
         contentStyle: [
           defaultContentStyle,
-          {color: onBaseColor},
-          StateLayers.disabled,
+          {color: level_032},
           rawContentStyle,
         ],
       };
     }
-    const surfaceColor = surfacesVariant?.surface2;
+    const {surface1, surface2} = SurfacesColor.light;
     if (pressed) {
       return {
         containerStyle: [
           defaultContainerStyle,
           elevation,
-          {backgroundColor: surfaceColor},
-          StateLayers.pressed,
+          {backgroundColor: surface2},
+          stateLayersPrimary.pressed,
           style,
         ],
         contentStyle: [
           defaultContentStyle,
           {color: baseColor},
-          StateLayers.pressed,
           rawContentStyle,
         ],
       };
@@ -62,7 +61,10 @@ export default function ElevatedButton(props) {
       containerStyle: [
         defaultContainerStyle,
         elevation,
-        {backgroundColor: surfaceColor},
+        {
+          backgroundColor: surface1,
+        },
+
         style,
       ],
       contentStyle: [defaultContentStyle, {color: baseColor}, rawContentStyle],
