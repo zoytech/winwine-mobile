@@ -1,9 +1,11 @@
 import React from 'react';
-import {Pressable, Text} from 'react-native';
+import {Pressable, StyleSheet, Text} from 'react-native';
+import {Shadow} from 'react-native-shadow-2';
 import {
   Color,
   ColorVariant,
   Elevations,
+  ShadowPresets,
   StateLayers,
   StateLayersVariant,
   Typography,
@@ -16,15 +18,17 @@ export default function SecondaryChip(props) {
     style,
     contentStyle: rawContentStyle,
     colorSecondary = ColorVariant.secondary,
-    elevationVariant = Elevations.light,
-    stateLayersOnSecondary = StateLayersVariant.secondaryContainer,
-    stateLayersOnSurface = StateLayersVariant.onSurface,
     typographyVariant = Typography.label.large,
     disabled,
     dragged,
     children,
     ...otherProps
   } = props;
+
+  const elevationVariant = Elevations.light,
+    stateLayersOnSecondary = StateLayersVariant.secondaryContainer,
+    stateLayersOnSurface = StateLayersVariant.onSurface,
+    shadowStyle = ShadowPresets.normal;
 
   function generateStateStyles(pressed, isDisabled, isDragged) {
     const defaultContainerStyle = DefaultChipStyle.container;
@@ -47,13 +51,13 @@ export default function SecondaryChip(props) {
     }
 
     const {container, onContainer} = Color.light[colorSecondary];
-    const {level_012, level_016} = StateLayers.light[stateLayersOnSecondary];
+    const {level_008, level_016} = StateLayers.light[stateLayersOnSecondary];
     if (pressed) {
       return {
         containerStyle: [
           defaultContainerStyle,
           elevation2,
-          {backgroundColor: level_012},
+          {backgroundColor: level_008},
           style,
         ],
         contentStyle: [
@@ -112,8 +116,16 @@ export default function SecondaryChip(props) {
   }
 
   return (
-    <Pressable {...otherProps} style={getContainerStyle}>
-      {renderContent}
-    </Pressable>
+    <Shadow {...shadowStyle} style={styles.shadow} disabled={disabled}>
+      <Pressable {...otherProps} style={getContainerStyle}>
+        {renderContent}
+      </Pressable>
+    </Shadow>
   );
 }
+
+const styles = StyleSheet.create({
+  shadow: {
+    borderRadius: 8,
+  },
+});

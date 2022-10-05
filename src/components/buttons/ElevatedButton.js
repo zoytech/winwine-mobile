@@ -18,13 +18,14 @@ export default function ElevatedButton(props) {
     style,
     contentStyle: rawContentStyle,
     colorPrimary = ColorVariant.primary, // elevation = Elevations.light.elevation1,
-    shadowStyle = ShadowPresets.button,
-    stateLayersOnSurface = StateLayersVariant.onSurface,
     typographyVariant = Typography.label.large,
     disabled,
     children,
     ...otherProps
   } = props;
+
+  const shadowStyle = ShadowPresets.normal,
+    stateLayersOnSurface = StateLayersVariant.onSurface;
 
   function generateStateStyles(pressed, isDisabled) {
     const defaultContainerStyle = DefaultButtonStyle.container;
@@ -85,13 +86,11 @@ export default function ElevatedButton(props) {
   }
 
   return (
-    <Shadow {...shadowStyle} style={styles.shadow}>
+    <Shadow {...shadowStyle} style={styles.shadow} disabled={disabled}>
       <Pressable {...otherProps} style={getContainerStyle}>
         {renderContent}
       </Pressable>
     </Shadow>
-
-    // <Pressable style={getContainerStyle}>{renderContent}</Pressable>
   );
 }
 

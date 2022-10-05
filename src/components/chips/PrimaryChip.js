@@ -1,10 +1,11 @@
 import React from 'react';
-import {Pressable, Text} from 'react-native';
+import {Pressable, StyleSheet, Text} from 'react-native';
 import {Shadow} from 'react-native-shadow-2';
 import {
   Color,
   ColorVariant,
   Elevations,
+  ShadowPresets,
   StateLayers,
   StateLayersVariant,
   SurfacesColor,
@@ -18,15 +19,18 @@ export default function PrimaryChip(props) {
     style,
     contentStyle: rawContentStyle,
     colorPrimary = ColorVariant.primary,
-    elevationVariant = Elevations.light,
-    stateLayersOnSurface = StateLayersVariant.onSurface,
-    stateLayersOnSurfaceVar = StateLayersVariant.onSurfaceVar,
     typographyVariant = Typography.label.large,
     disabled,
-    children,
     dragged,
+    children,
     ...otherProps
   } = props;
+
+  const stateLayersPrimary = StateLayersVariant.primary,
+    stateLayersOnSurface = StateLayersVariant.onSurface,
+    stateLayersOnSurfaceVar = StateLayersVariant.onSurfaceVar,
+    elevationVariant = Elevations.light,
+    shadowStyle = ShadowPresets.normal;
 
   function generateStateStyles(pressed, isDisabled, isDragged) {
     const defaultContainerStyle = DefaultChipStyle.container;
@@ -46,20 +50,17 @@ export default function PrimaryChip(props) {
           {color: level_032},
           rawContentStyle,
         ],
-        shadowStyle: {disable: true},
       };
     }
     const {surface1} = SurfacesColor.light;
     const {level_100} = StateLayers.light[stateLayersOnSurfaceVar];
-    const {level_012, level_016} = StateLayers.light[stateLayersOnSurface];
+    const {level_012, level_016} = StateLayers.light[stateLayersPrimary];
     if (pressed) {
       return {
         containerStyle: [
           defaultContainerStyle,
-          // elevation2,
           {
             backgroundColor: level_012,
-            shadowColor: surface1,
           },
           style,
         ],
@@ -77,7 +78,7 @@ export default function PrimaryChip(props) {
           // elevation3,
           {
             backgroundColor: level_016,
-            shadowColor: surface1,
+            // shadowColor: surface1,
           },
           style,
         ],
@@ -118,8 +119,16 @@ export default function PrimaryChip(props) {
   }
 
   return (
-    <Shadow {...otherProps}>
-      <Pressable style={getContainerStyle}>{renderContent}</Pressable>
+    <Shadow {...shadowStyle} style={styles.shadow} disabled={disabled}>
+      <Pressable {...otherProps} style={getContainerStyle}>
+        {renderContent}
+      </Pressable>
     </Shadow>
   );
 }
+
+const styles = StyleSheet.create({
+  shadow: {
+    borderRadius: 8,
+  },
+});
