@@ -1,21 +1,16 @@
-import {StyleSheet, View} from 'react-native';
-import {TextContent} from '../../content';
+import {StyleSheet, Text, View} from 'react-native';
 
 function Title(props) {
   const {content, contentStyle} = props;
-  return <TextContent content={content} contentStyle={contentStyle.heading} />;
+  return <Text style={contentStyle}>{content}</Text>;
 }
 
 function SubTitle(props) {
   const {contentLeft, contentRight, contentStyle} = props;
   return (
     <View style={styles.subHeading}>
-      {contentLeft && (
-        <TextContent content={contentLeft} contentStyle={contentStyle} />
-      )}
-      {contentRight && (
-        <TextContent content={contentRight} contentStyle={contentStyle} />
-      )}
+      {contentLeft && <Text style={contentStyle}>{contentLeft}</Text>}
+      {contentRight && <Text style={contentStyle}>{contentRight}</Text>}
     </View>
   );
 }

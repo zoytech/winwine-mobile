@@ -1,14 +1,13 @@
-import {Color, Typography} from '../../../themes';
-import cardItemLayout from './cardItemLayout';
 import {View} from 'react-native';
+import {Color, ColorVariant, Typography} from '../../../../themes';
+import cardItemLayout from './cardItemLayout';
 import {Action, Headline, Media} from '../cardComponents';
 import {SubTitle, Title} from '../cardComponents/Headline';
-import {FilledButton} from '../../buttons';
-import {ColorVariant} from '../../../themes/color';
+import {PrimaryChip, SecondaryChip} from '../../../../components/chips';
+import {ElevatedButton} from '../../../../components';
 
 export default function GamePackageItem(props) {
   const {
-    typoTitle = Typography.label.large,
     typoSubTitle = Typography.label.medium,
     typoButton = Typography.label.small,
     colorSurface = ColorVariant.surface,
@@ -31,17 +30,19 @@ export default function GamePackageItem(props) {
     <View style={containerStyle}>
       <Media
         style={media}
-        source={require('../../../assets/images/preview-package/member1.jpg')}
+        source={require('../../../../assets/images/preview-package/member1.jpg')}
       />
       <Headline style={headline}>
-        <Title content={title} contentStyle={typoTitle} />
+        <Title content={title} contentStyle={typoButton} />
         <SubTitle contentLeft={tag} contentStyle={typoSubTitle} />
       </Headline>
       <Action style={action}>
-        <FilledButton
+        <ElevatedButton
           content={'play now'}
           contentStyle={typoButton}
           onPress={handlePressFilledButton}
+          // dragged="true"
+          // disabled="true"
         />
       </Action>
     </View>

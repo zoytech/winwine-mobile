@@ -1,24 +1,20 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet, View} from 'react-native';
+import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import {
   FilledButton,
   HeadlineBase,
   HeadlineInfo,
-  MonoGram,
   MediumGameCard,
-  TextContent,
+  MonoGram,
 } from '../../components';
 
-import {ColorVariant} from '../../themes/color';
+import {ColorVariant} from '../../themes';
 import {Color, Typography} from '../../themes';
 import {gameCardLayout} from './layoutScreen';
-import {
-  Header,
-  SubHeader,
-} from '../../components/cards/cardComponents/Headline';
+import {Header, SubHeader} from './components/cardComponents/Headline';
 import PreviewCard from './components/PreviewCard';
 
-export default function PreviewScreen(props) {
+export default function GameWaitScreen(props) {
   const {
     typoHeader = Typography.title.large,
     typoSubHeader = Typography.label.large,
@@ -37,6 +33,8 @@ export default function PreviewScreen(props) {
   const screenStyle = [{backgroundColor: base}, containerStyle];
   const bodyTextStyle = [typoBody, styles.content];
   const {id, title, tag, totalCards, avatar} = cardInfo;
+
+  const content = 'Xem trước 10 lá bài';
 
   const handlePressFilledButton = () => {
     alert('move to game screen');
@@ -62,10 +60,7 @@ export default function PreviewScreen(props) {
         </HeadlineInfo>
       </HeadlineBase>
       <View style={supportingTextStyle}>
-        <TextContent
-          content={'Xem trước 10 lá bài'}
-          contentStyle={typoSupportingText}
-        />
+        {content && <Text style={typoSupportingText}>{content}</Text>}
       </View>
       <View style={mainContentStyle}>
         <MediumGameCard contentStyle={bodyTextStyle} />

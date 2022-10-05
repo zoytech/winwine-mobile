@@ -1,5 +1,5 @@
 import {StyleSheet, View} from 'react-native';
-import {Content, Icons, MonoGram} from './headerComponent';
+import {Content, Icons, MonoGram} from '../headerComponent';
 
 export default function Header(props) {
   const {icon, monogram, children, style} = props;

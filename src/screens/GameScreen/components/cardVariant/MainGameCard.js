@@ -1,13 +1,11 @@
 import {Color, Typography} from '../../../themes';
 import cardItemLayout from './cardItemLayout';
-import {View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {Action, Header} from '../cardComponents';
 import {Heading, SubHeading} from '../cardComponents/headerComponent';
-import {FilledButton, OutlinedButton} from '../../buttons';
+import {FilledButton} from '../../buttons';
 import {ColorVariant} from '../../../themes/color';
 import {LargeGameCard} from '../cardComponents/GameCardVariant';
-import {StyleSheet} from 'react-native';
-import TextButton from '../../buttons/TextButton';
 import ElevatedButton from '../../buttons/ElevatedButton';
 
 export default function MainGameCard(props) {

@@ -3,7 +3,6 @@ import {StyleSheet, View} from 'react-native';
 export default function Action(props) {
   const {children, style} = props;
   const containerStyle = [style, styles.horizontalDisplay];
-  console.log(style);
   return (
     // <View style={style}>
     //   <View style={styles.horizontalDisplay}>{children}</View>

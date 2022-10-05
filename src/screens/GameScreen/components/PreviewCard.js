@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Dimensions, Text} from 'react-native';
+import {Dimensions, StyleSheet, Text} from 'react-native';
 import ElevatedCard from '../../../components/cards/ElevatedCard';
 
 const width = Dimensions.get('width');

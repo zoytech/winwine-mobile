@@ -1,6 +1,7 @@
 import React from 'react';
 import {Dimensions, SafeAreaView, StyleSheet} from 'react-native';
-import GamePackageItem from '../../components/cards/cardVariant/GamePackageItem';
+import GamePackageItem from '../GameScreen/components/cardVariant/GamePackageItem';
+import ShadowTest from '../GameScreen/components/ShadowTest';
 
 export default function HomeScreen() {
   const screenStyle = [styles.container];

@@ -1,7 +1,6 @@
-import {View, StyleSheet} from 'react-native';
-import {TextContent} from '../../../content';
+import {View, StyleSheet, Text} from 'react-native';
 import {Color, Typography} from '../../../../themes';
-import {ColorVariant} from '../../../../themes/color';
+import {ColorVariant} from '../../../../themes';
 
 function Icons(props) {
   const {
@@ -14,11 +13,7 @@ function Icons(props) {
   const textStyle = [styles.text, {color: onBase}, typography];
   return (
     <View style={containerStyle}>
-      {initial ? (
-        <TextContent content={initial} contentStyle={textStyle} />
-      ) : (
-        <TextContent content={'?'} contentStyle={textStyle} />
-      )}
+      {initial && <Text style={textStyle}>{initial}</Text>}
     </View>
   );
 }
