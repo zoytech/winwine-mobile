@@ -3,36 +3,39 @@ import {Pressable, Text} from 'react-native';
 import {
   Color,
   ColorVariant,
+  Elevations,
   StateLayers,
   StateLayersVariant,
   Typography,
 } from 'src/themes';
-import DefaultButtonStyle from './defaultButtonStyle';
+import DefaultChipStyle from './defaultChipStyle';
 
-export default function OutlinedButton(props) {
+export default function SecondaryChip(props) {
   const {
     content,
     style,
     contentStyle: rawContentStyle,
-    colorPrimary = ColorVariant.primary,
-    colorOutline = ColorVariant.outline,
-    stateLayersPrimary = StateLayersVariant.primary,
+    colorSecondary = ColorVariant.secondary,
+    elevationVariant = Elevations.light,
+    stateLayersOnSecondary = StateLayersVariant.secondaryContainer,
     stateLayersOnSurface = StateLayersVariant.onSurface,
     typographyVariant = Typography.label.large,
     disabled,
+    dragged,
     children,
     ...otherProps
   } = props;
 
-  function generateStateStyles(pressed, isDisabled) {
-    const defaultContainerStyle = DefaultButtonStyle.container;
+  function generateStateStyles(pressed, isDisabled, isDragged) {
+    const defaultContainerStyle = DefaultChipStyle.container;
     const defaultContentStyle = typographyVariant;
+    const {elevation1, elevation2, elevation3} = elevationVariant;
     if (isDisabled) {
       const {level_012, level_032} = StateLayers.light[stateLayersOnSurface];
       return {
         containerStyle: [
           defaultContainerStyle,
-          {borderColor: level_012, borderWidth: 0.5},
+          {backgroundColor: level_012},
           style,
         ],
         contentStyle: [
@@ -42,23 +45,35 @@ export default function OutlinedButton(props) {
         ],
       };
     }
-    const {base: baseColor, onBase: onBaseColor} = Color.light[colorPrimary];
-    const {base: baseOutline} = Color.light[colorOutline];
+
+    const {container, onContainer} = Color.light[colorSecondary];
+    const {level_012, level_016} = StateLayers.light[stateLayersOnSecondary];
     if (pressed) {
-      const {level_012} = StateLayers.light[stateLayersPrimary];
       return {
         containerStyle: [
           defaultContainerStyle,
-          {
-            backgroundColor: level_012,
-            borderColor: baseOutline,
-            borderWidth: 0.5,
-          },
+          elevation2,
+          {backgroundColor: level_012},
           style,
         ],
         contentStyle: [
           defaultContentStyle,
-          {color: baseColor},
+          {color: onContainer},
+          rawContentStyle,
+        ],
+      };
+    }
+    if (isDragged) {
+      return {
+        containerStyle: [
+          defaultContainerStyle,
+          elevation3,
+          {backgroundColor: level_016},
+          style,
+        ],
+        contentStyle: [
+          defaultContentStyle,
+          {color: onContainer},
           rawContentStyle,
         ],
       };
@@ -66,23 +81,28 @@ export default function OutlinedButton(props) {
     return {
       containerStyle: [
         defaultContainerStyle,
-        {
-          backgroundColor: onBaseColor,
-          borderColor: baseOutline,
-          borderWidth: 0.5,
-        },
+        elevation1,
+        {backgroundColor: container},
         style,
       ],
-      contentStyle: [defaultContentStyle, {color: baseColor}, rawContentStyle],
+      contentStyle: [
+        defaultContentStyle,
+        {color: onContainer},
+        rawContentStyle,
+      ],
     };
   }
 
   function getContainerStyle({pressed}) {
-    return generateStateStyles(pressed, disabled)?.containerStyle;
+    return generateStateStyles(pressed, disabled, dragged)?.containerStyle;
   }
 
   function renderContent({pressed}) {
-    const contentStyle = generateStateStyles(pressed, disabled)?.contentStyle;
+    const contentStyle = generateStateStyles(
+      pressed,
+      disabled,
+      dragged,
+    )?.contentStyle;
     return (
       <>
         {children}

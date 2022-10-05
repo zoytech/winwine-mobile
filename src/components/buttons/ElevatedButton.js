@@ -1,9 +1,10 @@
 import React from 'react';
-import {Pressable, Text} from 'react-native';
+import {Pressable, StyleSheet, Text} from 'react-native';
+import {Shadow} from 'react-native-shadow-2';
 import {
   Color,
   ColorVariant,
-  Elevations,
+  ShadowPresets,
   StateLayers,
   StateLayersVariant,
   SurfacesColor,
@@ -16,10 +17,9 @@ export default function ElevatedButton(props) {
     content,
     style,
     contentStyle: rawContentStyle,
-    colorPrimary = ColorVariant.primary,
-    elevation = Elevations.light.elevation1,
+    colorPrimary = ColorVariant.primary, // elevation = Elevations.light.elevation1,
+    shadowStyle = ShadowPresets.button,
     stateLayersOnSurface = StateLayersVariant.onSurface,
-    stateLayersPrimary = StateLayersVariant.primary,
     typographyVariant = Typography.label.large,
     disabled,
     children,
@@ -49,10 +49,8 @@ export default function ElevatedButton(props) {
     if (pressed) {
       return {
         containerStyle: [
-          defaultContainerStyle,
-          elevation,
+          defaultContainerStyle, // elevation,
           {backgroundColor: surface2},
-          stateLayersPrimary.pressed,
           style,
         ],
         contentStyle: [
@@ -64,12 +62,8 @@ export default function ElevatedButton(props) {
     }
     return {
       containerStyle: [
-        defaultContainerStyle,
-        elevation,
-        {
-          backgroundColor: surface1,
-        },
-
+        defaultContainerStyle, // elevation,
+        {backgroundColor: surface1},
         style,
       ],
       contentStyle: [defaultContentStyle, {color: baseColor}, rawContentStyle],
@@ -91,8 +85,18 @@ export default function ElevatedButton(props) {
   }
 
   return (
-    <Pressable {...otherProps} style={getContainerStyle}>
-      {renderContent}
-    </Pressable>
+    <Shadow {...shadowStyle} style={styles.shadow}>
+      <Pressable {...otherProps} style={getContainerStyle}>
+        {renderContent}
+      </Pressable>
+    </Shadow>
+
+    // <Pressable style={getContainerStyle}>{renderContent}</Pressable>
   );
 }
+
+const styles = StyleSheet.create({
+  shadow: {
+    borderRadius: 100,
+  },
+});

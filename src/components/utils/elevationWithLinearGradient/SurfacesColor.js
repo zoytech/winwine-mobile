@@ -1,4 +1,6 @@
-import Surfaces, {SurfacesVariant} from './surfaces';
+import Surfaces, {
+  SurfacesVariant,
+} from '../../../themes/surfacesColor/surfaces';
 import LinearGradient from 'react-native-linear-gradient';
 
 function SurfaceBase(props) {
