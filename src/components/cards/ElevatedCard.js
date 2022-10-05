@@ -1,38 +1,31 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import {Shadow} from 'react-native-shadow-2';
+import {ShadowPresets, SurfacesColor} from 'src/themes';
+import DefaultCardStyle from './defaultCardStyle';
 
 export default function ElevatedCard(props) {
   const {style, children, ...otherProps} = props;
 
+  const shadowStyle = ShadowPresets.normal;
+  const defaultContainerStyle = DefaultCardStyle.container;
+  const {surface1} = SurfacesColor.light;
+  const containerStyle = [
+    defaultContainerStyle,
+    {backgroundColor: surface1},
+    style,
+  ];
   return (
-    <View {...otherProps} style={[styles.container, style]}>
-      <LinearGradient
-        colors={['#4c669f', '#3b5998', '#192f6a']}
-        style={styles.linearGradient}
-      />
-      {children}
-    </View>
+    <Shadow {...shadowStyle} style={styles.shadow}>
+      <View {...otherProps} style={containerStyle}>
+        {children}
+      </View>
+    </Shadow>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    height: 300,
-    width: 200,
-  },
-  linearGradient: {
-    flex: 1,
-    paddingLeft: 15,
-    paddingRight: 15,
-    borderRadius: 5,
-  },
-  buttonText: {
-    fontSize: 18,
-    fontFamily: 'Gill Sans',
-    textAlign: 'center',
-    margin: 10,
-    color: '#ffffff',
-    backgroundColor: 'transparent',
+  shadow: {
+    borderRadius: 12,
   },
 });
