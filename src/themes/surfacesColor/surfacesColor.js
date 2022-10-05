@@ -1,6 +1,6 @@
-import Color, {ColorVariant} from './color';
+import Color, {ColorVariant} from '../color';
 import hexToRgba from 'hex-to-rgba';
-import OpacityLevel from './opacityLevel';
+import OpacityLevel from '../opacityLevel';
 
 const baseColor = Color.light[ColorVariant.primary]?.base;
 const {opacity_005, opacity_008, opacity_011, opacity_012, opacity_014} =
