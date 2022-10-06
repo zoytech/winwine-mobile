@@ -2,9 +2,8 @@ const DefaultCardStyle = {
   container: {
     borderRadius: 12,
     paddingHorizontal: 16,
-    gap: 8,
-    width: 100,
-    height: 50,
+    width: 360,
+    height: 480,
   },
 };
 export default DefaultCardStyle;

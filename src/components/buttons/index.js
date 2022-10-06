@@ -1,4 +1,4 @@
-import FilledButton from './FilledButtons';
+import FilledButton from './FilledButton';
 import TextButton from './TextButton';
 import ElevatedButton from './ElevatedButton';
 import OutlinedButton from './OutlinedButton';

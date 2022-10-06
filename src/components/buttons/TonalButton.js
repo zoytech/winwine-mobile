@@ -9,7 +9,7 @@ import {
 } from 'src/themes';
 import DefaultButtonStyle from './defaultButtonStyle';
 
-export default function FilledButton(props) {
+export default function TonalButton(props) {
   const {
     content,
     style,

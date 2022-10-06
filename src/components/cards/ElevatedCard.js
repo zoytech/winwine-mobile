@@ -7,7 +7,7 @@ import DefaultCardStyle from './defaultCardStyle';
 export default function ElevatedCard(props) {
   const {style, children, ...otherProps} = props;
 
-  const shadowStyle = ShadowPresets.normal;
+  const shadowProps = ShadowPresets.normal;
   const defaultContainerStyle = DefaultCardStyle.container;
   const {surface1} = SurfacesColor.light;
   const containerStyle = [
@@ -15,8 +15,9 @@ export default function ElevatedCard(props) {
     {backgroundColor: surface1},
     style,
   ];
+  const shadowStyle = [styles.shadow, style];
   return (
-    <Shadow {...shadowStyle} style={styles.shadow}>
+    <Shadow {...shadowProps} style={shadowStyle}>
       <View {...otherProps} style={containerStyle}>
         {children}
       </View>
