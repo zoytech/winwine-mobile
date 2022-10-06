@@ -1,4 +1,4 @@
-import SurfacesColor from './surfacesColor/surfacesColor';
+import SurfacesColor from './surfacesColor';
 
 const {surface1, surface2, surface3, surface4, surface5} = SurfacesColor.light;
 
