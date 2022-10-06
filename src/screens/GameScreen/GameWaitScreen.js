@@ -1,87 +1,121 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
-import {
-  FilledButton,
-  HeadlineBase,
-  HeadlineInfo,
-  MediumGameCard,
-  MonoGram,
-} from '../../components';
+import {Dimensions, SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import {Color, ColorVariant, Typography} from 'src/themes';
+import {ElevatedCard, FilledButton} from '../../components';
+import FilledIconButton from '../../components/iconButtons/toggleable/FilledIconButton';
 
-import {ColorVariant} from '../../themes';
-import {Color, Typography} from '../../themes';
-import {gameCardLayout} from './layoutScreen';
-import {Header, SubHeader} from './components/cardComponents/Headline';
-import PreviewCard from './components/PreviewCard';
+const width = Dimensions.get('window').width,
+  height = Dimensions.get('window').height;
 
 export default function GameWaitScreen(props) {
   const {
-    typoHeader = Typography.title.large,
-    typoSubHeader = Typography.label.large,
     typoSupportingText = Typography.title.medium,
     typoBody = Typography.body.large,
     colorVariant = ColorVariant.surface,
+    style,
+    ...otherProps
   } = props;
   const {base} = Color.light[colorVariant];
-  const {
-    container: containerStyle,
-    headline: headlineStyle,
-    supportingText: supportingTextStyle,
-    mainContent: mainContentStyle,
-    action: actionStyle,
-  } = gameCardLayout;
-  const screenStyle = [{backgroundColor: base}, containerStyle];
-  const bodyTextStyle = [typoBody, styles.content];
-  const {id, title, tag, totalCards, avatar} = cardInfo;
 
-  const content = 'Xem trước 10 lá bài';
+  const defaultContainerStyle = [
+    {backgroundColor: base},
+    styles.container,
+    style,
+  ];
+  const defaultContentStyle = [styles.content];
+  const description = 'Xem trước 10 lá bài';
 
   const handlePressFilledButton = () => {
     alert('move to game screen');
   };
 
-  function renderItemPreviewCard(item) {
+  function PackageInfo({header, tag, info}) {
+    const containerStyle = [styles.container];
+    const subHeaderStyle = [styles.subHeader];
+    const contentStyle = [];
     return (
-      <PreviewCard style={styles.previewCardItem} content={item?.content} />
+      <View style={containerStyle}>
+        {header && (
+          <Text style={[defaultContentStyle, typoHeader]}>{header}</Text>
+        )}
+        <View style={subHeaderStyle}>
+          {tag && (
+            <Text style={[defaultContentStyle, typoSubHeader]}>{tag}</Text>
+          )}
+          {info && <Text style={[contentStyle, typoSubHeader]}>{info}</Text>}
+        </View>
+      </View>
+    );
+  }
+
+  function SupportingText({statement}) {
+    const contentStyle = [typoSupportingText];
+    return <>{statement && <Text style={contentStyle}>{statement}</Text>}</>;
+  }
+
+  function GameCard({icon: hasIcon, text}) {
+    const containerStyle = [styles.gameCard];
+    const contentStyle = [typoBody];
+    console.log('question', text);
+    return (
+      <ElevatedCard style={containerStyle}>
+        {hasIcon && <FilledIconButton content={hasIcon} />}
+        {text && <Text style={contentStyle}>{text}</Text>}
+      </ElevatedCard>
     );
   }
 
   return (
-    <SafeAreaView style={screenStyle}>
-      <HeadlineBase style={headlineStyle}>
-        <MonoGram initial={avatar} />
-        <HeadlineInfo>
-          <Header content={title} contentStyle={typoHeader} />
-          <SubHeader
-            contentLeft={tag}
-            contentRight={`Tổng số ${totalCards} lá`}
-            contentStyle={typoSubHeader}
-          />
-        </HeadlineInfo>
-      </HeadlineBase>
-      <View style={supportingTextStyle}>
-        {content && <Text style={typoSupportingText}>{content}</Text>}
+    <SafeAreaView {...otherProps} style={defaultContainerStyle}>
+      <ElevatedCard style={[defaultContainerStyle, {height: height * '0.2'}]}>
+        <View>
+          <FilledIconButton />
+        </View>
+        <PackageInfo
+          header={cardInfo?.title}
+          subHead={cardInfo?.tag}
+          info={cardInfo?.totalCards}
+        />
+      </ElevatedCard>
+      <View style={[defaultContainerStyle, {height: height * '0.1'}]}>
+        <SupportingText statement={description} />
       </View>
-      <View style={mainContentStyle}>
-        <MediumGameCard contentStyle={bodyTextStyle} />
+      <View style={[defaultContainerStyle, {height: height * '0.5'}]}>
+        <GameCard icon={item?.icon} text={questionInfo?.question1} />
       </View>
-      <View style={actionStyle}>
-        <FilledButton content={'Chơi ngay'} onPress={handlePressFilledButton} />
+      <View style={[defaultContainerStyle, {height: height * '0.2'}]}>
+        <FilledButton content={'Chơi luôn'} onPress={handlePressFilledButton} />
       </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  content: {
-    alignSelf: 'center',
+  container: {
+    width: width,
+    height: height,
+    alignItems: 'center',
+  },
+  gameCard: {
+    width: width * 0.6,
+    height: height * 0.5,
+  },
+  action: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  background: {
+    width: 16,
+    height: 16,
+  },
+  monogram: {},
+  text: {
+    textTransform: 'uppercase',
     textAlign: 'center',
     textAlignVertical: 'center',
+    height: '100%',
   },
-  previewCardItem: {
-    width: 100,
-    height: 300,
-  },
+  subHeader: {},
 });
 
 const cardInfo = {
@@ -92,3 +126,9 @@ const cardInfo = {
   avatar: 'N',
   currentCard: '28',
 };
+
+const questionInfo = {
+  question1:
+    'Em yeu truong em voi bao ban than va co giao hien nhu yeu que huong cap sach den truong.',
+};
+const item = {};

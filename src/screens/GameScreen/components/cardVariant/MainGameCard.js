@@ -2,11 +2,11 @@ import {Color, Typography} from '../../../themes';
 import cardItemLayout from './cardItemLayout';
 import {StyleSheet, View} from 'react-native';
 import {Action, Header} from '../cardComponents';
-import {Heading, SubHeading} from '../cardComponents/headerComponent';
+import {Heading, SubHeading} from '../cardComponents/header';
 import {FilledButton} from '../../buttons';
 import {ColorVariant} from '../../../themes/color';
 import {LargeGameCard} from '../cardComponents/GameCardVariant';
-import ElevatedButton from '../../buttons/ElevatedButton';
+import ElevatedButton from '../../buttons/ElevatedIconButton';
 
 export default function MainGameCard(props) {
   const {

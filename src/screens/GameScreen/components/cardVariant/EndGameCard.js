@@ -2,7 +2,7 @@ import {Color, Typography} from '../../../themes';
 import cardItemLayout from './cardItemLayout';
 import {StyleSheet, View} from 'react-native';
 import {Action, Header, Media, SupportingText} from '../cardComponents';
-import {Heading, SubHeading} from '../cardComponents/headerComponent';
+import {Heading, SubHeading} from '../cardComponents/header';
 import {FilledButton, OutlinedButton} from '../../buttons';
 import {ColorVariant} from '../../../themes/color';
 

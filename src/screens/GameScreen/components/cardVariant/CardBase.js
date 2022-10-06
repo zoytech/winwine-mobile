@@ -8,7 +8,7 @@ import {
   Media,
   SupportingText,
 } from '../cardComponents';
-import {Heading, SubHeading} from '../cardComponents/headerComponent';
+import {Heading, SubHeading} from '../cardComponents/header';
 import {SubTitle, Title} from '../cardComponents/Headline';
 import {FilledButton, OutlinedButton} from '../../buttons';
 import {ColorVariant} from '../../../themes/color';

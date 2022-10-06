@@ -1,13 +1,13 @@
 import React from 'react';
 import {Dimensions, SafeAreaView, StyleSheet} from 'react-native';
-import GamePackageItem from '../GameScreen/components/cardVariant/GamePackageItem';
-import ShadowTest from '../GameScreen/components/ShadowTest';
+import GameWaitScreen from '../GameScreen/GameWaitScreen';
+import GamePlayScreen from '../GameScreen/GamePlayScreen';
 
 export default function HomeScreen() {
   const screenStyle = [styles.container];
   return (
     <SafeAreaView style={screenStyle}>
-      <GamePackageItem />
+      <GamePlayScreen />
     </SafeAreaView>
   );
 }
