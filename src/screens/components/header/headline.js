@@ -1,11 +1,14 @@
 import {Text, View} from 'react-native';
 import {Typography} from 'src/themes';
+
+//TODO: use absolute import
 import {
   ElevatedCard,
   StandardIconButton,
   FilledIconButton,
 } from '../../../components';
 
+//TOOD: undefined styles variable,...
 export default function Headline(props) {
   const {
     header,

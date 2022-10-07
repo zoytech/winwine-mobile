@@ -1,3 +1,4 @@
+//TODO: use StyleSheet.create for better performance
 const DefaultIconButtonStyle = {
   container: {
     padding: 8,

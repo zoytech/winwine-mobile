@@ -33,6 +33,7 @@ export default function PrimaryChip(props) {
     shadowStyle = ShadowPresets.normal;
 
   function generateStateStyles(pressed, isDisabled, isDragged) {
+    //TODO: use optional chaining
     const defaultContainerStyle = DefaultChipStyle.container;
     const defaultContentStyle = typographyVariant;
     const {base: baseColor} = Color.light[colorPrimary];

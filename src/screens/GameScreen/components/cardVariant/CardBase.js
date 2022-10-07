@@ -23,6 +23,8 @@ export default function CardBase(props) {
     colorOutline = ColorVariant.outline,
   } = props;
 
+  //TODO: rename this filed to containerStyle
+  //TODO: undefined cardItemLayout
   const {
     container,
     headline: headlineStyle,
@@ -31,6 +33,7 @@ export default function CardBase(props) {
     media: mediaStyle,
     supportingText: supportingTextStyle,
   } = cardItemLayout.fullscreen;
+  //TODO: should rename it to baseColor
   const {base} = Color.light[colorSurface];
   const {base: outline} = Color.light[colorOutline];
   const containerStyle = [
@@ -38,6 +41,7 @@ export default function CardBase(props) {
     {borderColor: outline, backgroundColor: base},
   ];
 
+  //TODO: should default description be the props?
   const description =
     'Để có được 10 đồng tiền vàng, một ông lão đã phải nhảy xuống biển nhặt nó. Vậy hỏi đồng tiền vàng đó nặng bao nhiêu?';
   const {

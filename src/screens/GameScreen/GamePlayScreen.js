@@ -9,9 +9,11 @@ import {
 } from '../../components';
 import {ElevatedHeader} from '../components';
 
+//TODO: refactor ->: const {width: screenWidth, height: screenHeight } = Dimensions.get('window');
 const width = Dimensions.get('window').width,
   height = Dimensions.get('window').height;
 
+//TODO: GamePlayScreen define it own style
 export default function GamePlayScreen(props) {
   const {
     typoHeader = Typography.title.large,
@@ -22,6 +24,7 @@ export default function GamePlayScreen(props) {
     style,
     ...otherProps
   } = props;
+
   const {base} = Color.light[colorVariant];
 
   const defaultContainerStyle = [
@@ -77,6 +80,7 @@ const styles = StyleSheet.create({
     width: width,
     height: height,
     alignItems: 'center',
+    backgroundColor: 'red',
   },
   header: {
     height: height * 0.1,

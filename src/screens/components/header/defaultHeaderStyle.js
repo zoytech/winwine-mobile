@@ -2,6 +2,7 @@ import {Dimensions} from 'react-native';
 
 const width = Dimensions.get('window').width;
 
+//TODO: why not use StyleSheet.create
 export const DefaultHeaderStyle = {
   container: {
     width: width,

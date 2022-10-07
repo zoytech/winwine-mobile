@@ -1,4 +1,6 @@
 import {StyleSheet, Text, View} from 'react-native';
+
+//TODO: use absolute import instead (src/components)
 import {
   ElevatedCard,
   FilledIconButton,
@@ -6,6 +8,7 @@ import {
 } from '../../../components';
 import {DefaultHeaderStyle} from './defaultHeaderStyle';
 
+//TODO: move defaultHeaderStyle into this file
 export default function ElevatedHeader(props) {
   const {
     head,
@@ -19,6 +22,7 @@ export default function ElevatedHeader(props) {
   } = props;
   const {container, trailingIcon, leadingIcon, content, subHead} =
     DefaultHeaderStyle;
+  //TODO: why named it "defaultContainerStyle", should we use StyleSheet.compose
   const defaultContainerStyle = [container, style];
   const trailingIconStyle = [trailingIcon];
   const leadingIconStyle = [leadingIcon];

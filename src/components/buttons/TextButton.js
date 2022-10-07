@@ -9,6 +9,7 @@ import {
 } from 'src/themes';
 import DefaultButtonStyle from './defaultButtonStyle';
 
+//TODO: refactor this button
 export default function TextButton(props) {
   const {
     content,

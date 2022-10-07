@@ -8,6 +8,7 @@ export default function ElevatedCard(props) {
   const {style, children, ...otherProps} = props;
 
   const shadowProps = ShadowPresets.normal;
+  //TODO: unused variable defaultContainerStyle , why define DefaultCardStyle in another file ?
   const defaultContainerStyle = DefaultCardStyle.container;
   const {surface1} = SurfacesColor.light;
   const containerStyle = [
@@ -16,6 +17,7 @@ export default function ElevatedCard(props) {
     style,
   ];
   const shadowStyle = [styles.shadow, style];
+  //TODO: read document how to style the Shadow (https://www.npmjs.com/package/react-native-shadow-2)
   return (
     <Shadow {...shadowProps} style={shadowStyle}>
       <View {...otherProps} style={containerStyle}>

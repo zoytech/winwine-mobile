@@ -7,6 +7,7 @@ const ActionStyle = {
   },
 };
 
+//TODO: why upper case these varaible. Check convention
 const HeaderStyle = {
   container: {
     flexDirection: 'row',

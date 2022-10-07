@@ -1,6 +1,7 @@
 import LinearGradient from 'react-native-linear-gradient';
 import {StyleSheet} from 'react-native';
 
+//TODO: unused file
 function BoxShadow(props) {
   const {style, children} = props;
   const white15 = 'rgba(0, 0, 0, 0.3)';

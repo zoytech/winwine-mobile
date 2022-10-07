@@ -1,8 +1,17 @@
 import React from 'react';
 import {Dimensions, SafeAreaView, StyleSheet} from 'react-native';
-import GameWaitScreen from '../GameScreen/GameWaitScreen';
 import GamePlayScreen from '../GameScreen/GamePlayScreen';
+/* Example
+const {width: screenWidth, height: screenHeight} = Dimensions.get('window');
+const styles = StyleSheet.create({
+  container: {
+    width: windowWidth * 0.4
+    height: windowHeight
+  }
+});
+*/
 
+//TODO: why screen is contained in another screen ?
 export default function HomeScreen() {
   const screenStyle = [styles.container];
   return (
@@ -14,6 +23,7 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   container: {
+    //TODO: define dimension get width from out side, like example above
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
     // alignSelf: 'center',
@@ -34,6 +44,8 @@ const styles = StyleSheet.create({
     // shadowRadius: 2,
   },
 });
+
+//TODO: remove unused code
 
 /*
  <View style={screenView}>
