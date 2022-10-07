@@ -1,14 +1,6 @@
 import {StyleSheet, Text, View} from 'react-native';
+import {ElevatedCard, FilledIconButton} from '../../../../components';
 
-//TODO: use absolute import instead (src/components)
-import {
-  ElevatedCard,
-  FilledIconButton,
-  StandardIconButton,
-} from '../../../components';
-import {DefaultHeaderStyle} from './defaultHeaderStyle';
-
-//TODO: move defaultHeaderStyle into this file
 export default function ElevatedHeader(props) {
   const {
     head,
@@ -17,43 +9,56 @@ export default function ElevatedHeader(props) {
     headStyle,
     subHeadStyle,
     style,
+    containerStyle,
     children,
     ...otherProps
   } = props;
-  const {container, trailingIcon, leadingIcon, content, subHead} =
-    DefaultHeaderStyle;
-  //TODO: why named it "defaultContainerStyle", should we use StyleSheet.compose
-  const defaultContainerStyle = [container, style];
-  const trailingIconStyle = [trailingIcon];
-  const leadingIconStyle = [leadingIcon];
-  const contentStyle = [content];
-  const subHeadStyles = [subHead];
+
+  const defaultContainerStyle = [styles.container, style];
+  const subHeadStyles = [styles.subHead];
 
   return (
-    <ElevatedCard {...otherProps} style={defaultContainerStyle}>
+    <ElevatedCard
+      {...otherProps}
+      style={defaultContainerStyle}
+      containerStyle={containerStyle}>
       {children}
-      <View style={leadingIconStyle}>
+      <View style={styles.leadingIcon}>
         <FilledIconButton style={styles.buttonIconArea} />
       </View>
-      <View style={contentStyle}>
+      <View style={styles.content}>
         {head && <Text style={headStyle}>{head}</Text>}
         <View style={subHeadStyles}>
           {subHead1 && <Text style={subHeadStyle}>{subHead1}</Text>}
           {subHead2 && <Text style={subHeadStyle}>{subHead2}</Text>}
         </View>
       </View>
-      <View style={trailingIconStyle}>
-        <StandardIconButton style={styles.buttonIconArea} />
-      </View>
     </ElevatedCard>
   );
 }
 
 const styles = StyleSheet.create({
-  buttonIconArea: {
-    width: 16,
-    height: 16,
-    backgroundColor: 'gray',
+  container: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+  },
+  leadingIcon: {
+    width: '12%',
+    backgroundColor: 'greenyellow',
+    justifyContent: 'center',
+  },
+  content: {
+    width: '76%',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+  },
+  subHead: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
 });
 

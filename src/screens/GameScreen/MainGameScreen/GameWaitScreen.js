@@ -1,20 +1,23 @@
 import React from 'react';
-import {Dimensions, SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import {
+  Dimensions,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {
   ElevatedCard,
   FilledButton,
   FilledIconButton,
-  OutlinedButton,
-} from '../../components';
-import {ElevatedHeader} from '../components';
+} from '../../../components';
+import {ElevatedHeader} from './components';
 
-//TODO: refactor ->: const {width: screenWidth, height: screenHeight } = Dimensions.get('window');
-const width = Dimensions.get('window').width,
-  height = Dimensions.get('window').height;
+const {width: screenWidth} = Dimensions.get('screen');
 
-//TODO: GamePlayScreen define it own style
-export default function GamePlayScreen(props) {
+export default function GameWaitScreen(props) {
   const {
     typoHeader = Typography.title.large,
     typoSubHeader = Typography.label.large,
@@ -40,19 +43,20 @@ export default function GamePlayScreen(props) {
 
   return (
     <SafeAreaView {...otherProps} style={defaultContainerStyle}>
-      <ElevatedHeader
-        head={cardInfo?.title}
-        subHead1={cardInfo?.tag}
-        subHead2={`Tổng số ${cardInfo?.totalCards} lá`}
-        headStyle={[typoHeader]}
-        subHeadStyle={[typoSubHeader]}
-        style={styles.header}
-      />
-      <View style={styles.supportingText}>
-        {description && <Text style={typoSupportingText}>{description}</Text>}
-      </View>
-      <View style={styles.gameCard}>
-        <ElevatedCard style={styles.gameCard}>
+      <ScrollView contentContainerStyle={styles.scrollView}>
+        <ElevatedHeader
+          head={cardInfo?.title}
+          subHead1={cardInfo?.tag}
+          subHead2={`Tổng số ${cardInfo?.totalCards} lá`}
+          headStyle={[typoHeader]}
+          subHeadStyle={[typoSubHeader]}
+          style={styles.header}
+          containerStyle={styles.header}
+        />
+        <View style={styles.supportingText}>
+          {description && <Text style={typoSupportingText}>{description}</Text>}
+        </View>
+        <ElevatedCard style={shadowStyle} containerStyle={styles.gameCard}>
           {item?.icon && <FilledIconButton content={item?.icon} />}
           {questionInfo?.question1 && (
             <Text style={[typoBody, styles.text]}>
@@ -60,46 +64,44 @@ export default function GamePlayScreen(props) {
             </Text>
           )}
         </ElevatedCard>
-      </View>
-      <View style={styles.action}>
-        <OutlinedButton
-          content={'Lá trước'}
-          onPress={handlePressFilledButton}
-        />
-        <FilledButton
-          content={'Lá tiép theo'}
-          onPress={handlePressFilledButton}
-        />
-      </View>
+        <View style={styles.action}>
+          <FilledButton
+            content={'Choi ngay'}
+            onPress={handlePressFilledButton}
+          />
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    width: width,
-    height: height,
+    width: screenWidth,
+  },
+  scrollView: {
+    justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'red',
   },
   header: {
-    height: height * 0.1,
-    backgroundColor: 'coral',
-    alignItems: 'center',
+    width: '100%',
+    aspectRatio: 4,
   },
   supportingText: {
-    height: height * 0.1,
+    width: '100%',
+    aspectRatio: 5,
     alignItems: 'center',
     justifyContent: 'center',
   },
   gameCard: {
-    width: width * 0.7,
-    height: height * 0.6,
+    width: '70%',
+    aspectRatio: 7 / 10,
     justifyContent: 'center',
+    alignItems: 'center',
   },
   action: {
-    width: width,
-    height: height * 0.1,
+    width: '100%',
+    aspectRatio: 4,
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
@@ -109,6 +111,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 32,
   },
 });
+
+const shadowStyle = StyleSheet.compose(styles.gameCard, {width: '100%'});
 
 const cardInfo = {
   id: '123',
