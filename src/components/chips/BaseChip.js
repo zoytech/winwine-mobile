@@ -8,27 +8,48 @@ const ChipVariant = {
   ELEVATED: 'ELEVATED',
 };
 
-function generateStateStyles(selected, pressed, disabled, colorVariant) {
+function generateStateStyles(
+  selected,
+  pressed,
+  disabled,
+  selectedColorVariant,
+  colorVariant,
+) {
   if (disabled) {
     const {base: baseColor, onBase: onBaseColor} =
       Color.light[ColorVariant.surface];
     return {
-      containerStyle: {backgroundColor: baseColor},
+      containerStyle: {backgroundColor: baseColor, opacity: 0.5},
       contentStyle: {color: onBaseColor},
     };
   }
 
-  const {base: baseColor, onBase: onBaseColor} = Color.light[colorVariant];
-  if (pressed) {
+  if (selected) {
+    const {container: containerColor, onContainer: onContainerColor} =
+      Color.light[selectedColorVariant];
+    if (pressed) {
+      return {
+        containerStyle: {backgroundColor: containerColor},
+        contentStyle: {color: onContainerColor},
+      };
+    }
+    return {
+      containerStyle: {backgroundColor: containerColor},
+      contentStyle: {color: onContainerColor},
+    };
+  } else {
+    const {base: baseColor, onBase: onBaseColor} = Color.light[colorVariant];
+    if (pressed) {
+      return {
+        containerStyle: {backgroundColor: baseColor},
+        contentStyle: {color: onBaseColor},
+      };
+    }
     return {
       containerStyle: {backgroundColor: baseColor},
       contentStyle: {color: onBaseColor},
     };
   }
-  return {
-    containerStyle: {backgroundColor: baseColor},
-    contentStyle: {color: onBaseColor},
-  };
 }
 
 export default function BaseChip(props) {
@@ -40,7 +61,8 @@ export default function BaseChip(props) {
     style,
     contentStyle: rawContentStyle,
 
-    colorVariant = ColorVariant.surface,
+    selectedColorVariant = ColorVariant.secondary,
+    colorVariant = ColorVariant.surfaceVariant,
     chipVariant = ChipVariant.ELEVATED,
     typographyVariant = Typography.label.large,
 
@@ -52,8 +74,13 @@ export default function BaseChip(props) {
   function getContainerStyle({pressed}) {
     return [
       styles.container,
-      generateStateStyles(selected, pressed, disabled, colorVariant)
-        ?.containerStyle,
+      generateStateStyles(
+        selected,
+        pressed,
+        disabled,
+        selectedColorVariant,
+        colorVariant,
+      )?.containerStyle,
       style,
     ];
   }
@@ -63,6 +90,7 @@ export default function BaseChip(props) {
       selected,
       pressed,
       disabled,
+      selectedColorVariant,
       colorVariant,
     )?.contentStyle;
     return (
