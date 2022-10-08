@@ -1,5 +1,5 @@
 import HomeScreen from './HomeScreen/HomeScreen';
 
-import GameScreen from './GameScreen/GameScreen';
+import GameScreen from './gameScreens/GameScreen';
 
 export {HomeScreen, GameScreen};

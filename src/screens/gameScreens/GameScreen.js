@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import ElevatedCard from '../../components/cards/ElevatedCard';
 
-export default function GameScreen(props) {
+export default function GameScreen() {
   return (
     <View style={styles.container}>
       <ElevatedCard />
