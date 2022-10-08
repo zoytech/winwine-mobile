@@ -7,7 +7,6 @@ const ColorVariant = {
   surface: 'surface',
   surfaceVariant: 'surfaceVariant',
   outline: 'outline',
-  stateLayer: 'stateLayer',
 };
 
 const Color = {
@@ -55,50 +54,3 @@ const Color = {
 
 export {ColorVariant};
 export default Color;
-
-// const {opacity_100} = OpacityLevel;
-// const RGBA = 'rgba(255, 255, 255, 1)';
-// const Color = {
-//   light: {
-//     [ColorVariant.primary]: {
-//       base: `rgba(255, 255, 255, ${opacity_100})`,
-//       onBase: `rgba(255, 255, 255, ${opacity_100})`,
-//       container: `rgba(255, 221, 182, ${opacity_100})`,
-//       onContainer: `rgba(42, 24, 0, ${opacity_100})`,
-//     },
-//     [ColorVariant.secondary]: {
-//       base: `rgba(112, 91, 64, ${opacity_100})`,
-//       onBase: `rgba(255, 255, 255, ${opacity_100})`,
-//       container: `rgba(252, 222, 188, ${opacity_100})`,
-//       onContainer: `rgba(39, 25, 5, ${opacity_100})`,
-//     },
-//     [ColorVariant.tertiary]: {
-//       base: `rgba(83, 100, 62, ${opacity_100})`,
-//       onBase: `rgba(255, 255, 255, ${opacity_100})`,
-//       container: `rgba(214, 233, 186, ${opacity_100})`,
-//       onContainer: `rgba(18, 31, 3, ${opacity_100})`,
-//     },
-//     [ColorVariant.error]: {
-//       base: `rgba(186, 26, 26, ${opacity_100})`,
-//       onBase: `rgba(255, 255, 255, ${opacity_100})`,
-//       container: `rgba(255, 218, 214, ${opacity_100})`,
-//       onContainer: `rgba(65, 0, 2, ${opacity_100})`,
-//     },
-//     [ColorVariant.background]: {
-//       base: `rgba(255, 251, 255, ${opacity_100})`,
-//       onBase: `rgba(31, 27, 22, ${opacity_100})`,
-//     },
-//
-//     [ColorVariant.surface]: {
-//       base: `rgba(255, 251, 255, ${opacity_100})`,
-//       onBase: `rgba(31, 27, 22, ${opacity_100})`,
-//     },
-//     [ColorVariant.surfaceVariant]: {
-//       base: `rgba(255, 251, 255, ${opacity_100})`,
-//       onBase: `rgba(80, 69, 57, ${opacity_100})`,
-//     },
-//     [ColorVariant.outline]: {
-//       base: `rgba(130, 117, 104, ${opacity_100})`,
-//     },
-//   },
-// };
