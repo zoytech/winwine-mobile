@@ -15,13 +15,13 @@ export default function StandardIconButton(props) {
     style,
     contentStyle: rawContentStyle,
     colorPrimary = ColorVariant.primary,
-    stateLayersPrimary = StateLayersVariant.primary,
-    stateLayersOnSurface = StateLayersVariant.onSurface,
     typographyVariant = Typography.label.large,
     disabled,
     children,
     ...otherProps
   } = props;
+  const stateLayersPrimary = StateLayersVariant.primary,
+    stateLayersOnSurface = StateLayersVariant.onSurface;
 
   function generateStateStyles(pressed, isDisabled) {
     const defaultContainerStyle = DefaultIconButtonStyle.container;

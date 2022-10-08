@@ -1,11 +1,11 @@
 import React from 'react';
-import {Pressable, Text, View} from 'react-native';
+import {Pressable, View} from 'react-native';
 import {
   Color,
   ColorVariant,
-  Typography,
-  StateLayersVariant,
   StateLayers,
+  StateLayersVariant,
+  Typography,
 } from 'src/themes';
 import DefaultIconButtonStyle from './defaultIconButtonStyle';
 
@@ -15,13 +15,13 @@ export default function TonalIconButton(props) {
     style,
     contentStyle: rawContentStyle,
     colorSecondary = ColorVariant.secondary,
-    stateLayersOnSecondary = StateLayersVariant.onSecondary,
-    stateLayersOnSurface = StateLayersVariant.onSurface,
     typographyVariant = Typography.label.large,
     disabled,
     children,
     ...otherProps
   } = props;
+  const stateLayersOnSecondary = StateLayersVariant.onSecondaryContainer,
+    stateLayersOnSurface = StateLayersVariant.onSurface;
 
   function generateStateStyles(pressed, isDisabled) {
     const defaultContainerStyle = DefaultIconButtonStyle.container;

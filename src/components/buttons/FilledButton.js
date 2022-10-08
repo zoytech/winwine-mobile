@@ -15,16 +15,16 @@ export default function FilledButton(props) {
     style,
     contentStyle: rawContentStyle,
     colorPrimary = ColorVariant.primary,
-    stateLayersOnPrimary = StateLayersVariant.onPrimary,
-    stateLayersOnSurface = StateLayersVariant.onSurface,
     typographyVariant = Typography.label.large,
     disabled,
     children,
     ...otherProps
   } = props;
+  const stateLayersOnPrimary = StateLayersVariant.onPrimary,
+    stateLayersOnSurface = StateLayersVariant.onSurface;
 
   function generateStateStyles(pressed, isDisabled) {
-    const defaultContainerStyle = DefaultButtonStyle.container;
+    const defaultContainerStyle = [DefaultButtonStyle.container, style];
     const defaultContentStyle = typographyVariant;
     if (isDisabled) {
       const {level_012, level_032} = StateLayers.light[stateLayersOnSurface];
