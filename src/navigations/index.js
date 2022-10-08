@@ -51,6 +51,6 @@ export default function RootNavigator(props) {
 // <NavigationContainer>
 //     <Stack.Navigator initialRouteName={ScreenKeys.GAME_PLAY}>
 //         <Stack.Screen name={ScreenKeys.GAME_PLAY} component={MainGameScreen}/>
-//         <Stack.Screen name={ScreenKeys.HOME} component={HomeScreen}/>
+//         <Stack.Screen name={ScreenKeys.HOME} component={homeScreens}/>
 //     </Stack.Navigator>
 // </NavigationContainer>
