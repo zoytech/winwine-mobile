@@ -25,8 +25,11 @@ export default function SuggestionList(props) {
   return (
     <FlatList
       horizontal={true}
+      showsVerticalScrollIndicator={false}
+      showsHorizontalScrollIndicator={false}
+      keyExtractor={item => item?.id}
       ItemSeparatorComponent={<View style={styles.separator} />}
-      style={styles.container}
+      style={[styles.container, style]}
       data={data}
       renderItem={renderItem}
     />

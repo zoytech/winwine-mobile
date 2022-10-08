@@ -8,8 +8,10 @@ import {
   View,
 } from 'react-native';
 import {Color, ColorVariant, Typography} from 'src/themes';
-import MiniCardItem from '../components/MiniCardItem/MiniCardItem';
+import MiniCardItem from '../components/MiniCardItem';
 import SuggestionList from './SuggestionList';
+import HorizontalCardListList from './HorizontalCardListList';
+import SectionHeader from './SectionHeader';
 
 const {width: screenWidth} = Dimensions.get('screen');
 
@@ -27,11 +29,8 @@ export default function HomeScreen(props) {
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.contentContainer}>
         <SuggestionList style={styles.suggestionsView} data={SuggestionsData} />
-        <FlatList
-          data={CARD_DATA}
-          renderItem={renderPackageItem}
-          keyExtractor={item => item?.id}
-        />
+        <SectionHeader content={'Gần đây'} />
+        <HorizontalCardListList data={CARD_DATA} />
       </ScrollView>
     </SafeAreaView>
   );
@@ -40,6 +39,7 @@ export default function HomeScreen(props) {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
+    height: '100%',
     backgroundColor: Color.light[ColorVariant.background].base,
   },
   contentContainer: {
@@ -48,6 +48,9 @@ const styles = StyleSheet.create({
   suggestionsView: {},
   shadow: {
     margin: 16,
+  },
+  test: {
+    backgroundColor: 'blue',
   },
 });
 

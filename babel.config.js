@@ -12,6 +12,7 @@ module.exports = {
           'src/navigations': './src/navigations',
           'src/services': './src/services',
           'src/themes': './src/themes',
+          'src/assets': './src/assets',
         },
         extensions: [
           '.ios.ts',
