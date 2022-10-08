@@ -1,1 +1,1 @@
-export * from './header';
+export * from '../GameScreen/MainGameScreen/components/header';
