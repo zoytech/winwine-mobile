@@ -3,51 +3,49 @@ import {
   Dimensions,
   FlatList,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   View,
 } from 'react-native';
-import {PrimaryChip, SecondaryChip} from 'src/components';
-import {Typography} from 'src/themes';
-import MiniCardItem from './components/MiniCardItem/MiniCardItem';
+import {Color, ColorVariant, Typography} from 'src/themes';
+import MiniCardItem from '../components/MiniCardItem/MiniCardItem';
+import SuggestionList from './SuggestionList';
 
 const {width: screenWidth} = Dimensions.get('screen');
 
+const SuggestionsData = [
+  {content: 'Drinking Game', selected: true},
+  {content: 'Truth or dare', selected: false},
+  {content: 'Truth or dare 2', selected: false},
+];
+
 export default function HomeScreen(props) {
   const {typoChip = Typography.label.large} = props;
-  const screenStyle = [styles.container];
 
   const renderPackageItem = ({item}) => <MiniCardItem cardInfo={item} />;
   return (
-    <SafeAreaView style={screenStyle}>
-      <View style={styles.chip}>
-        <SecondaryChip
-          content={'Drinking game'}
-          contentStyle={typoChip}
-          containerStyle={styles.shadow}
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.contentContainer}>
+        <SuggestionList style={styles.suggestionsView} data={SuggestionsData} />
+        <FlatList
+          data={CARD_DATA}
+          renderItem={renderPackageItem}
+          keyExtractor={item => item?.id}
         />
-        <PrimaryChip
-          content={'Truth or dare'}
-          contentStyle={typoChip}
-          containerStyle={styles.shadow}
-        />
-      </View>
-      <FlatList
-        data={CARD_DATA}
-        renderItem={renderPackageItem}
-        keyExtractor={item => item?.id}
-        horizontal={true}
-      />
+      </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    width: screenWidth,
+    width: '100%',
+    backgroundColor: Color.light[ColorVariant.background].base,
   },
-  chip: {
-    flexDirection: 'row',
+  contentContainer: {
+    paddingHorizontal: 16,
   },
+  suggestionsView: {},
   shadow: {
     margin: 16,
   },
