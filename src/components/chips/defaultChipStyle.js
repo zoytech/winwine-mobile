@@ -1,4 +1,6 @@
-const DefaultChipStyle = {
+import {StyleSheet} from 'react-native';
+
+const DefaultChipStyle = StyleSheet.create({
   container: {
     paddingLeft: 16,
     paddingRight: 16,
@@ -12,5 +14,5 @@ const DefaultChipStyle = {
     width: 18,
     height: 18,
   },
-};
+});
 export default DefaultChipStyle;

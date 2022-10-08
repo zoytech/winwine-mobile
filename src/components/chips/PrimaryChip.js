@@ -4,7 +4,6 @@ import {Shadow} from 'react-native-shadow-2';
 import {
   Color,
   ColorVariant,
-  Elevations,
   ShadowPresets,
   StateLayers,
   StateLayersVariant,
@@ -18,6 +17,7 @@ export default function PrimaryChip(props) {
     content,
     style,
     contentStyle: rawContentStyle,
+    containerStyle,
     colorPrimary = ColorVariant.primary,
     typographyVariant = Typography.label.large,
     disabled,
@@ -29,15 +29,12 @@ export default function PrimaryChip(props) {
   const stateLayersPrimary = StateLayersVariant.primary,
     stateLayersOnSurface = StateLayersVariant.onSurface,
     stateLayersOnSurfaceVar = StateLayersVariant.onSurfaceVar,
-    elevationVariant = Elevations.light,
     shadowStyle = ShadowPresets.normal;
 
   function generateStateStyles(pressed, isDisabled, isDragged) {
-    //TODO: use optional chaining
-    const defaultContainerStyle = DefaultChipStyle.container;
+    const defaultContainerStyle = DefaultChipStyle?.container;
     const defaultContentStyle = typographyVariant;
     const {base: baseColor} = Color.light[colorPrimary];
-    const {elevation1, elevation2, elevation3} = elevationVariant;
     if (isDisabled) {
       const {level_012, level_032} = StateLayers.light[stateLayersOnSurface];
       return {
@@ -76,10 +73,8 @@ export default function PrimaryChip(props) {
       return {
         containerStyle: [
           defaultContainerStyle,
-          // elevation3,
           {
             backgroundColor: level_016,
-            // shadowColor: surface1,
           },
           style,
         ],
@@ -93,7 +88,6 @@ export default function PrimaryChip(props) {
     return {
       containerStyle: [
         defaultContainerStyle,
-        // elevation1,
         {backgroundColor: surface1},
         style,
       ],
@@ -120,7 +114,11 @@ export default function PrimaryChip(props) {
   }
 
   return (
-    <Shadow {...shadowStyle} style={styles.shadow} disabled={disabled}>
+    <Shadow
+      {...shadowStyle}
+      style={styles.shadow}
+      disabled={disabled}
+      containerStyle={containerStyle}>
       <Pressable {...otherProps} style={getContainerStyle}>
         {renderContent}
       </Pressable>

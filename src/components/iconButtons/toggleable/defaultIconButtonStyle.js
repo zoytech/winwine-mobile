@@ -1,5 +1,6 @@
-//TODO: use StyleSheet.create for better performance
-const DefaultIconButtonStyle = {
+import {StyleSheet} from 'react-native';
+
+const DefaultIconButtonStyle = StyleSheet.create({
   container: {
     padding: 8,
     minWidth: 40,
@@ -11,5 +12,5 @@ const DefaultIconButtonStyle = {
     width: 24,
     height: 24,
   },
-};
+});
 export default DefaultIconButtonStyle;

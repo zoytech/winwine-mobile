@@ -1,38 +1,102 @@
 import React from 'react';
-import {Dimensions, SafeAreaView, StyleSheet} from 'react-native';
+import {
+  Dimensions,
+  FlatList,
+  SafeAreaView,
+  StyleSheet,
+  View,
+} from 'react-native';
 import MiniCardItem from './components/MiniCardItem/MiniCardItem';
+import {PrimaryChip, SecondaryChip} from '../../components';
+import {Typography} from '../../themes';
 
-export default function HomeScreen() {
+const {width: screenWidth, height: screenHeight} = Dimensions.get('screen');
+
+export default function HomeScreen(props) {
+  const {typoChip = Typography.label.large} = props;
   const screenStyle = [styles.container];
+
+  const renderPackageItem = ({item}) => <MiniCardItem cardInfo={item} />;
   return (
     <SafeAreaView style={screenStyle}>
-      <MiniCardItem />
+      <View style={styles.chip}>
+        <SecondaryChip
+          content={'Drinking game'}
+          contentStyle={typoChip}
+          containerStyle={styles.shadow}
+        />
+        <PrimaryChip
+          content={'Truth or dare'}
+          contentStyle={typoChip}
+          containerStyle={styles.shadow}
+        />
+      </View>
+      <FlatList
+        data={CARD_DATA}
+        renderItem={renderPackageItem}
+        keyExtractor={item => item?.id}
+        horizontal={true}
+      />
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
-    // alignSelf: 'center',
-    // textAlign: 'center',
-    // textAlignVertical: 'center',
+    width: screenWidth,
   },
-  square: {
-    width: 200,
-    height: 200,
-    margin: 30,
-    backgroundColor: 'rgba(132, 84, 0, 0.5)',
-    shadowColor: 'rgba(0, 0, 0, 0.15)',
-    elevation: 1,
-
-    // shadowColor: '#000',
-    // shadowOffset: {width: 0, height: 2},
-    // shadowOpacity: 0.5,
-    // shadowRadius: 2,
+  chip: {
+    flexDirection: 'row',
+  },
+  shadow: {
+    margin: 16,
   },
 });
+
+const NameOfGame = [
+  {
+    id: '1',
+    name: 'Drinking game',
+  },
+  {
+    id: '2',
+    name: 'Truth or dare',
+  },
+];
+
+const CARD_DATA = [
+  {
+    id: '123',
+    title: 'Bai cua Nam',
+    tag: 'Thieu nhi',
+    totalCards: '30',
+    avatar: 'N',
+    currentCard: '28',
+  },
+  {
+    id: '124',
+    title: 'Bai cua Tu',
+    tag: '18+',
+    totalCards: '30',
+    avatar: 'N',
+    currentCard: '28',
+  },
+  {
+    id: '125',
+    title: 'Bai cua Minh',
+    tag: 'Thieu nhi',
+    totalCards: '40',
+    avatar: 'M',
+    currentCard: '28',
+  },
+];
+
+const questionInfo = {
+  question1:
+    'Em yeu truong em voi bao ban than va co giao hien nhu yeu que huong cap sach den truong.',
+  question2:
+    'Để có được 10 đồng tiền vàng, một ông lão đã phải nhảy xuống biển nhặt nó. Vậy hỏi đồng tiền vàng đó nặng bao nhiêu?',
+};
 
 /*
  <View style={screenView}>

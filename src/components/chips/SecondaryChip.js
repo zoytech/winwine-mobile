@@ -17,6 +17,7 @@ export default function SecondaryChip(props) {
     content,
     style,
     contentStyle: rawContentStyle,
+    containerStyle,
     colorSecondary = ColorVariant.secondary,
     typographyVariant = Typography.label.large,
     disabled,
@@ -116,7 +117,11 @@ export default function SecondaryChip(props) {
   }
 
   return (
-    <Shadow {...shadowStyle} style={styles.shadow} disabled={disabled}>
+    <Shadow
+      {...shadowStyle}
+      style={styles.shadow}
+      disabled={disabled}
+      containerStyle={containerStyle}>
       <Pressable {...otherProps} style={getContainerStyle}>
         {renderContent}
       </Pressable>

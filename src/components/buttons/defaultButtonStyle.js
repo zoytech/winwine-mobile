@@ -1,4 +1,6 @@
-const DefaultButtonStyle = {
+import {StyleSheet} from 'react-native';
+
+const DefaultIconButtonStyle = StyleSheet.create({
   container: {
     paddingVertical: 10,
     paddingHorizontal: 24,
@@ -8,5 +10,5 @@ const DefaultButtonStyle = {
     justifyContent: 'center',
     alignItems: 'center',
   },
-};
-export default DefaultButtonStyle;
+});
+export default DefaultIconButtonStyle;

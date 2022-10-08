@@ -4,7 +4,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {GameScreen, HomeScreen} from '../screens';
 import {ScreenKeys} from './ScreenKeys';
 import APP_NAME from '../constants';
-import {ColorVariant} from '../themes/color';
+import {ColorVariant} from '../themes';
 import {Color, Typography} from '../themes';
 
 const Stack = createNativeStackNavigator();
@@ -50,7 +50,7 @@ export default function RootNavigator(props) {
 
 // <NavigationContainer>
 //     <Stack.Navigator initialRouteName={ScreenKeys.GAME_PLAY}>
-//         <Stack.Screen name={ScreenKeys.GAME_PLAY} component={GameScreen}/>
+//         <Stack.Screen name={ScreenKeys.GAME_PLAY} component={MainGameScreen}/>
 //         <Stack.Screen name={ScreenKeys.HOME} component={HomeScreen}/>
 //     </Stack.Navigator>
 // </NavigationContainer>

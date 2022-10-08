@@ -5,6 +5,7 @@ import {FilledButton, OutlinedCard} from '../../../../components';
 
 export default function MiniCardItem(props) {
   const {
+    cardInfo,
     typoTitle = Typography.label.large,
     typoSubTitle = Typography.label.medium,
     typoButton = Typography.label.small,
