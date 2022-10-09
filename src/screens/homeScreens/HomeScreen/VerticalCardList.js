@@ -1,11 +1,9 @@
-import React, {useState} from 'react';
-import {FlatList, StyleSheet, Text, View} from 'react-native';
-import {SuggestionChip} from 'src/components';
+import React from 'react';
+import {FlatList, SectionList, StyleSheet, Text, View} from 'react-native';
 import MiniCardItem from '../components/MiniCardItem';
-import SectionHeader from './SectionHeader';
 
-export default function HorizontalCardListList(props) {
-  const {style, title, data, onItemPressed = () => {}} = props;
+export default function VerticalCardList(props) {
+  const {style, data, onItemPressed = () => {}} = props;
 
   function handleItemPressed({item, index}) {
     onItemPressed({item, index});
@@ -24,7 +22,6 @@ export default function HorizontalCardListList(props) {
     <>
       <FlatList
         style={[styles.container, style]}
-        horizontal={true}
         ItemSeparatorComponent={<View style={styles.separator} />}
         data={data}
         renderItem={renderItem}
@@ -35,6 +32,8 @@ export default function HorizontalCardListList(props) {
 const styles = StyleSheet.create({
   container: {
     paddingVertical: 16,
+    flexDirection: 'column',
+    flexWrap: 'wrap',
   },
 
   separator: {

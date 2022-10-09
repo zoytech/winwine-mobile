@@ -24,7 +24,8 @@ export default function MiniCardItem(props) {
     buttonStyle = Typography.label.small,
   } = props;
 
-  const {title, tag} = data || {};
+  const {head, tag, uri} = data || {};
+  console.log(data);
 
   const handlePressedImageArea = () => {
     onActionButtonPress();
@@ -37,11 +38,11 @@ export default function MiniCardItem(props) {
   return (
     <OutlinedCard style={[styles.container, style]} onPress={onPress}>
       <Pressable onPress={handlePressedImageArea} style={styles.pressedArea}>
-        <Image source={memberImg} style={styles.media} />
+        <Image source={{uri: uri}} style={styles.media} />
       </Pressable>
 
       <View style={styles.headline}>
-        {title && <Text style={titleStyle}>{title}</Text>}
+        {head && <Text style={titleStyle}>{head}</Text>}
         {tag && <Text style={subTitleStyle}>{tag}</Text>}
       </View>
       <View style={styles.action}>
