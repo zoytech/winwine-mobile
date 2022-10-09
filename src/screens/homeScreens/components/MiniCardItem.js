@@ -1,7 +1,15 @@
-import {Dimensions, Image, StyleSheet, Text, View} from 'react-native';
+import {
+  Dimensions,
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableNativeFeedback,
+  View,
+} from 'react-native';
 import memberImg from 'src/assets/images/preview-package/member1.jpg';
 import {FilledButton, OutlinedCard} from 'src/components';
-import {Color, ColorVariant, Typography} from 'src/themes';
+import {Typography} from 'src/themes';
 
 const {width: screenWidth} = Dimensions.get('screen');
 
@@ -18,25 +26,30 @@ export default function MiniCardItem(props) {
 
   const {title, tag} = data || {};
 
-  const handlePressFilledButton = () => {
+  const handlePressedImageArea = () => {
     onActionButtonPress();
+    alert('Move to game wait screen');
   };
-  const handlePressOutlinedButton = () => {
+  const handlePressButton = () => {
     onActionButtonPress();
+    alert('Move to game play screen');
   };
   return (
     <OutlinedCard style={[styles.container, style]} onPress={onPress}>
-      <Image style={styles.media} source={memberImg} />
+      <Pressable onPress={handlePressedImageArea} style={styles.pressedArea}>
+        <Image source={memberImg} style={styles.media} />
+      </Pressable>
+
       <View style={styles.headline}>
         {title && <Text style={titleStyle}>{title}</Text>}
         {tag && <Text style={subTitleStyle}>{tag}</Text>}
       </View>
-      <View style={styles.action} onPress={handlePressOutlinedButton}>
+      <View style={styles.action}>
         <FilledButton
           content={'play now'}
           contentStyle={buttonStyle}
           style={styles.button}
-          onPress={handlePressFilledButton}
+          onPress={handlePressButton}
         />
       </View>
     </OutlinedCard>
@@ -64,14 +77,18 @@ const styles = StyleSheet.create({
     width: screenWidth * 0.35,
     aspectRatio: 0.67,
     justifyContent: 'center',
-
+    overflow: 'hidden',
     position: 'relative',
+  },
+  pressedArea: {
+    width: '100%',
+    height: '60%',
   },
   media: {
     width: '100%',
-    height: '60%',
-    overflow: 'hidden',
+    height: '100%',
     resizeMode: 'cover',
+    backgroundColor: 'blue',
   },
   headline: {
     flexDirection: 'column',
@@ -85,7 +102,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   button: {
-    width: '75%',
+    width: '70%',
     aspectRatio: 3,
     borderRadius: 20,
     paddingVertical: 0,
