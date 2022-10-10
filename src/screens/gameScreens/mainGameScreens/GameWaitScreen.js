@@ -7,8 +7,9 @@ import {
   Text,
   View,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/AntDesign';
 import {Color, ColorVariant, Typography} from 'src/themes';
-import {ElevatedCard, FilledButton, FilledIconButton} from 'src/components';
+import {ElevatedCard, FilledButton} from 'src/components';
 import {ElevatedHeader} from './components';
 
 const {width: screenWidth} = Dimensions.get('screen');
@@ -36,6 +37,9 @@ export default function GameWaitScreen(props) {
   const handlePressFilledButton = () => {
     alert('move to game screen');
   };
+  const handlePressIconButton = () => {
+    alert('move to game screen');
+  };
 
   return (
     <SafeAreaView {...otherProps} style={defaultContainerStyle}>
@@ -52,14 +56,22 @@ export default function GameWaitScreen(props) {
         <View style={styles.supportingText}>
           {description && <Text style={supportingTextTypo}>{description}</Text>}
         </View>
-        <ElevatedCard style={shadowStyle} containerStyle={styles.gameCard}>
-          {item?.icon && <FilledIconButton content={item?.icon} />}
-          {questionInfo?.question1 && (
-            <Text style={[bodyTypo, styles.text]}>
-              {questionInfo?.question1}
-            </Text>
-          )}
-        </ElevatedCard>
+        <View style={styles.cardWithButton}>
+          <Icon.Button
+            name="leftcircle"
+            size={30}
+            backgroundColor="#900"
+            onPress={handlePressIconButton}
+          />
+          <ElevatedCard style={shadowStyle} containerStyle={styles.gameCard}>
+            {questionInfo?.question1 && (
+              <Text style={[bodyTypo, styles.text]}>
+                {questionInfo?.question1}
+              </Text>
+            )}
+          </ElevatedCard>
+          <Icon name="rightcircle" size={30} color="#900" />
+        </View>
         <View style={styles.action}>
           <FilledButton
             content={'Choi ngay'}
@@ -88,6 +100,11 @@ const styles = StyleSheet.create({
     aspectRatio: 5,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  cardWithButton: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   gameCard: {
     width: '70%',
