@@ -7,11 +7,10 @@ export default function ElevatedCard(props) {
   const {style, containerStyle, children, ...otherProps} = props;
 
   const shadowProps = ShadowPresets.normal;
-  const defaultContainerStyle = DefaultCardStyle.container;
-  const {surface1} = SurfacesColor.light;
+  const surfaceColor = SurfacesColor.light?.surface1;
   const childrenStyle = [
-    defaultContainerStyle,
-    {backgroundColor: surface1},
+    DefaultCardStyle.container,
+    {backgroundColor: surfaceColor},
     style,
   ];
   return (

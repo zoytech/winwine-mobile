@@ -7,11 +7,10 @@ export default function FilledCard(props) {
   const {style, children, ...otherProps} = props;
 
   const colorVariant = ColorVariant.surfaceVariant;
-  const defaultContainerStyle = DefaultCardStyle.container;
-  const {base} = Color.light[colorVariant];
+  const baseColor = Color.light[colorVariant]?.base;
   const containerStyle = [
-    defaultContainerStyle,
-    {backgroundColor: base},
+    DefaultCardStyle.container,
+    {backgroundColor: baseColor},
     style,
   ];
   return (

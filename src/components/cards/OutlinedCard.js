@@ -6,14 +6,11 @@ import DefaultCardStyle from './defaultCardStyle';
 export default function OutlinedCard(props) {
   const {style, children, ...otherProps} = props;
 
-  const colorOutline = ColorVariant.outline;
-  const colorSurface = ColorVariant.surface;
-  const defaultContainerStyle = DefaultCardStyle.container;
-  const {base: outlineColor} = Color.light[colorOutline];
-  const {base: surfaceColor} = Color.light[colorSurface];
+  const outlineColor = Color.light[ColorVariant.outline]?.base;
+  const surfaceColor = Color.light[ColorVariant.surface]?.base;
 
   const containerStyle = [
-    defaultContainerStyle,
+    DefaultCardStyle.container,
     {
       backgroundColor: surfaceColor,
       borderColor: outlineColor,
