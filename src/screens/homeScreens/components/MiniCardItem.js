@@ -6,7 +6,14 @@ import {
   Text,
   View,
 } from 'react-native';
-import {FilledButton, OutlinedCard} from 'src/components';
+import {
+  ElevatedButton,
+  FilledButton,
+  OutlinedButton,
+  OutlinedCard,
+  TextButton,
+  TonalButton,
+} from 'src/components';
 import {Typography} from 'src/themes';
 
 const {width: screenWidth} = Dimensions.get('screen');
@@ -43,32 +50,17 @@ export default function MiniCardItem(props) {
         {tag && <Text style={subTitleStyle}>{tag}</Text>}
       </View>
       <View style={styles.action}>
-        <FilledButton
+        <TonalButton
           content={'play now'}
           contentStyle={buttonStyle}
           style={styles.button}
           onPress={handlePressButton}
+          // disabled={true}
         />
       </View>
     </OutlinedCard>
   );
 }
-
-const cardInfo = {
-  id: '123',
-  title: 'Bai cua Nam',
-  tag: 'Thieu nhi',
-  totalCards: '30',
-  avatar: 'N',
-  currentCard: '28',
-};
-
-const questionInfo = {
-  question1:
-    'Em yeu truong em voi bao ban than va co giao hien nhu yeu que huong cap sach den truong.',
-  question2:
-    'Để có được 10 đồng tiền vàng, một ông lão đã phải nhảy xuống biển nhặt nó. Vậy hỏi đồng tiền vàng đó nặng bao nhiêu?',
-};
 
 const styles = StyleSheet.create({
   container: {

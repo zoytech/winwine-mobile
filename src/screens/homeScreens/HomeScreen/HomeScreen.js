@@ -1,10 +1,12 @@
 import React from 'react';
 import {Dimensions, FlatList, SafeAreaView, StyleSheet} from 'react-native';
-import {Color, ColorVariant, Typography} from 'src/themes';
-import SuggestionList from './SuggestionList';
-import SectionHeader from './SectionHeader';
-import HorizontalCardList from './HorizontalCardList';
-import VerticalCardList from './VerticalCardList';
+import {Color, ColorVariant} from 'src/themes';
+import {
+  HorizontalCardList,
+  SectionHeader,
+  SuggestionList,
+  VerticalCardList,
+} from './components';
 
 const {width: screenWidth} = Dimensions.get('screen');
 
@@ -35,14 +37,14 @@ const renderListItem = ({item}) => {
   );
 };
 
-export default function HomeScreen(props) {
-  const {typoChip = Typography.label.large} = props;
+export default function HomeScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
         data={SECTIONS}
         style={styles.container}
         contentContainerStyle={styles.contentContainer}
+        showsVerticalScrollIndicator={false}
         ListHeaderComponent={
           <SuggestionList
             style={styles.suggestionsView}
