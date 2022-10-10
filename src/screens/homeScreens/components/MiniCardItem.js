@@ -4,10 +4,8 @@ import {
   Pressable,
   StyleSheet,
   Text,
-  TouchableNativeFeedback,
   View,
 } from 'react-native';
-import memberImg from 'src/assets/images/preview-package/member1.jpg';
 import {FilledButton, OutlinedCard} from 'src/components';
 import {Typography} from 'src/themes';
 
@@ -25,7 +23,6 @@ export default function MiniCardItem(props) {
   } = props;
 
   const {head, tag, uri} = data || {};
-  console.log(data);
 
   const handlePressedImageArea = () => {
     onActionButtonPress();

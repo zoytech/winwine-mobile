@@ -1,5 +1,5 @@
 import React from 'react';
-import {FlatList, SectionList, StyleSheet, Text, View} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 import MiniCardItem from '../components/MiniCardItem';
 
 export default function VerticalCardList(props) {
@@ -32,11 +32,12 @@ export default function VerticalCardList(props) {
 const styles = StyleSheet.create({
   container: {
     paddingVertical: 16,
-    flexDirection: 'column',
+    flexDirection: 'row',
     flexWrap: 'wrap',
+    justifyContent: 'space-around',
   },
 
   separator: {
-    width: 16,
+    height: 32,
   },
 });
