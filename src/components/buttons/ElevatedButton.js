@@ -1,101 +1,72 @@
 import React from 'react';
-import {Pressable, StyleSheet, Text} from 'react-native';
-import {Shadow} from 'react-native-shadow-2';
-import {
-  Color,
-  ColorVariant,
-  ShadowPresets,
-  StateLayers,
-  StateLayersVariant,
-  SurfacesColor,
-  Typography,
-} from 'src/themes';
+import {Pressable, Text} from 'react-native';
+import {Color, ColorVariant, Typography} from 'src/themes';
 import DefaultButtonStyle from './defaultButtonStyle';
+
+function generateStateStyles(pressed, isDisabled, colorVariant) {
+  if (isDisabled) {
+    const {onBase: onBaseColor, base: baseColor} =
+      Color.light[ColorVariant.surface];
+    return {
+      containerStyle: {backgroundColor: baseColor},
+      contentStyle: {color: onBaseColor},
+    };
+  }
+  const {base: containerColor, onBase: onContainerColor} =
+    Color.light[colorVariant];
+  if (pressed) {
+    return {
+      containerStyle: {backgroundColor: containerColor},
+      contentStyle: {color: onContainerColor},
+    };
+  }
+  return {
+    containerStyle: {backgroundColor: containerColor},
+    contentStyle: {color: onContainerColor},
+  };
+}
 
 export default function ElevatedButton(props) {
   const {
     content,
     style,
     contentStyle: rawContentStyle,
-    colorPrimary = ColorVariant.primary, // elevation = Elevations.light.elevation1,
+    colorVariant = ColorVariant.surfaceVariant,
     typographyVariant = Typography.label.large,
     disabled,
     children,
     ...otherProps
   } = props;
 
-  const shadowStyle = ShadowPresets.normal,
-    stateLayersOnSurface = StateLayersVariant.onSurface;
-
-  function generateStateStyles(pressed, isDisabled) {
-    const defaultContainerStyle = DefaultButtonStyle.container;
-    const defaultContentStyle = typographyVariant;
-    const {base: baseColor} = Color.light[colorPrimary];
-    if (isDisabled) {
-      const {level_012, level_032} = StateLayers.light[stateLayersOnSurface];
-      return {
-        containerStyle: [
-          defaultContainerStyle,
-          {backgroundColor: level_012},
-          style,
-        ],
-        contentStyle: [
-          defaultContentStyle,
-          {color: level_032},
-          rawContentStyle,
-        ],
-      };
-    }
-    const {surface1, surface2} = SurfacesColor.light;
-    if (pressed) {
-      return {
-        containerStyle: [
-          defaultContainerStyle, // elevation,
-          {backgroundColor: surface2},
-          style,
-        ],
-        contentStyle: [
-          defaultContentStyle,
-          {color: baseColor},
-          rawContentStyle,
-        ],
-      };
-    }
-    return {
-      containerStyle: [
-        defaultContainerStyle, // elevation,
-        {backgroundColor: surface1},
-        style,
-      ],
-      contentStyle: [defaultContentStyle, {color: baseColor}, rawContentStyle],
-    };
-  }
-
   function getContainerStyle({pressed}) {
-    return generateStateStyles(pressed, disabled)?.containerStyle;
+    return [
+      DefaultButtonStyle.container,
+      generateStateStyles(pressed, disabled, colorVariant)?.containerStyle,
+      style,
+    ];
   }
 
   function renderContent({pressed}) {
-    const contentStyle = generateStateStyles(pressed, disabled)?.contentStyle;
+    const contentStyle = generateStateStyles(
+      pressed,
+      disabled,
+      colorVariant,
+    )?.contentStyle;
     return (
       <>
         {children}
-        {content && <Text style={contentStyle}>{content}</Text>}
+        {content && (
+          <Text style={[typographyVariant, contentStyle, rawContentStyle]}>
+            {content}
+          </Text>
+        )}
       </>
     );
   }
 
   return (
-    <Shadow {...shadowStyle} style={styles.shadow} disabled={disabled}>
-      <Pressable {...otherProps} style={getContainerStyle}>
-        {renderContent}
-      </Pressable>
-    </Shadow>
+    <Pressable {...otherProps} style={getContainerStyle}>
+      {renderContent}
+    </Pressable>
   );
 }
-
-const styles = StyleSheet.create({
-  shadow: {
-    borderRadius: 100,
-  },
-});

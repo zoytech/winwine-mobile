@@ -1,87 +1,63 @@
 import React from 'react';
 import {Pressable, Text} from 'react-native';
-import {
-  Color,
-  ColorVariant,
-  Typography,
-  StateLayersVariant,
-  StateLayers,
-} from 'src/themes';
+import {Color, ColorVariant, Typography} from 'src/themes';
 import DefaultButtonStyle from './defaultButtonStyle';
+
+function generateStateStyles(pressed, isDisabled, colorVariant) {
+  if (isDisabled) {
+    const {onBase: onBaseColor} = Color.light[ColorVariant.surface];
+    return {
+      contentStyle: {color: onBaseColor},
+    };
+  }
+  const {container: containerColor, onContainer: onContainerColor} =
+    Color.light[colorVariant];
+  if (pressed) {
+    return {
+      containerStyle: {backgroundColor: containerColor},
+      contentStyle: {color: onContainerColor},
+    };
+  }
+  return {
+    containerStyle: {backgroundColor: containerColor},
+    contentStyle: {color: onContainerColor},
+  };
+}
 
 export default function TonalButton(props) {
   const {
     content,
     style,
     contentStyle: rawContentStyle,
-    colorSecondary = ColorVariant.secondary,
-    stateLayersOnSecondary = StateLayersVariant.onSecondary,
-    stateLayersOnSurface = StateLayersVariant.onSurface,
+    colorVariant = ColorVariant.secondary,
     typographyVariant = Typography.label.large,
     disabled,
     children,
     ...otherProps
   } = props;
 
-  function generateStateStyles(pressed, isDisabled) {
-    const defaultContainerStyle = DefaultButtonStyle.container;
-    const defaultContentStyle = typographyVariant;
-    if (isDisabled) {
-      const {level_012, level_032} = StateLayers.light[stateLayersOnSurface];
-      return {
-        containerStyle: [
-          defaultContainerStyle,
-          {backgroundColor: level_012},
-          style,
-        ],
-        contentStyle: [
-          defaultContentStyle,
-          {color: level_032},
-          rawContentStyle,
-        ],
-      };
-    }
-
-    const {container, onContainer} = Color.light[colorSecondary];
-    if (pressed) {
-      const {level_012, level_032} = StateLayers.light[stateLayersOnSecondary];
-      return {
-        containerStyle: [
-          defaultContainerStyle,
-          {backgroundColor: level_012},
-          style,
-        ],
-        contentStyle: [
-          defaultContentStyle,
-          {color: onContainer},
-          rawContentStyle,
-        ],
-      };
-    }
-    return {
-      containerStyle: [
-        defaultContainerStyle,
-        {backgroundColor: container},
-        style,
-      ],
-      contentStyle: [
-        defaultContentStyle,
-        {color: onContainer},
-        rawContentStyle,
-      ],
-    };
-  }
-
   function getContainerStyle({pressed}) {
-    return generateStateStyles(pressed, disabled)?.containerStyle;
+    return [
+      DefaultButtonStyle.container,
+      generateStateStyles(pressed, disabled, colorVariant)?.containerStyle,
+      style,
+    ];
   }
 
   function renderContent({pressed}) {
-    const contentStyle = generateStateStyles(pressed, disabled)?.contentStyle;
+    const contentStyle = generateStateStyles(
+      pressed,
+      disabled,
+      colorVariant,
+    )?.contentStyle;
     return (
       <>
         {children}
-        {content && <Text style={contentStyle}>{content}</Text>}
+        {content && (
+          <Text style={[typographyVariant, contentStyle, rawContentStyle]}>
+            {content}
+          </Text>
+        )}
       </>
     );
   }

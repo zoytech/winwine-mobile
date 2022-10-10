@@ -1,92 +1,70 @@
 import React from 'react';
 import {Pressable, Text} from 'react-native';
-import {
-  Color,
-  ColorVariant,
-  StateLayers,
-  StateLayersVariant,
-  Typography,
-} from 'src/themes';
+import {Color, ColorVariant, Typography} from 'src/themes';
 import DefaultButtonStyle from './defaultButtonStyle';
+
+function generateStateStyles(pressed, isDisabled, colorVariant) {
+  if (isDisabled) {
+    const {onBase: onBaseColor} = Color.light[ColorVariant.surface];
+    return {
+      containerStyle: {borderColor: onBaseColor, borderWidth: 0.5},
+      contentStyle: {color: onBaseColor},
+    };
+  }
+  const {base: baseColor} = Color.light[colorVariant];
+  const {base: baseOutlineColor} = Color.light[ColorVariant.outline];
+  if (pressed) {
+    return {
+      containerStyle: {
+        borderColor: baseOutlineColor,
+        borderWidth: 0.5,
+      },
+      contentStyle: {color: baseColor},
+    };
+  }
+  return {
+    containerStyle: {
+      borderColor: baseOutlineColor,
+      borderWidth: 0.5,
+    },
+    contentStyle: {color: baseColor},
+  };
+}
 
 export default function OutlinedButton(props) {
   const {
     content,
     style,
     contentStyle: rawContentStyle,
-    colorPrimary = ColorVariant.primary,
-    colorOutline = ColorVariant.outline,
-    stateLayersPrimary = StateLayersVariant.primary,
-    stateLayersOnSurface = StateLayersVariant.onSurface,
+    colorVariant = ColorVariant.primary,
     typographyVariant = Typography.label.large,
     disabled,
     children,
     ...otherProps
   } = props;
 
-  function generateStateStyles(pressed, isDisabled) {
-    const defaultContainerStyle = DefaultButtonStyle.container;
-    const defaultContentStyle = typographyVariant;
-    if (isDisabled) {
-      const {level_012, level_032} = StateLayers.light[stateLayersOnSurface];
-      return {
-        containerStyle: [
-          defaultContainerStyle,
-          {borderColor: level_012, borderWidth: 0.5},
-          style,
-        ],
-        contentStyle: [
-          defaultContentStyle,
-          {color: level_032},
-          rawContentStyle,
-        ],
-      };
-    }
-    const {base: baseColor, onBase: onBaseColor} = Color.light[colorPrimary];
-    const {base: baseOutline} = Color.light[colorOutline];
-    if (pressed) {
-      const {level_012} = StateLayers.light[stateLayersPrimary];
-      return {
-        containerStyle: [
-          defaultContainerStyle,
-          {
-            backgroundColor: level_012,
-            borderColor: baseOutline,
-            borderWidth: 0.5,
-          },
-          style,
-        ],
-        contentStyle: [
-          defaultContentStyle,
-          {color: baseColor},
-          rawContentStyle,
-        ],
-      };
-    }
-    return {
-      containerStyle: [
-        defaultContainerStyle,
-        {
-          backgroundColor: onBaseColor,
-          borderColor: baseOutline,
-          borderWidth: 0.5,
-        },
-        style,
-      ],
-      contentStyle: [defaultContentStyle, {color: baseColor}, rawContentStyle],
-    };
-  }
-
   function getContainerStyle({pressed}) {
-    return generateStateStyles(pressed, disabled)?.containerStyle;
+    return [
+      DefaultButtonStyle.container,
+      generateStateStyles(pressed, disabled, colorVariant)?.containerStyle,
+      style,
+    ];
   }
 
   function renderContent({pressed}) {
-    const contentStyle = generateStateStyles(pressed, disabled)?.contentStyle;
+    const contentStyle = generateStateStyles(
+      pressed,
+      disabled,
+      colorVariant,
+    )?.contentStyle;
     return (
       <>
         {children}
-        {content && <Text style={contentStyle}>{content}</Text>}
+        {content && (
+          <Text style={[typographyVariant, contentStyle, rawContentStyle]}>
+            {content}
+          </Text>
+        )}
       </>
     );
   }
