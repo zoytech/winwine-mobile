@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Dimensions,
   SafeAreaView,
@@ -9,13 +9,14 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {Color, ColorVariant, Typography} from 'src/themes';
-import {ElevatedCard, FilledButton} from 'src/components';
+import {ElevatedCard, FilledButton, FilledIconButton} from 'src/components';
 import {ElevatedHeader} from './components';
 
 const {width: screenWidth} = Dimensions.get('screen');
 
 export default function GameWaitScreen(props) {
   const {
+    onIconButtonPress = () => {},
     headerTypo = Typography.title.large,
     subHeaderTypo = Typography.label.large,
     supportingTextTypo = Typography.title.medium,
@@ -25,6 +26,7 @@ export default function GameWaitScreen(props) {
     ...otherProps
   } = props;
 
+  const [previousCard, setPreviousCard] = useState(null);
   const baseColor = Color.light[colorVariant]?.base;
 
   const defaultContainerStyle = [
@@ -34,12 +36,32 @@ export default function GameWaitScreen(props) {
   ];
   const description = 'Xem trước 10 lá bài';
 
-  const handlePressFilledButton = () => {
+  function handlePressFilledButton() {
     alert('move to game screen');
-  };
-  const handlePressIconButton = () => {
-    alert('move to game screen');
-  };
+  }
+
+  function handlePressIconButton(number) {
+    setPreviousCard(number + 1);
+    onIconButtonPress(item);
+  }
+
+  function renderQuestionItem(item) {
+    const {question, number} = item || {};
+    return (
+      <>
+        <FilledIconButton
+          name="leftcircle"
+          onPress={() => handlePressIconButton(number)}
+        />
+        <ElevatedCard style={shadowStyle} containerStyle={styles.gameCard}>
+          <Text key={number} style={[bodyTypo, styles.text]}>
+            {question}
+          </Text>
+        </ElevatedCard>
+        <Icon name="rightcircle" size={30} color="#900" />
+      </>
+    );
+  }
 
   return (
     <SafeAreaView {...otherProps} style={defaultContainerStyle}>
@@ -57,20 +79,7 @@ export default function GameWaitScreen(props) {
           {description && <Text style={supportingTextTypo}>{description}</Text>}
         </View>
         <View style={styles.cardWithButton}>
-          <Icon.Button
-            name="leftcircle"
-            size={30}
-            backgroundColor="#900"
-            onPress={handlePressIconButton}
-          />
-          <ElevatedCard style={shadowStyle} containerStyle={styles.gameCard}>
-            {questionInfo?.question1 && (
-              <Text style={[bodyTypo, styles.text]}>
-                {questionInfo?.question1}
-              </Text>
-            )}
-          </ElevatedCard>
-          <Icon name="rightcircle" size={30} color="#900" />
+          {questions.map(renderQuestionItem)}
         </View>
         <View style={styles.action}>
           <FilledButton
@@ -136,8 +145,28 @@ const cardInfo = {
   currentCard: '28',
 };
 
-const questionInfo = {
-  question1:
-    'Em yeu truong em voi bao ban than va co giao hien nhu yeu que huong cap sach den truong.',
-};
+const questions = [
+  {
+    number: 1,
+    question: 'Describe your crush’s personality.',
+  },
+  {
+    number: 2,
+    question:
+      'Mùa thu rơi vào em, vào trong giấc mơ hôm qua. Mùa thu ôm mình em, chạy xa vòng tay vội vã',
+  },
+  {
+    number: 3,
+    question: 'How many people in the room would you be willing to kiss?',
+  },
+  {
+    number: 4,
+    question: 'When watching porn, what makes you turn it off?',
+  },
+  {
+    number: 5,
+    question:
+      'What is something “scandalous” and sex-related that you really want to try?',
+  },
+];
 const item = {};

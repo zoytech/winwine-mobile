@@ -9,8 +9,7 @@ const DefaultIconButtonStyle = StyleSheet.create({
     alignItems: 'center',
   },
   icon: {
-    width: 24,
-    height: 24,
+    size: 24,
   },
 });
 export default DefaultIconButtonStyle;

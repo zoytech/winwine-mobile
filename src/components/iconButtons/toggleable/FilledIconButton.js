@@ -1,13 +1,30 @@
-import React from 'react';
-import {Pressable, Text, View} from 'react-native';
-import {
-  Color,
-  ColorVariant,
-  Typography,
-  StateLayersVariant,
-  StateLayers,
-} from 'src/themes';
+import React, {useState} from 'react';
+import {Text} from 'react-native';
+import Icon from 'react-native-vector-icons/AntDesign';
+import {Color, ColorVariant} from 'src/themes';
 import DefaultIconButtonStyle from './defaultIconButtonStyle';
+
+function generateStateStyles(isPressed, isDisabled, colorVariant) {
+  if (isDisabled) {
+    const {onBase: onBaseColor, base: baseColor} =
+      Color.light[ColorVariant.surface];
+    return {
+      containerStyle: {backgroundColor: baseColor},
+      contentStyle: {color: onBaseColor},
+    };
+  }
+  const {onBase: onBaseColor, base: baseColor} = Color.light[colorVariant];
+  if (isPressed) {
+    return {
+      containerStyle: {backgroundColor: baseColor},
+      contentStyle: {color: onBaseColor},
+    };
+  }
+  return {
+    containerStyle: {backgroundColor: baseColor},
+    contentStyle: {color: onBaseColor},
+  };
+}
 
 export default function FilledIconButton(props) {
   const {
@@ -15,80 +32,42 @@ export default function FilledIconButton(props) {
     style,
     contentStyle: rawContentStyle,
     colorVariant = ColorVariant.primary,
-    stateLayersOnPrimary = StateLayersVariant.onPrimary,
-    stateLayersOnSurface = StateLayersVariant.onSurface,
-    typographyVariant = Typography.label.large,
     disabled,
+    pressed,
     children,
     ...otherProps
   } = props;
+  const [pressedStyle, setPressedStyle] = useState(false);
 
-  function generateStateStyles(pressed, isDisabled) {
-    const defaultContainerStyle = DefaultIconButtonStyle.container;
-    const defaultContentStyle = typographyVariant;
-    if (isDisabled) {
-      const {level_012, level_032} = StateLayers.light[stateLayersOnSurface];
-      return {
-        containerStyle: [
-          defaultContainerStyle,
-          {backgroundColor: level_012},
-          style,
-        ],
-        contentStyle: [
-          defaultContentStyle,
-          {color: level_032},
-          rawContentStyle,
-        ],
-      };
-    }
-
-    const {onBase: onBaseColor, base: baseColor} = Color.light[colorVariant];
-    if (pressed) {
-      const {level_012} = StateLayers.light[stateLayersOnPrimary];
-      return {
-        containerStyle: [
-          defaultContainerStyle,
-          {backgroundColor: level_012},
-          style,
-        ],
-        contentStyle: [
-          defaultContentStyle,
-          {color: onBaseColor},
-          rawContentStyle,
-        ],
-      };
-    }
-    return {
-      containerStyle: [
-        defaultContainerStyle,
-        {backgroundColor: baseColor},
-        style,
-      ],
-      contentStyle: [
-        defaultContentStyle,
-        {color: onBaseColor},
-        rawContentStyle,
-      ],
-    };
+  function getContainerStyle() {
+    return [
+      DefaultIconButtonStyle.container,
+      generateStateStyles(pressed, disabled, colorVariant)?.containerStyle,
+      style,
+    ];
   }
 
-  function getContainerStyle({pressed}) {
-    return generateStateStyles(pressed, disabled)?.containerStyle;
+  function renderContent() {
+    const contentStyle = generateStateStyles(
+      pressed,
+      disabled,
+      colorVariant,
+    )?.contentStyle;
+    console.log('contentStyle', contentStyle);
+    return content && <Text style={contentStyle}>{content}</Text>;
   }
 
-  function renderContent({pressed}) {
-    const contentStyle = generateStateStyles(pressed, disabled)?.contentStyle;
-    return (
-      <>
-        {children}
-        {content && <View style={contentStyle}>{content}</View>}
-      </>
-    );
-  }
-
+  const handleIconButtonPress = () => {
+    console.log(pressedStyle);
+    setPressedStyle(!pressedStyle);
+  };
   return (
-    <Pressable {...otherProps} style={getContainerStyle}>
+    <Icon.Button
+      {...otherProps}
+      onPress={handleIconButtonPress}
+      size={DefaultIconButtonStyle.icon.size}
+      backgroundColor={getContainerStyle}>
       {renderContent}
-    </Pressable>
+    </Icon.Button>
   );
 }
