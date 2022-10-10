@@ -1,19 +1,19 @@
 import React from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
-import MiniCardItem from '../../components/MiniCardItem';
+import MiniCardItem from './MiniCardItem';
 
-export default function VerticalCardList(props) {
+export default function HorizontalCardList(props) {
   const {style, data, onItemPressed = () => {}} = props;
 
-  function handleItemPressed({item, index}) {
-    onItemPressed({item, index});
+  function handleItemPressed({item, key}) {
+    onItemPressed({item, key});
   }
 
-  function renderItem({item, index}) {
+  function renderItem({item, key}) {
     return (
       <MiniCardItem
         data={item}
-        onPress={() => handleItemPressed({item, index})}
+        onPress={() => handleItemPressed({item, key})}
       />
     );
   }
@@ -22,10 +22,11 @@ export default function VerticalCardList(props) {
     <>
       <FlatList
         style={[styles.container, style]}
-        showsVerticalScrollIndicator={false}
+        horizontal={true}
         ItemSeparatorComponent={<View style={styles.separator} />}
         data={data}
         renderItem={renderItem}
+        showsHorizontalScrollIndicator={false}
       />
     </>
   );
@@ -33,12 +34,9 @@ export default function VerticalCardList(props) {
 const styles = StyleSheet.create({
   container: {
     paddingVertical: 16,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
   },
 
   separator: {
-    height: 32,
+    width: 16,
   },
 });

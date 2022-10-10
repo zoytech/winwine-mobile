@@ -6,14 +6,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import {
-  ElevatedButton,
-  FilledButton,
-  OutlinedButton,
-  OutlinedCard,
-  TextButton,
-  TonalButton,
-} from 'src/components';
+import {FilledButton, OutlinedCard, TonalButton} from 'src/components';
 import {Typography} from 'src/themes';
 
 const {width: screenWidth} = Dimensions.get('screen');
@@ -50,7 +43,7 @@ export default function MiniCardItem(props) {
         {tag && <Text style={subTitleStyle}>{tag}</Text>}
       </View>
       <View style={styles.action}>
-        <TonalButton
+        <FilledButton
           content={'play now'}
           contentStyle={buttonStyle}
           style={styles.button}

@@ -1,11 +1,16 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
-import {GameScreen, HomeScreen} from '../screens';
 import {ScreenKeys} from './ScreenKeys';
-import APP_NAME from '../constants';
-import {ColorVariant} from '../themes';
-import {Color, Typography} from '../themes';
+
+import {
+  GameEndScreen,
+  GamePlayScreen,
+  GameWaitScreen,
+  HomeScreen,
+} from '../screens';
+import APP_NAME from 'src/constants';
+import {Color, ColorVariant, Typography} from 'src/themes';
 
 const Stack = createNativeStackNavigator();
 
@@ -24,11 +29,20 @@ export default function RootNavigator(props) {
     headerTintColor: onBase,
     headerTitleAlign: 'center',
     headerBackGround: base,
-    // headerTransparent: true,
   };
+
   return (
     <NavigationContainer initialRouteName={ScreenKeys.HOME}>
       <Stack.Navigator>
+        <Stack.Screen
+          name={ScreenKeys.GAME_PLAY}
+          component={GamePlayScreen}
+          options={{
+            title: 'Bai cua Nam',
+            ...headerStyle,
+            ...headerShadowVisible,
+          }}
+        />
         <Stack.Screen
           name={ScreenKeys.HOME}
           component={HomeScreen}
@@ -39,18 +53,16 @@ export default function RootNavigator(props) {
           }}
         />
         <Stack.Screen
-          name={ScreenKeys.GAME_PLAY}
-          component={GameScreen}
+          name={ScreenKeys.GAME_WAIT}
+          component={GameWaitScreen}
+          options={{title: 'Bai cua Nam'}}
+        />
+        <Stack.Screen
+          name={ScreenKeys.GAME_END}
+          component={GameEndScreen}
           options={{title: 'Bai cua Nam'}}
         />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
-
-// <NavigationContainer>
-//     <Stack.Navigator initialRouteName={ScreenKeys.GAME_PLAY}>
-//         <Stack.Screen name={ScreenKeys.GAME_PLAY} component={MainGameScreen}/>
-//         <Stack.Screen name={ScreenKeys.HOME} component={homeScreens}/>
-//     </Stack.Navigator>
-// </NavigationContainer>

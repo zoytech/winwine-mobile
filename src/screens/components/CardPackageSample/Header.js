@@ -3,7 +3,7 @@ import {
   ElevatedCard,
   FilledIconButton,
   OutlinedCard,
-} from '../../../../components';
+} from '../../../components';
 
 export default function Header(props) {
   const {

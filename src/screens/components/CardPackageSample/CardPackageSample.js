@@ -1,12 +1,8 @@
-import {Color, ColorVariant, Typography} from '../../../../themes';
 import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import Header from './Header';
-import member1 from '../../../../assets/images/preview-package/member1.jpg';
-import {
-  FilledButton,
-  OutlinedButton,
-  OutlinedCard,
-} from '../../../../components';
+import member1 from '../../../assets/images/preview-package/member1.jpg';
+import {Color, ColorVariant, Typography} from 'src/themes';
+import {FilledButton, OutlinedButton, OutlinedCard} from 'src/components';
 
 export default function CardPackageSample(props) {
   const {
