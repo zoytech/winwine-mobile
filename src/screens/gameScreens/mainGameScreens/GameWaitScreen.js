@@ -8,30 +8,26 @@ import {
   View,
 } from 'react-native';
 import {Color, ColorVariant, Typography} from 'src/themes';
-import {
-  ElevatedCard,
-  FilledButton,
-  FilledIconButton,
-} from '../../../components';
+import {ElevatedCard, FilledButton, FilledIconButton} from 'src/components';
 import {ElevatedHeader} from './components';
 
 const {width: screenWidth} = Dimensions.get('screen');
 
 export default function GameWaitScreen(props) {
   const {
-    typoHeader = Typography.title.large,
-    typoSubHeader = Typography.label.large,
-    typoSupportingText = Typography.title.medium,
-    typoBody = Typography.body.large,
+    headerTypo = Typography.title.large,
+    subHeaderTypo = Typography.label.large,
+    supportingTextTypo = Typography.title.medium,
+    bodyTypo = Typography.body.large,
     colorVariant = ColorVariant.surface,
     style,
     ...otherProps
   } = props;
 
-  const {base} = Color.light[colorVariant];
+  const baseColor = Color.light[colorVariant]?.base;
 
   const defaultContainerStyle = [
-    {backgroundColor: base},
+    {backgroundColor: baseColor},
     styles.container,
     style,
   ];
@@ -46,20 +42,20 @@ export default function GameWaitScreen(props) {
       <ScrollView contentContainerStyle={styles.scrollView}>
         <ElevatedHeader
           head={cardInfo?.title}
-          subHead1={cardInfo?.tag}
-          subHead2={`Tổng số ${cardInfo?.totalCards} lá`}
-          headStyle={[typoHeader]}
-          subHeadStyle={[typoSubHeader]}
+          subHeadLeft={cardInfo?.tag}
+          subHeadRight={`Tổng số ${cardInfo?.totalCards} lá`}
+          headStyle={headerTypo}
+          subHeadStyle={subHeaderTypo}
           style={styles.header}
           containerStyle={styles.header}
         />
         <View style={styles.supportingText}>
-          {description && <Text style={typoSupportingText}>{description}</Text>}
+          {description && <Text style={supportingTextTypo}>{description}</Text>}
         </View>
         <ElevatedCard style={shadowStyle} containerStyle={styles.gameCard}>
           {item?.icon && <FilledIconButton content={item?.icon} />}
           {questionInfo?.question1 && (
-            <Text style={[typoBody, styles.text]}>
+            <Text style={[bodyTypo, styles.text]}>
               {questionInfo?.question1}
             </Text>
           )}

@@ -13,23 +13,23 @@ import {
   FilledButton,
   FilledIconButton,
   OutlinedButton,
-} from '../../../components';
+} from 'src/components';
 import {ElevatedHeader} from './components';
 
-const widthScreen = Dimensions.get('screen').width;
+const screenWidth = Dimensions.get('screen').width;
 export default function GamePlayScreen(props) {
   const {
-    typoHeader = Typography.title.large,
-    typoSubHeader = Typography.label.large,
-    typoBody = Typography.body.large,
+    headerTypo = Typography.title.large,
+    subHeaderTypo = Typography.label.large,
+    bodyTypo = Typography.body.large,
     colorVariant = ColorVariant.surface,
     style,
     ...otherProps
   } = props;
-  const {base} = Color.light[colorVariant];
+  const baseColor = Color.light[colorVariant]?.base;
 
   const defaultContainerStyle = [
-    {backgroundColor: base},
+    {backgroundColor: baseColor},
     styles.container,
     style,
   ];
@@ -43,9 +43,9 @@ export default function GamePlayScreen(props) {
       <ScrollView contentContainerStyle={styles.scrollView}>
         <ElevatedHeader
           head={cardInfo?.title}
-          subHead1={`Lá thứ ${cardInfo?.currentCard}/${cardInfo?.totalCards} `}
-          headStyle={[typoHeader]}
-          subHeadStyle={[typoSubHeader]}
+          subHeadLeft={`Lá thứ ${cardInfo?.currentCard}/${cardInfo?.totalCards} `}
+          headStyle={headerTypo}
+          subHeadStyle={subHeaderTypo}
           style={styles.header}
           containerStyle={styles.header}
         />
@@ -53,7 +53,7 @@ export default function GamePlayScreen(props) {
           <ElevatedCard style={shadowStyle} containerStyle={styles.gameCard}>
             {item?.icon && <FilledIconButton content={item?.icon} />}
             {questionInfo?.question1 && (
-              <Text style={[typoBody, styles.text]}>
+              <Text style={[bodyTypo, styles.text]}>
                 {questionInfo?.question1}
               </Text>
             )}
@@ -76,7 +76,7 @@ export default function GamePlayScreen(props) {
 
 const styles = StyleSheet.create({
   container: {
-    width: widthScreen,
+    width: screenWidth,
   },
   scrollView: {
     justifyContent: 'center',

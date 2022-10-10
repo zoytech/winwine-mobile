@@ -7,20 +7,18 @@ import {
   Text,
   View,
 } from 'react-native';
-import {ColorVariant, Typography} from 'src/themes';
-import {FilledButton, OutlinedButton, OutlinedCard} from '../../../components';
 import member1 from '../../../assets/images/preview-package/member1.jpg';
+import {Typography} from 'src/themes';
+import {FilledButton, OutlinedButton, OutlinedCard} from 'src/components';
 import {ElevatedHeader} from './components';
 
-const widthScreen = Dimensions.get('screen').width;
+const screenWidth = Dimensions.get('screen').width;
 export default function GameEndScreen(props) {
   const {
-    typoHeader = Typography.title.large,
-    typoSubHeader = Typography.title.medium,
-    typoSupportingText = Typography.title.medium,
-    typoButton = Typography.label.large,
-    colorSurface = ColorVariant.surface,
-    colorOutline = ColorVariant.outline,
+    headerTypo = Typography.title.large,
+    subHeaderTypo = Typography.title.medium,
+    supportingTextTypo = Typography.title.medium,
+    buttonTypo = Typography.label.large,
     style,
     ...otherProps
   } = props;
@@ -38,14 +36,14 @@ export default function GameEndScreen(props) {
         <ElevatedHeader
           head={cardInfo?.title}
           subHead1={cardInfo?.tag}
-          headStyle={[typoHeader]}
-          subHeadStyle={[typoSubHeader]}
+          headStyle={headerTypo}
+          subHeadStyle={subHeaderTypo}
           style={styles.header}
           containerStyle={styles.header}
         />
         <Image style={styles.media} source={member1} />
         <View style={styles.supportingText}>
-          {description && <Text style={typoSupportingText}>{description}</Text>}
+          {description && <Text style={supportingTextTypo}>{description}</Text>}
         </View>
         <View style={styles.action}>
           <OutlinedButton
@@ -54,7 +52,7 @@ export default function GameEndScreen(props) {
           />
           <FilledButton
             content={'Chơi bộ mới'}
-            contentStyle={typoButton}
+            contentStyle={buttonTypo}
             onPress={handlePressFilledButton}
           />
         </View>
@@ -65,7 +63,7 @@ export default function GameEndScreen(props) {
 
 const styles = StyleSheet.create({
   screenView: {
-    width: widthScreen,
+    width: screenWidth,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -104,15 +102,3 @@ const cardInfo = {
   totalCards: '30',
   currentCard: '28',
 };
-
-const questionInfo = {
-  question1:
-    'Em yeu truong em voi bao ban than va co giao hien nhu yeu que huong cap sach den truong.',
-};
-const item = {};
-
-/*
- <ScrollView
-        contentContainerStyle={{alignItems: 'center'}}
-        style={styles.scrollView}>
- */

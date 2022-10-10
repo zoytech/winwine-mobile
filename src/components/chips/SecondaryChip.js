@@ -15,14 +15,14 @@ import DefaultChipStyle from './defaultChipStyle';
 export default function SecondaryChip(props) {
   const {
     content,
+    children,
     style,
     contentStyle: rawContentStyle,
     containerStyle,
-    colorSecondary = ColorVariant.secondary,
+    colorVariant = ColorVariant.secondary,
     typographyVariant = Typography.label.large,
     disabled,
     dragged,
-    children,
     ...otherProps
   } = props;
 
@@ -51,7 +51,7 @@ export default function SecondaryChip(props) {
       };
     }
 
-    const {container, onContainer} = Color.light[colorSecondary];
+    const {container, onContainer} = Color.light[colorVariant];
     const {level_008, level_016} = StateLayers.light[stateLayersOnSecondary];
     if (pressed) {
       return {

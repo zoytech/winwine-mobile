@@ -6,20 +6,20 @@ import {FilledButton, OutlinedButton, OutlinedCard} from 'src/components';
 
 export default function CardPackageSample(props) {
   const {
-    typoHeader = Typography.title.medium,
-    typoSubHeader = Typography.body.medium,
-    typoTitle = Typography.body.large,
-    typoSupportingText = Typography.body.medium,
-    typoButton = Typography.label.large,
-    colorSurface = ColorVariant.surface,
-    colorOutline = ColorVariant.outline,
+    headerTypo = Typography.title.medium,
+    subHeaderTypo = Typography.body.medium,
+    titleTypo = Typography.body.large,
+    supportingTextTypo = Typography.body.medium,
+    buttonTypo = Typography.label.large,
+    colorSurfaceVariant = ColorVariant.surface,
+    colorOutlineVariant = ColorVariant.outline,
   } = props;
 
-  const {base: baseColor} = Color.light[colorSurface];
-  const {base: outline} = Color.light[colorOutline];
+  const {base: baseColor} = Color.light[colorSurfaceVariant];
+  const {base: baseOutlineColor} = Color.light[colorOutlineVariant];
   const containerStyle = [
     styles.container,
-    {borderColor: outline, backgroundColor: baseColor},
+    {borderColor: baseOutlineColor, backgroundColor: baseColor},
   ];
 
   const handlePressFilledButton = () => {
@@ -32,21 +32,21 @@ export default function CardPackageSample(props) {
     <OutlinedCard style={containerStyle}>
       <Header
         head={cardInfo?.title}
-        subHead1={cardInfo?.tag}
-        headStyle={[typoHeader]}
-        subHeadStyle={[typoSubHeader]}
+        subHeadLeft={cardInfo?.tag}
+        headStyle={[headerTypo]}
+        subHeadStyle={[subHeaderTypo]}
         style={styles.header}
         containerStyle={styles.header}
       />
       <ScrollView contentContainerStyle={styles.scrollView}>
         <Image style={styles.media} source={member1} />
         <View style={styles.headline}>
-          {cardInfo?.title && <Text style={typoTitle}>{cardInfo.title}</Text>}
-          {cardInfo?.tag && <Text style={typoSubHeader}>{cardInfo.tag}</Text>}
+          {cardInfo?.title && <Text style={titleTypo}>{cardInfo.title}</Text>}
+          {cardInfo?.tag && <Text style={subHeaderTypo}>{cardInfo.tag}</Text>}
         </View>
         <View style={styles.supportingText}>
           {questionInfo?.question2 && (
-            <Text style={typoSupportingText}>{questionInfo.question2}</Text>
+            <Text style={supportingTextTypo}>{questionInfo.question2}</Text>
           )}
         </View>
         <View style={styles.action}>
@@ -56,7 +56,7 @@ export default function CardPackageSample(props) {
           />
           <FilledButton
             content={'play now'}
-            contentStyle={typoButton}
+            contentStyle={buttonTypo}
             onPress={handlePressFilledButton}
           />
         </View>

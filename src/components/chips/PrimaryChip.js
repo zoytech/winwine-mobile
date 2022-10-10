@@ -15,14 +15,14 @@ import DefaultChipStyle from './defaultChipStyle';
 export default function PrimaryChip(props) {
   const {
     content,
+    children,
     style,
     contentStyle: rawContentStyle,
     containerStyle,
-    colorPrimary = ColorVariant.primary,
+    colorVariant = ColorVariant.primary,
     typographyVariant = Typography.label.large,
     disabled,
     dragged,
-    children,
     ...otherProps
   } = props;
 
@@ -34,7 +34,7 @@ export default function PrimaryChip(props) {
   function generateStateStyles(pressed, isDisabled, isDragged) {
     const defaultContainerStyle = DefaultChipStyle?.container;
     const defaultContentStyle = typographyVariant;
-    const {base: baseColor} = Color.light[colorPrimary];
+    const baseColor = Color.light[colorVariant]?.base;
     if (isDisabled) {
       const {level_012, level_032} = StateLayers.light[stateLayersOnSurface];
       return {

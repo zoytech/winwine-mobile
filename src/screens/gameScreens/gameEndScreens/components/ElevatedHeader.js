@@ -1,36 +1,34 @@
 import {StyleSheet, Text, View} from 'react-native';
-import {FilledIconButton, OutlinedCard} from '../../../../components';
+import {FilledIconButton, OutlinedCard} from 'src/components';
 
 export default function ElevatedHeader(props) {
   const {
     head,
-    subHead1,
-    subHead2,
+    subHeadLeft,
+    subHeadRight,
+    children,
     headStyle,
     subHeadStyle,
     style,
     containerStyle,
-    children,
     ...otherProps
   } = props;
   const defaultContainerStyle = [styles.container, style];
-  const leadingIconStyle = [styles.leadingIcon];
-  const contentStyle = [styles.content];
-  const subHeadStyles = [styles.subHead];
 
   return (
     <OutlinedCard
       {...otherProps}
       style={defaultContainerStyle}
       containerStyle={containerStyle}>
-      <View style={leadingIconStyle}>
+      {children}
+      <View style={styles.leadingIcon}>
         <FilledIconButton style={styles.buttonIconArea} />
       </View>
-      <View style={contentStyle}>
+      <View style={styles.content}>
         {head && <Text style={headStyle}>{head}</Text>}
-        <View style={subHeadStyles}>
-          {subHead1 && <Text style={subHeadStyle}>{subHead1}</Text>}
-          {subHead2 && <Text style={subHeadStyle}>{subHead2}</Text>}
+        <View style={styles.subHead}>
+          {subHeadLeft && <Text style={subHeadStyle}>{subHeadLeft}</Text>}
+          {subHeadRight && <Text style={subHeadStyle}>{subHeadRight}</Text>}
         </View>
       </View>
     </OutlinedCard>

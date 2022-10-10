@@ -1,25 +1,20 @@
 import {StyleSheet, Text, View} from 'react-native';
-import {
-  ElevatedCard,
-  FilledIconButton,
-  OutlinedCard,
-} from '../../../components';
+import {ElevatedCard, FilledIconButton} from '../../../components';
 
 export default function Header(props) {
   const {
     head,
-    subHead1,
-    subHead2,
-    headStyle,
-    subHeadStyle,
+    subHeadLeft,
+    subHeadRight,
+    children,
     style,
     containerStyle,
-    children,
+    headStyle,
+    subHeadStyle,
     ...otherProps
   } = props;
 
   const defaultContainerStyle = [styles.container, style];
-  const subHeadStyles = [styles.subHead];
 
   return (
     <ElevatedCard
@@ -32,9 +27,9 @@ export default function Header(props) {
       </View>
       <View style={styles.content}>
         {head && <Text style={headStyle}>{head}</Text>}
-        <View style={subHeadStyles}>
-          {subHead1 && <Text style={subHeadStyle}>{subHead1}</Text>}
-          {subHead2 && <Text style={subHeadStyle}>{subHead2}</Text>}
+        <View style={styles.subHead}>
+          {subHeadLeft && <Text style={subHeadStyle}>{subHeadLeft}</Text>}
+          {subHeadRight && <Text style={subHeadStyle}>{subHeadRight}</Text>}
         </View>
       </View>
       <View style={styles.trailingIcon}>
