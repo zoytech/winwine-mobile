@@ -14,7 +14,7 @@ export default function FilledIconButton(props) {
     content,
     style,
     contentStyle: rawContentStyle,
-    colorPrimary = ColorVariant.primary,
+    colorVariant = ColorVariant.primary,
     stateLayersOnPrimary = StateLayersVariant.onPrimary,
     stateLayersOnSurface = StateLayersVariant.onSurface,
     typographyVariant = Typography.label.large,
@@ -42,7 +42,7 @@ export default function FilledIconButton(props) {
       };
     }
 
-    const {onBase: onBaseColor, base: baseColor} = Color.light[colorPrimary];
+    const {onBase: onBaseColor, base: baseColor} = Color.light[colorVariant];
     if (pressed) {
       const {level_012} = StateLayers.light[stateLayersOnPrimary];
       return {
