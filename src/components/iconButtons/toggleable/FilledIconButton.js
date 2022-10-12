@@ -1,29 +1,24 @@
 import React, {useState} from 'react';
 import {Text} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
+import hexToRgba from 'hex-to-rgba';
 import {Color, ColorVariant} from 'src/themes';
-import DefaultIconButtonStyle from './defaultIconButtonStyle';
 
 function generateStateStyles(isPressed, isDisabled, colorVariant) {
   if (isDisabled) {
-    const {onBase: onBaseColor, base: baseColor} =
-      Color.light[ColorVariant.surface];
     return {
-      containerStyle: {backgroundColor: baseColor},
-      contentStyle: {color: onBaseColor},
+      backgroundColor: baseColor,
+      color: onBaseColor,
     };
   }
   const {onBase: onBaseColor, base: baseColor} = Color.light[colorVariant];
   if (isPressed) {
     return {
-      containerStyle: {backgroundColor: baseColor},
-      contentStyle: {color: onBaseColor},
+      backgroundColor: baseColor,
+      color: onBaseColor,
     };
   }
-  return {
-    containerStyle: {backgroundColor: baseColor},
-    contentStyle: {color: onBaseColor},
-  };
+  return {};
 }
 
 export default function FilledIconButton(props) {
@@ -38,14 +33,24 @@ export default function FilledIconButton(props) {
     ...otherProps
   } = props;
   const [pressedStyle, setPressedStyle] = useState(false);
+  const {onBase: onSurface, base: surfaceColor} =
+    Color.light[ColorVariant.surface];
+  const {onBase: onBaseColor, base: baseColor} = Color.light[colorVariant];
 
-  function getContainerStyle() {
-    return [
-      DefaultIconButtonStyle.container,
-      generateStateStyles(pressed, disabled, colorVariant)?.containerStyle,
-      style,
-    ];
-  }
+  const getContainerProps = {
+    borderRadius: 100,
+    size: 24,
+    backgroundColor: disabled
+      ? surfaceColor
+      : pressed
+      ? hexToRgba(baseColor, 0.8)
+      : baseColor,
+    color: disabled
+      ? onSurface
+      : pressed
+      ? hexToRgba(onBaseColor, 0.8)
+      : onBaseColor,
+  };
 
   function renderContent() {
     const contentStyle = generateStateStyles(
@@ -53,20 +58,14 @@ export default function FilledIconButton(props) {
       disabled,
       colorVariant,
     )?.contentStyle;
-    console.log('contentStyle', contentStyle);
     return content && <Text style={contentStyle}>{content}</Text>;
   }
 
   const handleIconButtonPress = () => {
-    console.log(pressedStyle);
     setPressedStyle(!pressedStyle);
   };
   return (
-    <Icon.Button
-      {...otherProps}
-      onPress={handleIconButtonPress}
-      size={DefaultIconButtonStyle.icon.size}
-      backgroundColor={getContainerStyle}>
+    <Icon.Button {...otherProps} {...getContainerProps}>
       {renderContent}
     </Icon.Button>
   );

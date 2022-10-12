@@ -7,6 +7,7 @@ const DefaultIconButtonStyle = StyleSheet.create({
     minHeight: 40,
     justifyContent: 'center',
     alignItems: 'center',
+    borderRadius: '100/2',
   },
   icon: {
     size: 24,
