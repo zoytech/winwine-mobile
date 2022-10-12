@@ -60,7 +60,7 @@ export default function TextButton(props) {
   }
 
   return (
-    <Pressable {...otherProps} style={getContainerStyle}>
+    <Pressable {...otherProps} disabled={!!disabled} style={getContainerStyle}>
       {renderContent}
     </Pressable>
   );

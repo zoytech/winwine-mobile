@@ -63,7 +63,7 @@ export default function TonalButton(props) {
   }
 
   return (
-    <Pressable {...otherProps} style={getContainerStyle}>
+    <Pressable {...otherProps} disabled={!!disabled} style={getContainerStyle}>
       {renderContent}
     </Pressable>
   );

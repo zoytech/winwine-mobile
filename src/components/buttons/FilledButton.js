@@ -1,5 +1,5 @@
 import React from 'react';
-import {Pressable, Text} from 'react-native';
+import {Pressable, Text, View} from 'react-native';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import DefaultButtonStyle from './defaultButtonStyle';
 
@@ -64,7 +64,7 @@ export default function FilledButton(props) {
   }
 
   return (
-    <Pressable {...otherProps} style={getContainerStyle}>
+    <Pressable {...otherProps} disabled={!!disabled} style={getContainerStyle}>
       {renderContent}
     </Pressable>
   );
