@@ -5,12 +5,9 @@ const DefaultIconButtonStyle = StyleSheet.create({
     padding: 8,
     minWidth: 40,
     minHeight: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: '100/2',
-  },
-  icon: {
-    size: 24,
+    paddingHorizontal: 8,
+    paddingVertical: 8,
+    borderRadius: 100,
   },
 });
 export default DefaultIconButtonStyle;

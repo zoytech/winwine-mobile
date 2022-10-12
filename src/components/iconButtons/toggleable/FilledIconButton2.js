@@ -1,70 +1,27 @@
-import React, {useState} from 'react';
-import {Text} from 'react-native';
+import React from 'react';
 import Icon from 'react-native-vector-icons/AntDesign';
-import {Color, ColorVariant} from 'src/themes';
-import DefaultIconButtonStyle from './defaultIconButtonStyle';
 import {FilledButton} from '../../buttons';
-
-function generateStateStyles(isPressed, isDisabled, colorVariant) {
-  if (isDisabled) {
-    const {onBase: onBaseColor, base: baseColor} =
-      Color.light[ColorVariant.surface];
-    return {
-      containerStyle: {backgroundColor: baseColor},
-      contentStyle: {color: onBaseColor},
-    };
-  }
-  const {onBase: onBaseColor, base: baseColor} = Color.light[colorVariant];
-  if (isPressed) {
-    return {
-      //TODO: remove demo background
-      containerStyle: {backgroundColor: 'blue'},
-      contentStyle: {color: onBaseColor},
-    };
-  }
-  return {
-    //TODO: remove demo background
-    containerStyle: {backgroundColor: 'red'},
-    contentStyle: {color: onBaseColor},
-  };
-}
+import DefaultIconButtonStyle from './defaultIconButtonStyle';
+import {Color, ColorVariant} from 'src/themes';
 
 export default function FilledIconButton(props) {
   const {
-    content,
-    style,
-    contentStyle: rawContentStyle,
-    colorVariant = ColorVariant.primary,
-    disabled,
-    children,
     name,
+    colorVariant = ColorVariant.primary,
+    children,
+    style,
     ...otherProps
   } = props;
-  const [pressed, setPressed] = useState(false);
-
-  const {containerStyle, contentStyle} = generateStateStyles(
-    pressed,
-    disabled,
-    colorVariant,
-  );
-
-  function handlePressOut() {
-    setPressed(false);
-  }
-
-  function handlePressIn() {
-    setPressed(true);
-  }
-
-  function renderContent() {
-    return (
-      content && <Text style={[contentStyle, rawContentStyle]}>{content}</Text>
-    );
-  }
+  const containerStyle = [DefaultIconButtonStyle.container, style];
+  const iconProps = {
+    name: name,
+    size: 24,
+    color: Color.light[colorVariant]?.onBase,
+  };
 
   return (
-    <FilledButton>
-      <Icon name={name} />
+    <FilledButton {...otherProps} style={containerStyle}>
+      <Icon {...iconProps} />
     </FilledButton>
   );
 }

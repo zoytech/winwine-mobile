@@ -7,7 +7,6 @@ import {
   Text,
   View,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/AntDesign';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {ElevatedCard, FilledButton, FilledIconButton} from 'src/components';
 import {ElevatedHeader} from './components';
@@ -16,7 +15,8 @@ const {width: screenWidth} = Dimensions.get('screen');
 
 export default function GameWaitScreen(props) {
   const {
-    onIconButtonPress = () => {},
+    onBackwardButtonPressed = () => {},
+    onForwardButtonPressed = () => {},
     headerTypo = Typography.title.large,
     subHeaderTypo = Typography.label.large,
     supportingTextTypo = Typography.title.medium,
@@ -26,7 +26,7 @@ export default function GameWaitScreen(props) {
     ...otherProps
   } = props;
 
-  const [previousCard, setPreviousCard] = useState(null);
+  const [previousCard, setPreviousCard] = useState(0);
   const baseColor = Color.light[colorVariant]?.base;
 
   const defaultContainerStyle = [
@@ -40,31 +40,16 @@ export default function GameWaitScreen(props) {
     alert('move to game screen');
   }
 
-  function handlePressIconButton(number) {
-    setPreviousCard(number + 1);
-    onIconButtonPress(item);
+  function handleBackwardButtonPressed() {
+    previousCard !== 0 ? setPreviousCard(0) : setPreviousCard(previousCard - 1);
+    onBackwardButtonPressed(item);
   }
 
-  function handleTestButtonPressed() {
-    alert('test');
-  }
-
-  function renderQuestionItem(item) {
-    const {question, number} = item || {};
-    return (
-      <>
-        <FilledIconButton
-          name="leftcircle"
-          onPress={() => handlePressIconButton(number)}
-        />
-        <ElevatedCard style={shadowStyle} containerStyle={styles.gameCard}>
-          <Text key={number} style={[bodyTypo, styles.text]}>
-            {question}
-          </Text>
-        </ElevatedCard>
-        <Icon name="rightcircle" size={30} color="#900" />
-      </>
-    );
+  function handleForwardButtonPressed() {
+    previousCard === questions.length
+      ? setPreviousCard(questions.length - 1)
+      : setPreviousCard(previousCard + 1);
+    onForwardButtonPressed(item);
   }
 
   return (
@@ -84,18 +69,21 @@ export default function GameWaitScreen(props) {
           {description && <Text style={supportingTextTypo}>{description}</Text>}
         </View>
         <View style={styles.cardWithButton}>
-          {questions.map(renderQuestionItem)}
+          <FilledIconButton
+            name="caretleft"
+            onPressOut={handleBackwardButtonPressed}
+          />
+          <ElevatedCard style={shadowStyle} containerStyle={styles.gameCard}>
+            <Text style={[bodyTypo, styles.text]}>
+              {questions[previousCard]?.question}
+            </Text>
+          </ElevatedCard>
+          <FilledIconButton
+            name="caretright"
+            onPressOut={handleForwardButtonPressed}
+          />
         </View>
         <View style={styles.action}>
-          <FilledIconButton onPress={handleTestButtonPressed} name="forward">
-            Test
-          </FilledIconButton>
-          <FilledIconButton name="forward" />
-          <FilledIconButton
-            name="forward"
-            content={'Test'}
-            onPressOut={handleTestButtonPressed}
-          />
           <FilledButton
             content={'Choi ngay'}
             onPress={handlePressFilledButton}
