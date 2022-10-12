@@ -1,4 +1,4 @@
-import FilledIconButton from './FilledIconButton';
+import FilledIconButton from './FilledIconButton2';
 import StandardIconButton from './StandardIconButton';
 import OutlinedIconButton from './OutlinedIconButton';
 import TonalIconButton from './TonalIconButton';

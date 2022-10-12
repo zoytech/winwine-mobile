@@ -45,6 +45,10 @@ export default function GameWaitScreen(props) {
     onIconButtonPress(item);
   }
 
+  function handleTestButtonPressed() {
+    alert('test');
+  }
+
   function renderQuestionItem(item) {
     const {question, number} = item || {};
     return (
@@ -75,6 +79,7 @@ export default function GameWaitScreen(props) {
           style={styles.header}
           containerStyle={styles.header}
         />
+
         <View style={styles.supportingText}>
           {description && <Text style={supportingTextTypo}>{description}</Text>}
         </View>
@@ -82,6 +87,15 @@ export default function GameWaitScreen(props) {
           {questions.map(renderQuestionItem)}
         </View>
         <View style={styles.action}>
+          <FilledIconButton onPress={handleTestButtonPressed} name="forward">
+            Test
+          </FilledIconButton>
+          <FilledIconButton name="forward" />
+          <FilledIconButton
+            name="forward"
+            content={'Test'}
+            onPressOut={handleTestButtonPressed}
+          />
           <FilledButton
             content={'Choi ngay'}
             onPress={handlePressFilledButton}
