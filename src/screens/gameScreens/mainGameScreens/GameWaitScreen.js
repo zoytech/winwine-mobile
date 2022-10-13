@@ -27,6 +27,8 @@ export default function GameWaitScreen(props) {
   } = props;
 
   const [previousCard, setPreviousCard] = useState(0);
+  const [leftButtonDisabled, setLeftButtonDisabled] = useState(false);
+  const [rightButtonDisabled, setRightButtonDisabled] = useState(false);
   const baseColor = Color.light[colorVariant]?.base;
 
   const defaultContainerStyle = [
@@ -41,14 +43,16 @@ export default function GameWaitScreen(props) {
   }
 
   function handleBackwardButtonPressed() {
-    previousCard !== 0 ? setPreviousCard(0) : setPreviousCard(previousCard - 1);
+    previousCard === 0
+      ? setLeftButtonDisabled(!leftButtonDisabled)
+      : setPreviousCard(previousCard - 1) && setLeftButtonDisabled(false);
     onBackwardButtonPressed(item);
   }
 
   function handleForwardButtonPressed() {
     previousCard === questions.length
-      ? setPreviousCard(questions.length - 1)
-      : setPreviousCard(previousCard + 1);
+      ? setRightButtonDisabled(!rightButtonDisabled)
+      : setPreviousCard(previousCard + 1) && setRightButtonDisabled(false);
     onForwardButtonPressed(item);
   }
 
@@ -58,7 +62,7 @@ export default function GameWaitScreen(props) {
         <ElevatedHeader
           head={cardInfo?.title}
           subHeadLeft={cardInfo?.tag}
-          subHeadRight={`Tổng số ${cardInfo?.totalCards} lá`}
+          subHeadRight={`Tổng số ${questions.length} lá`}
           headStyle={headerTypo}
           subHeadStyle={subHeaderTypo}
           style={styles.header}
@@ -72,6 +76,7 @@ export default function GameWaitScreen(props) {
           <FilledIconButton
             name="caretleft"
             onPressOut={handleBackwardButtonPressed}
+            disabled={leftButtonDisabled}
           />
           <ElevatedCard style={shadowStyle} containerStyle={styles.gameCard}>
             <Text style={[bodyTypo, styles.text]}>
@@ -81,6 +86,7 @@ export default function GameWaitScreen(props) {
           <FilledIconButton
             name="caretright"
             onPressOut={handleForwardButtonPressed}
+            disabled={rightButtonDisabled}
           />
         </View>
         <View style={styles.action}>
@@ -150,25 +156,25 @@ const cardInfo = {
 const questions = [
   {
     number: 1,
-    question: 'Describe your crush’s personality.',
+    question: '1. Describe your crush’s personality.',
   },
   {
     number: 2,
     question:
-      'Mùa thu rơi vào em, vào trong giấc mơ hôm qua. Mùa thu ôm mình em, chạy xa vòng tay vội vã',
+      '2. Mùa thu rơi vào em, vào trong giấc mơ hôm qua. Mùa thu ôm mình em, chạy xa vòng tay vội vã',
   },
   {
     number: 3,
-    question: 'How many people in the room would you be willing to kiss?',
+    question: '3. How many people in the room would you be willing to kiss?',
   },
   {
     number: 4,
-    question: 'When watching porn, what makes you turn it off?',
+    question: '4. When watching porn, what makes you turn it off?',
   },
   {
     number: 5,
     question:
-      'What is something “scandalous” and sex-related that you really want to try?',
+      '5. What is something “scandalous” and sex-related that you really want to try?',
   },
 ];
 const item = {};
