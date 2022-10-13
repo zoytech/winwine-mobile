@@ -26,9 +26,7 @@ export default function GameWaitScreen(props) {
     ...otherProps
   } = props;
 
-  const [previousCard, setPreviousCard] = useState(0);
-  const [leftButtonDisabled, setLeftButtonDisabled] = useState(false);
-  const [rightButtonDisabled, setRightButtonDisabled] = useState(false);
+  const [currentCard, setCurrentCard] = useState(0);
   const baseColor = Color.light[colorVariant]?.base;
 
   const defaultContainerStyle = [
@@ -43,16 +41,12 @@ export default function GameWaitScreen(props) {
   }
 
   function handleBackwardButtonPressed() {
-    previousCard === 0
-      ? setLeftButtonDisabled(!leftButtonDisabled)
-      : setPreviousCard(previousCard - 1) && setLeftButtonDisabled(false);
+    currentCard === 0 ? '' : setCurrentCard(currentCard - 1);
     onBackwardButtonPressed(item);
   }
 
   function handleForwardButtonPressed() {
-    previousCard === questions.length
-      ? setRightButtonDisabled(!rightButtonDisabled)
-      : setPreviousCard(previousCard + 1) && setRightButtonDisabled(false);
+    currentCard === questions.length ? '' : setCurrentCard(currentCard + 1);
     onForwardButtonPressed(item);
   }
 
@@ -76,17 +70,17 @@ export default function GameWaitScreen(props) {
           <FilledIconButton
             name="caretleft"
             onPressOut={handleBackwardButtonPressed}
-            disabled={leftButtonDisabled}
+            disabled={currentCard === 0}
           />
           <ElevatedCard style={shadowStyle} containerStyle={styles.gameCard}>
             <Text style={[bodyTypo, styles.text]}>
-              {questions[previousCard]?.question}
+              {questions[currentCard]?.question}
             </Text>
           </ElevatedCard>
           <FilledIconButton
             name="caretright"
             onPressOut={handleForwardButtonPressed}
-            disabled={rightButtonDisabled}
+            disabled={currentCard === questions.length - 1}
           />
         </View>
         <View style={styles.action}>
