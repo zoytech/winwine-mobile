@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Dimensions,
   SafeAreaView,
@@ -8,17 +8,14 @@ import {
   View,
 } from 'react-native';
 import {Color, ColorVariant, Typography} from 'src/themes';
-import {
-  ElevatedCard,
-  FilledButton,
-  FilledIconButton,
-  OutlinedButton,
-} from 'src/components';
+import {ElevatedCard, FilledButton, OutlinedButton} from 'src/components';
 import {ElevatedHeader} from './components';
 
 const screenWidth = Dimensions.get('screen').width;
 export default function GamePlayScreen(props) {
   const {
+    onContinueButtonPressed = () => {},
+    onLookBackButtonPressed = () => {},
     headerTypo = Typography.title.large,
     subHeaderTypo = Typography.label.large,
     bodyTypo = Typography.body.large,
@@ -26,6 +23,13 @@ export default function GamePlayScreen(props) {
     style,
     ...otherProps
   } = props;
+  const {
+    id: id,
+    title: title,
+    total: total,
+    question: questions = [],
+  } = CARD_DATA;
+  const [currentCard, setCurrentCard] = useState(0);
   const baseColor = Color.light[colorVariant]?.base;
 
   const defaultContainerStyle = [
@@ -34,39 +38,42 @@ export default function GamePlayScreen(props) {
     style,
   ];
 
-  const handlePressFilledButton = () => {
-    alert('move to game screen');
-  };
+  function handleContinueButtonPressed() {
+    currentCard === 0 ? '' : setCurrentCard(currentCard - 1);
+    onContinueButtonPressed();
+  }
+
+  function handleLookBackButtonPressed() {
+    currentCard === total ? '' : setCurrentCard(currentCard + 1);
+    onLookBackButtonPressed();
+  }
 
   return (
     <SafeAreaView {...otherProps} style={defaultContainerStyle}>
       <ScrollView contentContainerStyle={styles.scrollView}>
         <ElevatedHeader
-          head={cardInfo?.title}
-          subHeadLeft={`Lá thứ ${cardInfo?.currentCard}/${cardInfo?.totalCards} `}
+          head={title}
+          subHeadLeft={`Lá thứ ${currentCard + 1}/${total} `}
           headStyle={headerTypo}
           subHeadStyle={subHeaderTypo}
           style={styles.header}
           containerStyle={styles.header}
         />
-        <View style={styles.gameCardLayout}>
-          <ElevatedCard style={shadowStyle} containerStyle={styles.gameCard}>
-            {item?.icon && <FilledIconButton content={item?.icon} />}
-            {questionInfo?.question1 && (
-              <Text style={[bodyTypo, styles.text]}>
-                {questionInfo?.question1}
-              </Text>
-            )}
-          </ElevatedCard>
-        </View>
+        <ElevatedCard style={shadowStyle} containerStyle={styles.gameCard}>
+          <Text style={[bodyTypo, styles.text]}>
+            {questions[currentCard]?.question}
+          </Text>
+        </ElevatedCard>
         <View style={styles.action}>
           <OutlinedButton
             content={'Lá trước'}
-            onPress={handlePressFilledButton}
+            onPress={handleLookBackButtonPressed}
+            disabled={currentCard === 0}
           />
           <FilledButton
             content={'Lá tiép theo'}
-            onPress={handlePressFilledButton}
+            onPress={handleContinueButtonPressed}
+            disabled={currentCard === total - 1}
           />
         </View>
       </ScrollView>
@@ -114,17 +121,33 @@ const shadowStyle = StyleSheet.compose(styles.gameCard, {
   width: '100%',
 });
 
-const cardInfo = {
-  id: '123',
+const CARD_DATA = {
+  idPackage: '123',
   title: 'Bai cua Nam',
   tag: 'Thieu nhi',
-  totalCards: '30',
-  avatar: 'N',
-  currentCard: '28',
+  total: '5',
+  questions: [
+    {
+      number: 1,
+      question: '1. Describe your crush’s personality.',
+    },
+    {
+      number: 2,
+      question:
+        '2. Mùa thu rơi vào em, vào trong giấc mơ hôm qua. Mùa thu ôm mình em, chạy xa vòng tay vội vã',
+    },
+    {
+      number: 3,
+      question: '3. How many people in the room would you be willing to kiss?',
+    },
+    {
+      number: 4,
+      question: '4. When watching porn, what makes you turn it off?',
+    },
+    {
+      number: 5,
+      question:
+        '5. What is something “scandalous” and sex-related that you really want to try?',
+    },
+  ],
 };
-
-const questionInfo = {
-  question1:
-    'Em yeu truong em voi bao ban than va co giao hien nhu yeu que huong cap sach den truong.',
-};
-const item = {};

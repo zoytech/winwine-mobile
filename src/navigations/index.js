@@ -35,6 +35,15 @@ export default function RootNavigator(props) {
     <NavigationContainer initialRouteName={ScreenKeys.HOME}>
       <Stack.Navigator>
         <Stack.Screen
+          name={ScreenKeys.GAME_PLAY}
+          component={GamePlayScreen}
+          options={{
+            title: 'Bai cua Nam',
+            ...headerStyle,
+            ...headerShadowVisible,
+          }}
+        />
+        <Stack.Screen
           name={ScreenKeys.GAME_WAIT}
           component={GameWaitScreen}
           options={{
@@ -55,15 +64,6 @@ export default function RootNavigator(props) {
         <Stack.Screen
           name={ScreenKeys.GAME_END}
           component={GameEndScreen}
-          options={{
-            title: 'Bai cua Nam',
-            ...headerStyle,
-            ...headerShadowVisible,
-          }}
-        />
-        <Stack.Screen
-          name={ScreenKeys.GAME_PLAY}
-          component={GamePlayScreen}
           options={{
             title: 'Bai cua Nam',
             ...headerStyle,

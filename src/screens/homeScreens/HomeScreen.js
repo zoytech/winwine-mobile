@@ -204,3 +204,65 @@ const SECTIONS = [
     ],
   },
 ];
+
+const CARD_DATA = [
+  {
+    idPackage: '123',
+    title: 'Bai cua Nam',
+    tag: 'Thieu nhi',
+    total: '5',
+    questions: [
+      {
+        number: 1,
+        question: '1. Describe your crush’s personality.',
+      },
+      {
+        number: 2,
+        question:
+          '2. Mùa thu rơi vào em, vào trong giấc mơ hôm qua. Mùa thu ôm mình em, chạy xa vòng tay vội vã',
+      },
+      {
+        number: 3,
+        question:
+          '3. How many people in the room would you be willing to kiss?',
+      },
+      {
+        number: 4,
+        question: '4. When watching porn, what makes you turn it off?',
+      },
+      {
+        number: 5,
+        question:
+          '5. What is something “scandalous” and sex-related that you really want to try?',
+      },
+    ],
+  },
+  {
+    idPackage: '124',
+    title: 'Bai cua Trọng Hùng',
+    tag: 'Lovers',
+    totalCards: '5',
+    questions: [
+      {
+        number: 1,
+        question: 'I really love you x1.',
+      },
+      {
+        number: 2,
+        question: 'I really love you x2.',
+      },
+      {
+        number: 3,
+        question: 'I really love you x3.',
+      },
+      {
+        number: 4,
+        question: 'I really love you x4.',
+      },
+      {
+        number: 5,
+        question: 'I really love you x5.',
+      },
+    ],
+  },
+];
