@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "drinking-game-cards",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "question",
+      "count",
+      "uses",
+      "rounds",
+      "id"
+    ],
+    "properties": {
+      "question": {
+        "type": "string",
+        "minLength": 1,
+        "description": "The task text. It may contain {int} as a placeholder for a random number."
+      },
+      "count": {
+        "type": "integer",
+        "minimum": 1,
+        "description": "How many times the card can occur in one session -> implicit higher probability"
+      },
+      "uses": {
+        "type": "integer",
+        "minimum": 0,
+        "description": "How often the (interactive) card can be used."
+      },
+      "rounds": {
+        "type": "integer",
+        "minimum": -1,
+        "description": "How many rounds the card is active for. If uses > 1, the rounds are counted after each use. Use -1 for infinite duration."
+      },
+      "id": {
+        "type": "integer",
+        "description": "The ID of this task. Note that this is NOT always the index in the tasks list."
+      }
+    }
+  }
+}

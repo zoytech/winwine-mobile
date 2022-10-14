@@ -1,0 +1,1256 @@
+[
+  {
+    "key": "1",
+    "name": "Item text 1",
+    "tag": "18+",
+    "data": [
+      {
+        "text": "Wenn du schon einmal der Chauffeur für alle warst, verteile {int} Schlücke. Ansonsten trink sie selbst.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 0
+      },
+      {
+        "text": "Wer als Letzter beide Hände auf seine Knie legt trinkt {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 1
+      },
+      {
+        "text": "Sagt nacheinander „Danke“ in einer anderen Sprache als auf Deutsch. Derjenige, der etwas wiederholt oder nichts mehr weiß, trinkt {int} Schlücke.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 2
+      },
+      {
+        "text": "Alle, die liebend gerne mit ihrem/r rechten Nachbarn/in ficken würden, trinken {int} Schlücke.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 3
+      },
+      {
+        "text": "Berühre jemanden an seinem Arsch. Danach trinkt jeder von euch beiden {int} Schlücke.",
+        "count": 9,
+        "uses": 0,
+        "rounds": 0,
+        "id": 4
+      },
+      {
+        "text": "Alle, die die Zunge rollen können, sind safe. Alle anderen müssen einen Schluck trinken.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 19
+      },
+      {
+        "text": "Dafür oder dagegen: Eine Hinfahrt ohne Rückfahrt zu einem neuen bewohnbaren Planeten mit 1000 Personen machen und am Aufbau einer neuen Welt teilnehmen, aber deine Nahestehenden dafür verlassen? Stimmt alle gleichzeitig ab, die Verlierer trinken {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 129
+      },
+      {
+        "text": "Neues Thema und {int} Schlücke für den Verlierer: „Whiskymarken“. Du beginnst.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 130
+      },
+      {
+        "text": "Alle die größer als 1.80 sind, trinken {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 131
+      },
+      {
+        "text": "Alle Kampfsportler trinken {int} Schlücke.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 132
+      },
+      {
+        "text": "Verteile {int} Schlücke und trinke {int} Schlücke.",
+        "count": 22,
+        "uses": 0,
+        "rounds": 0,
+        "id": 133
+      },
+      {
+        "text": "Verteile {int} Schlücke. Diese müssen auf mindestens 2 Personen aufgeteilt werden.",
+        "count": 43,
+        "uses": 0,
+        "rounds": 0,
+        "id": 134
+      },
+      {
+        "text": "Trinke {int} Schlücke oder mache {int} Liegestütze.",
+        "count": 10,
+        "uses": 0,
+        "rounds": 0,
+        "id": 135
+      },
+      {
+        "text": "Suche dir einen Mitspieler aus. Nach 3 Sekunden schreit jeder von euch gleichzeitig eine Zahl zwischen 1 und 5. Schreit ihr die selbe Zahl, trinkt ihr beide {int} Schlücke. Schreit ihr eine unterschiedliche Zahl, trinkst nur du {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 136
+      },
+      {
+        "text": "Lieber ohne Beine oder ohne Arme leben? Stimmt alle gleichzeitig ab, die Verlierer trinken {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 137
+      },
+      {
+        "text": "Jeder, der schon einmal in seinem Leben seinen Führerschein abgenommen bekommen hat, trinkt {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 138
+      },
+      {
+        "text": "Wer sich nicht traut, seinen rechten Nachbarn auf den Mund zu küssen, muss {int} Schlücke trinken.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 139
+      }
+    ]
+  },
+  {
+    "key": "2",
+    "name": "Item text 2",
+    "tag": "18+",
+    "data": [
+      {
+        "text": "Wenn du schon einmal der Chauffeur für alle warst, verteile {int} Schlücke. Ansonsten trink sie selbst.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 0
+      },
+      {
+        "text": "Wer als Letzter beide Hände auf seine Knie legt trinkt {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 1
+      },
+      {
+        "text": "Themenspiel und {int} Schlücke für den Verlierer: „Baumarten“. Du beginnst.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 47
+      },
+      {
+        "text": "Sage den Zungenbrecher „Wenn der Benz bremst, brennt das Benzbremslicht.“ auf. Schaffst du es: Verteile {int} Schlücke. Schaffst du es nicht: Trinke sie selbst.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 48
+      },
+      {
+        "text": "Dreh dich 6 mal im Kreis. Danach trinke {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 49
+      },
+      {
+        "text": "Jedes Mal, wenn jemand das Wort „Ich“ sagt, darfst du {int} Schlücke verteilen. Die Regel gilt bis zum Ende des Spieles.",
+        "count": 1,
+        "uses": 0,
+        "rounds": -1,
+        "id": 50
+      },
+      {
+        "text": "Lieber im Lotto gewinnen oder doppelt so alt werden, wie der Durchschnitt? Stimmt alle gleichzeitig ab, die Verlierer trinken {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 51
+      },
+      {
+        "text": "„Hunderassen“. Die Person, die keine Ideen mehr hat, oder eine Rasse wiederholt, trinkt {int} Schlücke! Du beginnst.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 52
+      },
+      {
+        "text": "Dafür oder dagegen: Eine Hinfahrt ohne Rückfahrt zu einem neuen bewohnbaren Planeten mit 1000 Personen machen und am Aufbau einer neuen Welt teilnehmen, aber deine Nahestehenden dafür verlassen? Stimmt alle gleichzeitig ab, die Verlierer trinken {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 129
+      },
+      {
+        "text": "Neues Thema und {int} Schlücke für den Verlierer: „Whiskymarken“. Du beginnst.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 130
+      },
+      {
+        "text": "Alle die größer als 1.80 sind, trinken {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 131
+      },
+      {
+        "text": "Alle Kampfsportler trinken {int} Schlücke.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 132
+      },
+      {
+        "text": "Verteile {int} Schlücke und trinke {int} Schlücke.",
+        "count": 22,
+        "uses": 0,
+        "rounds": 0,
+        "id": 133
+      },
+      {
+        "text": "Verteile {int} Schlücke. Diese müssen auf mindestens 2 Personen aufgeteilt werden.",
+        "count": 43,
+        "uses": 0,
+        "rounds": 0,
+        "id": 134
+      },
+      {
+        "text": "Trinke {int} Schlücke oder mache {int} Liegestütze.",
+        "count": 10,
+        "uses": 0,
+        "rounds": 0,
+        "id": 135
+      },
+      {
+        "text": "Suche dir einen Mitspieler aus. Nach 3 Sekunden schreit jeder von euch gleichzeitig eine Zahl zwischen 1 und 5. Schreit ihr die selbe Zahl, trinkt ihr beide {int} Schlücke. Schreit ihr eine unterschiedliche Zahl, trinkst nur du {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 136
+      },
+      {
+        "text": "Lieber ohne Beine oder ohne Arme leben? Stimmt alle gleichzeitig ab, die Verlierer trinken {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 137
+      },
+      {
+        "text": "Jeder, der schon einmal in seinem Leben seinen Führerschein abgenommen bekommen hat, trinkt {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 138
+      },
+      {
+        "text": "Wer sich nicht traut, seinen rechten Nachbarn auf den Mund zu küssen, muss {int} Schlücke trinken.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 139
+      },
+      {
+        "text": "Wenn du schon einmal Studenten Nachhilfe gegeben hast, verteil {int} Schlücke. Ansonsten trink sie selbst.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 176
+      },
+      {
+        "text": "Die Schlücke, die du verteilst, werden immer verdoppelt.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 177
+      },
+      {
+        "text": "Wenn du schon einmal in einer Schlägerei mit Besoffenen verwickelt warst, trink {int} Schlücke. Wenn nicht, verteile sie.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 178
+      },
+      {
+        "text": "„Pizzanamen“, alle sagen nacheinander einen Pizzanamen. Die Person, die keinen mehr sagen kann, oder einen Namen wiederholt, trinkt {int} Schlücke! Du beginnst!",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 179
+      },
+      {
+        "text": "Exe dein Getränk.",
+        "count": 6,
+        "uses": 0,
+        "rounds": 0,
+        "id": 180
+      },
+      {
+        "text": "Wenn du nicht weißt, wer Toru Iwatani ist, trinke {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 181
+      },
+      {
+        "text": "Jeder, der dir am Ellenbogen leckt, darf {int} Schlücke verteilen. Will es keiner machen, darfst du sie verteilen. Lässt du es nicht zu, trinkst du {int} Schlücke.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 182
+      },
+      {
+        "text": "Alle, die sich im letzten Monat einen Porno angesehen haben, verteilen {int} Schlücke.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 183
+      },
+      {
+        "text": "Alle, die Single sind, trinken {int} Schlücke.",
+        "count": 3,
+        "uses": 0,
+        "rounds": 0,
+        "id": 184
+      },
+      {
+        "text": "Lieber als total bekloppt durchgehen oder einfach stinklangweilig normal sein? Stimmt alle gleichzeitig ab, die Verlierer trinken {int} Schlücke.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 185
+      },
+      {
+        "text": "Jeder, mit weniger als 92 Prozent Akku, trinkt {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 190
+      },
+      {
+        "text": "Sage den Zungenbrecher „Lang schwang der Klang den Hang entlang.“ auf. Schaffst du es: Verteile {int} Schlücke. Schaffst du es nicht: Trinke sie selbst.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 191
+      },
+      {
+        "text": "Imitiere 5 Sekunden lang eine Schildkröte oder trink {int} Schlücke!",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 192
+      },
+      {
+        "text": "„Lieder von Justin Bieber“, derjenige, der etwas wiederholt oder nichts mehr weiß, trinkt {int} Schlücke. Du beginnst.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 193
+      },
+      {
+        "text": "Wer als Letzter „Amena koyum“ schreit, trinkt {int} Schlücke.",
+        "count": 3,
+        "uses": 0,
+        "rounds": 0,
+        "id": 194
+      },
+      {
+        "text": "Trink {int} Schlücke, wenn du schon einmal mit deinem rechten Nachbarn gekotzt hast.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 195
+      }
+    ]
+  },
+  {
+    "key": "3",
+    "name": "Item text 3",
+    "tag": "18+",
+    "data": [
+      {
+        "text": "Trink {int} Schlücke, wenn du schon einmal dein Smartphone gesucht hast, obwohl es in deiner Hosentasche oder Hand war.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 53
+      },
+      {
+        "text": "Jeder, dem der Film „Hangover“ gefallen hat, trinkt {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 54
+      },
+      {
+        "text": "Du musst eine Runde lang die Augen zu machen und darfst nicht sehen was passiert. Trinke {int} Schlücke für jeden Bruch der Regel.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 1,
+        "personal": true,
+        "remote": true,
+        "unique": false,
+        "id": 55
+      },
+      {
+        "text": "Dein Name ist bis zum Ende des Spiels verboten. Jedes Mal, wenn jemand deinen Namen sagt, trinkt derjenige {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": -1,
+        "id": 56
+      },
+      {
+        "text": "Jeder, der schon einmal im Bierkönig war, trinkt {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 57
+      },
+      {
+        "text": "Wer als Letzter das Wort: Lukas-Von-Hinten-Nehmer schreit, trinkt {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 58
+      },
+      {
+        "text": "Alle, die keinen Autoführerschein besitzen, trinken {int} Schlücke. Der Rest, trinkt {int} Schlücke.",
+        "count": 3,
+        "uses": 0,
+        "rounds": 0,
+        "id": 59
+      },
+      {
+        "text": "„Jobs, die mit G beginnen“, derjenige, der etwas wiederholt oder nichts mehr weiß, trinkt {int} Schlücke. Du beginnst.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 60
+      },
+      {
+        "text": "Alle, die es nicht schaffen, den oberen Rand ihres Glases komplett in den Mund zu nehmen, trinken {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 61
+      },
+      {
+        "text": "Verteile die Anzahl an Buchstaben, die dein Vorname hat, als Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 62
+      },
+      {
+        "text": "Der letzte, der heute auf dem Klo war, trinkt {int} Schlücke.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 63
+      },
+      {
+        "text": "Wenn das dein erstes Glas ist, trink es halb leer, ansonsten verteil {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 64
+      },
+      {
+        "text": "Lecke am Mittelfinger deines linken Mitspielers oder trinke {int} Schlücke.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 65
+      },
+      {
+        "text": "Lieber nie wieder Fleisch essen oder nie wieder feiern gehen?",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 66
+      },
+      {
+        "text": "Wenn du schon einmal der Chauffeur für alle warst, verteile {int} Schlücke. Ansonsten trink sie selbst.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 0
+      },
+      {
+        "text": "Wer als Letzter beide Hände auf seine Knie legt trinkt {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 1
+      },
+      {
+        "text": "Themenspiel und {int} Schlücke für den Verlierer: „Baumarten“. Du beginnst.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 47
+      },
+      {
+        "text": "Sage den Zungenbrecher „Wenn der Benz bremst, brennt das Benzbremslicht.“ auf. Schaffst du es: Verteile {int} Schlücke. Schaffst du es nicht: Trinke sie selbst.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 48
+      },
+      {
+        "text": "Dreh dich 6 mal im Kreis. Danach trinke {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 49
+      },
+      {
+        "text": "Jedes Mal, wenn jemand das Wort „Ich“ sagt, darfst du {int} Schlücke verteilen. Die Regel gilt bis zum Ende des Spieles.",
+        "count": 1,
+        "uses": 0,
+        "rounds": -1,
+        "id": 50
+      },
+      {
+        "text": "Lieber im Lotto gewinnen oder doppelt so alt werden, wie der Durchschnitt? Stimmt alle gleichzeitig ab, die Verlierer trinken {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 51
+      },
+      {
+        "text": "„Hunderassen“. Die Person, die keine Ideen mehr hat, oder eine Rasse wiederholt, trinkt {int} Schlücke! Du beginnst.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 52
+      },
+      {
+        "text": "Mach die Augen zu, streck deinen linken Arm aus und versuche mit dem Mittelfinger, deine Nasenspitze zu berühren. Schaffst du es, verteile {int} Schlücke. Schaffst du es nicht: Trinke {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 128
+      },
+      {
+        "text": "Dafür oder dagegen: Eine Hinfahrt ohne Rückfahrt zu einem neuen bewohnbaren Planeten mit 1000 Personen machen und am Aufbau einer neuen Welt teilnehmen, aber deine Nahestehenden dafür verlassen? Stimmt alle gleichzeitig ab, die Verlierer trinken {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 129
+      },
+      {
+        "text": "Neues Thema und {int} Schlücke für den Verlierer: „Whiskymarken“. Du beginnst.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 130
+      },
+      {
+        "text": "Alle die größer als 1.80 sind, trinken {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 131
+      },
+      {
+        "text": "Alle Kampfsportler trinken {int} Schlücke.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 132
+      },
+      {
+        "text": "Verteile {int} Schlücke und trinke {int} Schlücke.",
+        "count": 22,
+        "uses": 0,
+        "rounds": 0,
+        "id": 133
+      },
+      {
+        "text": "Verteile {int} Schlücke. Diese müssen auf mindestens 2 Personen aufgeteilt werden.",
+        "count": 43,
+        "uses": 0,
+        "rounds": 0,
+        "id": 134
+      },
+      {
+        "text": "Trinke {int} Schlücke oder mache {int} Liegestütze.",
+        "count": 10,
+        "uses": 0,
+        "rounds": 0,
+        "id": 135
+      },
+      {
+        "text": "Suche dir einen Mitspieler aus. Nach 3 Sekunden schreit jeder von euch gleichzeitig eine Zahl zwischen 1 und 5. Schreit ihr die selbe Zahl, trinkt ihr beide {int} Schlücke. Schreit ihr eine unterschiedliche Zahl, trinkst nur du {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 136
+      },
+      {
+        "text": "Lieber ohne Beine oder ohne Arme leben? Stimmt alle gleichzeitig ab, die Verlierer trinken {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 137
+      },
+      {
+        "text": "Jeder, der schon einmal in seinem Leben seinen Führerschein abgenommen bekommen hat, trinkt {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 138
+      },
+      {
+        "text": "Wer sich nicht traut, seinen rechten Nachbarn auf den Mund zu küssen, muss {int} Schlücke trinken.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 139
+      },
+      {
+        "text": "Du entscheidest: Alle trinken 6 oder {int} Schlücke.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 140
+      },
+      {
+        "text": "Jeder trinkt so viele Schlücke wie er denkt, dass Idioten anwesend sind.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 141
+      },
+      {
+        "text": "Ist es zwischen 20 und 21 Uhr: Trinke {int} Schlücke. Ist es zwischen 22 und 23 Uhr: Verteile {int} Schlücke. Trifft beides nicht zu, hast du Pech gehabt.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 142
+      },
+      {
+        "text": "Alle unter 25 Jahren trinken {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 143
+      },
+      {
+        "text": "Jeder, der weiße Schuhe an hat, trinkt {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 144
+      },
+      {
+        "text": "Haben wir eine gerade Stunde, trinken alle {int} Schlücke. Haben wir eine ungerade Stunde, trinken alle {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 145
+      },
+      {
+        "text": "Zählt im Uhrzeigersinn bis 7. Derjenige, der die 7 erwischt, muss {int} Schlücke trinken.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 146
+      },
+      {
+        "text": "Alle Hundebesitzer trinken die nächsten 3 Runden doppelt.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 3,
+        "id": 147
+      },
+      {
+        "text": "Sei für eine Runde ein Huhn. Trinke {int} Schlücke für jeden Regelbruch.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 1,
+        "personal": true,
+        "remote": true,
+        "unique": false,
+        "id": 148
+      },
+      {
+        "text": "Alle, die ein M im Vornamen haben, trinken ihr Glas auf Ex!",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 149
+      },
+      {
+        "text": "Themenspiel und {int} Schlücke für den Verlierer: „Jobs im Bereich Handwerk“, du beginnst.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 150
+      },
+      {
+        "text": "Jeder, der schon einmal in seinem Leben betrunken auf die Fresse gefallen ist und sich verletzt hat, trinkt {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 151
+      },
+      {
+        "text": "Du darfst eine Runde lang nur das Wort „Blablabla“ benutzen. Trinke {int} Schlücke für jedes andere Wort.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 1,
+        "id": 153
+      },
+      {
+        "text": "Trink {int} Schlücke, wenn du den Geschmack des Geschlechts deines/r Partners/in magst.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 154
+      },
+      {
+        "text": "Idiotenduell zwischen dir und deinem linken Nachbarn! Der/diejenige, der/die sich am stärksten auf den Hintern schlägt, gewinnt. Der Verlierer trinkt {int} Schlücke!",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 155
+      },
+      {
+        "text": "Deine Mitspieler dürfen dir eine, realistisch zu beantwortende, Frage stellen. Beantworte diese wahrheitsgemäß oder trinke {int} Schlücke.",
+        "count": 4,
+        "uses": 0,
+        "rounds": 0,
+        "id": 156
+      },
+      {
+        "text": "Du entscheidest: Alle trinken {int} Schlücke oder {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 157
+      },
+      {
+        "text": "Jeder, der gern Pickel ausdrückt, trinkt {int} Schlücke, +1, wenn der-/diejenige das auch gern bei anderen macht.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 158
+      },
+      {
+        "text": "Alle trinken {int} Schlücke. Wer nicht trinken will, macht stattdessen {int} Liegestütze.",
+        "count": 5,
+        "uses": 0,
+        "rounds": 0,
+        "id": 159
+      },
+      {
+        "text": "Mädels, ihr trinkt eure Körbchengröße in Schlucken (A = 1, B = 2, etc.).",
+        "count": 4,
+        "uses": 0,
+        "rounds": 0,
+        "id": 160
+      },
+      {
+        "text": "Mache ein Selfie mit einem Spieler deiner Wahl und trinke mit ihm {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 161
+      },
+      {
+        "text": "Wenn dein linker Nachbar dich schon einmal kotzen gesehen hat, trink {int} Schlücke. Ansonsten verteil sie.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 162
+      },
+      {
+        "text": "Du musst bis zum Ende des Spiels, jedes mal bevor du trinkst, vorher auf den Tisch klopfen. Bei jedem Verstoß trinkst du {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": -1,
+        "id": 163
+      },
+      {
+        "text": "Wenn du nicht weißt, wer Mark Hamill ist, trinke {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 164
+      },
+      {
+        "text": "Jeder, der eine Kopfbedeckung trägt, trinkt {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 165
+      },
+      {
+        "text": "Trink {int} Schlücke, wenn dir schon einmal das Fahrrad geklaut wurde.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 166
+      },
+      {
+        "text": "Trinke {int} Schlücke, wenn du schon einmal Shisha geraucht hast.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 167
+      },
+      {
+        "text": "Alle Bushido Fans trinken {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 168
+      },
+      {
+        "text": "Habt ihr schon mehr als 40 Aufgaben erledigt, verteile {int} Schlücke. Ansonsten trinke {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 169
+      },
+      {
+        "text": "Halte 40 Sekunden die Luft an und trinke danach {int} Schlücke. Schaffst du es nicht ex dein Getränk. Wahlweise kannst du auch stattdessen gleich dein Getränk exen.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 170
+      },
+      {
+        "text": "Du darfst eine Runde lang nur das Wort „Hamster“ benutzen. Trinke {int} Schlücke für jedes andere Wort.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 1,
+        "id": 171
+      },
+      {
+        "text": "Trink {int} Schlücke, wenn du schon einmal einen Flammen-Furz gemacht hast.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 172
+      },
+      {
+        "text": "Alle BVB-Fans müssen einen Schluck trinken.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 173
+      },
+      {
+        "text": "Die Rothaarigen unter euch trinken {int} Schlücke.",
+        "count": 4,
+        "uses": 0,
+        "rounds": 0,
+        "id": 174
+      },
+      {
+        "text": "Rufe jemanden an, der nicht im Raum ist, und frage ihn, was besser ist: Drei Vierkornbrötchen oder vier Dreikornbrötchen. Machst du es nicht oder derjenige nicht dran geht, trinke {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 175
+      },
+      {
+        "text": "Wenn du schon einmal Studenten Nachhilfe gegeben hast, verteil {int} Schlücke. Ansonsten trink sie selbst.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 176
+      },
+      {
+        "text": "Die Schlücke, die du verteilst, werden immer verdoppelt.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 177
+      },
+      {
+        "text": "Wenn du schon einmal in einer Schlägerei mit Besoffenen verwickelt warst, trink {int} Schlücke. Wenn nicht, verteile sie.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 178
+      },
+      {
+        "text": "„Pizzanamen“, alle sagen nacheinander einen Pizzanamen. Die Person, die keinen mehr sagen kann, oder einen Namen wiederholt, trinkt {int} Schlücke! Du beginnst!",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 179
+      },
+      {
+        "text": "Exe dein Getränk.",
+        "count": 6,
+        "uses": 0,
+        "rounds": 0,
+        "id": 180
+      },
+      {
+        "text": "Wenn du nicht weißt, wer Toru Iwatani ist, trinke {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 181
+      },
+      {
+        "text": "Jeder, der dir am Ellenbogen leckt, darf {int} Schlücke verteilen. Will es keiner machen, darfst du sie verteilen. Lässt du es nicht zu, trinkst du {int} Schlücke.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 182
+      },
+      {
+        "text": "Alle, die sich im letzten Monat einen Porno angesehen haben, verteilen {int} Schlücke.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 183
+      },
+      {
+        "text": "Alle, die Single sind, trinken {int} Schlücke.",
+        "count": 3,
+        "uses": 0,
+        "rounds": 0,
+        "id": 184
+      },
+      {
+        "text": "Lieber als total bekloppt durchgehen oder einfach stinklangweilig normal sein? Stimmt alle gleichzeitig ab, die Verlierer trinken {int} Schlücke.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 185
+      },
+      {
+        "text": "Jeder, der schon einmal besoffen eine Business-Idee mit einem Freund hatte, trinkt {int} Schlücke. Ist er/sie da, trinkt ihr beide doppelt.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 186
+      },
+      {
+        "text": "Berühre jemanden an seinem Fuß. Danach trinkt jeder von euch beiden {int} Schlücke.",
+        "count": 9,
+        "uses": 0,
+        "rounds": 0,
+        "id": 187
+      },
+      {
+        "text": "Alle, die gerade Bier trinken, trinken {int} Schlücke.",
+        "count": 5,
+        "uses": 0,
+        "rounds": 0,
+        "id": 188
+      },
+      {
+        "text": "Verteile {int} Schlücke, wenn du schon einmal in die Dusche gepinkelt hat. Ansonsten trink sie selbst.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 189
+      },
+      {
+        "text": "Jeder, mit weniger als 92 Prozent Akku, trinkt {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 190
+      },
+      {
+        "text": "Sage den Zungenbrecher „Lang schwang der Klang den Hang entlang.“ auf. Schaffst du es: Verteile {int} Schlücke. Schaffst du es nicht: Trinke sie selbst.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 191
+      },
+      {
+        "text": "Imitiere 5 Sekunden lang eine Schildkröte oder trink {int} Schlücke!",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 192
+      },
+      {
+        "text": "„Lieder von Justin Bieber“, derjenige, der etwas wiederholt oder nichts mehr weiß, trinkt {int} Schlücke. Du beginnst.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 193
+      },
+      {
+        "text": "Wer als Letzter „Amena koyum“ schreit, trinkt {int} Schlücke.",
+        "count": 3,
+        "uses": 0,
+        "rounds": 0,
+        "id": 194
+      },
+      {
+        "text": "Trink {int} Schlücke, wenn du schon einmal mit deinem rechten Nachbarn gekotzt hast.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 195
+      },
+      {
+        "text": "Alle Dorfkinder trinken {int} Schlücke.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 197
+      },
+      {
+        "text": "Hast du weniger als 50 Prozent Akku, verteile {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 198
+      },
+      {
+        "text": "Verteile {int} Schlücke oder erhalte für eine Runde Immunität.",
+        "count": 22,
+        "uses": 0,
+        "rounds": 1,
+        "personal": true,
+        "remote": true,
+        "unique": false,
+        "id": 199
+      },
+      {
+        "text": "Wenn du nicht weißt, wer Jawed Karim und Chad Hurley sind, trinke {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 200
+      },
+      {
+        "text": "Sage den Zungenbrecher „Zwanzig Zwerge zeigen Handstand, zehn im Wandschrank, zehn am Sandstrand.“ auf. Schaffst du es: Verteile {int} Schlücke. Schaffst du es nicht: Trinke sie selbst.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 201
+      },
+      {
+        "text": "Jeder, der schon einmal in seinem Leben besoffen in der Schule war, trinkt {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 202
+      },
+      {
+        "text": "Einmal im Uhrzeigersinn: Du trinkst {int} Schlücke, der Nächste {int} Schlücke, der Nächste {int} Schlücke, usw.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 203
+      },
+      {
+        "text": "Summe ein Lied deiner Wahl. Wer es erkennt, darf {int} Schlücke verteilen. Wahlweise kannst du auch stattdessen dein Getränk exen.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 204
+      },
+      {
+        "text": "Alle Mitspieler müssen 1 Runde lang schweigen. Für jedes Wort, trinkt derjenige {int} Schlücke.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 1,
+        "id": 205
+      },
+      {
+        "text": "Umarme eine Person deiner Wahl und trinke mit ihr {int} Schlücke.",
+        "count": 27,
+        "uses": 0,
+        "rounds": 0,
+        "id": 206
+      },
+      {
+        "text": "Dein linker Sitznachbar entscheidet, wer {int} Schlücke trinken muss.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 207
+      },
+      {
+        "text": "Lieber alle Musikinstrumente spielen können oder 15 Sprachen perfekt sprechen? Stimmt alle gleichzeitig ab, die Verlierer trinken {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 208
+      },
+      {
+        "text": "Denke dir eine Regel aus. Diese Regel gilt nur für eine Runde.",
+        "count": 3,
+        "uses": 0,
+        "rounds": 1,
+        "personal": true,
+        "remote": true,
+        "unique": false,
+        "id": 209
+      },
+      {
+        "text": "Trinke {int} Schlücke oder ziehe ein Kleidungsstück aus.",
+        "count": 10,
+        "uses": 0,
+        "rounds": 0,
+        "id": 210
+      },
+      {
+        "text": "Frage einen Mitspieler deiner Wahl, was er lieber haben möchte: Sein Getränk exen oder dir 2 Euro geben. Erfülle seinen Wunsch.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 211
+      },
+      {
+        "text": "Nenne eine Band, die sich aufgelöst hat. Wenn du eine weißt, verteile {int} Schlücke, wenn nicht trinke {int} Schlücke.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 212
+      },
+      {
+        "text": "Der Spieler, der den kleinsten Geldschein bei sich trägt, verteilt {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 213
+      },
+      {
+        "text": "Alle trinken ein Drittel ihres Alters in Schlücken.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 214
+      },
+      {
+        "text": "Veranstalte, 10 Sekunden lang, einen sexy Dance mit 2 Personen deiner Wahl. Machst du und die ausgewählten Personen es nicht, trinkt jeder {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 215
+      },
+      {
+        "text": "Trinke {int} Schlücke oder gib einem Spieler deiner Wahl 1 Euro.",
+        "count": 12,
+        "uses": 0,
+        "rounds": 0,
+        "id": 216
+      },
+      {
+        "text": "Verteil {int} Schlücke, wenn es hier Spieler gibt, mit denen du einen besonderen Check hast.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 217
+      },
+      {
+        "text": "Jeder, der braune Haare hat, trinkt {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 196
+      },
+      {
+        "text": "Wenn du 3 Titel kennst, die spanische Hits sind oder waren, verteile {int} Schlücke. Sonst trinke sie selbst.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 218
+      },
+      {
+        "text": "Bestimme einen Mitspieler. Dieser darf {int} Schlücke verteilen.",
+        "count": 38,
+        "uses": 0,
+        "rounds": 0,
+        "id": 219
+      },
+      {
+        "text": "Wer als Letzter seinen Daumen auf dem Tisch hat, trinkt {int} Schlücke.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 220
+      },
+      {
+        "text": "Wer als Letzter das Wort: Brutaler-Pussy-Slayer schreit, trinkt {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 221
+      },
+      {
+        "text": "Die Mädels trinken so viele Schlücke, wie heiße Kerle hier mitspielen.",
+        "count": 4,
+        "uses": 0,
+        "rounds": 0,
+        "id": 222
+      },
+      {
+        "text": "Trink aus jeder Flasche, die auf dem Tisch steht.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 223
+      },
+      {
+        "text": "Denke dir eine Regel und eine Strafe für den Bruch dieser Regel aus. Diese Regel ist gültig bis zum Ende des Spiels. Wahlweise darfst du auch stattdessen eine aktive Regel aufheben.",
+        "count": 40,
+        "uses": 0,
+        "rounds": -1,
+        "personal": true,
+        "remote": true,
+        "unique": false,
+        "id": 224
+      },
+      {
+        "text": "Verteile einen Schluck an eine Person deiner Wahl oder dein linker Nachbar trinkt {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 225
+      },
+      {
+        "text": "Alle Nicht-Raucher verteilen {int} Schlücke.",
+        "count": 4,
+        "uses": 0,
+        "rounds": 0,
+        "id": 226
+      },
+      {
+        "text": "Wer als Letzter beide Hände auf seine Arschbacken legt, trinkt {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 227
+      },
+      {
+        "text": "Wer als Letzter seinen Namen sagt, trinkt {int} Schlücke.",
+        "count": 4,
+        "uses": 0,
+        "rounds": 0,
+        "id": 228
+      }
+    ]
+  }
+]
