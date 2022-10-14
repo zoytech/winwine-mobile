@@ -15,7 +15,7 @@ import {ElevatedHeader} from './components';
 const screenWidth = Dimensions.get('screen').width;
 export default function GamePlayScreen(props) {
   const {
-    key = 3,
+    key = 1,
     onContinueButtonPressed = () => {},
     onLookBackButtonPressed = () => {},
     headerTypo = Typography.title.large,
@@ -28,14 +28,8 @@ export default function GamePlayScreen(props) {
 
   const [packageItem, setPackageItem] = useState({});
   const [currentCard, setCurrentCard] = useState(0);
-  const {name: name, data: data = []} = packageItem || {};
-  // const {
-  //   id: id,
-  //   text: question,
-  //   count: count,
-  //   uses: uses,
-  //   rounds: rounds,
-  // } = data[currentCard];
+  const {name: name, data: questions = []} = packageItem || {};
+  const TOTAL_QUESTIONS = questions.length;
   const baseColor = Color.light[colorVariant]?.base;
   useEffect(() => {
     getQuestionList();
@@ -53,13 +47,13 @@ export default function GamePlayScreen(props) {
     style,
   ];
 
-  function handleContinueButtonPressed() {
+  function handleLookBackButtonPressed() {
     currentCard === 0 ? '' : setCurrentCard(currentCard - 1);
     onContinueButtonPressed();
   }
 
-  function handleLookBackButtonPressed() {
-    currentCard === data.length ? '' : setCurrentCard(currentCard + 1);
+  function handleContinueButtonPressed() {
+    currentCard === TOTAL_QUESTIONS ? '' : setCurrentCard(currentCard + 1);
     onLookBackButtonPressed();
   }
 
@@ -68,25 +62,27 @@ export default function GamePlayScreen(props) {
       <ScrollView contentContainerStyle={styles.scrollView}>
         <ElevatedHeader
           head={name}
-          subHeadLeft={`Lá thứ ${currentCard + 1}/${data.length} `}
+          subHeadLeft={`Lá thứ ${currentCard + 1}/${TOTAL_QUESTIONS} `}
           headStyle={headerTypo}
           subHeadStyle={subHeaderTypo}
           style={styles.header}
           containerStyle={styles.header}
         />
         <ElevatedCard style={shadowStyle} containerStyle={styles.gameCard}>
-          <Text style={[bodyTypo, styles.text]}>{data[currentCard]?.text}</Text>
+          <Text style={[bodyTypo, styles.text]}>
+            {questions[currentCard]?.text}
+          </Text>
         </ElevatedCard>
         <View style={styles.action}>
           <OutlinedButton
             content={'Lá trước'}
-            onPress={handleLookBackButtonPressed}
+            onPressOut={handleLookBackButtonPressed}
             disabled={currentCard === 0}
           />
           <FilledButton
             content={'Lá tiép theo'}
-            onPress={handleContinueButtonPressed}
-            disabled={currentCard === data.length - 1}
+            onPressOut={handleContinueButtonPressed}
+            disabled={currentCard === TOTAL_QUESTIONS - 1}
           />
         </View>
       </ScrollView>

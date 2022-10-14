@@ -1,5 +1,5 @@
 import questionsMockData from './mockData/questions.json';
-import questionHomeScreen from './mockData/questionHomeScreen.json';
+import questionHomeScreenMockData from './mockData/questionHomeScreen.json';
 
 function promiseWithTimeout(data, timeout = 1000) {
   return new Promise(resolve => {
@@ -14,7 +14,7 @@ function getQuestionPackagesList() {
 }
 
 function getQuestionHomeScreenList() {
-  return promiseWithTimeout(questionHomeScreen);
+  return promiseWithTimeout(questionHomeScreenMockData);
 }
 
 export default {getQuestionPackagesList, getQuestionHomeScreenList};

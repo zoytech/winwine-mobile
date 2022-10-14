@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Dimensions,
   SafeAreaView,
@@ -10,11 +10,13 @@ import {
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {ElevatedCard, FilledButton, FilledIconButton} from 'src/components';
 import {ElevatedHeader} from './components';
+import API from '../../../api';
 
 const {width: screenWidth} = Dimensions.get('screen');
 
 export default function GameWaitScreen(props) {
   const {
+    key = 4,
     onBackwardButtonPressed = () => {},
     onForwardButtonPressed = () => {},
     headerTypo = Typography.title.large,
@@ -26,15 +28,34 @@ export default function GameWaitScreen(props) {
     ...otherProps
   } = props;
 
+  const [packageItem, setPackageItem] = useState({});
   const [currentCard, setCurrentCard] = useState(0);
   const baseColor = Color.light[colorVariant]?.base;
+  const {name: name, tag: tag, data: questions = []} = packageItem || {};
+  const TOTAL_QUESTIONS = questions.length;
 
   const defaultContainerStyle = [
     {backgroundColor: baseColor},
     styles.container,
     style,
   ];
-  const description = 'Xem trước 10 lá bài';
+
+  function previewNumberOfCard(total) {
+    const MAX_VIEW = 10;
+    return total >= MAX_VIEW
+      ? `Xem trước ${MAX_VIEW} lá bài`
+      : `Xem trước ${total} lá bài`;
+  }
+
+  useEffect(() => {
+    getQuestionList();
+  }, []);
+
+  const getQuestionList = async () => {
+    const DATA = await API.getQuestionPackagesList();
+    const currentData = DATA.find(item => item.key === key.toString());
+    setPackageItem(currentData);
+  };
 
   function handlePressFilledButton() {
     alert('move to game screen');
@@ -42,21 +63,21 @@ export default function GameWaitScreen(props) {
 
   function handleBackwardButtonPressed() {
     currentCard === 0 ? '' : setCurrentCard(currentCard - 1);
-    onBackwardButtonPressed(item);
+    onBackwardButtonPressed();
   }
 
   function handleForwardButtonPressed() {
-    currentCard === questions.length ? '' : setCurrentCard(currentCard + 1);
-    onForwardButtonPressed(item);
+    currentCard === TOTAL_QUESTIONS ? '' : setCurrentCard(currentCard + 1);
+    onForwardButtonPressed();
   }
 
   return (
     <SafeAreaView {...otherProps} style={defaultContainerStyle}>
       <ScrollView contentContainerStyle={styles.scrollView}>
         <ElevatedHeader
-          head={cardInfo?.title}
-          subHeadLeft={cardInfo?.tag}
-          subHeadRight={`Tổng số ${questions.length} lá`}
+          head={name}
+          subHeadLeft={tag}
+          subHeadRight={`Tổng số ${TOTAL_QUESTIONS} lá`}
           headStyle={headerTypo}
           subHeadStyle={subHeaderTypo}
           style={styles.header}
@@ -64,7 +85,9 @@ export default function GameWaitScreen(props) {
         />
 
         <View style={styles.supportingText}>
-          {description && <Text style={supportingTextTypo}>{description}</Text>}
+          <Text style={supportingTextTypo}>
+            {previewNumberOfCard(TOTAL_QUESTIONS)}
+          </Text>
         </View>
         <View style={styles.cardWithButton}>
           <FilledIconButton
@@ -74,13 +97,13 @@ export default function GameWaitScreen(props) {
           />
           <ElevatedCard style={shadowStyle} containerStyle={styles.gameCard}>
             <Text style={[bodyTypo, styles.text]}>
-              {questions[currentCard]?.question}
+              {questions[currentCard]?.text}
             </Text>
           </ElevatedCard>
           <FilledIconButton
             name="caretright"
             onPressOut={handleForwardButtonPressed}
-            disabled={currentCard === questions.length - 1}
+            disabled={currentCard === TOTAL_QUESTIONS - 1}
           />
         </View>
         <View style={styles.action}>
@@ -137,38 +160,3 @@ const styles = StyleSheet.create({
 });
 
 const shadowStyle = StyleSheet.compose(styles.gameCard, {width: '100%'});
-
-const cardInfo = {
-  id: '123',
-  title: 'Bai cua Nam',
-  tag: 'Thieu nhi',
-  totalCards: '30',
-  avatar: 'N',
-  currentCard: '28',
-};
-
-const questions = [
-  {
-    number: 1,
-    question: '1. Describe your crush’s personality.',
-  },
-  {
-    number: 2,
-    question:
-      '2. Mùa thu rơi vào em, vào trong giấc mơ hôm qua. Mùa thu ôm mình em, chạy xa vòng tay vội vã',
-  },
-  {
-    number: 3,
-    question: '3. How many people in the room would you be willing to kiss?',
-  },
-  {
-    number: 4,
-    question: '4. When watching porn, what makes you turn it off?',
-  },
-  {
-    number: 5,
-    question:
-      '5. What is something “scandalous” and sex-related that you really want to try?',
-  },
-];
-const item = {};

@@ -1252,5 +1252,68 @@
         "id": 228
       }
     ]
+  },
+  {
+    "key": "4",
+    "name": "Item text 4",
+    "tag": "18+",
+    "data": [
+      {
+        "text": "Wenn du schon einmal der Chauffeur für alle warst, verteile {int} Schlücke. Ansonsten trink sie selbst.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 0
+      },
+      {
+        "text": "Wer als Letzter beide Hände auf seine Knie legt trinkt {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 1
+      },
+      {
+        "text": "Sagt nacheinander „Danke“ in einer anderen Sprache als auf Deutsch. Derjenige, der etwas wiederholt oder nichts mehr weiß, trinkt {int} Schlücke.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 2
+      },
+      {
+        "text": "Alle Kampfsportler trinken {int} Schlücke.",
+        "count": 2,
+        "uses": 0,
+        "rounds": 0,
+        "id": 132
+      },
+      {
+        "text": "Verteile {int} Schlücke und trinke {int} Schlücke.",
+        "count": 22,
+        "uses": 0,
+        "rounds": 0,
+        "id": 133
+      },
+      {
+        "text": "Verteile {int} Schlücke. Diese müssen auf mindestens 2 Personen aufgeteilt werden.",
+        "count": 43,
+        "uses": 0,
+        "rounds": 0,
+        "id": 134
+      },
+      {
+        "text": "Trinke {int} Schlücke oder mache {int} Liegestütze.",
+        "count": 10,
+        "uses": 0,
+        "rounds": 0,
+        "id": 135
+      },
+      {
+        "text": "Suche dir einen Mitspieler aus. Nach 3 Sekunden schreit jeder von euch gleichzeitig eine Zahl zwischen 1 und 5. Schreit ihr die selbe Zahl, trinkt ihr beide {int} Schlücke. Schreit ihr eine unterschiedliche Zahl, trinkst nur du {int} Schlücke.",
+        "count": 1,
+        "uses": 0,
+        "rounds": 0,
+        "id": 136
+      }
+    ]
   }
 ]
