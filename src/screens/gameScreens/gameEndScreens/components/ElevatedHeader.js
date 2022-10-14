@@ -1,7 +1,7 @@
 import {StyleSheet, Text, View} from 'react-native';
-import {FilledIconButton, OutlinedCard} from 'src/components';
+import {FilledIconButton, OutlinedCard, StandardCard} from 'src/components';
 
-export default function ElevatedHeader(props) {
+export default function StandardHeader(props) {
   const {
     head,
     subHeadLeft,
@@ -16,7 +16,7 @@ export default function ElevatedHeader(props) {
   const defaultContainerStyle = [styles.container, style];
 
   return (
-    <OutlinedCard
+    <StandardCard
       {...otherProps}
       style={defaultContainerStyle}
       containerStyle={containerStyle}>
@@ -31,7 +31,7 @@ export default function ElevatedHeader(props) {
           {subHeadRight && <Text style={subHeadStyle}>{subHeadRight}</Text>}
         </View>
       </View>
-    </OutlinedCard>
+    </StandardCard>
   );
 }
 
@@ -40,15 +40,14 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'space-evenly',
   },
   leadingIcon: {
     width: '12%',
-    backgroundColor: 'greenyellow',
     justifyContent: 'center',
   },
   content: {
-    width: '76%',
+    width: '60%',
     flexDirection: 'column',
     alignItems: 'flex-start',
   },

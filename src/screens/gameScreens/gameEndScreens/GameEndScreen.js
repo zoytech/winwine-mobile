@@ -12,6 +12,7 @@ import {Typography} from 'src/themes';
 import {FilledButton, OutlinedButton, OutlinedCard} from 'src/components';
 import {ElevatedHeader} from './components';
 import API from '../../../api';
+import StandardHeader from './components/ElevatedHeader';
 
 const screenWidth = Dimensions.get('screen').width;
 export default function GameEndScreen(props) {
@@ -50,7 +51,7 @@ export default function GameEndScreen(props) {
   return (
     <SafeAreaView {...otherProps} style={styles.screenView}>
       <OutlinedCard style={styles.baseCard}>
-        <ElevatedHeader
+        <StandardHeader
           head={name}
           subHeadLeft={tag}
           headStyle={headerTypo}
@@ -86,6 +87,7 @@ const styles = StyleSheet.create({
   },
   baseCard: {
     width: '80%',
+    marginTop: 100,
   },
   header: {
     width: '100%',
@@ -94,7 +96,7 @@ const styles = StyleSheet.create({
   media: {
     width: '100%',
     aspectRatio: 10 / 6,
-    resizeMode: 'contain',
+    resizeMode: 'cover',
     alignSelf: 'center',
   },
   supportingText: {
