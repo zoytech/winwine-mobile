@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Dimensions,
   Image,
@@ -11,10 +11,12 @@ import member1 from '../../../assets/images/preview-package/member1.jpg';
 import {Typography} from 'src/themes';
 import {FilledButton, OutlinedButton, OutlinedCard} from 'src/components';
 import {ElevatedHeader} from './components';
+import API from '../../../api';
 
 const screenWidth = Dimensions.get('screen').width;
 export default function GameEndScreen(props) {
   const {
+    keyPackage = 11,
     headerTypo = Typography.title.large,
     subHeaderTypo = Typography.title.medium,
     supportingTextTypo = Typography.title.medium,
@@ -22,8 +24,23 @@ export default function GameEndScreen(props) {
     style,
     ...otherProps
   } = props;
-  const description = 'Bạn đã chơi hết rồi';
 
+  const [packageInfo, setPackageInfo] = useState([]);
+  const {tag: tag, uri: uri, package: name} = packageInfo || {};
+  useEffect(() => {
+    getHomeScreenData();
+  }, []);
+
+  const getHomeScreenData = async () => {
+    const packageListData = await API.getQuestionPackagesList();
+    const currentPackageData = packageListData.find(
+      item => item.key === keyPackage.toString(),
+    );
+    console.log('currentPackage: ', currentPackageData);
+    setPackageInfo(currentPackageData);
+  };
+
+  const description = 'Bạn đã chơi hết rồi';
   const handlePressFilledButton = () => {
     alert('move to home screen');
   };
@@ -34,14 +51,14 @@ export default function GameEndScreen(props) {
     <SafeAreaView {...otherProps} style={styles.screenView}>
       <OutlinedCard style={styles.baseCard}>
         <ElevatedHeader
-          head={cardInfo?.title}
-          subHead1={cardInfo?.tag}
+          head={name}
+          subHeadLeft={tag}
           headStyle={headerTypo}
           subHeadStyle={subHeaderTypo}
           style={styles.header}
           containerStyle={styles.header}
         />
-        <Image style={styles.media} source={member1} />
+        <Image style={styles.media} source={{uri: uri}} />
         <View style={styles.supportingText}>
           {description && <Text style={supportingTextTypo}>{description}</Text>}
         </View>
@@ -90,7 +107,7 @@ const styles = StyleSheet.create({
     width: '100%',
     aspectRatio: 10 / 2,
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
   },
 });

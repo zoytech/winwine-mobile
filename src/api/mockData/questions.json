@@ -1,8 +1,9 @@
 [
   {
-    "key": "1",
-    "name": "Item text 1",
+    "key": "11",
+    "package": "Item text 1",
     "tag": "18+",
+    "uri": "https://picsum.photos/id/1011/200",
     "data": [
       {
         "text": "Wenn du schon einmal der Chauffeur für alle warst, verteile {int} Schlücke. Ansonsten trink sie selbst.",
@@ -126,9 +127,10 @@
     ]
   },
   {
-    "key": "2",
-    "name": "Item text 2",
+    "key": "12",
+    "package": "Item text 2",
     "tag": "18+",
+    "uri": "https://picsum.photos/id/1012/200",
     "data": [
       {
         "text": "Wenn du schon einmal der Chauffeur für alle warst, verteile {int} Schlücke. Ansonsten trink sie selbst.",
@@ -285,7 +287,7 @@
         "id": 178
       },
       {
-        "text": "„Pizzanamen“, alle sagen nacheinander einen Pizzanamen. Die Person, die keinen mehr sagen kann, oder einen Namen wiederholt, trinkt {int} Schlücke! Du beginnst!",
+        "text": "„Pizzapackagen“, alle sagen nacheinander einen Pizzapackagen. Die Person, die keinen mehr sagen kann, oder einen packagen wiederholt, trinkt {int} Schlücke! Du beginnst!",
         "count": 1,
         "uses": 0,
         "rounds": 0,
@@ -378,9 +380,10 @@
     ]
   },
   {
-    "key": "3",
-    "name": "Item text 3",
+    "key": "13",
+    "package": "Item text 3",
     "tag": "18+",
+    "uri": "https://picsum.photos/id/1013/200",
     "data": [
       {
         "text": "Trink {int} Schlücke, wenn du schon einmal dein Smartphone gesucht hast, obwohl es in deiner Hosentasche oder Hand war.",
@@ -407,7 +410,7 @@
         "id": 55
       },
       {
-        "text": "Dein Name ist bis zum Ende des Spiels verboten. Jedes Mal, wenn jemand deinen Namen sagt, trinkt derjenige {int} Schlücke.",
+        "text": "Dein package ist bis zum Ende des Spiels verboten. Jedes Mal, wenn jemand deinen packagen sagt, trinkt derjenige {int} Schlücke.",
         "count": 1,
         "uses": 0,
         "rounds": -1,
@@ -449,7 +452,7 @@
         "id": 61
       },
       {
-        "text": "Verteile die Anzahl an Buchstaben, die dein Vorname hat, als Schlücke.",
+        "text": "Verteile die Anzahl an Buchstaben, die dein Vorpackage hat, als Schlücke.",
         "count": 1,
         "uses": 0,
         "rounds": 0,
@@ -690,7 +693,7 @@
         "id": 148
       },
       {
-        "text": "Alle, die ein M im Vornamen haben, trinken ihr Glas auf Ex!",
+        "text": "Alle, die ein M im Vorpackagen haben, trinken ihr Glas auf Ex!",
         "count": 1,
         "uses": 0,
         "rounds": 0,
@@ -893,7 +896,7 @@
         "id": 178
       },
       {
-        "text": "„Pizzanamen“, alle sagen nacheinander einen Pizzanamen. Die Person, die keinen mehr sagen kann, oder einen Namen wiederholt, trinkt {int} Schlücke! Du beginnst!",
+        "text": "„Pizzapackagen“, alle sagen nacheinander einen Pizzapackagen. Die Person, die keinen mehr sagen kann, oder einen packagen wiederholt, trinkt {int} Schlücke! Du beginnst!",
         "count": 1,
         "uses": 0,
         "rounds": 0,
@@ -1245,7 +1248,7 @@
         "id": 227
       },
       {
-        "text": "Wer als Letzter seinen Namen sagt, trinkt {int} Schlücke.",
+        "text": "Wer als Letzter seinen packagen sagt, trinkt {int} Schlücke.",
         "count": 4,
         "uses": 0,
         "rounds": 0,
@@ -1254,9 +1257,10 @@
     ]
   },
   {
-    "key": "4",
-    "name": "Item text 4",
+    "key": "14",
+    "package": "Item text 4",
     "tag": "18+",
+    "uri": "https://picsum.photos/id/1015/200",
     "data": [
       {
         "text": "Wenn du schon einmal der Chauffeur für alle warst, verteile {int} Schlücke. Ansonsten trink sie selbst.",

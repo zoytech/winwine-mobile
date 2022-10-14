@@ -16,7 +16,7 @@ const {width: screenWidth} = Dimensions.get('screen');
 
 export default function GameWaitScreen(props) {
   const {
-    key = 4,
+    keyPackage = 14,
     onBackwardButtonPressed = () => {},
     onForwardButtonPressed = () => {},
     headerTypo = Typography.title.large,
@@ -31,7 +31,7 @@ export default function GameWaitScreen(props) {
   const [packageItem, setPackageItem] = useState({});
   const [currentCard, setCurrentCard] = useState(0);
   const baseColor = Color.light[colorVariant]?.base;
-  const {name: name, tag: tag, data: questions = []} = packageItem || {};
+  const {package: name, tag: tag, data: questions = []} = packageItem || {};
   const TOTAL_QUESTIONS = questions.length;
 
   const defaultContainerStyle = [
@@ -52,9 +52,11 @@ export default function GameWaitScreen(props) {
   }, []);
 
   const getQuestionList = async () => {
-    const DATA = await API.getQuestionPackagesList();
-    const currentData = DATA.find(item => item.key === key.toString());
-    setPackageItem(currentData);
+    const packageListData = await API.getQuestionPackagesList();
+    const currentPackageData = packageListData.find(
+      item => item.key === keyPackage.toString(),
+    );
+    setPackageItem(currentPackageData);
   };
 
   function handlePressFilledButton() {

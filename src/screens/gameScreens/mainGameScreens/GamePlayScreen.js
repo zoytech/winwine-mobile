@@ -15,7 +15,7 @@ import {ElevatedHeader} from './components';
 const screenWidth = Dimensions.get('screen').width;
 export default function GamePlayScreen(props) {
   const {
-    key = 1,
+    keyPackage = 11,
     onContinueButtonPressed = () => {},
     onLookBackButtonPressed = () => {},
     headerTypo = Typography.title.large,
@@ -28,7 +28,7 @@ export default function GamePlayScreen(props) {
 
   const [packageItem, setPackageItem] = useState({});
   const [currentCard, setCurrentCard] = useState(0);
-  const {name: name, data: questions = []} = packageItem || {};
+  const {package: name, data: questions = []} = packageItem || {};
   const TOTAL_QUESTIONS = questions.length;
   const baseColor = Color.light[colorVariant]?.base;
   useEffect(() => {
@@ -36,9 +36,11 @@ export default function GamePlayScreen(props) {
   }, []);
 
   const getQuestionList = async () => {
-    const DATA = await API.getQuestionPackagesList();
-    const currentData = DATA.find(item => item.key === key.toString());
-    setPackageItem(currentData);
+    const packageDataList = await API.getQuestionPackagesList();
+    const currentPackageData = packageDataList.find(
+      item => item.key === keyPackage.toString(),
+    );
+    setPackageItem(currentPackageData);
   };
 
   const defaultContainerStyle = [

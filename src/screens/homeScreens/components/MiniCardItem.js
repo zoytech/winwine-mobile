@@ -22,7 +22,7 @@ export default function MiniCardItem(props) {
     buttonStyle = Typography.label.small,
   } = props;
 
-  const {head, tag, uri} = data || {};
+  const {package: name, tag: tag, uri: uri} = data || {};
 
   const handlePressedImageArea = () => {
     onActionButtonPress();
@@ -39,7 +39,7 @@ export default function MiniCardItem(props) {
       </Pressable>
 
       <View style={styles.headline}>
-        {head && <Text style={titleStyle}>{head}</Text>}
+        {name && <Text style={titleStyle}>{name}</Text>}
         {tag && <Text style={subTitleStyle}>{tag}</Text>}
       </View>
       <View style={styles.action}>

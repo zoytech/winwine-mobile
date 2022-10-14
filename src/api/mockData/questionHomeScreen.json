@@ -1,40 +1,41 @@
 [
   {
+    "key": 1,
     "title": "Recently",
     "horizontal": true,
     "data": [
       {
-        "key": "1",
+        "key": "11",
         "package": "Item text 1",
         "tag": "18+",
         "uri": "https://picsum.photos/id/1011/200"
       },
       {
-        "key": "2",
+        "key": "12",
         "package": "Item text 2",
         "tag": "18+",
         "uri": "https://picsum.photos/id/1012/200"
       },
       {
-        "key": "3",
+        "key": "13",
         "package": "Item text 3",
         "tag": "18+",
         "uri": "https://picsum.photos/id/1013/200"
       },
       {
-        "key": "4",
+        "key": "14",
         "package": "Item text 4",
         "tag": "18+",
         "uri": "https://picsum.photos/id/1015/200"
       },
       {
-        "key": "5",
+        "key": "15",
         "package": "Item text 5",
         "tag": "18+",
         "uri": "https://picsum.photos/id/1016/200"
       },
       {
-        "key": "6",
+        "key": "16",
         "package": "Item text 6",
         "tag": "18+",
         "uri": "https://picsum.photos/id/1016/200"
@@ -42,41 +43,42 @@
     ]
   },
   {
+    "key": 2,
     "title": "On trending",
     "horizontal": false,
     "data": [
       {
-        "key": "1",
+        "key": "21",
         "package": "Item text 1",
         "tag": "18+",
         "uri": "https://picsum.photos/id/1020/200"
       },
       {
-        "key": "2",
+        "key": "22",
         "package": "Item text 2",
         "tag": "18+",
         "uri": "https://picsum.photos/id/1024/200"
       },
       {
-        "key": "3",
+        "key": "23",
         "package": "Item text 3",
         "tag": "18+",
         "uri": "https://picsum.photos/id/1027/200"
       },
       {
-        "key": "4",
+        "key": "24",
         "package": "Item text 4",
         "tag": "18+",
         "uri": "https://picsum.photos/id/1035/200"
       },
       {
-        "key": "5",
+        "key": "25",
         "package": "Item text 5",
         "tag": "18+",
         "uri": "https://picsum.photos/id/1038/200"
       },
       {
-        "key": "6",
+        "key": "26",
         "package": "Item text 6",
         "tag": "18+",
         "uri": "https://picsum.photos/id/1038/200"
@@ -84,41 +86,42 @@
     ]
   },
   {
+    "key": 3,
     "title": "Made for you",
     "horizontal": false,
     "data": [
       {
-        "key": "1",
+        "key": "31",
         "package": "Item text 1",
         "tag": "18+",
         "uri": "https://picsum.photos/id/1/200"
       },
       {
-        "key": "2",
+        "key": "32",
         "package": "Item text 2",
         "tag": "18+",
         "uri": "https://picsum.photos/id/10/200"
       },
       {
-        "key": "3",
+        "key": "33",
         "package": "Item text 3",
         "tag": "18+",
         "uri": "https://picsum.photos/id/1002/200"
       },
       {
-        "key": "4",
+        "key": "34",
         "package": "Item text 4",
         "tag": "18+",
         "uri": "https://picsum.photos/id/1006/200"
       },
       {
-        "key": "5",
+        "key": "35",
         "package": "Item text 5",
         "tag": "18+",
         "uri": "https://picsum.photos/id/1008/200"
       },
       {
-        "key": "6",
+        "key": "36",
         "package": "Item text 6",
         "tag": "18+",
         "uri": "https://picsum.photos/id/1008/200"
