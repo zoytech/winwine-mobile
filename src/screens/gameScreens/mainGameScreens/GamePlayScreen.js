@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Dimensions,
   SafeAreaView,
@@ -7,6 +7,7 @@ import {
   Text,
   View,
 } from 'react-native';
+import API from '../../../api';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {ElevatedCard, FilledButton, OutlinedButton} from 'src/components';
 import {ElevatedHeader} from './components';
@@ -14,6 +15,7 @@ import {ElevatedHeader} from './components';
 const screenWidth = Dimensions.get('screen').width;
 export default function GamePlayScreen(props) {
   const {
+    key = 3,
     onContinueButtonPressed = () => {},
     onLookBackButtonPressed = () => {},
     headerTypo = Typography.title.large,
@@ -23,14 +25,27 @@ export default function GamePlayScreen(props) {
     style,
     ...otherProps
   } = props;
-  const {
-    id: id,
-    title: title,
-    total: total,
-    question: questions = [],
-  } = CARD_DATA;
+
+  const [packageItem, setPackageItem] = useState({});
   const [currentCard, setCurrentCard] = useState(0);
+  const {name: name, data: data = []} = packageItem || {};
+  // const {
+  //   id: id,
+  //   text: question,
+  //   count: count,
+  //   uses: uses,
+  //   rounds: rounds,
+  // } = data[currentCard];
   const baseColor = Color.light[colorVariant]?.base;
+  useEffect(() => {
+    getQuestionList();
+  }, []);
+
+  const getQuestionList = async () => {
+    const DATA = await API.getQuestionPackagesList();
+    const currentData = DATA.find(item => item.key === key.toString());
+    setPackageItem(currentData);
+  };
 
   const defaultContainerStyle = [
     {backgroundColor: baseColor},
@@ -44,7 +59,7 @@ export default function GamePlayScreen(props) {
   }
 
   function handleLookBackButtonPressed() {
-    currentCard === total ? '' : setCurrentCard(currentCard + 1);
+    currentCard === data.length ? '' : setCurrentCard(currentCard + 1);
     onLookBackButtonPressed();
   }
 
@@ -52,17 +67,15 @@ export default function GamePlayScreen(props) {
     <SafeAreaView {...otherProps} style={defaultContainerStyle}>
       <ScrollView contentContainerStyle={styles.scrollView}>
         <ElevatedHeader
-          head={title}
-          subHeadLeft={`Lá thứ ${currentCard + 1}/${total} `}
+          head={name}
+          subHeadLeft={`Lá thứ ${currentCard + 1}/${data.length} `}
           headStyle={headerTypo}
           subHeadStyle={subHeaderTypo}
           style={styles.header}
           containerStyle={styles.header}
         />
         <ElevatedCard style={shadowStyle} containerStyle={styles.gameCard}>
-          <Text style={[bodyTypo, styles.text]}>
-            {questions[currentCard]?.question}
-          </Text>
+          <Text style={[bodyTypo, styles.text]}>{data[currentCard]?.text}</Text>
         </ElevatedCard>
         <View style={styles.action}>
           <OutlinedButton
@@ -73,7 +86,7 @@ export default function GamePlayScreen(props) {
           <FilledButton
             content={'Lá tiép theo'}
             onPress={handleContinueButtonPressed}
-            disabled={currentCard === total - 1}
+            disabled={currentCard === data.length - 1}
           />
         </View>
       </ScrollView>
@@ -120,34 +133,3 @@ const styles = StyleSheet.create({
 const shadowStyle = StyleSheet.compose(styles.gameCard, {
   width: '100%',
 });
-
-const CARD_DATA = {
-  idPackage: '123',
-  title: 'Bai cua Nam',
-  tag: 'Thieu nhi',
-  total: '5',
-  questions: [
-    {
-      number: 1,
-      question: '1. Describe your crush’s personality.',
-    },
-    {
-      number: 2,
-      question:
-        '2. Mùa thu rơi vào em, vào trong giấc mơ hôm qua. Mùa thu ôm mình em, chạy xa vòng tay vội vã',
-    },
-    {
-      number: 3,
-      question: '3. How many people in the room would you be willing to kiss?',
-    },
-    {
-      number: 4,
-      question: '4. When watching porn, what makes you turn it off?',
-    },
-    {
-      number: 5,
-      question:
-        '5. What is something “scandalous” and sex-related that you really want to try?',
-    },
-  ],
-};
