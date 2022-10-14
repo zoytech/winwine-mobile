@@ -7,10 +7,8 @@ import {
   Text,
   View,
 } from 'react-native';
-import member1 from '../../../assets/images/preview-package/member1.jpg';
 import {Typography} from 'src/themes';
 import {FilledButton, OutlinedButton, OutlinedCard} from 'src/components';
-import {ElevatedHeader} from './components';
 import API from '../../../api';
 import StandardHeader from './components/ElevatedHeader';
 

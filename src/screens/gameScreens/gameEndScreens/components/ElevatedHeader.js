@@ -1,5 +1,5 @@
 import {StyleSheet, Text, View} from 'react-native';
-import {FilledIconButton, OutlinedCard, StandardCard} from 'src/components';
+import {FilledIconButton, StandardCard} from 'src/components';
 
 export default function StandardHeader(props) {
   const {
