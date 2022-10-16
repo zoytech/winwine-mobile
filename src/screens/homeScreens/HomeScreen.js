@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
   Dimensions,
-  FlatList,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -37,26 +36,31 @@ export default function HomeScreen() {
     console.log('suggestionData: ', suggestedHashtagData);
     console.log('packageData: ', popularCardDecks);
     console.log('packageData: ', recentlyCardDecks);
-    setSuggestedHashtag(suggestedHashtagData);
-    setPopularCardDecks(popularCardDecksData);
-    setRecentlyCardDecks(recentlyCardDecksData);
+    setSuggestedHashtag(suggestedHashtagData?.data);
+    setPopularCardDecks(popularCardDecksData?.data);
+    setRecentlyCardDecks(recentlyCardDecksData?.data);
   }
+
+  // useEffect(() => {
+  //   console.log('1');
+  //   setSuggestedHashtag([]);
+  //   return () => {
+  //     console.log('clear 1');
+  //   };
+  // }, []);
+  // useEffect(() => {
+  //   console.log('2');
+  //   setSuggestedHashtag([1]);
+  // });
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
-        <SuggestionList
-          data={suggestedHashtag}
-          style={styles.suggestedHashtag}
-        />
-        <View style={styles.recentlyCardDecks}>
-          <SectionHeader content={'Recently'} />
-          <HorizontalCardList data={recentlyCardDecks} />
-        </View>
-        <View style={styles.popularCardDecks}>
-          <SectionHeader content={'Popular'} />
-          <VerticalCardList data={popularCardDecks} />
-        </View>
+      <ScrollView contentContainerStyle={styles.contentContainer}>
+        <SuggestionList data={suggestedHashtag} />
+        <SectionHeader content={'Recently'} />
+        <HorizontalCardList data={recentlyCardDecks} />
+        <SectionHeader content={'Popular'} />
+        <VerticalCardList data={popularCardDecks} />
       </ScrollView>
     </SafeAreaView>
   );
@@ -70,6 +74,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     paddingHorizontal: 16,
+    justifyContent: 'center',
   },
 });
 

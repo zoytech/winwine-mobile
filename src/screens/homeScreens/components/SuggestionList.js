@@ -29,6 +29,7 @@ export default function SuggestionList(props) {
       showsHorizontalScrollIndicator={false}
       keyExtractor={item => item?.id}
       ItemSeparatorComponent={<View style={styles.separator} />}
+      contentContainerStyle={[styles.contentContainer]}
       style={[styles.container, style]}
       data={data}
       renderItem={renderItem}
@@ -36,8 +37,9 @@ export default function SuggestionList(props) {
   );
 }
 const styles = StyleSheet.create({
-  container: {
+  contentContainer: {
     paddingVertical: 16,
+    justifyContent: 'center',
   },
   separator: {
     width: 4,

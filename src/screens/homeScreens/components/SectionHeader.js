@@ -15,6 +15,7 @@ export default function SectionHeader(props) {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
+    justifyContent: 'center',
   },
   content: {
     ...Typography.label.large,

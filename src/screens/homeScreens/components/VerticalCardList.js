@@ -1,5 +1,5 @@
 import React from 'react';
-import {FlatList, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import MiniCardItem from './MiniCardItem';
 
 export default function VerticalCardList(props) {
@@ -19,15 +19,9 @@ export default function VerticalCardList(props) {
   }
 
   return (
-    <>
-      <FlatList
-        style={[styles.container, style]}
-        showsVerticalScrollIndicator={false}
-        ItemSeparatorComponent={<View style={styles.separator} />}
-        data={data}
-        renderItem={renderItem}
-      />
-    </>
+    <View style={styles.container}>
+      {data && data.map((item, index) => renderItem({item, index}))}
+    </View>
   );
 }
 const styles = StyleSheet.create({

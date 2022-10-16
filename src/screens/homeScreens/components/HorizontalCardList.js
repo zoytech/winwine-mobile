@@ -27,15 +27,17 @@ export default function HorizontalCardList(props) {
         data={data}
         renderItem={renderItem}
         showsHorizontalScrollIndicator={false}
+        contentContainerStyle={[styles.contentContainer]}
       />
     </>
   );
 }
 const styles = StyleSheet.create({
-  container: {
+  container: {},
+  contentContainer: {
     paddingVertical: 16,
+    justifyContent: 'center',
   },
-
   separator: {
     width: 16,
   },
