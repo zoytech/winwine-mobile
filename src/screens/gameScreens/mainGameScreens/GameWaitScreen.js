@@ -10,13 +10,13 @@ import {
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {ElevatedCard, FilledButton, FilledIconButton} from 'src/components';
 import {ElevatedHeader} from './components';
-import API from '../../../api';
+import API from 'src/apis';
 
 const {width: screenWidth} = Dimensions.get('screen');
 
 export default function GameWaitScreen(props) {
   const {
-    keyPackage = 14,
+    deckId = 4,
     onBackwardButtonPressed = () => {},
     onForwardButtonPressed = () => {},
     headerTypo = Typography.title.large,
@@ -28,11 +28,11 @@ export default function GameWaitScreen(props) {
     ...otherProps
   } = props;
 
-  const [packageItem, setPackageItem] = useState({});
-  const [currentCard, setCurrentCard] = useState(0);
+  const [cardDeckItem, setCardDeckItem] = useState({});
+  const [taskTurn, setTaskTurn] = useState(0);
   const baseColor = Color.light[colorVariant]?.base;
-  const {package: name, tag: tag, data: questions = []} = packageItem || {};
-  const TOTAL_QUESTIONS = questions.length;
+  const {cardDeck: name, tag: tag, tasks: tasks = []} = cardDeckItem || {};
+  const TOTAL_TASKS = tasks.length;
 
   const defaultContainerStyle = [
     {backgroundColor: baseColor},
@@ -48,28 +48,25 @@ export default function GameWaitScreen(props) {
   }
 
   useEffect(() => {
-    getQuestionList();
-  }, []);
+    getCurrentCardDeck(deckId);
+  }, [deckId]);
 
-  const getQuestionList = async () => {
-    const packageListData = await API.getQuestionPackagesList();
-    const currentPackageData = packageListData.find(
-      item => item.key === keyPackage.toString(),
-    );
-    setPackageItem(currentPackageData);
-  };
+  async function getCurrentCardDeck(cardDeckId) {
+    const cardDeck = await API.getCardDeckById(cardDeckId);
+    setCardDeckItem(cardDeck);
+  }
 
   function handlePressFilledButton() {
     alert('move to game screen');
   }
 
   function handleBackwardButtonPressed() {
-    currentCard === 0 ? '' : setCurrentCard(currentCard - 1);
+    taskTurn === 0 ? '' : setTaskTurn(taskTurn - 1);
     onBackwardButtonPressed();
   }
 
   function handleForwardButtonPressed() {
-    currentCard === TOTAL_QUESTIONS ? '' : setCurrentCard(currentCard + 1);
+    taskTurn === TOTAL_TASKS ? '' : setTaskTurn(taskTurn + 1);
     onForwardButtonPressed();
   }
 
@@ -79,7 +76,7 @@ export default function GameWaitScreen(props) {
         <ElevatedHeader
           head={name}
           subHeadLeft={tag}
-          subHeadRight={`Tổng số ${TOTAL_QUESTIONS} lá`}
+          subHeadRight={`Tổng số ${TOTAL_TASKS} lá`}
           headStyle={headerTypo}
           subHeadStyle={subHeaderTypo}
           style={styles.header}
@@ -88,24 +85,22 @@ export default function GameWaitScreen(props) {
 
         <View style={styles.supportingText}>
           <Text style={supportingTextTypo}>
-            {previewNumberOfCard(TOTAL_QUESTIONS)}
+            {previewNumberOfCard(TOTAL_TASKS)}
           </Text>
         </View>
         <View style={styles.cardWithButton}>
           <FilledIconButton
             name="caretleft"
             onPressOut={handleBackwardButtonPressed}
-            disabled={currentCard === 0}
+            disabled={taskTurn === 0}
           />
           <ElevatedCard style={shadowStyle} containerStyle={styles.gameCard}>
-            <Text style={[bodyTypo, styles.text]}>
-              {questions[currentCard]?.text}
-            </Text>
+            <Text style={[bodyTypo, styles.text]}>{tasks[taskTurn]?.text}</Text>
           </ElevatedCard>
           <FilledIconButton
             name="caretright"
             onPressOut={handleForwardButtonPressed}
-            disabled={currentCard === TOTAL_QUESTIONS - 1}
+            disabled={taskTurn === TOTAL_TASKS - 1}
           />
         </View>
         <View style={styles.action}>

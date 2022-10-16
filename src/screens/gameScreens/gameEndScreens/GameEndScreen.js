@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {Typography} from 'src/themes';
 import {FilledButton, OutlinedButton, OutlinedCard} from 'src/components';
-import API from '../../../api';
+import API from '../../../apis';
 import StandardHeader from './components/ElevatedHeader';
 
 const screenWidth = Dimensions.get('screen').width;

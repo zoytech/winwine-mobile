@@ -7,7 +7,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import API from '../../../api';
+import API from 'src/apis';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {ElevatedCard, FilledButton, OutlinedButton} from 'src/components';
 import {ElevatedHeader} from './components';
@@ -15,7 +15,7 @@ import {ElevatedHeader} from './components';
 const screenWidth = Dimensions.get('screen').width;
 export default function GamePlayScreen(props) {
   const {
-    keyPackage = 11,
+    deckId = 1,
     onContinueButtonPressed = () => {},
     onLookBackButtonPressed = () => {},
     headerTypo = Typography.title.large,
@@ -26,22 +26,20 @@ export default function GamePlayScreen(props) {
     ...otherProps
   } = props;
 
-  const [packageItem, setPackageItem] = useState({});
-  const [currentCard, setCurrentCard] = useState(0);
-  const {package: name, data: questions = []} = packageItem || {};
-  const TOTAL_QUESTIONS = questions.length;
+  const [cardDeckItem, setCardDeckItem] = useState({});
+  const [taskTurn, setTaskTurn] = useState(0);
+  const {package: name, data: questions = []} = cardDeckItem || {};
+  const TOTAL_TASKS = questions.length;
   const baseColor = Color.light[colorVariant]?.base;
-  useEffect(() => {
-    getQuestionList();
-  }, []);
 
-  const getQuestionList = async () => {
-    const packageDataList = await API.getQuestionPackagesList();
-    const currentPackageData = packageDataList.find(
-      item => item.key === keyPackage.toString(),
-    );
-    setPackageItem(currentPackageData);
-  };
+  useEffect(() => {
+    getCurrentCardDeck(deckId);
+  }, [deckId]);
+
+  async function getCurrentCardDeck(cardDeckId) {
+    const cardDeck = await API.getCardDeckById(cardDeckId);
+    setCardDeckItem(cardDeck);
+  }
 
   const defaultContainerStyle = [
     {backgroundColor: baseColor},
@@ -50,12 +48,12 @@ export default function GamePlayScreen(props) {
   ];
 
   function handleLookBackButtonPressed() {
-    currentCard === 0 ? '' : setCurrentCard(currentCard - 1);
+    taskTurn === 0 ? '' : setTaskTurn(taskTurn - 1);
     onContinueButtonPressed();
   }
 
   function handleContinueButtonPressed() {
-    currentCard === TOTAL_QUESTIONS ? '' : setCurrentCard(currentCard + 1);
+    taskTurn === TOTAL_TASKS ? '' : setTaskTurn(taskTurn + 1);
     onLookBackButtonPressed();
   }
 
@@ -64,7 +62,7 @@ export default function GamePlayScreen(props) {
       <ScrollView contentContainerStyle={styles.scrollView}>
         <ElevatedHeader
           head={name}
-          subHeadLeft={`Lá thứ ${currentCard + 1}/${TOTAL_QUESTIONS} `}
+          subHeadLeft={`Lá thứ ${taskTurn + 1}/${TOTAL_TASKS} `}
           headStyle={headerTypo}
           subHeadStyle={subHeaderTypo}
           style={styles.header}
@@ -72,19 +70,19 @@ export default function GamePlayScreen(props) {
         />
         <ElevatedCard style={shadowStyle} containerStyle={styles.gameCard}>
           <Text style={[bodyTypo, styles.text]}>
-            {questions[currentCard]?.text}
+            {questions[taskTurn]?.text}
           </Text>
         </ElevatedCard>
         <View style={styles.action}>
           <OutlinedButton
             content={'Lá trước'}
             onPressOut={handleLookBackButtonPressed}
-            disabled={currentCard === 0}
+            disabled={taskTurn === 0}
           />
           <FilledButton
             content={'Lá tiép theo'}
             onPressOut={handleContinueButtonPressed}
-            disabled={currentCard === TOTAL_QUESTIONS - 1}
+            disabled={taskTurn === TOTAL_TASKS - 1}
           />
         </View>
       </ScrollView>
