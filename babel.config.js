@@ -13,6 +13,7 @@ module.exports = {
           'src/services': './src/services',
           'src/themes': './src/themes',
           'src/assets': './src/assets',
+          'src/apis': './src/apis',
         },
         extensions: [
           '.ios.ts',

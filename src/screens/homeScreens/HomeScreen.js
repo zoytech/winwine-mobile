@@ -1,6 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {Dimensions, FlatList, SafeAreaView, StyleSheet} from 'react-native';
-import API from '../../api';
+import {
+  Dimensions,
+  FlatList,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  View,
+} from 'react-native';
+import API from '../../apis';
 import {Color, ColorVariant} from 'src/themes';
 import {
   HorizontalCardList,
@@ -12,52 +19,45 @@ import {
 export default function HomeScreen() {
   const {width: screenWidth} = Dimensions.get('screen');
 
-  const [suggestion, setSuggestion] = useState([]);
-  const [packageInfo, setPackageInfo] = useState([]);
+  const [suggestedHashtag, setSuggestedHashtag] = useState([]);
+  const [popularCardDecks, setPopularCardDecks] = useState([]);
+  const [recentlyCardDecks, setRecentlyCardDecks] = useState([]);
+
   useEffect(() => {
     getHomeScreenData();
   }, []);
 
-  const getHomeScreenData = async () => {
-    const [suggestionData, packageData] = await Promise.all([
-      API.getSuggestionGameList(),
-      API.getQuestionHomeScreenList(),
-    ]);
-    console.log('suggestionData: ', suggestionData);
-    console.log('packageData: ', packageData);
-    setSuggestion(suggestionData);
-    setPackageInfo(packageData);
-  };
+  async function getHomeScreenData() {
+    const [suggestedHashtagData, popularCardDecksData, recentlyCardDecksData] =
+      await Promise.all([
+        API.getSuggestedHashtag(),
+        API.getRecentlyCardDecks(),
+        API.getPopularCardDecks(),
+      ]);
+    console.log('suggestionData: ', suggestedHashtagData);
+    console.log('packageData: ', popularCardDecks);
+    console.log('packageData: ', recentlyCardDecks);
+    setSuggestedHashtag(suggestedHashtagData);
+    setPopularCardDecks(popularCardDecksData);
+    setRecentlyCardDecks(recentlyCardDecksData);
+  }
 
-  const renderListItem = ({item}) => {
-    if (item?.horizontal) {
-      return (
-        <>
-          <SectionHeader content={item?.title} />
-          <HorizontalCardList data={item?.data} index={item?.key} />
-        </>
-      );
-    }
-
-    return (
-      <>
-        <SectionHeader content={item?.title} />
-        <VerticalCardList data={item?.data} index={item?.key} />
-      </>
-    );
-  };
   return (
     <SafeAreaView style={styles.container}>
-      <FlatList
-        data={packageInfo}
-        style={styles.container}
-        contentContainerStyle={styles.contentContainer}
-        showsVerticalScrollIndicator={false}
-        ListHeaderComponent={
-          <SuggestionList style={styles.suggestionsView} data={suggestion} />
-        }
-        renderItem={renderListItem}
-      />
+      <ScrollView>
+        <SuggestionList
+          data={suggestedHashtag}
+          style={styles.suggestedHashtag}
+        />
+        <View style={styles.recentlyCardDecks}>
+          <SectionHeader content={'Recently'} />
+          <HorizontalCardList data={recentlyCardDecks} />
+        </View>
+        <View style={styles.popularCardDecks}>
+          <SectionHeader content={'Popular'} />
+          <VerticalCardList data={popularCardDecks} />
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -71,11 +71,17 @@ const styles = StyleSheet.create({
   contentContainer: {
     paddingHorizontal: 16,
   },
-  suggestionsView: {},
-  shadow: {
-    margin: 16,
-  },
-  test: {
-    backgroundColor: 'blue',
-  },
 });
+
+/*
+<FlatList
+        data={popularCardDecks}
+        style={r}
+        contentContainerStyle={}
+        showsVerticalScrollIndicator={false}
+        ListHeaderComponent={
+
+        }
+        renderItem={renderListItem}
+      />
+ */
