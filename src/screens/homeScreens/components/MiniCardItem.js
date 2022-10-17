@@ -6,7 +6,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import {FilledButton, OutlinedCard, TonalButton} from 'src/components';
+import {FilledButton, OutlinedCard} from 'src/components';
 import {Typography} from 'src/themes';
 
 const {width: screenWidth} = Dimensions.get('screen');
@@ -22,7 +22,7 @@ export default function MiniCardItem(props) {
     buttonStyle = Typography.label.small,
   } = props;
 
-  const {package: name, tag: tag, uri: uri} = data || {};
+  const {cardDeck: name, tag: tag, uri: uri} = data || {};
 
   const handlePressedImageArea = () => {
     onActionButtonPress();
@@ -39,7 +39,11 @@ export default function MiniCardItem(props) {
       </Pressable>
 
       <View style={styles.headline}>
-        {name && <Text style={titleStyle}>{name}</Text>}
+        {name && (
+          <Text style={titleStyle} numberOfLines={1} ellipsizeMode={'tail'}>
+            {name}
+          </Text>
+        )}
         {tag && <Text style={subTitleStyle}>{tag}</Text>}
       </View>
       <View style={styles.action}>
@@ -61,7 +65,7 @@ const styles = StyleSheet.create({
     aspectRatio: 0.67,
     justifyContent: 'center',
     overflow: 'hidden',
-    position: 'relative',
+    marginBottom: 16,
   },
   pressedArea: {
     width: '100%',

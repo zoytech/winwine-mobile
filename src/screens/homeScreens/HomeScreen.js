@@ -1,11 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {
-  Dimensions,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  View,
-} from 'react-native';
+import {Dimensions, SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import API from '../../apis';
 import {Color, ColorVariant} from 'src/themes';
 import {
@@ -33,9 +27,6 @@ export default function HomeScreen() {
         API.getRecentlyCardDecks(),
         API.getPopularCardDecks(),
       ]);
-    console.log('suggestionData: ', suggestedHashtagData);
-    console.log('packageData: ', popularCardDecks);
-    console.log('packageData: ', recentlyCardDecks);
     setSuggestedHashtag(suggestedHashtagData?.data);
     setPopularCardDecks(popularCardDecksData?.data);
     setRecentlyCardDecks(recentlyCardDecksData?.data);
@@ -57,9 +48,9 @@ export default function HomeScreen() {
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.contentContainer}>
         <SuggestionList data={suggestedHashtag} />
-        <SectionHeader content={'Recently'} />
+        <SectionHeader content={'Recently'} style={styles.sectionHeader} />
         <HorizontalCardList data={recentlyCardDecks} />
-        <SectionHeader content={'Popular'} />
+        <SectionHeader content={'Popular'} style={styles.sectionHeader} />
         <VerticalCardList data={popularCardDecks} />
       </ScrollView>
     </SafeAreaView>
@@ -75,6 +66,9 @@ const styles = StyleSheet.create({
   contentContainer: {
     paddingHorizontal: 16,
     justifyContent: 'center',
+  },
+  sectionHeader: {
+    justifyContent: 'flex-start',
   },
 });
 

@@ -14,6 +14,7 @@ module.exports = {
           'src/themes': './src/themes',
           'src/assets': './src/assets',
           'src/apis': './src/apis',
+          'src/screens': './src/screens',
         },
         extensions: [
           '.ios.ts',

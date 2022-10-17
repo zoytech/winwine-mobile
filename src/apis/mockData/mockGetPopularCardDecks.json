@@ -16,15 +16,14 @@
     },
     {
       "cardDeckId": 3,
-      "cardDeck": "Package cua Trong Hung",
-      "tag": "18+",
+      "cardDeck": "Trong Hung package",
       "uri": "https://picsum.photos/id/1013/200"
     },
     {
       "cardDeckId": 4,
       "cardDeck": "Package ABC",
       "tag": "Thân quen",
-      "uri": "https://picsum.photos/id/1015/200",
+      "uri": "https://picsum.photos/id/1015/200"
     },
     {
       "cardDeckId": 5,

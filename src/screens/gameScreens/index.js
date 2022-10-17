@@ -1,5 +1,4 @@
-import GameEndScreen from './gameEndScreens/GameEndScreen';
-import GameWaitScreen from './mainGameScreens/GameWaitScreen';
-import GamePlayScreen from './mainGameScreens/GamePlayScreen';
+import GameEndScreen from './gameEndScreen';
+import {GamePlayScreen, GameWaitScreen} from './gameMainScreens';
 
 export {GameEndScreen, GamePlayScreen, GameWaitScreen};

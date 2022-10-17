@@ -1,14 +1,13 @@
 import {StyleSheet, Text, View} from 'react-native';
-import {ElevatedCard, FilledIconButton} from 'src/components';
+import {FilledCard, FilledIconButton, StandardCard} from 'src/components';
 
-export default function ElevatedHeader(props) {
+export default function FilledHeader(props) {
   const {
     head,
     subHeadLeft,
     subHeadRight,
     children,
     style,
-    containerStyle,
     headStyle,
     subHeadStyle,
     ...otherProps
@@ -17,10 +16,7 @@ export default function ElevatedHeader(props) {
   const defaultContainerStyle = [styles.container, style];
 
   return (
-    <ElevatedCard
-      {...otherProps}
-      style={defaultContainerStyle}
-      containerStyle={containerStyle}>
+    <StandardCard {...otherProps} style={defaultContainerStyle}>
       {children}
       <View style={styles.leadingIcon}>
         <FilledIconButton style={styles.buttonIconArea} />
@@ -32,7 +28,7 @@ export default function ElevatedHeader(props) {
           {subHeadRight && <Text style={subHeadStyle}>{subHeadRight}</Text>}
         </View>
       </View>
-    </ElevatedCard>
+    </StandardCard>
   );
 }
 

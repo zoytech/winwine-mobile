@@ -11,12 +11,12 @@ function promiseWithTimeout(data, timeout = 1000) {
   });
 }
 
-function getCardDeckById(cardDeckId) {
+function getCardDeckById(id) {
   //fetch(`/apis/v1/cardDecks/${cardDeckId}`);
-  console.log('GET:' + `/api/v1/card-decks/${cardDeckId}`);
-  const cardDeckData = mockGetCardDeckById;
-  cardDeckData.id = cardDeckId;
-  return promiseWithTimeout(cardDeckData);
+  console.log('GET:' + `/api/v1/card-decks/${id}`);
+  const cardDeckData = mockGetCardDeckById?.data;
+  const cardDeckItem = cardDeckData.find(({cardDeckId}) => cardDeckId === id);
+  return promiseWithTimeout(cardDeckItem);
 }
 
 function getPopularCardDecks() {

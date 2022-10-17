@@ -19,7 +19,7 @@ export default function VerticalCardList(props) {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       {data && data.map((item, index) => renderItem({item, index}))}
     </View>
   );

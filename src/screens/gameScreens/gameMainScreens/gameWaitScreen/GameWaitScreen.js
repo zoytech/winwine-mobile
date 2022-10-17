@@ -8,21 +8,19 @@ import {
   View,
 } from 'react-native';
 import {Color, ColorVariant, Typography} from 'src/themes';
-import {ElevatedCard, FilledButton, FilledIconButton} from 'src/components';
-import {ElevatedHeader} from './components';
+import {FilledButton} from 'src/components';
 import API from 'src/apis';
+import {FilledHeader} from '../components';
+import {NavigatedGameCard} from './components';
 
 const {width: screenWidth} = Dimensions.get('screen');
 
 export default function GameWaitScreen(props) {
   const {
     deckId = 4,
-    onBackwardButtonPressed = () => {},
-    onForwardButtonPressed = () => {},
     headerTypo = Typography.title.large,
     subHeaderTypo = Typography.label.large,
     supportingTextTypo = Typography.title.medium,
-    bodyTypo = Typography.body.large,
     colorVariant = ColorVariant.surface,
     style,
     ...otherProps
@@ -30,22 +28,15 @@ export default function GameWaitScreen(props) {
 
   const [cardDeckItem, setCardDeckItem] = useState({});
   const [taskTurn, setTaskTurn] = useState(0);
-  const baseColor = Color.light[colorVariant]?.base;
   const {cardDeck: name, tag: tag, tasks: tasks = []} = cardDeckItem || {};
   const TOTAL_TASKS = tasks.length;
+  const baseColor = Color.light[colorVariant]?.base;
 
   const defaultContainerStyle = [
     {backgroundColor: baseColor},
     styles.container,
     style,
   ];
-
-  function previewNumberOfCard(total) {
-    const MAX_VIEW = 10;
-    return total >= MAX_VIEW
-      ? `Xem trước ${MAX_VIEW} lá bài`
-      : `Xem trước ${total} lá bài`;
-  }
 
   useEffect(() => {
     getCurrentCardDeck(deckId);
@@ -62,18 +53,23 @@ export default function GameWaitScreen(props) {
 
   function handleBackwardButtonPressed() {
     taskTurn === 0 ? '' : setTaskTurn(taskTurn - 1);
-    onBackwardButtonPressed();
   }
 
   function handleForwardButtonPressed() {
     taskTurn === TOTAL_TASKS ? '' : setTaskTurn(taskTurn + 1);
-    onForwardButtonPressed();
+  }
+
+  function previewNumberOfCard(total) {
+    const MAX_VIEW = 10;
+    return total >= MAX_VIEW
+      ? `Xem trước ${MAX_VIEW} lá bài`
+      : `Xem trước ${total} lá bài`;
   }
 
   return (
     <SafeAreaView {...otherProps} style={defaultContainerStyle}>
       <ScrollView contentContainerStyle={styles.scrollView}>
-        <ElevatedHeader
+        <FilledHeader
           head={name}
           subHeadLeft={tag}
           subHeadRight={`Tổng số ${TOTAL_TASKS} lá`}
@@ -82,30 +78,23 @@ export default function GameWaitScreen(props) {
           style={styles.header}
           containerStyle={styles.header}
         />
-
         <View style={styles.supportingText}>
           <Text style={supportingTextTypo}>
             {previewNumberOfCard(TOTAL_TASKS)}
           </Text>
         </View>
-        <View style={styles.cardWithButton}>
-          <FilledIconButton
-            name="caretleft"
-            onPressOut={handleBackwardButtonPressed}
-            disabled={taskTurn === 0}
-          />
-          <ElevatedCard style={shadowStyle} containerStyle={styles.gameCard}>
-            <Text style={[bodyTypo, styles.text]}>{tasks[taskTurn]?.text}</Text>
-          </ElevatedCard>
-          <FilledIconButton
-            name="caretright"
-            onPressOut={handleForwardButtonPressed}
-            disabled={taskTurn === TOTAL_TASKS - 1}
-          />
-        </View>
+        <NavigatedGameCard
+          style={styles.navigatedGameCard}
+          content={tasks[taskTurn]?.task}
+          onBackwardPressed={handleBackwardButtonPressed}
+          onForwardPressed={handleForwardButtonPressed}
+          onBackwardDisabled={taskTurn === 0}
+          onForwardDisabled={taskTurn === TOTAL_TASKS - 1}
+        />
         <View style={styles.action}>
           <FilledButton
             content={'Choi ngay'}
+            style={styles.button}
             onPress={handlePressFilledButton}
           />
         </View>
@@ -132,16 +121,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  cardWithButton: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  gameCard: {
-    width: '70%',
-    aspectRatio: 7 / 10,
-    justifyContent: 'center',
-    alignItems: 'center',
+  navigatedGameCard: {
+    width: '100%',
   },
   action: {
     width: '100%',
@@ -150,10 +131,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center',
   },
-  text: {
-    textAlign: 'center',
-    paddingHorizontal: 32,
+  button: {
+    width: 150,
+    height: 50,
   },
 });
-
-const shadowStyle = StyleSheet.compose(styles.gameCard, {width: '100%'});

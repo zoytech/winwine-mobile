@@ -9,13 +9,13 @@ import {
 } from 'react-native';
 import {Typography} from 'src/themes';
 import {FilledButton, OutlinedButton, OutlinedCard} from 'src/components';
-import API from '../../../apis';
-import StandardHeader from './components/ElevatedHeader';
+import API from 'src/apis';
+import {StandardHeader} from './components';
 
 const screenWidth = Dimensions.get('screen').width;
 export default function GameEndScreen(props) {
   const {
-    keyPackage = 11,
+    deckId = 1,
     headerTypo = Typography.title.large,
     subHeaderTypo = Typography.title.medium,
     supportingTextTypo = Typography.title.medium,
@@ -24,20 +24,16 @@ export default function GameEndScreen(props) {
     ...otherProps
   } = props;
 
-  const [packageInfo, setPackageInfo] = useState([]);
-  const {tag: tag, uri: uri, package: name} = packageInfo || {};
+  const [cardDeckItem, setCardDeckItem] = useState([]);
+  const {tag: tag, uri: uri, cardDeck: name} = cardDeckItem || {};
   useEffect(() => {
-    getHomeScreenData();
-  }, []);
+    getCurrentCardDeck(deckId);
+  }, [deckId]);
 
-  const getHomeScreenData = async () => {
-    const packageListData = await API.getQuestionPackagesList();
-    const currentPackageData = packageListData.find(
-      item => item.key === keyPackage.toString(),
-    );
-    console.log('currentPackage: ', currentPackageData);
-    setPackageInfo(currentPackageData);
-  };
+  async function getCurrentCardDeck(cardDeckId) {
+    const cardDeck = await API.getCardDeckById(cardDeckId);
+    setCardDeckItem(cardDeck);
+  }
 
   const description = 'Bạn đã chơi hết rồi';
   const handlePressFilledButton = () => {
@@ -105,17 +101,9 @@ const styles = StyleSheet.create({
   },
   action: {
     width: '100%',
-    aspectRatio: 10 / 2,
+    aspectRatio: 10 / 3,
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
   },
 });
-
-const cardInfo = {
-  id: '123',
-  title: 'Bai cua Nam',
-  tag: 'Thieu nhi',
-  totalCards: '30',
-  currentCard: '28',
-};
