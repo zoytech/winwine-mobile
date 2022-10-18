@@ -3,7 +3,7 @@ import {StyleSheet, View} from 'react-native';
 import MiniCardItem from './miniCardItem';
 
 export default function VerticalCardList(props) {
-  const {style, data, onItemPressed = () => {}} = props;
+  const {style, data, onItemPressed = () => {}, ...otherProps} = props;
 
   function handleItemPressed(item, index) {
     onItemPressed(item, index);
@@ -13,6 +13,7 @@ export default function VerticalCardList(props) {
     const id = item?.cardDeckId;
     return (
       <MiniCardItem
+        {...otherProps}
         key={id}
         data={item}
         onPress={() => handleItemPressed(item, id)}

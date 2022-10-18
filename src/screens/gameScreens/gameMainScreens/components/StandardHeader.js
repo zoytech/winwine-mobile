@@ -1,7 +1,7 @@
 import {StyleSheet, Text, View} from 'react-native';
 import {FilledCard, FilledIconButton, StandardCard} from 'src/components';
 
-export default function FilledHeader(props) {
+export default function StandardHeader(props) {
   const {
     head,
     subHeadLeft,
@@ -24,7 +24,11 @@ export default function FilledHeader(props) {
       <View style={styles.content}>
         {head && <Text style={headStyle}>{head}</Text>}
         <View style={styles.subHead}>
-          {subHeadLeft && <Text style={subHeadStyle}>{subHeadLeft}</Text>}
+          {subHeadLeft && (
+            <Text style={[subHeadStyle, styles.subHeadLeft]}>
+              {subHeadLeft}
+            </Text>
+          )}
           {subHeadRight && <Text style={subHeadStyle}>{subHeadRight}</Text>}
         </View>
       </View>
@@ -41,19 +45,23 @@ const styles = StyleSheet.create({
   },
   leadingIcon: {
     width: '12%',
-    backgroundColor: 'greenyellow',
     justifyContent: 'center',
   },
   content: {
     width: '76%',
+    aspectRatio: 4.4,
     flexDirection: 'column',
     alignItems: 'flex-start',
   },
   subHead: {
     width: '100%',
+    height: '50%',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
+  },
+  subHeadLeft: {
+    width: '50%',
   },
 });
 

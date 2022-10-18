@@ -13,19 +13,19 @@ export default function StandardHeader(props) {
     containerStyle,
     ...otherProps
   } = props;
-  const defaultContainerStyle = [styles.container, style];
 
   return (
-    <StandardCard
-      {...otherProps}
-      style={defaultContainerStyle}
-      containerStyle={containerStyle}>
+    <StandardCard {...otherProps} style={[styles.container, style]}>
       {children}
       <View style={styles.leadingIcon}>
         <FilledIconButton style={styles.buttonIconArea} />
       </View>
       <View style={styles.content}>
-        {head && <Text style={headStyle}>{head}</Text>}
+        {head && (
+          <Text style={headStyle} numberOfLines={1} ellipsizeMode={'tail'}>
+            {head}
+          </Text>
+        )}
         <View style={styles.subHead}>
           {subHeadLeft && <Text style={subHeadStyle}>{subHeadLeft}</Text>}
           {subHeadRight && <Text style={subHeadStyle}>{subHeadRight}</Text>}
@@ -40,14 +40,15 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-around',
   },
   leadingIcon: {
     width: '12%',
     justifyContent: 'center',
   },
   content: {
-    width: '60%',
+    width: '75%',
+    aspectRatio: 4.4,
     flexDirection: 'column',
     alignItems: 'flex-start',
   },
@@ -58,8 +59,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonIconArea: {
-    width: 16,
-    height: 16,
-    backgroundColor: 'green',
+    width: 12,
+    height: 12,
   },
 });

@@ -10,14 +10,16 @@ import {
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {FilledButton} from 'src/components';
 import API from 'src/apis';
-import {FilledHeader} from '../components';
+import {StandardHeader} from '../components';
 import {NavigatedGameCard} from './components';
+import {ScreenKeys} from '../../../../navigations/ScreenKeys';
 
 const {width: screenWidth} = Dimensions.get('screen');
 
 export default function GameWaitScreen(props) {
   const {
-    deckId = 4,
+    navigation,
+    route,
     headerTypo = Typography.title.large,
     subHeaderTypo = Typography.label.large,
     supportingTextTypo = Typography.title.medium,
@@ -26,6 +28,7 @@ export default function GameWaitScreen(props) {
     ...otherProps
   } = props;
 
+  const {deckId} = route.params;
   const [cardDeckItem, setCardDeckItem] = useState({});
   const [taskTurn, setTaskTurn] = useState(0);
   const {cardDeck: name, tag: tag, tasks: tasks = []} = cardDeckItem || {};
@@ -48,7 +51,9 @@ export default function GameWaitScreen(props) {
   }
 
   function handlePressFilledButton() {
-    alert('move to game screen');
+    navigation.navigate(ScreenKeys.GAME_PLAY, {
+      deckId: deckId || '',
+    });
   }
 
   function handleBackwardButtonPressed() {
@@ -56,7 +61,7 @@ export default function GameWaitScreen(props) {
   }
 
   function handleForwardButtonPressed() {
-    taskTurn === TOTAL_TASKS ? '' : setTaskTurn(taskTurn + 1);
+    taskTurn === TOTAL_TASKS - 1 ? '' : setTaskTurn(taskTurn + 1);
   }
 
   function previewNumberOfCard(total) {
@@ -69,7 +74,7 @@ export default function GameWaitScreen(props) {
   return (
     <SafeAreaView {...otherProps} style={defaultContainerStyle}>
       <ScrollView contentContainerStyle={styles.scrollView}>
-        <FilledHeader
+        <StandardHeader
           head={name}
           subHeadLeft={tag}
           subHeadRight={`Tổng số ${TOTAL_TASKS} lá`}
@@ -97,7 +102,6 @@ export default function GameWaitScreen(props) {
             style={styles.button}
             onPress={handlePressFilledButton}
             contentStyle={headerTypo}
-            // disabled={true}
           />
         </View>
       </ScrollView>

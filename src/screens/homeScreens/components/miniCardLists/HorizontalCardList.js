@@ -3,7 +3,7 @@ import {FlatList, StyleSheet, View} from 'react-native';
 import MiniCardItem from './miniCardItem';
 
 export default function HorizontalCardList(props) {
-  const {style, data, onItemPressed = () => {}} = props;
+  const {style, data, onItemPressed = () => {}, ...otherProps} = props;
 
   function handleItemPressed(item, id) {
     onItemPressed(item, id);
@@ -13,6 +13,7 @@ export default function HorizontalCardList(props) {
     const id = item?.cardDeckId;
     return (
       <MiniCardItem
+        {...otherProps}
         key={id}
         data={item}
         onPress={() => handleItemPressed(item, id)}
@@ -42,6 +43,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   separator: {
-    width: 16,
+    width: 32,
   },
 });

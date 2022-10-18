@@ -1,3 +1,3 @@
-import FilledHeader from './FilledHeader';
+import StandardHeader from './StandardHeader';
 
-export {FilledHeader};
+export {StandardHeader};

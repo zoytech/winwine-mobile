@@ -9,7 +9,7 @@ import {
   VerticalCardList,
 } from './components';
 
-export default function HomeScreen() {
+export default function HomeScreen({navigation}) {
   const {width: screenWidth} = Dimensions.get('screen');
 
   const [suggestedHashtag, setSuggestedHashtag] = useState([]);
@@ -35,11 +35,11 @@ export default function HomeScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.contentContainer}>
-        <SuggestionList data={suggestedHashtag} />
+        <SuggestionList data={suggestedHashtag} navigation={navigation} />
         <SectionHeader content={'Recently'} style={styles.sectionHeader} />
-        <HorizontalCardList data={recentlyCardDecks} />
+        <HorizontalCardList data={recentlyCardDecks} navigation={navigation} />
         <SectionHeader content={'Popular'} style={styles.sectionHeader} />
-        <VerticalCardList data={popularCardDecks} />
+        <VerticalCardList data={popularCardDecks} navigation={navigation} />
       </ScrollView>
     </SafeAreaView>
   );

@@ -3,7 +3,7 @@ import {FlatList, StyleSheet, View} from 'react-native';
 import {SuggestionChip} from 'src/components';
 
 export default function SuggestionList(props) {
-  const {style, data, onItemPressed = () => {}} = props;
+  const {style, data, onItemPressed = () => {}, ...otherProps} = props;
   const [selectedItemName, setSelectedItemName] = useState(null);
 
   function handleItemPressed({item, index}) {
@@ -15,6 +15,7 @@ export default function SuggestionList(props) {
     const {content} = item || {};
     return (
       <SuggestionChip
+        {...otherProps}
         key={index}
         content={content}
         selected={content === selectedItemName}

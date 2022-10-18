@@ -1,7 +1,14 @@
-import {Dimensions, StyleSheet, Text, View} from 'react-native';
+import {
+  Dimensions,
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import {FilledButton, OutlinedCard} from 'src/components';
 import {Typography} from 'src/themes';
-import {PressableImage} from './components';
+import {ScreenKeys} from '../../../../../navigations/ScreenKeys';
 
 const {width: screenWidth} = Dimensions.get('screen');
 
@@ -10,45 +17,53 @@ export default function MiniCardItem(props) {
     data,
     style,
     onActionButtonPress = () => {},
+    navigation,
     titleStyle = Typography.label.large,
     subTitleStyle = Typography.label.medium,
     buttonStyle = Typography.label.small,
   } = props;
 
-  const {cardDeck: name, tag: tag, uri: uri} = data || {};
+  const {cardDeck: name, tag: tag, uri: uri, cardDeckId: deckId} = data || {};
 
   const handlePressedImageArea = () => {
     onActionButtonPress();
-    alert('Move to game wait screen');
+    navigation.navigate(ScreenKeys.GAME_WAIT, {deckId: deckId || ''});
   };
   const handlePressButton = () => {
     onActionButtonPress();
-    alert('Move to game play screen');
+    navigation.navigate(ScreenKeys.GAME_PLAY, {deckId: deckId});
   };
+
+  function getContainerStyle({pressed}) {
+    return pressed
+      ? {opacity: 0.75, backgroundColor: 'white'}
+      : {opacity: 1, backgroundColor: 'white'};
+  }
+
   return (
     <OutlinedCard style={[styles.container, style]}>
-      <PressableImage
-        uri={uri}
-        style={styles.pressedArea}
-        onPress={handlePressedImageArea}
-      />
-      <View style={styles.headline}>
-        {name && (
-          <Text style={titleStyle} numberOfLines={1} ellipsizeMode={'tail'}>
-            {name}
-          </Text>
-        )}
-        {tag && <Text style={subTitleStyle}>{tag}</Text>}
-      </View>
-      <View style={styles.action}>
-        <FilledButton
-          content={'play now'}
-          contentStyle={buttonStyle}
-          style={styles.button}
-          onPress={handlePressButton}
-          // disabled={true}
-        />
-      </View>
+      <Pressable style={getContainerStyle} onPress={handlePressedImageArea}>
+        <View style={styles.media}>
+          <Image source={{uri: uri}} style={styles.image} />
+        </View>
+        <View style={styles.headline}>
+          {name && (
+            <Text style={titleStyle} numberOfLines={1} ellipsizeMode={'tail'}>
+              {name}
+            </Text>
+          )}
+          {tag && <Text style={subTitleStyle}>{tag}</Text>}
+        </View>
+        <View style={styles.action}>
+          <FilledButton
+            content={'play now'}
+            contentStyle={buttonStyle}
+            style={styles.button}
+            onPress={handlePressButton}
+            // disabled={true}
+          />
+        </View>
+      </Pressable>
     </OutlinedCard>
   );
 }
@@ -57,22 +72,30 @@ const styles = StyleSheet.create({
   container: {
     width: screenWidth * 0.35,
     aspectRatio: 0.67,
-    justifyContent: 'center',
     overflow: 'hidden',
     marginBottom: 16,
   },
-  pressedArea: {
+  media: {
     width: '100%',
-    height: '60%',
+    aspectRatio: 1.2,
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
+    backgroundColor: 'white',
   },
   headline: {
+    width: '100%',
+    aspectRatio: 3,
     flexDirection: 'column',
     alignItems: 'flex-start',
     justifyContent: 'center',
     paddingHorizontal: 6,
   },
   action: {
-    flex: 1,
+    width: '100%',
+    aspectRatio: 3,
     alignItems: 'center',
     justifyContent: 'center',
   },

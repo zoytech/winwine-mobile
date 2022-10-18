@@ -11,11 +11,13 @@ import {Typography} from 'src/themes';
 import {FilledButton, OutlinedButton, OutlinedCard} from 'src/components';
 import API from 'src/apis';
 import {StandardHeader} from './components';
+import {ScreenKeys} from '../../../navigations/ScreenKeys';
 
 const screenWidth = Dimensions.get('screen').width;
 export default function GameEndScreen(props) {
   const {
-    deckId = 1,
+    navigation,
+    route,
     headerTypo = Typography.title.large,
     subHeaderTypo = Typography.title.medium,
     supportingTextTypo = Typography.title.medium,
@@ -24,6 +26,7 @@ export default function GameEndScreen(props) {
     ...otherProps
   } = props;
 
+  const {deckId} = route.params;
   const [cardDeckItem, setCardDeckItem] = useState([]);
   const {tag: tag, uri: uri, cardDeck: name} = cardDeckItem || {};
   useEffect(() => {
@@ -37,10 +40,18 @@ export default function GameEndScreen(props) {
 
   const description = 'Bạn đã chơi hết rồi';
   const handlePressFilledButton = () => {
-    alert('move to home screen');
+    navigation.navigate(ScreenKeys.HOME, {
+      deckId: deckId || '',
+    });
   };
   const handlePressOutlinedButton = () => {
-    alert('move to game screen');
+    navigation.navigate({
+      name: ScreenKeys.GAME_PLAY,
+      params: {
+        deckId: deckId || '',
+      },
+      merge: true,
+    });
   };
   return (
     <SafeAreaView {...otherProps} style={styles.screenView}>
@@ -85,23 +96,23 @@ const styles = StyleSheet.create({
   },
   header: {
     width: '100%',
-    aspectRatio: 10 / 3,
+    aspectRatio: 4,
   },
   media: {
     width: '100%',
-    aspectRatio: 10 / 6,
+    aspectRatio: 1.2,
     resizeMode: 'cover',
     alignSelf: 'center',
   },
   supportingText: {
     width: '100%',
-    aspectRatio: 10 / 2,
+    aspectRatio: 6.5,
     alignItems: 'center',
     justifyContent: 'center',
   },
   action: {
     width: '100%',
-    aspectRatio: 10 / 3,
+    aspectRatio: 5,
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',

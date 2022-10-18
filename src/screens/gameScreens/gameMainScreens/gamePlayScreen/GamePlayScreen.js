@@ -9,18 +9,15 @@ import {
 } from 'react-native';
 import API from 'src/apis';
 import {Color, ColorVariant, Typography} from 'src/themes';
-import {
-  FilledButton,
-  FilledCard,
-  OutlinedButton,
-  OutlinedCard,
-} from 'src/components';
-import {FilledHeader} from '../components';
+import {FilledButton, FilledCard, OutlinedButton} from 'src/components';
+import {StandardHeader} from '../components';
+import {ScreenKeys} from '../../../../navigations/ScreenKeys';
 
 const screenWidth = Dimensions.get('screen').width;
 export default function GamePlayScreen(props) {
   const {
-    deckId = 2,
+    navigation,
+    route,
     headerTypo = Typography.title.large,
     subHeaderTypo = Typography.label.large,
     bodyTypo = Typography.body.large,
@@ -29,6 +26,7 @@ export default function GamePlayScreen(props) {
     ...otherProps
   } = props;
 
+  const {deckId} = route.params;
   const [cardDeckItem, setCardDeckItem] = useState({});
   const [taskTurn, setTaskTurn] = useState(0);
   const {cardDeck: name, tasks: tasks = []} = cardDeckItem || {};
@@ -41,7 +39,6 @@ export default function GamePlayScreen(props) {
 
   async function getCurrentCardDeck(cardDeckId) {
     const cardDeck = await API.getCardDeckById(cardDeckId);
-    console.log('cardDeck', cardDeck);
     setCardDeckItem(cardDeck);
   }
 
@@ -56,13 +53,19 @@ export default function GamePlayScreen(props) {
   }
 
   function handleContinueButtonPressed() {
-    taskTurn === TOTAL_TASKS ? '' : setTaskTurn(taskTurn + 1);
+    taskTurn === TOTAL_TASKS - 1 ? '' : setTaskTurn(taskTurn + 1);
+  }
+
+  function handleNavigateToGameEndScreen() {
+    navigation.navigate(ScreenKeys.GAME_END, {
+      deckId: deckId || '',
+    });
   }
 
   return (
     <SafeAreaView {...otherProps} style={defaultContainerStyle}>
       <ScrollView contentContainerStyle={styles.scrollView}>
-        <FilledHeader
+        <StandardHeader
           head={name}
           subHeadLeft={`Lá thứ ${taskTurn + 1}/${TOTAL_TASKS} `}
           headStyle={headerTypo}
@@ -79,14 +82,17 @@ export default function GamePlayScreen(props) {
           <OutlinedButton
             content={'Lá trước'}
             style={styles.button}
-            onPressOut={handleLookBackButtonPressed}
+            onPress={handleLookBackButtonPressed}
             disabled={taskTurn === 0}
           />
           <FilledButton
             content={'Lá tiếp theo'}
             style={styles.button}
-            onPressOut={handleContinueButtonPressed}
-            disabled={taskTurn === TOTAL_TASKS - 1}
+            onPress={
+              taskTurn === TOTAL_TASKS - 1
+                ? handleNavigateToGameEndScreen
+                : handleContinueButtonPressed
+            }
           />
         </View>
       </ScrollView>
@@ -130,7 +136,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 32,
   },
   button: {
-    width: 120,
+    minWidth: 120,
     height: 40,
   },
 });
