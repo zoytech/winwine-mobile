@@ -1,7 +1,6 @@
 import React from 'react';
-import {Pressable, Text} from 'react-native';
-import {Color, ColorVariant, Typography} from 'src/themes';
-import DefaultButtonStyle from './defaultButtonStyle';
+import {Text} from 'react-native';
+import {Color, ColorVariant} from 'src/themes';
 import BaseButton from './BaseButton';
 
 function generateStateStyles(pressed, isDisabled, colorVariant) {

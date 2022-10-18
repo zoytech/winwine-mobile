@@ -32,18 +32,6 @@ export default function HomeScreen() {
     setRecentlyCardDecks(recentlyCardDecksData?.data);
   }
 
-  // useEffect(() => {
-  //   console.log('1');
-  //   setSuggestedHashtag([]);
-  //   return () => {
-  //     console.log('clear 1');
-  //   };
-  // }, []);
-  // useEffect(() => {
-  //   console.log('2');
-  //   setSuggestedHashtag([1]);
-  // });
-
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.contentContainer}>

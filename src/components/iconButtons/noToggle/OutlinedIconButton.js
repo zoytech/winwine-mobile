@@ -3,7 +3,7 @@ import {View} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {Color, ColorVariant} from 'src/themes';
 import DefaultIconButtonStyle from './defaultIconButtonStyle';
-import BaseButton from '../../buttons/BaseButton';
+import {BaseButton} from '../../buttons';
 
 function getStateStyles(isPressed, isDisabled, colorVariant) {
   if (isDisabled) {

@@ -1,5 +1,5 @@
 import {StyleSheet, Text, View} from 'react-native';
-import {FilledCard, StandardIconButton, TonalIconButton} from 'src/components';
+import {FilledCard, StandardIconButton} from 'src/components';
 import {Typography} from 'src/themes';
 
 export default function NavigatedGameCard(props) {
@@ -16,7 +16,7 @@ export default function NavigatedGameCard(props) {
 
   return (
     <View {...otherProps} style={[styles.cardWithButton, style]}>
-      <TonalIconButton
+      <StandardIconButton
         name="caretleft"
         onPress={onBackwardPressed}
         disabled={onBackwardDisabled}
@@ -24,7 +24,7 @@ export default function NavigatedGameCard(props) {
       <FilledCard style={[styles.gameCard]}>
         {content && <Text style={[bodyTypo, styles.text]}>{content}</Text>}
       </FilledCard>
-      <TonalIconButton
+      <StandardIconButton
         name="caretright"
         onPress={onForwardPressed}
         disabled={onForwardDisabled}
