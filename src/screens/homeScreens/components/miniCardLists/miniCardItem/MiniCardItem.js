@@ -1,13 +1,7 @@
-import {
-  Dimensions,
-  Image,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {Dimensions, StyleSheet, Text, View} from 'react-native';
 import {FilledButton, OutlinedCard} from 'src/components';
 import {Typography} from 'src/themes';
+import {PressableImage} from './components';
 
 const {width: screenWidth} = Dimensions.get('screen');
 
@@ -15,7 +9,6 @@ export default function MiniCardItem(props) {
   const {
     data,
     style,
-    onPress = () => {},
     onActionButtonPress = () => {},
     titleStyle = Typography.label.large,
     subTitleStyle = Typography.label.medium,
@@ -33,11 +26,12 @@ export default function MiniCardItem(props) {
     alert('Move to game play screen');
   };
   return (
-    <OutlinedCard style={[styles.container, style]} onPress={onPress}>
-      <Pressable onPress={handlePressedImageArea} style={styles.pressedArea}>
-        <Image source={{uri: uri}} style={styles.media} />
-      </Pressable>
-
+    <OutlinedCard style={[styles.container, style]}>
+      <PressableImage
+        uri={uri}
+        style={styles.pressedArea}
+        onPress={handlePressedImageArea}
+      />
       <View style={styles.headline}>
         {name && (
           <Text style={titleStyle} numberOfLines={1} ellipsizeMode={'tail'}>
@@ -70,12 +64,6 @@ const styles = StyleSheet.create({
   pressedArea: {
     width: '100%',
     height: '60%',
-  },
-  media: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'cover',
-    backgroundColor: 'blue',
   },
   headline: {
     flexDirection: 'column',

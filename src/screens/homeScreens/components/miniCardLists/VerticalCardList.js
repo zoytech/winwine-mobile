@@ -1,26 +1,28 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import MiniCardItem from './MiniCardItem';
+import MiniCardItem from './miniCardItem';
 
 export default function VerticalCardList(props) {
   const {style, data, onItemPressed = () => {}} = props;
 
-  function handleItemPressed({item, index}) {
-    onItemPressed({item, index});
+  function handleItemPressed(item, index) {
+    onItemPressed(item, index);
   }
 
-  function renderItem({item, index}) {
+  function renderItem(item) {
+    const id = item?.cardDeckId;
     return (
       <MiniCardItem
+        key={id}
         data={item}
-        onPress={() => handleItemPressed({item, index})}
+        onPress={() => handleItemPressed(item, id)}
       />
     );
   }
 
   return (
     <View style={[styles.container, style]}>
-      {data && data.map((item, index) => renderItem({item, index}))}
+      {data && data.map(item => renderItem(item))}
     </View>
   );
 }

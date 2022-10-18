@@ -4,7 +4,6 @@ import {Typography} from 'src/themes';
 
 export default function SectionHeader(props) {
   const {content, contentStyle, style} = props;
-  //TODO: add icon
   return (
     <View style={[styles.container, style]}>
       <Text style={[styles.content, contentStyle]}>{content}</Text>

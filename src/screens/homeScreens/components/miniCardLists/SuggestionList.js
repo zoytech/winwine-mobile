@@ -15,6 +15,7 @@ export default function SuggestionList(props) {
     const {content} = item || {};
     return (
       <SuggestionChip
+        key={index}
         content={content}
         selected={content === selectedItemName}
         onPress={() => handleItemPressed({item, index})}
@@ -25,9 +26,9 @@ export default function SuggestionList(props) {
   return (
     <FlatList
       horizontal={true}
+      listKey={true}
       showsVerticalScrollIndicator={false}
       showsHorizontalScrollIndicator={false}
-      keyExtractor={item => item?.id}
       ItemSeparatorComponent={<View style={styles.separator} />}
       contentContainerStyle={[styles.contentContainer]}
       style={[styles.container, style]}

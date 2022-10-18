@@ -1,19 +1,21 @@
 import React from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
-import MiniCardItem from './MiniCardItem';
+import MiniCardItem from './miniCardItem';
 
 export default function HorizontalCardList(props) {
   const {style, data, onItemPressed = () => {}} = props;
 
-  function handleItemPressed({item, key}) {
-    onItemPressed({item, key});
+  function handleItemPressed(item, id) {
+    onItemPressed(item, id);
   }
 
-  function renderItem({item, key}) {
+  function renderItem({item}) {
+    const id = item?.cardDeckId;
     return (
       <MiniCardItem
+        key={id}
         data={item}
-        onPress={() => handleItemPressed({item, key})}
+        onPress={() => handleItemPressed(item, id)}
       />
     );
   }
@@ -23,6 +25,7 @@ export default function HorizontalCardList(props) {
       <FlatList
         style={[styles.container, style]}
         horizontal={true}
+        listKey={true}
         ItemSeparatorComponent={<View style={styles.separator} />}
         data={data}
         renderItem={renderItem}

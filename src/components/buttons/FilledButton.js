@@ -37,7 +37,10 @@ export default function FilledButton(props) {
   } = props;
 
   function getContainerStyle({pressed}) {
-    return generateStateStyles(pressed, disabled, colorVariant)?.containerStyle;
+    return [
+      generateStateStyles(pressed, disabled, colorVariant)?.containerStyle,
+      style,
+    ];
   }
 
   function renderContent({pressed}) {
