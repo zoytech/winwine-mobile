@@ -1,1 +1,1 @@
-export * from './toggleable';
+export * from './noToggle';

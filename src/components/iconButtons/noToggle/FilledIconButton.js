@@ -1,35 +1,41 @@
 import React from 'react';
 import {Text} from 'react-native';
+import Icon from 'react-native-vector-icons/AntDesign';
 import {Color, ColorVariant} from 'src/themes';
-import BaseButton from './BaseButton';
+import BaseButton from '../../buttons/BaseButton';
+import DefaultIconButtonStyle from './defaultIconButtonStyle';
 
-function generateStateStyles(pressed, isDisabled, colorVariant) {
+function getStateStyles(isPressed, isDisabled, colorVariant) {
   if (isDisabled) {
     const {onBase: onBaseColor, base: baseColor} =
       Color.light[ColorVariant.surface];
     return {
       containerStyle: {backgroundColor: baseColor},
       contentStyle: {color: onBaseColor},
+      iconColor: onBaseColor,
     };
   }
   const {onBase: onBaseColor, base: baseColor} = Color.light[colorVariant];
-  if (pressed) {
+  if (isPressed) {
     return {
       containerStyle: {backgroundColor: baseColor},
       contentStyle: {color: onBaseColor},
+      iconColor: onBaseColor,
     };
   }
   return {
     containerStyle: {backgroundColor: baseColor},
     contentStyle: {color: onBaseColor},
+    iconColor: onBaseColor,
   };
 }
 
-export default function FilledButton(props) {
+export default function FilledIconButton(props) {
   const {
     content,
     style,
     contentStyle: rawContentStyle,
+    name,
     colorVariant = ColorVariant.primary,
     disabled,
     children,
@@ -37,17 +43,27 @@ export default function FilledButton(props) {
   } = props;
 
   function getContainerStyle({pressed}) {
-    return generateStateStyles(pressed, disabled, colorVariant)?.containerStyle;
+    return [
+      DefaultIconButtonStyle.container,
+      getStateStyles(pressed, disabled, colorVariant)?.containerStyle,
+      style,
+    ];
   }
 
   function renderContent({pressed}) {
-    const contentStyle = generateStateStyles(
+    const {contentStyle, iconColor} = getStateStyles(
       pressed,
       disabled,
       colorVariant,
-    )?.contentStyle;
+    );
+    const iconProps = {
+      size: DefaultIconButtonStyle.icon.size,
+      name: name,
+      color: iconColor,
+    };
     return (
       <>
+        <Icon {...iconProps} />
         {content && (
           <Text style={[contentStyle, rawContentStyle]}>{content}</Text>
         )}
@@ -56,7 +72,7 @@ export default function FilledButton(props) {
   }
 
   return (
-    <BaseButton {...otherProps} style={getContainerStyle} disabled={!!disabled}>
+    <BaseButton {...otherProps} style={getContainerStyle}>
       {renderContent}
     </BaseButton>
   );

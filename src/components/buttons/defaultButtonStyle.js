@@ -10,6 +10,8 @@ const defaultButtonStyle = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
+    flexDirection: 'row',
+    flexWrap: 'nowrap',
   },
 });
 export default defaultButtonStyle;

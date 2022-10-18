@@ -96,6 +96,8 @@ export default function GameWaitScreen(props) {
             content={'Choi ngay'}
             style={styles.button}
             onPress={handlePressFilledButton}
+            contentStyle={headerTypo}
+            // disabled={true}
           />
         </View>
       </ScrollView>

@@ -1,7 +1,7 @@
 import React from 'react';
-import {Pressable, Text} from 'react-native';
-import {Color, ColorVariant, Typography} from 'src/themes';
-import DefaultButtonStyle from './defaultButtonStyle';
+import {Text} from 'react-native';
+import {Color, ColorVariant} from 'src/themes';
+import BaseButton from './BaseButton';
 
 function generateStateStyles(pressed, isDisabled, colorVariant) {
   if (isDisabled) {
@@ -29,19 +29,14 @@ export default function TonalButton(props) {
     content,
     style,
     contentStyle: rawContentStyle,
-    colorVariant = ColorVariant.secondary,
-    typographyVariant = Typography.label.large,
+    colorVariant = ColorVariant.primary,
     disabled,
     children,
     ...otherProps
   } = props;
 
   function getContainerStyle({pressed}) {
-    return [
-      DefaultButtonStyle.container,
-      generateStateStyles(pressed, disabled, colorVariant)?.containerStyle,
-      style,
-    ];
+    return generateStateStyles(pressed, disabled, colorVariant)?.containerStyle;
   }
 
   function renderContent({pressed}) {
@@ -52,19 +47,16 @@ export default function TonalButton(props) {
     )?.contentStyle;
     return (
       <>
-        {children}
         {content && (
-          <Text style={[typographyVariant, contentStyle, rawContentStyle]}>
-            {content}
-          </Text>
+          <Text style={[contentStyle, rawContentStyle]}>{content}</Text>
         )}
       </>
     );
   }
 
   return (
-    <Pressable {...otherProps} disabled={!!disabled} style={getContainerStyle}>
+    <BaseButton {...otherProps} style={getContainerStyle} disabled={!!disabled}>
       {renderContent}
-    </Pressable>
+    </BaseButton>
   );
 }
