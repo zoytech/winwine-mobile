@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {
   Dimensions,
   SafeAreaView,
@@ -7,6 +7,7 @@ import {
   Text,
   View,
 } from 'react-native';
+import {useFocusEffect} from '@react-navigation/native';
 import API from 'src/apis';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {FilledButton, FilledCard, OutlinedButton} from 'src/components';
@@ -33,14 +34,29 @@ export default function GamePlayScreen(props) {
   const TOTAL_TASKS = tasks.length;
   const baseColor = Color.light[colorVariant]?.base;
 
-  useEffect(() => {
-    getCurrentCardDeck(deckId);
-  }, [deckId]);
+  useFocusEffect(
+    useCallback(() => {
+      let isActive = true;
 
-  async function getCurrentCardDeck(cardDeckId) {
-    const cardDeck = await API.getCardDeckById(cardDeckId);
-    setCardDeckItem(cardDeck);
-  }
+      async function getCurrentCardDeck() {
+        try {
+          const cardDeck = await API.getCardDeckById(deckId);
+          if (isActive) {
+            setCardDeckItem(cardDeck);
+            console.log('setCardDeckItem');
+          }
+        } catch (e) {
+          //log errors
+        }
+      }
+
+      getCurrentCardDeck();
+      return () => {
+        isActive = false;
+        setTaskTurn(0);
+      };
+    }, [deckId]),
+  );
 
   const defaultContainerStyle = [
     {backgroundColor: baseColor},
@@ -93,6 +109,11 @@ export default function GamePlayScreen(props) {
                 ? handleNavigateToGameEndScreen
                 : handleContinueButtonPressed
             }
+          />
+          <FilledButton
+            content={'Hết'}
+            style={styles.button}
+            onPress={handleNavigateToGameEndScreen}
           />
         </View>
       </ScrollView>
