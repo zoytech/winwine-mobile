@@ -110,11 +110,6 @@ export default function GamePlayScreen(props) {
                 : handleContinueButtonPressed
             }
           />
-          <FilledButton
-            content={'Hết'}
-            style={styles.button}
-            onPress={handleNavigateToGameEndScreen}
-          />
         </View>
       </ScrollView>
     </SafeAreaView>
