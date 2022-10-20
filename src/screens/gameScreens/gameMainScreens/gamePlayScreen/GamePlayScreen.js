@@ -7,12 +7,13 @@ import {
   Text,
   View,
 } from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 import {useFocusEffect} from '@react-navigation/native';
-import API from 'src/apis';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {FilledButton, FilledCard, OutlinedButton} from 'src/components';
 import {StandardHeader} from '../components';
 import {ScreenKeys} from '../../../../navigations/ScreenKeys';
+import {getCardDeck} from '../../../../redux/actions';
 
 const screenWidth = Dimensions.get('screen').width;
 export default function GamePlayScreen(props) {
@@ -26,9 +27,10 @@ export default function GamePlayScreen(props) {
     style,
     ...otherProps
   } = props;
+  const cardDeckItem = useSelector(state => state.cardDeck.cardDeck);
+  const dispatch = useDispatch();
 
   const {deckId} = route.params;
-  const [cardDeckItem, setCardDeckItem] = useState({});
   const [taskTurn, setTaskTurn] = useState(0);
   const {cardDeck: name, tasks: tasks = []} = cardDeckItem || {};
   const TOTAL_TASKS = tasks.length;
@@ -36,26 +38,8 @@ export default function GamePlayScreen(props) {
 
   useFocusEffect(
     useCallback(() => {
-      let isActive = true;
-
-      async function getCurrentCardDeck() {
-        try {
-          const cardDeck = await API.getCardDeckById(deckId);
-          if (isActive) {
-            setCardDeckItem(cardDeck);
-            console.log('setCardDeckItem');
-          }
-        } catch (e) {
-          //log errors
-        }
-      }
-
-      getCurrentCardDeck();
-      return () => {
-        isActive = false;
-        setTaskTurn(0);
-      };
-    }, [deckId]),
+      dispatch(getCardDeck(deckId));
+    }, [dispatch]),
   );
 
   const defaultContainerStyle = [
@@ -156,3 +140,25 @@ const styles = StyleSheet.create({
     height: 40,
   },
 });
+
+/*
+let isActive = true;
+
+      async function getCurrentCardDeck() {
+        try {
+          const cardDeck = await API.getCardDeckById(deckId);
+          if (isActive) {
+            setCardDeckItem(cardDeck);
+            console.log('setCardDeckItem');
+          }
+        } catch (e) {
+          //log errors
+        }
+      }
+
+      getCurrentCardDeck();
+      return () => {
+        isActive = false;
+        setTaskTurn(0);
+      };
+ */

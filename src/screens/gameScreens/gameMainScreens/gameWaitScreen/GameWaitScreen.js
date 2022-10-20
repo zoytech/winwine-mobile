@@ -7,19 +7,21 @@ import {
   Text,
   View,
 } from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {FilledButton} from 'src/components';
-import API from 'src/apis';
+import {getCardDeck} from 'src/redux/actions';
 import {StandardHeader} from '../components';
 import {NavigatedGameCard} from './components';
 import {ScreenKeys} from '../../../../navigations/ScreenKeys';
 
 const {width: screenWidth} = Dimensions.get('screen');
 
-export default function GameWaitScreen(props) {
+function GameWaitScreen(props) {
   const {
     navigation,
     route,
+    actions,
     headerTypo = Typography.title.large,
     subHeaderTypo = Typography.label.large,
     supportingTextTypo = Typography.title.medium,
@@ -27,9 +29,10 @@ export default function GameWaitScreen(props) {
     style,
     ...otherProps
   } = props;
+  const cardDeckItem = useSelector(state => state.cardDeck.cardDeck);
+  const dispatch = useDispatch();
 
   const {deckId} = route.params;
-  const [cardDeckItem, setCardDeckItem] = useState({});
   const [taskTurn, setTaskTurn] = useState(0);
   const {cardDeck: name, tag: tag, tasks: tasks = []} = cardDeckItem || {};
   const TOTAL_TASKS = tasks.length;
@@ -40,15 +43,11 @@ export default function GameWaitScreen(props) {
     styles.container,
     style,
   ];
+  console.log('deckId: ', deckId);
 
   useEffect(() => {
-    getCurrentCardDeck(deckId);
-  }, [deckId]);
-
-  async function getCurrentCardDeck(cardDeckId) {
-    const cardDeck = await API.getCardDeckById(cardDeckId);
-    setCardDeckItem(cardDeck);
-  }
+    dispatch(getCardDeck(deckId));
+  }, [dispatch]);
 
   function handlePressFilledButton() {
     navigation.navigate(ScreenKeys.GAME_PLAY, {
@@ -142,3 +141,5 @@ const styles = StyleSheet.create({
     height: 50,
   },
 });
+
+export default GameWaitScreen;
