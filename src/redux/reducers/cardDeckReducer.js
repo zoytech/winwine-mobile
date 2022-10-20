@@ -1,18 +1,41 @@
-import {GET_CARD_DECK} from '../constants';
+import {
+  FETCH_CARD_DECK_REQUEST,
+  FETCH_CARD_DECK_ERROR,
+  FETCH_CARD_DECK_SUCCESS,
+} from '../constants/cardDeck';
 
 const initialState = {
-  cardDeckItem: {},
+  requesting: false,
+  success: false,
+  message: null,
+  data: {},
 };
-const cardDeckReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case GET_CARD_DECK:
-      console.log('action.payload: ', action.payload);
+
+function cardDeckReducer(state = initialState, payload) {
+  const {type, data, message} = payload;
+  switch (type) {
+    case FETCH_CARD_DECK_REQUEST:
       return {
         ...state,
-        cardDeck: action.payload,
+        requesting: true,
+      };
+    case FETCH_CARD_DECK_SUCCESS:
+      console.log('action.payload', payload);
+      return {
+        ...state,
+        requesting: false,
+        success: true,
+        data: data || {},
+      };
+    case FETCH_CARD_DECK_ERROR:
+      return {
+        ...state,
+        requesting: false,
+        message: message,
       };
     default:
       return state;
   }
-};
+}
+
 export default cardDeckReducer;

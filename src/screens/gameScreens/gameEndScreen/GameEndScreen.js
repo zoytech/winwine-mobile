@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {
   Dimensions,
   Image,
@@ -7,11 +7,13 @@ import {
   Text,
   View,
 } from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 import {Typography} from 'src/themes';
 import {FilledButton, OutlinedButton, OutlinedCard} from 'src/components';
-import API from 'src/apis';
 import {StandardHeader} from './components';
 import {ScreenKeys} from '../../../navigations/ScreenKeys';
+import {cardDeckSelector} from 'src/redux/selectors';
+import {loadCardDeckById} from 'src/redux/actions';
 
 const screenWidth = Dimensions.get('screen').width;
 export default function GameEndScreen(props) {
@@ -27,16 +29,13 @@ export default function GameEndScreen(props) {
   } = props;
 
   const {deckId} = route.params;
-  const [cardDeckItem, setCardDeckItem] = useState([]);
+  const dispatch = useDispatch();
+  const cardDeckItem = useSelector(cardDeckSelector);
   const {tag: tag, uri: uri, cardDeck: name} = cardDeckItem || {};
-  useEffect(() => {
-    getCurrentCardDeck(deckId);
-  }, [deckId]);
 
-  async function getCurrentCardDeck(cardDeckId) {
-    const cardDeck = await API.getCardDeckById(cardDeckId);
-    setCardDeckItem(cardDeck);
-  }
+  useEffect(() => {
+    dispatch(loadCardDeckById(deckId));
+  }, [dispatch]);
 
   const description = 'Bạn đã chơi hết rồi';
   const handlePressFilledButton = () => {

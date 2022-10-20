@@ -1,2 +1,0 @@
-const GET_CARD_DECK = 'GET_CARD_DECK';
-export {GET_CARD_DECK};

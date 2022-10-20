@@ -8,12 +8,14 @@ import {
   View,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
+import Icon from 'react-native-vector-icons/AntDesign';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {FilledButton} from 'src/components';
-import {getCardDeck} from 'src/redux/actions';
+import {loadCardDeckById} from 'src/redux/actions';
 import {StandardHeader} from '../components';
 import {NavigatedGameCard} from './components';
 import {ScreenKeys} from '../../../../navigations/ScreenKeys';
+import {cardDeckSelector, requestingSelector} from 'src/redux/selectors';
 
 const {width: screenWidth} = Dimensions.get('screen');
 
@@ -29,10 +31,10 @@ function GameWaitScreen(props) {
     style,
     ...otherProps
   } = props;
-  const cardDeckItem = useSelector(state => state.cardDeck.cardDeck);
-  const dispatch = useDispatch();
-
   const {deckId} = route.params;
+  const cardDeckItem = useSelector(cardDeckSelector);
+  const requesting = useSelector(requestingSelector);
+  const dispatch = useDispatch();
   const [taskTurn, setTaskTurn] = useState(0);
   const {cardDeck: name, tag: tag, tasks: tasks = []} = cardDeckItem || {};
   const TOTAL_TASKS = tasks.length;
@@ -43,10 +45,9 @@ function GameWaitScreen(props) {
     styles.container,
     style,
   ];
-  console.log('deckId: ', deckId);
 
   useEffect(() => {
-    dispatch(getCardDeck(deckId));
+    dispatch(loadCardDeckById(deckId));
   }, [dispatch]);
 
   function handlePressFilledButton() {
@@ -71,40 +72,46 @@ function GameWaitScreen(props) {
   }
 
   return (
-    <SafeAreaView {...otherProps} style={defaultContainerStyle}>
-      <ScrollView contentContainerStyle={styles.scrollView}>
-        <StandardHeader
-          head={name}
-          subHeadLeft={tag}
-          subHeadRight={`Tổng số ${TOTAL_TASKS} lá`}
-          headStyle={headerTypo}
-          subHeadStyle={subHeaderTypo}
-          style={styles.header}
-          containerStyle={styles.header}
-        />
-        <View style={styles.supportingText}>
-          <Text style={supportingTextTypo}>
-            {previewNumberOfCard(TOTAL_TASKS)}
-          </Text>
-        </View>
-        <NavigatedGameCard
-          style={styles.navigatedGameCard}
-          content={tasks[taskTurn]?.task}
-          onBackwardPressed={handleBackwardButtonPressed}
-          onForwardPressed={handleForwardButtonPressed}
-          onBackwardDisabled={taskTurn === 0}
-          onForwardDisabled={taskTurn === TOTAL_TASKS - 1}
-        />
-        <View style={styles.action}>
-          <FilledButton
-            content={'Choi ngay'}
-            style={styles.button}
-            onPress={handlePressFilledButton}
-            contentStyle={headerTypo}
-          />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <>
+      {requesting ? (
+        <Icon name={'loading1'} />
+      ) : (
+        <SafeAreaView {...otherProps} style={defaultContainerStyle}>
+          <ScrollView contentContainerStyle={styles.scrollView}>
+            <StandardHeader
+              head={name}
+              subHeadLeft={tag}
+              subHeadRight={`Tổng số ${TOTAL_TASKS} lá`}
+              headStyle={headerTypo}
+              subHeadStyle={subHeaderTypo}
+              style={styles.header}
+              containerStyle={styles.header}
+            />
+            <View style={styles.supportingText}>
+              <Text style={supportingTextTypo}>
+                {previewNumberOfCard(TOTAL_TASKS)}
+              </Text>
+            </View>
+            <NavigatedGameCard
+              style={styles.navigatedGameCard}
+              content={tasks[taskTurn]?.task}
+              onBackwardPressed={handleBackwardButtonPressed}
+              onForwardPressed={handleForwardButtonPressed}
+              onBackwardDisabled={taskTurn === 0}
+              onForwardDisabled={taskTurn === TOTAL_TASKS - 1}
+            />
+            <View style={styles.action}>
+              <FilledButton
+                content={'Choi ngay'}
+                style={styles.button}
+                onPress={handlePressFilledButton}
+                contentStyle={headerTypo}
+              />
+            </View>
+          </ScrollView>
+        </SafeAreaView>
+      )}
+    </>
   );
 }
 

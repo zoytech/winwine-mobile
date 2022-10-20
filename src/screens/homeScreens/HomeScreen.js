@@ -10,8 +10,6 @@ import {
 } from './components';
 
 export default function HomeScreen({navigation}) {
-  const {width: screenWidth} = Dimensions.get('screen');
-
   const [suggestedHashtag, setSuggestedHashtag] = useState([]);
   const [popularCardDecks, setPopularCardDecks] = useState([]);
   const [recentlyCardDecks, setRecentlyCardDecks] = useState([]);

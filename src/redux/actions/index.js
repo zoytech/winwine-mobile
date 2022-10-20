@@ -1,2 +1,3 @@
-import {getCardDeck} from './getCardDeck';
-export {getCardDeck};
+import {loadCardDeckById} from './loadCardDeckById';
+
+export {loadCardDeckById};

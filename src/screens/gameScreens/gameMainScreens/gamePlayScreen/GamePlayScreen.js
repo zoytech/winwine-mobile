@@ -13,7 +13,8 @@ import {Color, ColorVariant, Typography} from 'src/themes';
 import {FilledButton, FilledCard, OutlinedButton} from 'src/components';
 import {StandardHeader} from '../components';
 import {ScreenKeys} from '../../../../navigations/ScreenKeys';
-import {getCardDeck} from '../../../../redux/actions';
+import {loadCardDeckById} from 'src/redux/actions';
+import {cardDeckSelector} from '../../../../redux/selectors';
 
 const screenWidth = Dimensions.get('screen').width;
 export default function GamePlayScreen(props) {
@@ -27,18 +28,21 @@ export default function GamePlayScreen(props) {
     style,
     ...otherProps
   } = props;
-  const cardDeckItem = useSelector(state => state.cardDeck.cardDeck);
-  const dispatch = useDispatch();
-
   const {deckId} = route.params;
+  const dispatch = useDispatch();
+  const cardDeckItem = useSelector(cardDeckSelector);
   const [taskTurn, setTaskTurn] = useState(0);
   const {cardDeck: name, tasks: tasks = []} = cardDeckItem || {};
   const TOTAL_TASKS = tasks.length;
   const baseColor = Color.light[colorVariant]?.base;
 
+  const cardDeck = loadCardDeckById(deckId);
   useFocusEffect(
     useCallback(() => {
-      dispatch(getCardDeck(deckId));
+      dispatch(cardDeck);
+      return () => {
+        setTaskTurn(0);
+      };
     }, [dispatch]),
   );
 
@@ -93,6 +97,11 @@ export default function GamePlayScreen(props) {
                 ? handleNavigateToGameEndScreen
                 : handleContinueButtonPressed
             }
+          />
+          <FilledButton
+            content={'Lá'}
+            style={styles.button}
+            onPress={handleNavigateToGameEndScreen}
           />
         </View>
       </ScrollView>
