@@ -4,7 +4,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {ScreenKeys} from './ScreenKeys';
 
 import APP_NAME from 'src/constants';
-import {Color, ColorVariant, Typography} from 'src/themes';
+import {Color, ColorVariant} from 'src/themes';
 import {
   GameEndScreen,
   GamePlayScreen,

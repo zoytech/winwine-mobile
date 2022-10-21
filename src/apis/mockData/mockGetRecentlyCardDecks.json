@@ -4,7 +4,8 @@
       "cardDeckId": 3,
       "cardDeck": "Mua yeu dau",
       "tag": "18+",
-      "uri": "https://picsum.photos/id/1013/200"
+      "uri": "https://picsum.photos/id/1013/200",
+      "numberOfTasks": 10
     },
     {
       "cardDeckId": 1,
@@ -24,19 +25,22 @@
       "cardDeckId": 4,
       "cardDeck": "Package ABC",
       "tag": "Thân quen",
-      "uri": "https://picsum.photos/id/1015/200"
+      "uri": "https://picsum.photos/id/1015/200",
+      "numberOfTasks": 10
     },
     {
       "cardDeckId": 5,
       "cardDeck": "Package card deck",
       "tag": "18+",
-      "uri": "https://picsum.photos/id/1016/200"
+      "uri": "https://picsum.photos/id/1016/200",
+      "numberOfTasks": 10
     },
     {
       "cardDeckId": 6,
       "cardDeck": "Múi sầu riêng tên H",
       "tag": "Công sở",
-      "uri": "https://picsum.photos/id/1016/200"
+      "uri": "https://picsum.photos/id/1016/200",
+      "numberOfTasks": 10
     }
   ]
 }

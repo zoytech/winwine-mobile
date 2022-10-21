@@ -10,7 +10,7 @@ export function loadCardDeckById(cardDeckId) {
     try {
       dispatch({type: FETCH_CARD_DECK_REQUEST});
       const responseBody = await API.getCardDeckById(cardDeckId);
-      console.log('responseBody', responseBody);
+      console.log('getCardDeckById: ', responseBody);
       dispatch({
         type: FETCH_CARD_DECK_SUCCESS,
         data: responseBody,

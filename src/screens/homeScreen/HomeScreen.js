@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
-import {Dimensions, SafeAreaView, ScrollView, StyleSheet} from 'react-native';
-import API from '../../apis';
+import React, {useEffect} from 'react';
+import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 import {Color, ColorVariant} from 'src/themes';
 import {
   HorizontalCardList,
@@ -8,27 +8,35 @@ import {
   SuggestionList,
   VerticalCardList,
 } from './components';
+import {
+  loadPopularCardDecks,
+  loadRecentlyCardDecks,
+  loadSuggestedHashtag,
+} from 'src/redux/actions';
+import {
+  popularCardDecksSelector,
+  recentlyCardDecksSelector,
+  suggestedCardDecksSelector,
+} from 'src/redux/selectors';
 
 export default function HomeScreen({navigation}) {
-  const [suggestedHashtag, setSuggestedHashtag] = useState([]);
-  const [popularCardDecks, setPopularCardDecks] = useState([]);
-  const [recentlyCardDecks, setRecentlyCardDecks] = useState([]);
+  const dispatch = useDispatch();
+  const suggestedHashtag = useSelector(suggestedCardDecksSelector);
+  const popularCardDecks = useSelector(popularCardDecksSelector);
+  const recentlyCardDecks = useSelector(recentlyCardDecksSelector);
+  console.log('homescreen: ');
 
   useEffect(() => {
-    getHomeScreenData();
-  }, []);
+    dispatch(loadSuggestedHashtag());
+  }, [dispatch]);
 
-  async function getHomeScreenData() {
-    const [suggestedHashtagData, popularCardDecksData, recentlyCardDecksData] =
-      await Promise.all([
-        API.getSuggestedHashtag(),
-        API.getRecentlyCardDecks(),
-        API.getPopularCardDecks(),
-      ]);
-    setSuggestedHashtag(suggestedHashtagData?.data);
-    setPopularCardDecks(popularCardDecksData?.data);
-    setRecentlyCardDecks(recentlyCardDecksData?.data);
-  }
+  useEffect(() => {
+    dispatch(loadPopularCardDecks());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(loadRecentlyCardDecks());
+  }, [dispatch]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -57,16 +65,3 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
 });
-
-/*
-<FlatList
-        data={popularCardDecks}
-        style={r}
-        contentContainerStyle={}
-        showsVerticalScrollIndicator={false}
-        ListHeaderComponent={
-
-        }
-        renderItem={renderListItem}
-      />
- */
