@@ -11,30 +11,20 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useFocusEffect} from '@react-navigation/native';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {FilledButton, FilledCard, OutlinedButton} from 'src/components';
+import {loadCardDeckById} from 'src/redux/actions';
+import {cardDeckSelector} from 'src/redux/selectors';
 import {StandardHeader} from '../components';
 import {ScreenKeys} from '../../../../navigations/ScreenKeys';
-import {loadCardDeckById} from 'src/redux/actions';
-import {cardDeckSelector} from '../../../../redux/selectors';
 
 const screenWidth = Dimensions.get('screen').width;
-export default function GamePlayScreen(props) {
-  const {
-    navigation,
-    route,
-    headerTypo = Typography.title.large,
-    subHeaderTypo = Typography.label.large,
-    bodyTypo = Typography.body.large,
-    colorVariant = ColorVariant.surface,
-    style,
-    ...otherProps
-  } = props;
-  const {deckId} = route.params;
+export default function GamePlayScreen({navigation, route}) {
+  const deckId = route.params?.deckId;
   const dispatch = useDispatch();
   const cardDeckItem = useSelector(cardDeckSelector);
   const [taskTurn, setTaskTurn] = useState(0);
   const {cardDeck: name, tasks: tasks = []} = cardDeckItem || {};
-  const TOTAL_TASKS = tasks.length;
-  const baseColor = Color.light[colorVariant]?.base;
+  const totalTasks = tasks.length;
+  const baseColor = Color.light[ColorVariant.surface]?.base;
 
   const cardDeck = loadCardDeckById(deckId);
   useFocusEffect(
@@ -49,37 +39,41 @@ export default function GamePlayScreen(props) {
   const defaultContainerStyle = [
     {backgroundColor: baseColor},
     styles.container,
-    style,
   ];
 
   function handleLookBackButtonPressed() {
-    taskTurn === 0 ? '' : setTaskTurn(taskTurn - 1);
+    taskTurn !== 0 && setTaskTurn(taskTurn - 1);
   }
 
   function handleContinueButtonPressed() {
-    taskTurn === TOTAL_TASKS - 1 ? '' : setTaskTurn(taskTurn + 1);
+    taskTurn !== totalTasks - 1 && setTaskTurn(taskTurn + 1);
   }
 
   function handleNavigateToGameEndScreen() {
-    navigation.navigate(ScreenKeys.GAME_END, {
-      deckId: deckId || '',
+    navigation.navigate({
+      name: ScreenKeys.GAME_END,
+      params: {
+        deckId: deckId || '',
+      },
     });
   }
 
   return (
-    <SafeAreaView {...otherProps} style={defaultContainerStyle}>
+    <SafeAreaView style={defaultContainerStyle}>
       <ScrollView contentContainerStyle={styles.scrollView}>
         <StandardHeader
           head={name}
-          subHeadLeft={`Lá thứ ${taskTurn + 1}/${TOTAL_TASKS} `}
-          headStyle={headerTypo}
-          subHeadStyle={subHeaderTypo}
+          subHeadLeft={`Lá thứ ${taskTurn + 1}/${totalTasks} `}
+          headStyle={Typography.title.large}
+          subHeadStyle={Typography.label.large}
           style={styles.header}
           containerStyle={styles.header}
         />
         <View style={styles.gameCardLayout}>
           <FilledCard style={styles.gameCard}>
-            <Text style={[bodyTypo, styles.text]}>{tasks[taskTurn]?.task}</Text>
+            <Text style={[Typography.body.large, styles.text]}>
+              {tasks[taskTurn]?.task}
+            </Text>
           </FilledCard>
         </View>
         <View style={styles.action}>
@@ -93,7 +87,7 @@ export default function GamePlayScreen(props) {
             content={'Lá tiếp theo'}
             style={styles.button}
             onPress={
-              taskTurn === TOTAL_TASKS - 1
+              taskTurn === totalTasks - 1
                 ? handleNavigateToGameEndScreen
                 : handleContinueButtonPressed
             }

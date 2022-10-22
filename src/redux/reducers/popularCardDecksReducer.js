@@ -11,8 +11,8 @@ const initialState = {
   data: [],
 };
 
-function popularCardDecksReducer(state = initialState, payload) {
-  const {type, data, message} = payload;
+function popularCardDecksReducer(state = initialState, action) {
+  const {type, payload, message} = action;
   switch (type) {
     case FETCH_POPULAR_DECKS_REQUEST:
       return {
@@ -20,12 +20,11 @@ function popularCardDecksReducer(state = initialState, payload) {
         requesting: true,
       };
     case FETCH_POPULAR_DECKS_SUCCESS:
-      console.log('popularCardDecksReducer', payload);
       return {
         ...state,
         requesting: false,
         success: true,
-        data: data || [],
+        data: payload || [],
       };
     case FETCH_POPULAR_DECKS_ERROR:
       return {

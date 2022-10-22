@@ -10,10 +10,9 @@ export function loadSuggestedHashtag() {
     try {
       dispatch({type: FETCH_SUGGESTED_HASHTAG_REQUEST});
       const responseBody = await API.getSuggestedHashtag();
-      console.log('getSuggestedHashtag: ', responseBody);
       dispatch({
         type: FETCH_SUGGESTED_HASHTAG_SUCCESS,
-        data: responseBody,
+        payload: responseBody?.data,
       });
     } catch (error) {
       console.error(error);

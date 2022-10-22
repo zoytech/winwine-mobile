@@ -11,8 +11,8 @@ const initialState = {
   data: {},
 };
 
-function cardDeckReducer(state = initialState, payload) {
-  const {type, data, message} = payload;
+function cardDeckReducer(state = initialState, action) {
+  const {type, payload, message} = action;
   switch (type) {
     case FETCH_CARD_DECK_REQUEST:
       return {
@@ -20,12 +20,11 @@ function cardDeckReducer(state = initialState, payload) {
         requesting: true,
       };
     case FETCH_CARD_DECK_SUCCESS:
-      console.log('action.payload', payload);
       return {
         ...state,
         requesting: false,
         success: true,
-        data: data || {},
+        data: payload || {},
       };
     case FETCH_CARD_DECK_ERROR:
       return {

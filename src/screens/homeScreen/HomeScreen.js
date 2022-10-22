@@ -14,17 +14,25 @@ import {
   loadSuggestedHashtag,
 } from 'src/redux/actions';
 import {
+  cardDeckListSelector,
   popularCardDecksSelector,
   recentlyCardDecksSelector,
   suggestedCardDecksSelector,
 } from 'src/redux/selectors';
+import {loadCardDeckList} from '../../redux/actions/loadCardDeckList';
 
 export default function HomeScreen({navigation}) {
   const dispatch = useDispatch();
+  const cardDeckList = useSelector(cardDeckListSelector);
   const suggestedHashtag = useSelector(suggestedCardDecksSelector);
   const popularCardDecks = useSelector(popularCardDecksSelector);
   const recentlyCardDecks = useSelector(recentlyCardDecksSelector);
-  console.log('homescreen: ');
+  const {suggestData, popularData, recentlyData} = cardDeckList;
+  console.log('popularData home: ', popularData);
+
+  useEffect(() => {
+    dispatch(loadCardDeckList());
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(loadSuggestedHashtag());
@@ -41,11 +49,11 @@ export default function HomeScreen({navigation}) {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.contentContainer}>
-        <SuggestionList data={suggestedHashtag} navigation={navigation} />
+        <SuggestionList data={suggestData} navigation={navigation} />
         <SectionHeader content={'Recently'} style={styles.sectionHeader} />
-        <HorizontalCardList data={recentlyCardDecks} navigation={navigation} />
+        <HorizontalCardList data={recentlyData} navigation={navigation} />
         <SectionHeader content={'Popular'} style={styles.sectionHeader} />
-        <VerticalCardList data={popularCardDecks} navigation={navigation} />
+        <VerticalCardList data={popularData} navigation={navigation} />
       </ScrollView>
     </SafeAreaView>
   );

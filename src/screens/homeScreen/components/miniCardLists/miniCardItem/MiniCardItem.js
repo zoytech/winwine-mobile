@@ -27,17 +27,25 @@ export default function MiniCardItem(props) {
 
   const handlePressedImageArea = () => {
     onActionButtonPress();
-    navigation.navigate(ScreenKeys.GAME_WAIT, {deckId: deckId || ''});
+    navigation.navigate({
+      name: ScreenKeys.GAME_WAIT,
+      params: {
+        deckId: deckId || '',
+      },
+    });
   };
   const handlePressButton = () => {
     onActionButtonPress();
-    navigation.navigate(ScreenKeys.GAME_PLAY, {deckId: deckId});
+    navigation.navigate({
+      name: ScreenKeys.GAME_PLAY,
+      params: {
+        deckId: deckId || '',
+      },
+    });
   };
 
   function getContainerStyle({pressed}) {
-    return pressed
-      ? {opacity: 0.75, backgroundColor: 'white'}
-      : {opacity: 1, backgroundColor: 'white'};
+    return pressed && styles.opacityPressed;
   }
 
   return (
@@ -105,5 +113,9 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingVertical: 0,
     paddingHorizontal: 0,
+  },
+  opacityPressed: {
+    opacity: 0.75,
+    backgroundColor: 'white',
   },
 });

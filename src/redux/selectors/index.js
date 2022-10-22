@@ -1,15 +1,9 @@
 export const cardDeckSelector = state => state.cardDeck.data;
 export const requestingSelector = state => state.cardDeck.requesting;
+export const cardDeckListSelector = state => state.cardDeckList.data;
+console.log();
 
-export const popularCardDecksSelector = state => {
-  console.log('popularCardDecksSelector: ', state.popularCardDecks.data);
-  return state.popularCardDecks.data;
-};
-export const suggestedCardDecksSelector = state => {
-  console.log('suggestedCardDecksSelector: ', state.suggestedCardDecks.data);
-  return state.suggestedCardDecks.data;
-};
-export const recentlyCardDecksSelector = state => {
-  console.log('recentlyCardDecksSelector: ', state.recentlyCardDecks.data);
-  return state.recentlyCardDecks.data;
-};
+export const popularCardDecksSelector = state => state.popularCardDecks.data;
+export const suggestedCardDecksSelector = state =>
+  state.suggestedCardDecks.data;
+export const recentlyCardDecksSelector = state => state.recentlyCardDecks.data;

@@ -1,32 +1,33 @@
 import {
-  FETCH_SUGGESTED_HASHTAG_ERROR,
-  FETCH_SUGGESTED_HASHTAG_REQUEST,
-  FETCH_SUGGESTED_HASHTAG_SUCCESS,
-} from '../constants/suggestedHashtag';
+  FETCH_DECKS_REQUEST,
+  FETCH_DECKS_SUCCESS,
+  FETCH_DECKS_ERROR,
+} from '../constants/cardDeckList';
 
 const initialState = {
   requesting: false,
   success: false,
   message: null,
-  data: [],
+  data: {},
 };
 
-function suggestedHashtagReducer(state = initialState, action) {
+function cardDeckListReducer(state = initialState, action) {
   const {type, payload, message} = action;
   switch (type) {
-    case FETCH_SUGGESTED_HASHTAG_REQUEST:
+    case FETCH_DECKS_REQUEST:
       return {
         ...state,
         requesting: true,
       };
-    case FETCH_SUGGESTED_HASHTAG_SUCCESS:
+    case FETCH_DECKS_SUCCESS:
+      console.log('action: ', payload);
       return {
         ...state,
         requesting: false,
         success: true,
-        data: payload || [],
+        data: payload?.data || [],
       };
-    case FETCH_SUGGESTED_HASHTAG_ERROR:
+    case FETCH_DECKS_ERROR:
       return {
         ...state,
         requesting: false,
@@ -37,4 +38,4 @@ function suggestedHashtagReducer(state = initialState, action) {
   }
 }
 
-export default suggestedHashtagReducer;
+export default cardDeckListReducer;

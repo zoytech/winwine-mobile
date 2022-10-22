@@ -24,7 +24,7 @@ function getPopularCardDecks() {
   console.log(
     'GET:' + '/apis/v1/card-decks?hashtag_id=htg1&variant=popular&limit=50',
   );
-  return promiseWithTimeout(mockGetPopularCardDecks?.data);
+  return promiseWithTimeout(mockGetPopularCardDecks);
 }
 
 function getRecentlyCardDecks() {
@@ -32,13 +32,13 @@ function getRecentlyCardDecks() {
   console.log(
     'GET:' + '/apis/v1/card-decks?hashtag_id=htg1&variant=recently&limit=50',
   );
-  return promiseWithTimeout(mockGetRecentlyCardDecks?.data);
+  return promiseWithTimeout(mockGetRecentlyCardDecks);
 }
 
 function getSuggestedHashtag() {
   //fetch(/apis/v1/tags)
   console.log('GET:' + '/apis/v1/tags');
-  return promiseWithTimeout(mockSuggestedHashtag?.data);
+  return promiseWithTimeout(mockSuggestedHashtag);
 }
 
 export default {

@@ -10,10 +10,9 @@ export function loadPopularCardDecks() {
     try {
       dispatch({type: FETCH_POPULAR_DECKS_REQUEST});
       const responseBody = await API.getPopularCardDecks();
-      console.log('getPopularCardDecks(): ', responseBody);
       dispatch({
         type: FETCH_POPULAR_DECKS_SUCCESS,
-        data: responseBody,
+        payload: responseBody?.data,
       });
     } catch (error) {
       console.error(error);

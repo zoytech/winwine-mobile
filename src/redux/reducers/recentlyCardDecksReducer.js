@@ -11,8 +11,8 @@ const initialState = {
   data: [],
 };
 
-function recentlyCardDecksReducer(state = initialState, payload) {
-  const {type, data, message} = payload;
+function recentlyCardDecksReducer(state = initialState, action) {
+  const {type, payload, message} = action;
   switch (type) {
     case FETCH_RECENTLY_DECKS_REQUEST:
       return {
@@ -20,12 +20,11 @@ function recentlyCardDecksReducer(state = initialState, payload) {
         requesting: true,
       };
     case FETCH_RECENTLY_DECKS_SUCCESS:
-      console.log('recentlyCardDecksReducer', payload);
       return {
         ...state,
         requesting: false,
         success: true,
-        data: data || [],
+        data: payload || [],
       };
     case FETCH_RECENTLY_DECKS_ERROR:
       return {

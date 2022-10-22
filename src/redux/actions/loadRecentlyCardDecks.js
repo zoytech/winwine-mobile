@@ -10,10 +10,9 @@ export function loadRecentlyCardDecks() {
     try {
       dispatch({type: FETCH_RECENTLY_DECKS_REQUEST});
       const responseBody = await API.getRecentlyCardDecks();
-      console.log('getRecentlyCardDecks: ', responseBody);
       dispatch({
         type: FETCH_RECENTLY_DECKS_SUCCESS,
-        data: responseBody,
+        payload: responseBody?.data,
       });
     } catch (error) {
       console.error(error);
