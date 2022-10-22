@@ -30,9 +30,9 @@ export default function GamePlayScreen(props) {
   } = props;
   const {deckId} = route.params;
   const dispatch = useDispatch();
-  const cardDeckItem = useSelector(cardDeckSelector);
+  const {cardDeck} = useSelector(cardDeckSelector);
   const [taskTurn, setTaskTurn] = useState(0);
-  const {cardDeck: name, tasks: tasks = []} = cardDeckItem || {};
+  const {cardDeck: name, tasks: tasks = []} = cardDeck || {};
   const TOTAL_TASKS = tasks.length;
   const baseColor = Color.light[colorVariant]?.base;
 

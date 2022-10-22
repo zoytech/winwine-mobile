@@ -8,14 +8,12 @@ import {
   View,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import Icon from 'react-native-vector-icons/AntDesign';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {FilledButton} from 'src/components';
-import {loadCardDeckById} from 'src/redux/actions';
 import {StandardHeader} from '../components';
 import {NavigatedGameCard} from './components';
 import {ScreenKeys} from '../../../../navigations/ScreenKeys';
-import {cardDeckSelector, requestingSelector} from 'src/redux/selectors';
+import {getCardDeckById, selectCardDeck} from '../../cardDeckSlice';
 
 const {width: screenWidth} = Dimensions.get('screen');
 
@@ -32,11 +30,10 @@ function GameWaitScreen(props) {
     ...otherProps
   } = props;
   const {deckId} = route.params;
-  const cardDeckItem = useSelector(cardDeckSelector);
-  const requesting = useSelector(requestingSelector);
+  const {status, cardDeck} = useSelector(selectCardDeck);
   const dispatch = useDispatch();
   const [taskTurn, setTaskTurn] = useState(0);
-  const {cardDeck: name, tag: tag, tasks: tasks = []} = cardDeckItem || {};
+  const {cardDeck: name, tag: tag, tasks: tasks = []} = cardDeck || {};
   const TOTAL_TASKS = tasks.length;
   const baseColor = Color.light[colorVariant]?.base;
 
@@ -45,10 +42,11 @@ function GameWaitScreen(props) {
     styles.container,
     style,
   ];
-
   useEffect(() => {
-    dispatch(loadCardDeckById(deckId));
-  }, [dispatch]);
+    if (status === 'idle') {
+      dispatch(getCardDeckById(deckId));
+    }
+  }, [status, dispatch]);
 
   function handlePressFilledButton() {
     navigation.navigate(ScreenKeys.GAME_PLAY, {
@@ -57,11 +55,11 @@ function GameWaitScreen(props) {
   }
 
   function handleBackwardButtonPressed() {
-    taskTurn === 0 ? '' : setTaskTurn(taskTurn - 1);
+    taskTurn === 0 && setTaskTurn(taskTurn - 1);
   }
 
   function handleForwardButtonPressed() {
-    taskTurn === TOTAL_TASKS - 1 ? '' : setTaskTurn(taskTurn + 1);
+    taskTurn === TOTAL_TASKS - 1 && setTaskTurn(taskTurn + 1);
   }
 
   function previewNumberOfCard(total) {
@@ -71,48 +69,56 @@ function GameWaitScreen(props) {
       : `Xem trước ${total} lá bài`;
   }
 
-  return (
-    <>
-      {requesting ? (
-        <Icon name={'loading1'} />
-      ) : (
-        <SafeAreaView {...otherProps} style={defaultContainerStyle}>
-          <ScrollView contentContainerStyle={styles.scrollView}>
-            <StandardHeader
-              head={name}
-              subHeadLeft={tag}
-              subHeadRight={`Tổng số ${TOTAL_TASKS} lá`}
-              headStyle={headerTypo}
-              subHeadStyle={subHeaderTypo}
-              style={styles.header}
-              containerStyle={styles.header}
+  if (status === 'loading') {
+    return (
+      <Text style={{justifyContent: 'center', alignContent: 'center'}}>
+        Loading...
+      </Text>
+    );
+  } else if (status === 'error') {
+    return (
+      <Text style={{justifyContent: 'center', alignContent: 'center'}}>
+        Error
+      </Text>
+    );
+  } else {
+    return (
+      <SafeAreaView {...otherProps} style={defaultContainerStyle}>
+        <ScrollView contentContainerStyle={styles.scrollView}>
+          <StandardHeader
+            head={name}
+            subHeadLeft={tag}
+            subHeadRight={`Tổng số ${TOTAL_TASKS} lá`}
+            headStyle={headerTypo}
+            subHeadStyle={subHeaderTypo}
+            style={styles.header}
+            containerStyle={styles.header}
+          />
+          <View style={styles.supportingText}>
+            <Text style={supportingTextTypo}>
+              {previewNumberOfCard(TOTAL_TASKS)}
+            </Text>
+          </View>
+          <NavigatedGameCard
+            style={styles.navigatedGameCard}
+            content={tasks[taskTurn]?.task}
+            onBackwardPressed={handleBackwardButtonPressed}
+            onForwardPressed={handleForwardButtonPressed}
+            onBackwardDisabled={taskTurn === 0}
+            onForwardDisabled={taskTurn === TOTAL_TASKS - 1}
+          />
+          <View style={styles.action}>
+            <FilledButton
+              content={'Choi ngay'}
+              style={styles.button}
+              onPress={handlePressFilledButton}
+              contentStyle={headerTypo}
             />
-            <View style={styles.supportingText}>
-              <Text style={supportingTextTypo}>
-                {previewNumberOfCard(TOTAL_TASKS)}
-              </Text>
-            </View>
-            <NavigatedGameCard
-              style={styles.navigatedGameCard}
-              content={tasks[taskTurn]?.task}
-              onBackwardPressed={handleBackwardButtonPressed}
-              onForwardPressed={handleForwardButtonPressed}
-              onBackwardDisabled={taskTurn === 0}
-              onForwardDisabled={taskTurn === TOTAL_TASKS - 1}
-            />
-            <View style={styles.action}>
-              <FilledButton
-                content={'Choi ngay'}
-                style={styles.button}
-                onPress={handlePressFilledButton}
-                contentStyle={headerTypo}
-              />
-            </View>
-          </ScrollView>
-        </SafeAreaView>
-      )}
-    </>
-  );
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
