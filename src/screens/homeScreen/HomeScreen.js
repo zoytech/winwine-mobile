@@ -8,44 +8,19 @@ import {
   SuggestionList,
   VerticalCardList,
 } from './components';
-import {
-  loadPopularCardDecks,
-  loadRecentlyCardDecks,
-  loadSuggestedHashtag,
-} from 'src/redux/actions';
-import {
-  cardDeckListSelector,
-  popularCardDecksSelector,
-  recentlyCardDecksSelector,
-  suggestedCardDecksSelector,
-} from 'src/redux/selectors';
-import {loadCardDeckList} from '../../redux/actions/loadCardDeckList';
+import {cardDeckListSelector} from 'src/redux/selectors';
+import {loadCardDeckList} from 'src/redux/actions';
 
 export default function HomeScreen({navigation}) {
   const dispatch = useDispatch();
   const cardDeckList = useSelector(cardDeckListSelector);
-  const suggestedHashtag = useSelector(suggestedCardDecksSelector);
-  const popularCardDecks = useSelector(popularCardDecksSelector);
-  const recentlyCardDecks = useSelector(recentlyCardDecksSelector);
+
   const {suggestData, popularData, recentlyData} = cardDeckList;
   console.log('popularData home: ', popularData);
 
   useEffect(() => {
     dispatch(loadCardDeckList());
   }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(loadSuggestedHashtag());
-  }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(loadPopularCardDecks());
-  }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(loadRecentlyCardDecks());
-  }, [dispatch]);
-
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.contentContainer}>
