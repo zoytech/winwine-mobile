@@ -4,6 +4,7 @@ import {
   FETCH_DECKS_SUCCESS,
 } from '../constants/cardDeckList';
 import API from 'src/apis';
+import {allSettled} from 'src/utils';
 
 export function loadCardDeckList() {
   return async dispatch => {
@@ -13,7 +14,7 @@ export function loadCardDeckList() {
         suggestedHashtagData,
         popularCardDecksData,
         recentlyCardDecksData,
-      ] = await Promise.allSettled([
+      ] = await allSettled([
         API.getSuggestedHashtag(),
         API.getRecentlyCardDecks(),
         API.getPopularCardDecks(),

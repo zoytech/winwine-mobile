@@ -16,6 +16,7 @@ module.exports = {
           'src/apis': './src/apis',
           'src/screens': './src/screens',
           'src/redux': './src/redux',
+          'src/utils': './src/utils',
         },
         extensions: [
           '.ios.ts',
