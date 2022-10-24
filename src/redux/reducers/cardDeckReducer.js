@@ -1,14 +1,13 @@
 import {
-  FETCH_CARD_DECK_REQUEST,
   FETCH_CARD_DECK_ERROR,
+  FETCH_CARD_DECK_REQUEST,
   FETCH_CARD_DECK_SUCCESS,
 } from '../constants/cardDeck';
 
 const initialState = {
   requesting: false,
-  success: false,
-  message: null,
   data: {},
+  error: {},
 };
 
 function cardDeckReducer(state = initialState, action) {
@@ -23,14 +22,13 @@ function cardDeckReducer(state = initialState, action) {
       return {
         ...state,
         requesting: false,
-        success: true,
         data: payload || {},
       };
     case FETCH_CARD_DECK_ERROR:
       return {
         ...state,
         requesting: false,
-        message: message,
+        error: message,
       };
     default:
       return state;

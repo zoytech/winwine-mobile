@@ -13,8 +13,8 @@ import {Color, ColorVariant, Typography} from 'src/themes';
 import {FilledButton, FilledCard, OutlinedButton} from 'src/components';
 import {loadCardDeckById} from 'src/redux/actions';
 import {cardDeckSelector} from 'src/redux/selectors';
+import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import {StandardHeader} from '../components';
-import {ScreenKeys} from '../../../../navigations/ScreenKeys';
 
 const screenWidth = Dimensions.get('screen').width;
 export default function GamePlayScreen({navigation, route}) {

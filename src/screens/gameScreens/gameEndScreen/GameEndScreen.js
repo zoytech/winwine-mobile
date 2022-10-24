@@ -8,12 +8,14 @@ import {
   View,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {Typography} from 'src/themes';
+import hexToRgba from 'hex-to-rgba';
+import {StateLayersVariant, Typography} from 'src/themes';
 import {FilledButton, OutlinedButton, OutlinedCard} from 'src/components';
 import {cardDeckSelector} from 'src/redux/selectors';
 import {loadCardDeckById} from 'src/redux/actions';
+import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import {StandardHeader} from './components';
-import {ScreenKeys} from '../../../navigations/ScreenKeys';
+import {StateLayers} from '../../../themes';
 
 const screenWidth = Dimensions.get('screen').width;
 export default function GameEndScreen({navigation, route}) {
@@ -21,6 +23,8 @@ export default function GameEndScreen({navigation, route}) {
   const dispatch = useDispatch();
   const cardDeckItem = useSelector(cardDeckSelector);
   const {tag: tag, uri: uri, cardDeck: name} = cardDeckItem || {};
+  const layoutColor =
+    StateLayers.light[StateLayersVariant.onSurface]?.level_032;
 
   useEffect(() => {
     dispatch(loadCardDeckById(deckId));
@@ -43,7 +47,7 @@ export default function GameEndScreen({navigation, route}) {
   };
 
   return (
-    <SafeAreaView style={styles.screenView}>
+    <SafeAreaView style={[styles.screenView, {backgroundColor: layoutColor}]}>
       <OutlinedCard style={styles.baseCard}>
         <StandardHeader
           head={name}
@@ -78,8 +82,9 @@ export default function GameEndScreen({navigation, route}) {
 const styles = StyleSheet.create({
   screenView: {
     width: screenWidth,
+    aspectRatio: 9 / 18,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
   },
   baseCard: {
     width: '80%',

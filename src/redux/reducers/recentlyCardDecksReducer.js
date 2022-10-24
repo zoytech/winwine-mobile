@@ -6,9 +6,8 @@ import {
 
 const initialState = {
   requesting: false,
-  success: false,
-  message: null,
   data: [],
+  error: {},
 };
 
 function recentlyCardDecksReducer(state = initialState, action) {
@@ -23,14 +22,13 @@ function recentlyCardDecksReducer(state = initialState, action) {
       return {
         ...state,
         requesting: false,
-        success: true,
         data: payload || [],
       };
     case FETCH_RECENTLY_DECKS_ERROR:
       return {
         ...state,
         requesting: false,
-        message: message,
+        error: message,
       };
     default:
       return state;

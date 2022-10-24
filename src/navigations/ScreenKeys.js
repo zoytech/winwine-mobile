@@ -1,4 +1,6 @@
 const ScreenKeys = {
+  ROOT: 'ROOT',
+  MODAL: 'MODAL',
   HOME: 'HOME',
 
   GAME: 'GAME',

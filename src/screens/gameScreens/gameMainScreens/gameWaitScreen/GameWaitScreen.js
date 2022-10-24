@@ -14,7 +14,7 @@ import {FilledButton} from 'src/components';
 import {loadCardDeckById} from 'src/redux/actions';
 import {StandardHeader} from '../components';
 import {NavigatedGameCard} from './components';
-import {ScreenKeys} from '../../../../navigations/ScreenKeys';
+import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import {cardDeckSelector, requestingSelector} from 'src/redux/selectors';
 
 const {width: screenWidth} = Dimensions.get('screen');
