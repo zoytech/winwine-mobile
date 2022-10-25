@@ -7,6 +7,9 @@ const ScreenKeys = {
   GAME_PLAY: 'GAME/PLAY',
   GAME_END: 'GAME/END',
   GAME_WAIT: 'GAME/WAIT',
+
+  DIALOG: 'DIALOG',
+  DIALOG_GAME_PAUSED: 'DIALOG_GAME_PAUSED',
 };
 
 export {ScreenKeys};

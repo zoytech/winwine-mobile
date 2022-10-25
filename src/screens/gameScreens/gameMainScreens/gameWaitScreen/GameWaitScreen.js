@@ -50,6 +50,12 @@ function GameWaitScreen({navigation, route}) {
     });
   }
 
+  function handleTestDialogButton() {
+    navigation.navigate({
+      name: ScreenKeys.DIALOG_GAME_PAUSED,
+    });
+  }
+
   function handleBackwardButtonPressed() {
     taskTurn !== 0 && setTaskTurn(taskTurn - 1);
   }
@@ -99,6 +105,12 @@ function GameWaitScreen({navigation, route}) {
                 content={'Choi ngay'}
                 style={styles.button}
                 onPress={handlePressFilledButton}
+                contentStyle={Typography.title.large}
+              />
+              <FilledButton
+                content={'Test Dialog'}
+                style={styles.button}
+                onPress={handleTestDialogButton}
                 contentStyle={Typography.title.large}
               />
             </View>

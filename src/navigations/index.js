@@ -12,6 +12,7 @@ import {
   GameWaitScreen,
   HomeScreen,
 } from '../screens';
+import {ConfirmDialog} from '../screens/modalScreens';
 
 const Stack = createNativeStackNavigator();
 export default function RootNavigator() {
@@ -30,6 +31,7 @@ export default function RootNavigator() {
   const modalScreenProps = {
     presentation: 'transparentModal',
     cardOverlayEnable: false,
+    headerShown: false,
   };
 
   function headerNavBarProps({route}) {
@@ -43,15 +45,18 @@ export default function RootNavigator() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={ScreenKeys.HOME}>
+      <Stack.Navigator
+        initialRouteName={ScreenKeys.HOME}
+        screenOptions={{
+          ...headerStyle,
+          ...headerShadowVisible,
+        }}>
         <Stack.Group>
           <Stack.Screen
             name={ScreenKeys.HOME}
             component={HomeScreen}
             options={{
               title: APP_NAME,
-              ...headerStyle,
-              ...headerShadowVisible,
             }}
           />
           <Stack.Screen
@@ -59,8 +64,6 @@ export default function RootNavigator() {
             component={GameWaitScreen}
             options={({route}) => ({
               title: route.params.title,
-              ...headerStyle,
-              ...headerShadowVisible,
             })}
           />
           <Stack.Screen
@@ -68,16 +71,14 @@ export default function RootNavigator() {
             component={GamePlayScreen}
             options={({route}) => ({
               title: route.params.title,
-              ...headerStyle,
-              ...headerShadowVisible,
             })}
           />
         </Stack.Group>
         <Stack.Group screenOptions={{...modalScreenProps}}>
+          <Stack.Screen name={ScreenKeys.GAME_END} component={GameEndScreen} />
           <Stack.Screen
-            name={ScreenKeys.GAME_END}
-            component={GameEndScreen}
-            options={{headerShown: false}}
+            name={ScreenKeys.DIALOG_GAME_PAUSED}
+            component={ConfirmDialog}
           />
         </Stack.Group>
       </Stack.Navigator>
