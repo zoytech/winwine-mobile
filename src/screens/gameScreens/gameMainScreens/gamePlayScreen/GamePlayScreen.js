@@ -18,7 +18,7 @@ import {StandardHeader} from '../components';
 
 const screenWidth = Dimensions.get('screen').width;
 export default function GamePlayScreen({navigation, route}) {
-  const deckId = route.params?.deckId;
+  const {deckId, title} = route.params;
   const dispatch = useDispatch();
   const cardDeckItem = useSelector(cardDeckSelector);
   const [taskTurn, setTaskTurn] = useState(0);
@@ -53,7 +53,8 @@ export default function GamePlayScreen({navigation, route}) {
     navigation.navigate({
       name: ScreenKeys.GAME_END,
       params: {
-        deckId: deckId || '',
+        deckId: deckId && deckId,
+        title: name || ScreenKeys.GAME_END,
       },
     });
   }

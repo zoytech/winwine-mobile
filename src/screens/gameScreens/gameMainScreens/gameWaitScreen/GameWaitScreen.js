@@ -38,11 +38,14 @@ function GameWaitScreen({navigation, route}) {
     dispatch(loadCardDeckById(deckId));
   }, [dispatch]);
 
+  console.log('name:', name);
+
   function handlePressFilledButton() {
     navigation.navigate({
       name: ScreenKeys.GAME_PLAY,
       params: {
-        deckId: deckId || '',
+        deckId: deckId && deckId,
+        title: name || ScreenKeys.GAME_PLAY,
       },
     });
   }

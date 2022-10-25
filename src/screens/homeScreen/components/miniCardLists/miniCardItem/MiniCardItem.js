@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 import {FilledButton, OutlinedCard} from 'src/components';
 import {Typography} from 'src/themes';
-import {ScreenKeys} from '../../../../../navigations/ScreenKeys';
 
 const {width: screenWidth} = Dimensions.get('screen');
 
@@ -16,33 +15,14 @@ export default function MiniCardItem(props) {
   const {
     data,
     style,
-    onActionButtonPress = () => {},
-    navigation,
+    onImageAreaPress = () => {},
+    onButtonPress = () => {},
     titleStyle = Typography.label.large,
     subTitleStyle = Typography.label.medium,
     buttonStyle = Typography.label.small,
   } = props;
 
-  const {cardDeck: name, tag: tag, uri: uri, cardDeckId: deckId} = data || {};
-
-  const handlePressedImageArea = () => {
-    onActionButtonPress();
-    navigation.navigate({
-      name: ScreenKeys.GAME_WAIT,
-      params: {
-        deckId: deckId || '',
-      },
-    });
-  };
-  const handlePressButton = () => {
-    onActionButtonPress();
-    navigation.navigate({
-      name: ScreenKeys.GAME_PLAY,
-      params: {
-        deckId: deckId || '',
-      },
-    });
-  };
+  const {cardDeck: name, tag: tag, uri: uri} = data || {};
 
   function getContainerStyle({pressed}) {
     return pressed && styles.opacityPressed;
@@ -50,7 +30,7 @@ export default function MiniCardItem(props) {
 
   return (
     <OutlinedCard style={[styles.container, style]}>
-      <Pressable style={getContainerStyle} onPress={handlePressedImageArea}>
+      <Pressable style={getContainerStyle} onPress={onImageAreaPress}>
         <View style={styles.media}>
           <Image source={{uri: uri}} style={styles.image} />
         </View>
@@ -67,7 +47,7 @@ export default function MiniCardItem(props) {
             content={'play now'}
             contentStyle={buttonStyle}
             style={styles.button}
-            onPress={handlePressButton}
+            onPress={onButtonPress}
             // disabled={true}
           />
         </View>

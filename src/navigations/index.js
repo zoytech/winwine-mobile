@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import {ScreenKeys} from './ScreenKeys';
@@ -14,9 +14,8 @@ import {
 } from '../screens';
 
 const Stack = createNativeStackNavigator();
-export default function RootNavigator(props) {
-  const {colorVariant = ColorVariant.surface} = props;
-  const {base, onBase} = Color.light[colorVariant];
+export default function RootNavigator() {
+  const {base, onBase} = Color.light[ColorVariant.surface];
 
   const headerShadowVisible = {
     elevation: 0,
@@ -32,6 +31,15 @@ export default function RootNavigator(props) {
     presentation: 'transparentModal',
     cardOverlayEnable: false,
   };
+
+  function headerNavBarProps({route}) {
+    console.log('route', route);
+    return {
+      title: route.params.title,
+      ...headerStyle,
+      ...headerShadowVisible,
+    };
+  }
 
   return (
     <NavigationContainer>
@@ -49,20 +57,20 @@ export default function RootNavigator(props) {
           <Stack.Screen
             name={ScreenKeys.GAME_WAIT}
             component={GameWaitScreen}
-            options={{
-              title: 'Bai cua Nam',
+            options={({route}) => ({
+              title: route.params.title,
               ...headerStyle,
               ...headerShadowVisible,
-            }}
+            })}
           />
           <Stack.Screen
             name={ScreenKeys.GAME_PLAY}
             component={GamePlayScreen}
-            options={{
-              title: 'Bai cua Nam',
+            options={({route}) => ({
+              title: route.params.title,
               ...headerStyle,
               ...headerShadowVisible,
-            }}
+            })}
           />
         </Stack.Group>
         <Stack.Group screenOptions={{...modalScreenProps}}>

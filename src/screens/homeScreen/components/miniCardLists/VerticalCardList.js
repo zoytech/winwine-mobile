@@ -1,22 +1,39 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import MiniCardItem from './miniCardItem';
+import {ScreenKeys} from '../../../../navigations/ScreenKeys';
 
 export default function VerticalCardList(props) {
-  const {style, data, onItemPressed = () => {}, ...otherProps} = props;
+  const {style, data, navigation, ...otherProps} = props;
 
-  function handleItemPressed(item, index) {
-    onItemPressed(item, index);
-  }
+  const handleImageAreaPress = (cardDeck, cardDeckId) => {
+    navigation.navigate({
+      name: ScreenKeys.GAME_WAIT,
+      params: {
+        deckId: cardDeckId || '',
+        title: cardDeck || ScreenKeys.GAME_WAIT,
+      },
+    });
+  };
+  const handleButtonPress = (cardDeck, cardDeckId) => {
+    navigation.navigate({
+      name: ScreenKeys.GAME_PLAY,
+      params: {
+        deckId: cardDeckId || '',
+        title: cardDeck || ScreenKeys.GAME_PLAY,
+      },
+    });
+  };
 
   function renderItem(item) {
-    const id = item?.cardDeckId;
+    const {cardDeck, cardDeckId} = item;
     return (
       <MiniCardItem
         {...otherProps}
-        key={id}
+        key={cardDeckId}
         data={item}
-        onPress={() => handleItemPressed(item, id)}
+        onImageAreaPress={() => handleImageAreaPress(cardDeck, cardDeckId)}
+        onButtonPress={() => handleButtonPress(cardDeck, cardDeckId)}
       />
     );
   }
