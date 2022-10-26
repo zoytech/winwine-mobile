@@ -1,3 +1,3 @@
-import ConfirmDialog from './ConfirmDialog';
+import ExitGameDialog from './ExitGameDialog';
 
-export {ConfirmDialog};
+export {ExitGameDialog};

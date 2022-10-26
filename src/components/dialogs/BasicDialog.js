@@ -1,17 +1,28 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {Dimensions, StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
-import {Color, ColorVariant, Typography} from 'src/themes';
-import {TextButton} from '../buttons';
+import {
+  Color,
+  ColorVariant,
+  StateLayers,
+  StateLayersVariant,
+  Typography,
+} from 'src/themes';
 import {Divider} from '../divider';
+import {TextButton} from '../buttons';
+import {FilledCard} from '../cards';
+
+const screenWidth = Dimensions.get('screen').width;
 
 export function BasicDialog(props) {
   const {
     icon,
     headline,
     supportingText,
-    leftButton,
-    rightButton,
+    mainAction,
+    subAction,
     hasDivider,
+    onMainActionPress,
+    onSubActionPress,
     style,
     contentStyle,
     children,
@@ -19,13 +30,16 @@ export function BasicDialog(props) {
   } = props;
 
   const {base: surface, onBase: onSurface} = Color.light[ColorVariant.surface];
-  const secondaryColor = Color.light[ColorVariant.surface]?.base;
+  const secondaryColor = Color.light[ColorVariant.secondary]?.base;
   const onSurfaceVarColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
-  const containerStyle = [
-    styles.container,
+  const layoutColor =
+    StateLayers.light[StateLayersVariant.onSurface]?.level_032;
+  const containerStyle = [styles.container, {backgroundColor: layoutColor}];
+  const dialogStyle = [
+    styles.dialog,
     {
-      backgroundColor: 'yellow',
-      justifyContent: icon && 'center',
+      backgroundColor: surface,
+      alignItems: icon && 'center',
     },
     style,
   ];
@@ -33,6 +47,10 @@ export function BasicDialog(props) {
   const supportingTextStyle = [
     {color: onSurfaceVarColor},
     Typography.body.medium,
+  ];
+  const actionStyle = [
+    styles.action,
+    {justifyContent: icon ? 'center' : 'flex-end'},
   ];
 
   const iconProps = {
@@ -42,39 +60,54 @@ export function BasicDialog(props) {
   };
 
   return (
-    <View {...otherProps} style={containerStyle}>
-      <View style={styles.icon}>{icon && <Icon {...iconProps} />}</View>
-      <View style={styles.headline}>
-        {headline && <Text style={headlineStyle}>{headline}</Text>}
+    <View style={containerStyle}>
+      <View {...otherProps} style={dialogStyle}>
+        <View style={styles.icon}>{icon && <Icon {...iconProps} />}</View>
+        <View style={styles.headline}>
+          {headline && <Text style={headlineStyle}>{headline}</Text>}
+        </View>
+        <View style={styles.supportingText}>
+          {supportingText && (
+            <Text style={supportingTextStyle}>{supportingText}</Text>
+          )}
+        </View>
+        <View>{hasDivider && <Divider style={styles.divider} />}</View>
+        <View style={actionStyle}>
+          <TextButton
+            content={subAction}
+            style={styles.button}
+            onPress={onSubActionPress}
+          />
+          <TextButton
+            content={mainAction}
+            style={styles.button}
+            onPress={onMainActionPress}
+          />
+        </View>
       </View>
-      <View style={styles.supportingText}>
-        {supportingText && (
-          <Text style={supportingTextStyle}>{supportingText}</Text>
-        )}
-      </View>
-      <View>{hasDivider && <Divider style={styles.divider} />}</View>
-      <View style={styles.action}>{children}</View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    width: screenWidth,
+    aspectRatio: 9 / 18,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  dialog: {
     borderRadius: 28,
-    minWidth: 280,
-    maxWidth: 560,
+    width: 312,
     padding: 24,
+    flexDirection: 'column',
   },
   icon: {
-    backgroundColor: 'gold',
+    paddingBottom: 16,
   },
-  headline: {
-    paddingTop: 16,
-    backgroundColor: 'coral',
-  },
+  headline: {},
   supportingText: {
     paddingTop: 16,
-    backgroundColor: 'green',
   },
   divider: {
     borderWidth: 1,
@@ -83,10 +116,8 @@ const styles = StyleSheet.create({
     paddingTop: 24,
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    backgroundColor: 'red',
   },
   button: {
     paddingLeft: 8,
   },
-  scrim: {},
 });
