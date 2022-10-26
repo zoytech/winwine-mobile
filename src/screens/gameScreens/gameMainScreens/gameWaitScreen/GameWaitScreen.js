@@ -52,7 +52,7 @@ function GameWaitScreen({navigation, route}) {
 
   function handleTestDialogButton() {
     navigation.navigate({
-      name: ScreenKeys.DIALOG_GAME_PAUSED,
+      name: ScreenKeys.DIALOG_GAME_EXIT,
     });
   }
 

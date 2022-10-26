@@ -1,7 +1,10 @@
 const ScreenKeys = {
+  RENDER_VIEW: 'RENDER_VIEW',
   ROOT: 'ROOT',
   MODAL: 'MODAL',
   HOME: 'HOME',
+
+  SPLASH: 'SPLASH',
 
   GAME: 'GAME',
   GAME_PLAY: 'GAME/PLAY',
@@ -9,7 +12,7 @@ const ScreenKeys = {
   GAME_WAIT: 'GAME/WAIT',
 
   DIALOG: 'DIALOG',
-  DIALOG_GAME_PAUSED: 'DIALOG_GAME_PAUSED',
+  DIALOG_GAME_EXIT: 'DIALOG_GAME_EXIT',
 };
 
 export {ScreenKeys};

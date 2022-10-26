@@ -11,8 +11,9 @@ import {
   GamePlayScreen,
   GameWaitScreen,
   HomeScreen,
+  ExitGameDialog,
+  SplashScreen,
 } from '../screens';
-import {ConfirmDialog} from '../screens/modalScreens';
 
 const Stack = createNativeStackNavigator();
 export default function RootNavigator() {
@@ -45,13 +46,15 @@ export default function RootNavigator() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName={ScreenKeys.HOME}
-        screenOptions={{
-          ...headerStyle,
-          ...headerShadowVisible,
-        }}>
+      <Stack.Navigator initialRouteName={ScreenKeys.SPLASH}>
         <Stack.Group>
+          <Stack.Screen name={ScreenKeys.SPLASH} component={SplashScreen} />
+        </Stack.Group>
+        <Stack.Group
+          screenOptions={{
+            ...headerStyle,
+            ...headerShadowVisible,
+          }}>
           <Stack.Screen
             name={ScreenKeys.HOME}
             component={HomeScreen}
@@ -77,8 +80,8 @@ export default function RootNavigator() {
         <Stack.Group screenOptions={{...modalScreenProps}}>
           <Stack.Screen name={ScreenKeys.GAME_END} component={GameEndScreen} />
           <Stack.Screen
-            name={ScreenKeys.DIALOG_GAME_PAUSED}
-            component={ConfirmDialog}
+            name={ScreenKeys.DIALOG_GAME_EXIT}
+            component={ExitGameDialog}
           />
         </Stack.Group>
       </Stack.Navigator>

@@ -16,11 +16,11 @@ export default function HomeScreen({navigation}) {
   const cardDeckList = useSelector(cardDeckListSelector);
 
   const {suggestData, popularData, recentlyData} = cardDeckList;
-  console.log('popularData home: ', popularData);
 
   useEffect(() => {
     dispatch(loadCardDeckList());
   }, [dispatch]);
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.contentContainer}>

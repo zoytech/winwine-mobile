@@ -1,3 +1,4 @@
 const APP_NAME = 'WIN WINE';
-export {APP_NAME};
+const SPLASH_TIME = 5000;
+export {APP_NAME, SPLASH_TIME};
 export * from '../navigations/ScreenKeys';
