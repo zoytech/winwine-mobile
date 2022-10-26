@@ -2,18 +2,15 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
-import {ScreenKeys} from './ScreenKeys';
-
-import APP_NAME from 'src/constants';
 import {Color, ColorVariant} from 'src/themes';
 import {
-  GameEndScreen,
+  EndingGameDialog,
+  ExitGameDialog,
   GamePlayScreen,
   GameWaitScreen,
   HomeScreen,
-  ExitGameDialog,
-  SplashScreen,
-} from '../screens';
+} from 'src/screens';
+import {ScreenKeys} from './ScreenKeys';
 
 const Stack = createNativeStackNavigator();
 export default function RootNavigator() {
@@ -46,39 +43,27 @@ export default function RootNavigator() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={ScreenKeys.SPLASH}>
-        <Stack.Group>
-          <Stack.Screen name={ScreenKeys.SPLASH} component={SplashScreen} />
-        </Stack.Group>
+      <Stack.Navigator initialRouteName={ScreenKeys.HOME}>
         <Stack.Group
           screenOptions={{
             ...headerStyle,
             ...headerShadowVisible,
           }}>
-          <Stack.Screen
-            name={ScreenKeys.HOME}
-            component={HomeScreen}
-            options={{
-              title: APP_NAME,
-            }}
-          />
+          <Stack.Screen name={ScreenKeys.HOME} component={HomeScreen} />
           <Stack.Screen
             name={ScreenKeys.GAME_WAIT}
             component={GameWaitScreen}
-            options={({route}) => ({
-              title: route.params.title,
-            })}
           />
           <Stack.Screen
             name={ScreenKeys.GAME_PLAY}
             component={GamePlayScreen}
-            options={({route}) => ({
-              title: route.params.title,
-            })}
           />
         </Stack.Group>
         <Stack.Group screenOptions={{...modalScreenProps}}>
-          <Stack.Screen name={ScreenKeys.GAME_END} component={GameEndScreen} />
+          <Stack.Screen
+            name={ScreenKeys.DIALOG_GAME_END}
+            component={EndingGameDialog}
+          />
           <Stack.Screen
             name={ScreenKeys.DIALOG_GAME_EXIT}
             component={ExitGameDialog}
@@ -99,7 +84,7 @@ const styles = StyleSheet.create({
 
 // <Stack.Screen
 //     name={ScreenKeys.GAME_END}
-//     component={GameEndScreen}
+//     component={EndingGameDialog}
 //     mode={'modal'}
 //     options={{
 //         presentation: 'transparentModal',

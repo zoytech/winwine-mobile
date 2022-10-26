@@ -49,12 +49,12 @@ export default function GamePlayScreen({navigation, route}) {
     taskTurn !== totalTasks - 1 && setTaskTurn(taskTurn + 1);
   }
 
-  function handleNavigateToGameEndScreen() {
+  function handleNavigateToGameEnd() {
     navigation.navigate({
-      name: ScreenKeys.GAME_END,
+      name: ScreenKeys.DIALOG_GAME_END,
       params: {
         deckId: deckId && deckId,
-        title: name || ScreenKeys.GAME_END,
+        title: name || ScreenKeys.DIALOG_GAME_END,
       },
     });
   }
@@ -89,14 +89,14 @@ export default function GamePlayScreen({navigation, route}) {
             style={styles.button}
             onPress={
               taskTurn === totalTasks - 1
-                ? handleNavigateToGameEndScreen
+                ? handleNavigateToGameEnd
                 : handleContinueButtonPressed
             }
           />
           <FilledButton
             content={'Lá'}
             style={styles.button}
-            onPress={handleNavigateToGameEndScreen}
+            onPress={handleNavigateToGameEnd}
           />
         </View>
       </ScrollView>

@@ -4,15 +4,13 @@ const ScreenKeys = {
   MODAL: 'MODAL',
   HOME: 'HOME',
 
-  SPLASH: 'SPLASH',
-
   GAME: 'GAME',
   GAME_PLAY: 'GAME/PLAY',
-  GAME_END: 'GAME/END',
   GAME_WAIT: 'GAME/WAIT',
 
   DIALOG: 'DIALOG',
   DIALOG_GAME_EXIT: 'DIALOG_GAME_EXIT',
+  DIALOG_GAME_END: 'DIALOG_GAME_END',
 };
 
 export {ScreenKeys};

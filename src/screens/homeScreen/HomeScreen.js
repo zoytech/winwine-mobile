@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
+import SplashScreen from 'react-native-splash-screen';
 import {Color, ColorVariant} from 'src/themes';
 import {
   HorizontalCardList,
@@ -19,6 +20,7 @@ export default function HomeScreen({navigation}) {
 
   useEffect(() => {
     dispatch(loadCardDeckList());
+    SplashScreen.hide();
   }, [dispatch]);
 
   return (

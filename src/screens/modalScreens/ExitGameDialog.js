@@ -9,9 +9,7 @@ export default function ExitGameDialog({routes, navigation}) {
   }
 
   function handleSubActionPress() {
-    navigation.navigate({
-      name: ScreenKeys.GAME_PLAY,
-    });
+    navigation.goBack();
   }
 
   return (

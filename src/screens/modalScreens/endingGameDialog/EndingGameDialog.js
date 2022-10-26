@@ -8,7 +8,6 @@ import {
   View,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import hexToRgba from 'hex-to-rgba';
 import {StateLayersVariant, Typography} from 'src/themes';
 import {FilledButton, OutlinedButton, OutlinedCard} from 'src/components';
 import {cardDeckSelector} from 'src/redux/selectors';
@@ -18,7 +17,7 @@ import {StandardHeader} from './components';
 import {StateLayers} from '../../../themes';
 
 const screenWidth = Dimensions.get('screen').width;
-export default function GameEndScreen({navigation, route}) {
+export default function EndingGameDialog({navigation, route}) {
   const deckId = route.params?.deckId;
   const dispatch = useDispatch();
   const cardDeckItem = useSelector(cardDeckSelector);
