@@ -8,9 +8,8 @@ import {
   View,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import Icon from 'react-native-vector-icons/AntDesign';
 import {Color, ColorVariant, Typography} from 'src/themes';
-import {FilledButton} from 'src/components';
+import {FilledButton, SpinnerType1} from 'src/components';
 import {loadCardDeckById} from 'src/redux/actions';
 import {StandardHeader} from '../components';
 import {NavigatedGameCard} from './components';
@@ -38,14 +37,13 @@ function GameWaitScreen({navigation, route}) {
     dispatch(loadCardDeckById(deckId));
   }, [dispatch]);
 
-  console.log('name:', name);
-
   function handlePressFilledButton() {
     navigation.navigate({
       name: ScreenKeys.GAME_PLAY,
       params: {
         deckId: deckId && deckId,
         title: name || ScreenKeys.GAME_PLAY,
+        requesting: requesting,
       },
     });
   }
@@ -74,7 +72,7 @@ function GameWaitScreen({navigation, route}) {
   return (
     <>
       {requesting ? (
-        <Icon name={'loading1'} />
+        <SpinnerType1 />
       ) : (
         <SafeAreaView style={defaultContainerStyle}>
           <ScrollView contentContainerStyle={styles.scrollView}>

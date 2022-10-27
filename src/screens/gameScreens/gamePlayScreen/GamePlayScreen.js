@@ -10,7 +10,12 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import {useFocusEffect} from '@react-navigation/native';
 import {Color, ColorVariant, Typography} from 'src/themes';
-import {FilledButton, FilledCard, OutlinedButton} from 'src/components';
+import {
+  FilledButton,
+  FilledCard,
+  OutlinedButton,
+  SpinnerType1,
+} from 'src/components';
 import {loadCardDeckById} from 'src/redux/actions';
 import {cardDeckSelector} from 'src/redux/selectors';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
@@ -18,7 +23,7 @@ import {StandardHeader} from '../components';
 
 const screenWidth = Dimensions.get('screen').width;
 export default function GamePlayScreen({navigation, route}) {
-  const {deckId, title} = route.params;
+  const {deckId, requesting} = route.params;
   const dispatch = useDispatch();
   const cardDeckItem = useSelector(cardDeckSelector);
   const [taskTurn, setTaskTurn] = useState(0);
@@ -57,6 +62,10 @@ export default function GamePlayScreen({navigation, route}) {
         title: name || ScreenKeys.DIALOG_GAME_END,
       },
     });
+  }
+
+  if (requesting) {
+    return <SpinnerType1 />;
   }
 
   return (

@@ -42,9 +42,6 @@ export const fetchDecksRequest = () => ({
 //   payload: {data},
 // });
 export const fetchDecksSuccess = data => {
-  const {popularData} = data;
-  console.log('popularData', popularData);
-
   return {
     type: FETCH_DECKS_SUCCESS,
     payload: {data},

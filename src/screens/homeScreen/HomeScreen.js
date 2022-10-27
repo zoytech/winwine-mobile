@@ -3,26 +3,36 @@ import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
 import {Color, ColorVariant} from 'src/themes';
+
 import {
   HorizontalCardList,
   SectionHeader,
   SuggestionList,
   VerticalCardList,
 } from './components';
-import {cardDeckListSelector} from 'src/redux/selectors';
+import {
+  cardDeckListSelector,
+  requestingDeckListSelector,
+} from 'src/redux/selectors';
 import {loadCardDeckList} from 'src/redux/actions';
+import {SpinnerType1} from '../../components';
 
 export default function HomeScreen({navigation}) {
   const dispatch = useDispatch();
   const cardDeckList = useSelector(cardDeckListSelector);
+  const requesting = useSelector(requestingDeckListSelector);
 
   const {suggestData, popularData, recentlyData} = cardDeckList;
 
   useEffect(() => {
     dispatch(loadCardDeckList());
-    SplashScreen.hide();
+    if (requesting === false) {
+      SplashScreen.hide();
+    }
   }, [dispatch]);
-
+  if (requesting) {
+    return <SpinnerType1 />;
+  }
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.contentContainer}>
