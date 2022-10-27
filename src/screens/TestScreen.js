@@ -1,15 +1,20 @@
-import {Image} from 'react-native';
-
-export default function TestScreen() {
-  return (
-    <Image
-      source={require('src/assets/images/happy_beer.gif')}
-      style={{
-        width: 100,
-        height: 100,
-        flexDirection: 'row',
-        alignSelf: 'center',
-      }}
-    />
-  );
-}
+// import React, {useEffect, useRef} from 'react';
+// import Lottie from 'lottie-react-native';
+//
+// export default function AnimationWithImperativeApi() {
+//   const animationRef = useRef < Lottie > null;
+//
+//   useEffect(() => {
+//     animationRef.current?.play();
+//
+//     // Or set a specific startFrame and endFrame with:
+//     animationRef.current?.play(30, 120);
+//   }, []);
+//
+//   return (
+//     <Lottie
+//       ref={animationRef}
+//       source={require('src/assets/images/trungthureel.json')}
+//     />
+//   );
+// }

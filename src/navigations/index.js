@@ -44,8 +44,7 @@ export default function RootNavigator() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={'TESTING'}>
-        <Stack.Screen name={'TESTING'} component={TestScreen} />
+      <Stack.Navigator initialRouteName={ScreenKeys.HOME}>
         <Stack.Group
           screenOptions={{
             ...headerStyle,
