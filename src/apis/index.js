@@ -3,7 +3,7 @@ import mockGetPopularCardDecks from './mockData/mockGetPopularCardDecks.json';
 import mockGetRecentlyCardDecks from './mockData/mockGetRecentlyCardDecks.json';
 import mockSuggestedHashtag from './mockData/suggested-hashtag.json';
 
-function promiseWithTimeout(data, timeout = 1000) {
+function promiseWithTimeout(data, timeout = 500) {
   return new Promise(resolve => {
     setTimeout(() => {
       resolve(data);

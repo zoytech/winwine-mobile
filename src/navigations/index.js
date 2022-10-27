@@ -11,6 +11,7 @@ import {
   HomeScreen,
 } from 'src/screens';
 import {ScreenKeys} from './ScreenKeys';
+import TestScreen from '../screens/TestScreen';
 
 const Stack = createNativeStackNavigator();
 export default function RootNavigator() {
@@ -43,7 +44,8 @@ export default function RootNavigator() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={ScreenKeys.HOME}>
+      <Stack.Navigator initialRouteName={'TESTING'}>
+        <Stack.Screen name={'TESTING'} component={TestScreen} />
         <Stack.Group
           screenOptions={{
             ...headerStyle,
