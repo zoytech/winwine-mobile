@@ -1,5 +1,6 @@
 import {StyleSheet, Text, View} from 'react-native';
 import {FilledCard, FilledIconButton, StandardCard} from 'src/components';
+import {Color, ColorVariant} from '../../../themes';
 
 export default function StandardHeader(props) {
   const {
@@ -13,7 +14,10 @@ export default function StandardHeader(props) {
     ...otherProps
   } = props;
 
+  const textColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
   const defaultContainerStyle = [styles.container, style];
+  const headStyles = [headStyle, {color: textColor}];
+  const subHeadStyles = [subHeadStyle, {color: textColor}];
 
   return (
     <StandardCard {...otherProps} style={defaultContainerStyle}>
@@ -22,14 +26,14 @@ export default function StandardHeader(props) {
         <FilledIconButton style={styles.buttonIconArea} />
       </View>
       <View style={styles.content}>
-        {head && <Text style={headStyle}>{head}</Text>}
+        {head && <Text style={headStyles}>{head}</Text>}
         <View style={styles.subHead}>
           {subHeadLeft && (
-            <Text style={[subHeadStyle, styles.subHeadLeft]}>
+            <Text style={[subHeadStyles, styles.subHeadLeft]}>
               {subHeadLeft}
             </Text>
           )}
-          {subHeadRight && <Text style={subHeadStyle}>{subHeadRight}</Text>}
+          {subHeadRight && <Text style={subHeadStyles}>{subHeadRight}</Text>}
         </View>
       </View>
     </StandardCard>

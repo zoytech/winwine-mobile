@@ -9,7 +9,6 @@ import {
 } from 'src/themes';
 import {Divider} from '../divider';
 import {TextButton} from '../buttons';
-import {FilledCard} from '../cards';
 
 const screenWidth = Dimensions.get('screen').width;
 

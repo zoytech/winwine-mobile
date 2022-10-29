@@ -1,6 +1,7 @@
 import React, {useCallback, useState} from 'react';
 import {
   Dimensions,
+  InteractionManager,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -17,27 +18,29 @@ import {
   SpinnerType1,
 } from 'src/components';
 import {loadCardDeckById} from 'src/redux/actions';
-import {cardDeckSelector} from 'src/redux/selectors';
+import {cardDeckSelector, requestingDeckSelector} from 'src/redux/selectors';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import {StandardHeader} from '../components';
 
 const screenWidth = Dimensions.get('screen').width;
 export default function GamePlayScreen({navigation, route}) {
-  const {deckId, requesting} = route.params;
+  const deckId = route.params?.deckId;
   const dispatch = useDispatch();
   const cardDeckItem = useSelector(cardDeckSelector);
+  const requesting = useSelector(requestingDeckSelector);
+  const isFocused = navigation.isFocused();
   const [taskTurn, setTaskTurn] = useState(0);
   const {cardDeck: name, tasks: tasks = []} = cardDeckItem || {};
   const totalTasks = tasks.length;
   const baseColor = Color.light[ColorVariant.surface]?.base;
+  const textColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
 
-  const cardDeck = loadCardDeckById(deckId);
   useFocusEffect(
     useCallback(() => {
-      dispatch(cardDeck);
-      return () => {
-        setTaskTurn(0);
-      };
+      const task = InteractionManager.runAfterInteractions(() => {
+        dispatch(loadCardDeckById(deckId));
+      });
+      return setTaskTurn(0) && task.cancel();
     }, [dispatch]),
   );
 
@@ -45,6 +48,8 @@ export default function GamePlayScreen({navigation, route}) {
     {backgroundColor: baseColor},
     styles.container,
   ];
+
+  const textStyles = [Typography.body.large, {color: textColor}, styles.text];
 
   function handleLookBackButtonPressed() {
     taskTurn !== 0 && setTaskTurn(taskTurn - 1);
@@ -59,12 +64,11 @@ export default function GamePlayScreen({navigation, route}) {
       name: ScreenKeys.DIALOG_GAME_END,
       params: {
         deckId: deckId && deckId,
-        title: name || ScreenKeys.DIALOG_GAME_END,
       },
     });
   }
 
-  if (requesting) {
+  if (requesting && isFocused) {
     return <SpinnerType1 />;
   }
 
@@ -81,9 +85,7 @@ export default function GamePlayScreen({navigation, route}) {
         />
         <View style={styles.gameCardLayout}>
           <FilledCard style={styles.gameCard}>
-            <Text style={[Typography.body.large, styles.text]}>
-              {tasks[taskTurn]?.task}
-            </Text>
+            <Text style={textStyles}>{tasks[taskTurn]?.task}</Text>
           </FilledCard>
         </View>
         <View style={styles.action}>

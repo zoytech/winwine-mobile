@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import {FilledButton, OutlinedCard} from 'src/components';
-import {Typography} from 'src/themes';
+import {Color, ColorVariant, Typography} from 'src/themes';
 
 const {width: screenWidth} = Dimensions.get('screen');
 
@@ -23,6 +23,7 @@ export default function MiniCardItem(props) {
   } = props;
 
   const {cardDeck: name, tag: tag, uri: uri} = data || {};
+  const textColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
 
   function getContainerStyle({pressed}) {
     return pressed && styles.opacityPressed;
@@ -36,11 +37,16 @@ export default function MiniCardItem(props) {
         </View>
         <View style={styles.headline}>
           {name && (
-            <Text style={titleStyle} numberOfLines={1} ellipsizeMode={'tail'}>
+            <Text
+              style={[titleStyle, {color: textColor}]}
+              numberOfLines={1}
+              ellipsizeMode={'tail'}>
               {name}
             </Text>
           )}
-          {tag && <Text style={subTitleStyle}>{tag}</Text>}
+          {tag && (
+            <Text style={[subTitleStyle, {color: textColor}]}>{tag}</Text>
+          )}
         </View>
         <View style={styles.action}>
           <FilledButton
@@ -96,6 +102,7 @@ const styles = StyleSheet.create({
   },
   opacityPressed: {
     opacity: 0.75,
-    backgroundColor: 'white',
+    // backgroundColor: 'white',
+    color: Color.light[ColorVariant.primary]?.base,
   },
 });

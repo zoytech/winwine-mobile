@@ -1,18 +1,26 @@
 import {StyleSheet, Text, View} from 'react-native';
 import {FilledCard, FilledIconButton} from 'src/components';
-import {Typography} from 'src/themes';
+import {Color, ColorVariant, Typography} from 'src/themes';
 
 export default function NavigatedGameCard(props) {
   const {
     content,
     style,
-    bodyTypo = Typography.body.large,
+    contentStyle,
     onBackwardPressed = () => {},
     onForwardPressed = () => {},
     onBackwardDisabled = () => {},
     onForwardDisabled = () => {},
     ...otherProps
   } = props;
+
+  const textColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
+  const textStyles = [
+    contentStyle,
+    Typography.body.large,
+    {color: textColor},
+    styles.text,
+  ];
 
   return (
     <View {...otherProps} style={[styles.cardWithButton, style]}>
@@ -22,7 +30,7 @@ export default function NavigatedGameCard(props) {
         disabled={onBackwardDisabled}
       />
       <FilledCard style={[styles.gameCard]}>
-        {content && <Text style={[bodyTypo, styles.text]}>{content}</Text>}
+        {content && <Text style={textStyles}>{content}</Text>}
       </FilledCard>
       <FilledIconButton
         name="caretright"

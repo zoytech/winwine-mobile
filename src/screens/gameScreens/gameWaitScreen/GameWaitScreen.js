@@ -14,19 +14,20 @@ import {loadCardDeckById} from 'src/redux/actions';
 import {StandardHeader} from '../components';
 import {NavigatedGameCard} from './components';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
-import {cardDeckSelector, requestingSelector} from 'src/redux/selectors';
+import {cardDeckSelector, requestingDeckSelector} from 'src/redux/selectors';
 
 const {width: screenWidth} = Dimensions.get('screen');
 
 function GameWaitScreen({navigation, route}) {
   const deckId = route.params?.deckId;
   const cardDeckItem = useSelector(cardDeckSelector);
-  const requesting = useSelector(requestingSelector);
+  const requesting = useSelector(requestingDeckSelector);
   const dispatch = useDispatch();
   const [taskTurn, setTaskTurn] = useState(0);
   const {cardDeck: name, tag: tag, tasks: tasks = []} = cardDeckItem || {};
   const totalTasks = tasks.length;
   const baseColor = Color.light[ColorVariant.surface]?.base;
+  const textColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
 
   const defaultContainerStyle = [
     {backgroundColor: baseColor},
@@ -69,53 +70,50 @@ function GameWaitScreen({navigation, route}) {
       : `Xem trước ${total} lá bài`;
   }
 
+  if (requesting) {
+    return <SpinnerType1 />;
+  }
   return (
-    <>
-      {requesting ? (
-        <SpinnerType1 />
-      ) : (
-        <SafeAreaView style={defaultContainerStyle}>
-          <ScrollView contentContainerStyle={styles.scrollView}>
-            <StandardHeader
-              head={name}
-              subHeadLeft={tag}
-              subHeadRight={`Tổng số ${totalTasks} lá`}
-              headStyle={Typography.title.large}
-              subHeadStyle={Typography.label.large}
-              style={styles.header}
-              containerStyle={styles.header}
-            />
-            <View style={styles.supportingText}>
-              <Text style={Typography.title.medium}>
-                {previewNumberOfCard(totalTasks)}
-              </Text>
-            </View>
-            <NavigatedGameCard
-              style={styles.navigatedGameCard}
-              content={tasks[taskTurn]?.task}
-              onBackwardPressed={handleBackwardButtonPressed}
-              onForwardPressed={handleForwardButtonPressed}
-              onBackwardDisabled={taskTurn === 0}
-              onForwardDisabled={taskTurn === totalTasks - 1}
-            />
-            <View style={styles.action}>
-              <FilledButton
-                content={'Choi ngay'}
-                style={styles.button}
-                onPress={handlePressFilledButton}
-                contentStyle={Typography.title.large}
-              />
-              <FilledButton
-                content={'Test Dialog'}
-                style={styles.button}
-                onPress={handleTestDialogButton}
-                contentStyle={Typography.title.large}
-              />
-            </View>
-          </ScrollView>
-        </SafeAreaView>
-      )}
-    </>
+    <SafeAreaView style={defaultContainerStyle}>
+      <ScrollView contentContainerStyle={styles.scrollView}>
+        <StandardHeader
+          head={name}
+          subHeadLeft={tag}
+          subHeadRight={`Tổng số ${totalTasks} lá`}
+          headStyle={Typography.title.large}
+          subHeadStyle={Typography.label.large}
+          style={styles.header}
+          containerStyle={styles.header}
+        />
+        <View style={styles.supportingText}>
+          <Text style={[Typography.title.medium, {color: textColor}]}>
+            {previewNumberOfCard(totalTasks)}
+          </Text>
+        </View>
+        <NavigatedGameCard
+          style={styles.navigatedGameCard}
+          content={tasks[taskTurn]?.task}
+          onBackwardPressed={handleBackwardButtonPressed}
+          onForwardPressed={handleForwardButtonPressed}
+          onBackwardDisabled={taskTurn === 0}
+          onForwardDisabled={taskTurn === totalTasks - 1}
+        />
+        <View style={styles.action}>
+          <FilledButton
+            content={'Choi ngay'}
+            style={styles.button}
+            onPress={handlePressFilledButton}
+            contentStyle={Typography.title.large}
+          />
+          <FilledButton
+            content={'Test Dialog'}
+            style={styles.button}
+            onPress={handleTestDialogButton}
+            contentStyle={Typography.title.large}
+          />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 

@@ -8,13 +8,19 @@ import {
   View,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {StateLayersVariant, Typography} from 'src/themes';
+
+import {
+  Color,
+  ColorVariant,
+  StateLayers,
+  StateLayersVariant,
+  Typography,
+} from 'src/themes';
 import {FilledButton, OutlinedButton, OutlinedCard} from 'src/components';
 import {cardDeckSelector} from 'src/redux/selectors';
 import {loadCardDeckById} from 'src/redux/actions';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import {StandardHeader} from './components';
-import {StateLayers} from '../../../themes';
 
 const screenWidth = Dimensions.get('screen').width;
 export default function EndingGameDialog({navigation, route}) {
@@ -24,6 +30,7 @@ export default function EndingGameDialog({navigation, route}) {
   const {tag: tag, uri: uri, cardDeck: name} = cardDeckItem || {};
   const layoutColor =
     StateLayers.light[StateLayersVariant.onSurface]?.level_032;
+  const textColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
 
   useEffect(() => {
     dispatch(loadCardDeckById(deckId));
@@ -59,7 +66,9 @@ export default function EndingGameDialog({navigation, route}) {
         <Image style={styles.media} source={{uri: uri}} />
         <View style={styles.supportingText}>
           {description && (
-            <Text style={Typography.title.medium}>{description}</Text>
+            <Text style={[Typography.title.medium, {color: textColor}]}>
+              {description}
+            </Text>
           )}
         </View>
         <View style={styles.action}>
