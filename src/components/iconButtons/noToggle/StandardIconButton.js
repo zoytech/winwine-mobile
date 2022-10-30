@@ -13,7 +13,7 @@ function getStateStyles(isPressed, isDisabled, colorVariant) {
         backgroundColor: 'transparent',
       },
       contentStyle: {color: onBaseColor},
-      iconColor: {color: onBaseColor},
+      iconColor: onBaseColor,
     };
   }
   const {onBase: onBaseColor} = Color.light[colorVariant];
@@ -41,7 +41,7 @@ export default function StandardIconButton(props) {
     style,
     contentStyle: rawContentStyle,
     name,
-    colorVariant = ColorVariant.primary,
+    colorVariant = ColorVariant.surfaceVariant,
     disabled,
     children,
     ...otherProps
@@ -60,7 +60,7 @@ export default function StandardIconButton(props) {
       pressed,
       disabled,
       colorVariant,
-    )?.contentStyle;
+    );
     const iconProps = {
       size: DefaultIconButtonStyle.icon.size,
       name: name,

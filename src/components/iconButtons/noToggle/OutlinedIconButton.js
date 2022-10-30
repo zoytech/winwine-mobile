@@ -15,7 +15,7 @@ function getStateStyles(isPressed, isDisabled, colorVariant) {
         borderWidth: 0.5,
       },
       contentStyle: {color: onBaseColor},
-      iconColor: {color: onBaseColor},
+      iconColor: onBaseColor,
     };
   }
   const {onBase: onBaseColor} = Color.light[colorVariant];
@@ -67,7 +67,7 @@ export default function OutlinedIconButton(props) {
       pressed,
       disabled,
       colorVariant,
-    )?.contentStyle;
+    );
     const iconProps = {
       size: DefaultIconButtonStyle.icon.size,
       name: name,
