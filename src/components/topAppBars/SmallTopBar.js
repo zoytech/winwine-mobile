@@ -11,7 +11,7 @@ export default function SmallTopBar(props) {
     contentStyle,
     headerTitleStyle,
     rightContainerStyle,
-    renderHeaderRightComponent,
+    renderRightComponents,
     ...otherProps
   } = props;
 
@@ -23,12 +23,12 @@ export default function SmallTopBar(props) {
     contentStyle,
   ];
 
-  function renderRightComponent({iconStyle}) {
+  function renderRight({iconStyle}) {
     //Can add more style if needed, not just iconStyle, Example: defaultContentStyle,...
-    if (typeof renderHeaderRightComponent === 'function') {
-      return renderHeaderRightComponent({iconStyle});
+    if (typeof renderRightComponents === 'function') {
+      return renderRightComponents({iconStyle});
     }
-    return renderHeaderRightComponent;
+    return renderRightComponents;
   }
 
   return (
@@ -49,7 +49,7 @@ export default function SmallTopBar(props) {
         </Text>
       </View>
       <View style={[styles.rightContainer, rightContainerStyle]}>
-        {renderRightComponent({iconStyle: styles.icon})}
+        {renderRight({iconStyle: styles.icon})}
       </View>
     </View>
   );

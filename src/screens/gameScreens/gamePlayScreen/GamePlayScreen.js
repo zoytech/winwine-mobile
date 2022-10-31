@@ -35,6 +35,10 @@ export default function GamePlayScreen({navigation, route}) {
   const totalTasks = tasks.length;
   const baseColor = Color.light[ColorVariant.surface]?.base;
   const textColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
+  const defaultContainerStyle = [
+    {backgroundColor: baseColor},
+    styles.container,
+  ];
 
   useFocusEffect(
     useCallback(() => {
@@ -50,16 +54,11 @@ export default function GamePlayScreen({navigation, route}) {
       header: () => (
         <SmallTopBar
           content={name}
-          renderHeaderRightComponent={renderHeaderRightComponent}
+          renderRightComponents={renderHeaderRightComponent}
         />
       ),
     });
   }, [navigation]);
-
-  const defaultContainerStyle = [
-    {backgroundColor: baseColor},
-    styles.container,
-  ];
 
   const textStyles = [{color: textColor}, styles.text];
 
