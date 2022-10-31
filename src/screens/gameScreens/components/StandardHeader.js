@@ -1,6 +1,6 @@
 import {StyleSheet, Text, View} from 'react-native';
-import {FilledCard, FilledIconButton, StandardCard} from 'src/components';
-import {Color, ColorVariant} from '../../../themes';
+import {FilledIconButton, StandardCard} from 'src/components';
+import {Color, ColorVariant} from 'src/themes';
 
 export default function StandardHeader(props) {
   const {

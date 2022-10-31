@@ -11,7 +11,7 @@ export default function HorizontalCardList(props) {
       name: ScreenKeys.GAME_WAIT,
       params: {
         deckId: cardDeckId || '',
-        title: cardDeck || ScreenKeys.GAME_WAIT,
+        title: cardDeck || '',
       },
     });
   };
@@ -20,7 +20,7 @@ export default function HorizontalCardList(props) {
       name: ScreenKeys.GAME_PLAY,
       params: {
         deckId: cardDeckId || '',
-        title: cardDeck || ScreenKeys.GAME_PLAY,
+        title: cardDeck || '',
       },
     });
   };

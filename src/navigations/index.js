@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Text} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import {Color, ColorVariant} from 'src/themes';
@@ -11,9 +11,32 @@ import {
   HomeScreen,
 } from 'src/screens';
 import {ScreenKeys} from './ScreenKeys';
-import TestScreen from '../screens/TestScreen';
+import {
+  CenterAlignedTopBar,
+  SmallTopBar,
+  StandardIconButton,
+} from '../components';
+import {Typography} from '../themes';
 
 const Stack = createNativeStackNavigator();
+
+function HeaderTitleRender(props) {
+  const {route, title: fixedTitle, contentStyle} = props;
+  const dynamicTitle = route.params?.title;
+  const headerContentStyle = [Typography.title.large, contentStyle];
+
+  return dynamicTitle ? (
+    <Text style={headerContentStyle}>{dynamicTitle}</Text>
+  ) : (
+    <Text style={headerContentStyle}>{fixedTitle}</Text>
+  );
+}
+
+function HeaderRightRender(props) {
+  const {name} = props;
+  return <StandardIconButton name={name} onPress={() => alert('alolaloa')} />;
+}
+
 export default function RootNavigator() {
   const {base, onBase} = Color.light[ColorVariant.surface];
 
@@ -22,10 +45,9 @@ export default function RootNavigator() {
     shadowOpacity: 0,
     borderBottomWidth: 0,
   };
-  const headerStyle = {
-    headerTintColor: onBase,
-    headerTitleAlign: 'center',
-    headerBackGround: base,
+
+  const headerProps = {
+    headerBackTitleVisible: false,
   };
   const modalScreenProps = {
     presentation: 'transparentModal',
@@ -33,31 +55,42 @@ export default function RootNavigator() {
     headerShown: false,
   };
 
-  function headerNavBarProps({route}) {
-    console.log('route', route);
-    return {
-      title: route.params.title,
-      ...headerStyle,
-      ...headerShadowVisible,
-    };
-  }
-
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName={ScreenKeys.HOME}>
-        <Stack.Group
-          screenOptions={{
-            ...headerStyle,
-            ...headerShadowVisible,
-          }}>
-          <Stack.Screen name={ScreenKeys.HOME} component={HomeScreen} />
+        <Stack.Group>
+          <Stack.Screen
+            name={ScreenKeys.HOME}
+            component={HomeScreen}
+            options={{
+              ...headerProps,
+              ...headerShadowVisible,
+              header: () => <CenterAlignedTopBar />,
+            }}
+          />
           <Stack.Screen
             name={ScreenKeys.GAME_WAIT}
             component={GameWaitScreen}
+            options={({navigation, route}) => ({
+              headerRight: () => <HeaderRightRender name={'setting'} />,
+              headerTitle: () => (
+                <HeaderTitleRender
+                  title={'Good morning'}
+                  route={route}
+                  contentStyle={{color: onBase}}
+                />
+              ),
+              ...headerProps,
+            })}
           />
           <Stack.Screen
             name={ScreenKeys.GAME_PLAY}
             component={GamePlayScreen}
+            options={{
+              ...headerProps,
+              ...headerShadowVisible,
+              header: () => <SmallTopBar />,
+            }}
           />
         </Stack.Group>
         <Stack.Group screenOptions={{...modalScreenProps}}>

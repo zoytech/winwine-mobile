@@ -11,10 +11,10 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {FilledButton, SpinnerType1} from 'src/components';
 import {loadCardDeckById} from 'src/redux/actions';
-import {StandardHeader} from '../components';
 import {NavigatedGameCard} from './components';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import {cardDeckSelector, requestingDeckSelector} from 'src/redux/selectors';
+import {StandardHeader} from '../components';
 
 const {width: screenWidth} = Dimensions.get('screen');
 
@@ -43,8 +43,7 @@ function GameWaitScreen({navigation, route}) {
       name: ScreenKeys.GAME_PLAY,
       params: {
         deckId: deckId && deckId,
-        title: name || ScreenKeys.GAME_PLAY,
-        requesting: requesting,
+        title: name || '',
       },
     });
   }

@@ -3,6 +3,7 @@ import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
 import {Color, ColorVariant} from 'src/themes';
+import avatarTest from 'src/assets/images/preview-package/user.png';
 
 import {
   HorizontalCardList,
@@ -15,7 +16,7 @@ import {
   requestingDeckListSelector,
 } from 'src/redux/selectors';
 import {loadCardDeckList} from 'src/redux/actions';
-import {SpinnerType1} from '../../components';
+import {CenterAlignedTopBar, SpinnerType1} from '../../components';
 
 export default function HomeScreen({navigation}) {
   const dispatch = useDispatch();
@@ -30,6 +31,20 @@ export default function HomeScreen({navigation}) {
       SplashScreen.hide();
     }
   }, [dispatch]);
+
+  useEffect(() => {
+    navigation.setOptions({
+      header: () => (
+        <CenterAlignedTopBar
+          content={'Good morning'}
+          headerTitleStyle={styles.headerTitleStyle}
+          trailingIcon={avatarTest}
+          onTrailingIconPress={() => alert('test leading button')}
+        />
+      ),
+    });
+  }, [navigation]);
+
   if (requesting) {
     return <SpinnerType1 />;
   }
@@ -57,6 +72,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   sectionHeader: {
+    justifyContent: 'flex-start',
+  },
+  headerTitleStyle: {
     justifyContent: 'flex-start',
   },
 });

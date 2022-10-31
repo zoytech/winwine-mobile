@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useState, useEffect} from 'react';
 import {
   Dimensions,
   InteractionManager,
@@ -15,12 +15,12 @@ import {
   FilledButton,
   FilledCard,
   OutlinedButton,
+  SmallTopBar,
   SpinnerType1,
 } from 'src/components';
 import {loadCardDeckById} from 'src/redux/actions';
 import {cardDeckSelector, requestingDeckSelector} from 'src/redux/selectors';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
-import {StandardHeader} from '../components';
 
 const screenWidth = Dimensions.get('screen').width;
 export default function GamePlayScreen({navigation, route}) {
@@ -35,6 +35,21 @@ export default function GamePlayScreen({navigation, route}) {
   const baseColor = Color.light[ColorVariant.surface]?.base;
   const textColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
 
+  const iconNavigatorList = [
+    {
+      name: 'paperclip',
+      handlePress: () => alert('button 1'),
+    },
+    {
+      name: 'sharealt',
+      handlePress: () => alert('button 2'),
+    },
+    {
+      name: 'ellipsis1',
+      handlePress: () => alert('button 3'),
+    },
+  ];
+
   useFocusEffect(
     useCallback(() => {
       const task = InteractionManager.runAfterInteractions(() => {
@@ -44,12 +59,20 @@ export default function GamePlayScreen({navigation, route}) {
     }, [dispatch]),
   );
 
+  useEffect(() => {
+    navigation.setOptions({
+      header: () => (
+        <SmallTopBar content={name} trailingIcons={iconNavigatorList} />
+      ),
+    });
+  }, [navigation]);
+
   const defaultContainerStyle = [
     {backgroundColor: baseColor},
     styles.container,
   ];
 
-  const textStyles = [Typography.body.large, {color: textColor}, styles.text];
+  const textStyles = [{color: textColor}, styles.text];
 
   function handleLookBackButtonPressed() {
     taskTurn !== 0 && setTaskTurn(taskTurn - 1);
@@ -64,6 +87,7 @@ export default function GamePlayScreen({navigation, route}) {
       name: ScreenKeys.DIALOG_GAME_END,
       params: {
         deckId: deckId && deckId,
+        title: name || '',
       },
     });
   }
@@ -75,17 +99,16 @@ export default function GamePlayScreen({navigation, route}) {
   return (
     <SafeAreaView style={defaultContainerStyle}>
       <ScrollView contentContainerStyle={styles.scrollView}>
-        <StandardHeader
-          head={name}
-          subHeadLeft={`Lá thứ ${taskTurn + 1}/${totalTasks} `}
-          headStyle={Typography.title.large}
-          subHeadStyle={Typography.label.large}
-          style={styles.header}
-          containerStyle={styles.header}
-        />
+        <View style={styles.header}>
+          <Text style={[Typography.label.large, textStyles]}>
+            {`Lá thứ ${taskTurn + 1}/${totalTasks}`}
+          </Text>
+        </View>
         <View style={styles.gameCardLayout}>
           <FilledCard style={styles.gameCard}>
-            <Text style={textStyles}>{tasks[taskTurn]?.task}</Text>
+            <Text style={[Typography.body.large, textStyles]}>
+              {tasks[taskTurn]?.task}
+            </Text>
           </FilledCard>
         </View>
         <View style={styles.action}>
@@ -105,7 +128,7 @@ export default function GamePlayScreen({navigation, route}) {
             }
           />
           <FilledButton
-            content={'Lá'}
+            content={'End'}
             style={styles.button}
             onPress={handleNavigateToGameEnd}
           />
@@ -125,7 +148,7 @@ const styles = StyleSheet.create({
   },
   header: {
     width: '100%',
-    aspectRatio: 3,
+    aspectRatio: 7,
     paddingVertical: 16,
   },
   gameCardLayout: {
@@ -134,7 +157,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   gameCard: {
-    width: '68%',
+    width: '80%',
     aspectRatio: 6 / 10,
     justifyContent: 'center',
   },
@@ -155,25 +178,3 @@ const styles = StyleSheet.create({
     height: 40,
   },
 });
-
-/*
-let isActive = true;
-
-      async function getCurrentCardDeck() {
-        try {
-          const cardDeck = await API.getCardDeckById(deckId);
-          if (isActive) {
-            setCardDeckItem(cardDeck);
-            console.log('setCardDeckItem');
-          }
-        } catch (e) {
-          //log errors
-        }
-      }
-
-      getCurrentCardDeck();
-      return () => {
-        isActive = false;
-        setTaskTurn(0);
-      };
- */

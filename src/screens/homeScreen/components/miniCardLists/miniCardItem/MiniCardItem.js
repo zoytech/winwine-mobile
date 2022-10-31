@@ -6,7 +6,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import {FilledButton, OutlinedCard} from 'src/components';
+import {FilledIconButton, OutlinedCard} from 'src/components';
 import {Color, ColorVariant, Typography} from 'src/themes';
 
 const {width: screenWidth} = Dimensions.get('screen');
@@ -49,10 +49,10 @@ export default function MiniCardItem(props) {
           )}
         </View>
         <View style={styles.action}>
-          <FilledButton
-            content={'play now'}
+          <FilledIconButton
+            name={'caretright'}
             contentStyle={buttonStyle}
-            style={styles.button}
+            style={styles.iconButton}
             onPress={onButtonPress}
             // disabled={true}
           />
@@ -100,9 +100,28 @@ const styles = StyleSheet.create({
     paddingVertical: 0,
     paddingHorizontal: 0,
   },
+  iconButton: {
+    // width: '50%',
+    // aspectRatio: 3,
+    minWidth: '50%',
+    minHeight: 3,
+    borderRadius: 20,
+    paddingVertical: 0,
+    paddingHorizontal: 0,
+  },
   opacityPressed: {
     opacity: 0.75,
     // backgroundColor: 'white',
     color: Color.light[ColorVariant.primary]?.base,
   },
 });
+
+/*
+<FilledButton
+            content={'play now'}
+            contentStyle={buttonStyle}
+            style={styles.button}
+            onPress={onButtonPress}
+            // disabled={true}
+          />
+ */
