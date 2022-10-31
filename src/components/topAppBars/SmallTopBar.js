@@ -23,17 +23,14 @@ export default function SmallTopBar(props) {
     contentStyle,
   ];
 
-  function renderIconButtonItem(name, handlePress) {
-    return (
-      <View style={styles.targetSize} key={name}>
-        <StandardIconButton
-          name={name}
-          onPress={handlePress}
-          style={styles.icon}
-        />
-      </View>
-    );
+  function renderRightComponent(iconStyle) {
+    if (typeof children === 'function') {
+      return children(iconStyle);
+    }
+    return children;
   }
+
+  function renderIconButtonItem(name, handlePress) {}
 
   return (
     <View {...otherProps} style={containerStyle}>
@@ -52,12 +49,7 @@ export default function SmallTopBar(props) {
           {content}
         </Text>
       </View>
-      <View style={styles.iconDisplay}>
-        {trailingIcons &&
-          trailingIcons.map(({name, handlePress}) =>
-            renderIconButtonItem(name, handlePress),
-          )}
-      </View>
+      {renderRightComponent}
     </View>
   );
 }
@@ -84,3 +76,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
 });
+
+/*
+<View style={styles.iconDisplay}>
+        {trailingIcons &&
+          trailingIcons.map(({name, handlePress}) =>
+            renderIconButtonItem(name, handlePress),
+          )}
+      </View>
+ */

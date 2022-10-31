@@ -37,7 +37,7 @@ export default function HomeScreen({navigation}) {
       header: () => (
         <CenterAlignedTopBar
           content={'Good morning'}
-          headerTitleStyle={styles.headerTitleStyle}
+          headerTitleStyle={styles.headerTitle}
           trailingIcon={avatarTest}
           onTrailingIconPress={() => alert('test leading button')}
         />
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
   sectionHeader: {
     justifyContent: 'flex-start',
   },
-  headerTitleStyle: {
+  headerTitle: {
     justifyContent: 'flex-start',
   },
 });

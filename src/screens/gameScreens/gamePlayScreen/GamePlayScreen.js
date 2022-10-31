@@ -1,4 +1,4 @@
-import React, {useCallback, useState, useEffect} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   Dimensions,
   InteractionManager,
@@ -17,6 +17,7 @@ import {
   OutlinedButton,
   SmallTopBar,
   SpinnerType1,
+  StandardIconButton,
 } from 'src/components';
 import {loadCardDeckById} from 'src/redux/actions';
 import {cardDeckSelector, requestingDeckSelector} from 'src/redux/selectors';
@@ -34,6 +35,34 @@ export default function GamePlayScreen({navigation, route}) {
   const totalTasks = tasks.length;
   const baseColor = Color.light[ColorVariant.surface]?.base;
   const textColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
+
+  function renderHeaderRightComponent(iconStyle) {
+    return (
+      <View>
+        <View style={styles.targetSize} key={name}>
+          <StandardIconButton
+            name={name}
+            onPress={handlePress}
+            style={styles.icon}
+          />
+        </View>
+        <View style={styles.targetSize} key={name}>
+          <StandardIconButton
+            name={name}
+            onPress={handlePress}
+            style={styles.icon}
+          />
+        </View>
+        <View style={styles.targetSize} key={name}>
+          <StandardIconButton
+            name={name}
+            onPress={handlePress}
+            style={styles.icon}
+          />
+        </View>
+      </View>
+    );
+  }
 
   const iconNavigatorList = [
     {
@@ -62,7 +91,9 @@ export default function GamePlayScreen({navigation, route}) {
   useEffect(() => {
     navigation.setOptions({
       header: () => (
-        <SmallTopBar content={name} trailingIcons={iconNavigatorList} />
+        <SmallTopBar content={name} trailingIcons={iconNavigatorList}>
+          {renderHeaderRightComponent}
+        </SmallTopBar>
       ),
     });
   }, [navigation]);
