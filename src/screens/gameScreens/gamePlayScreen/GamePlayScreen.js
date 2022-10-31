@@ -36,49 +36,6 @@ export default function GamePlayScreen({navigation, route}) {
   const baseColor = Color.light[ColorVariant.surface]?.base;
   const textColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
 
-  function renderHeaderRightComponent(iconStyle) {
-    return (
-      <View>
-        <View style={styles.targetSize} key={name}>
-          <StandardIconButton
-            name={name}
-            onPress={handlePress}
-            style={styles.icon}
-          />
-        </View>
-        <View style={styles.targetSize} key={name}>
-          <StandardIconButton
-            name={name}
-            onPress={handlePress}
-            style={styles.icon}
-          />
-        </View>
-        <View style={styles.targetSize} key={name}>
-          <StandardIconButton
-            name={name}
-            onPress={handlePress}
-            style={styles.icon}
-          />
-        </View>
-      </View>
-    );
-  }
-
-  const iconNavigatorList = [
-    {
-      name: 'paperclip',
-      handlePress: () => alert('button 1'),
-    },
-    {
-      name: 'sharealt',
-      handlePress: () => alert('button 2'),
-    },
-    {
-      name: 'ellipsis1',
-      handlePress: () => alert('button 3'),
-    },
-  ];
-
   useFocusEffect(
     useCallback(() => {
       const task = InteractionManager.runAfterInteractions(() => {
@@ -91,9 +48,10 @@ export default function GamePlayScreen({navigation, route}) {
   useEffect(() => {
     navigation.setOptions({
       header: () => (
-        <SmallTopBar content={name} trailingIcons={iconNavigatorList}>
-          {renderHeaderRightComponent}
-        </SmallTopBar>
+        <SmallTopBar
+          content={name}
+          renderHeaderRightComponent={renderHeaderRightComponent}
+        />
       ),
     });
   }, [navigation]);
@@ -123,6 +81,55 @@ export default function GamePlayScreen({navigation, route}) {
     });
   }
 
+  function renderHeaderRightComponent({iconStyle}) {
+    return (
+      <>
+        <StandardIconButton
+          name={'paperclip'}
+          onPress={handleNavigateToGameEnd}
+          style={[iconStyle, styles.headerButtonIcon]}
+        />
+        <StandardIconButton
+          name={'sharealt'}
+          onPress={handleNavigateToGameEnd}
+          style={[iconStyle, styles.headerButtonIcon]}
+        />
+        <StandardIconButton
+          name={'ellipsis1'}
+          onPress={handleNavigateToGameEnd}
+          style={[iconStyle, styles.headerButtonIcon]}
+        />
+      </>
+    );
+  }
+
+  function renderBottomButtons() {
+    return (
+      <View style={styles.action}>
+        <OutlinedButton
+          content={'Lá trước'}
+          style={styles.button}
+          onPress={handleLookBackButtonPressed}
+          disabled={taskTurn === 0}
+        />
+        <FilledButton
+          content={'Lá tiếp theo'}
+          style={styles.button}
+          onPress={
+            taskTurn === totalTasks - 1
+              ? handleNavigateToGameEnd
+              : handleContinueButtonPressed
+          }
+        />
+        <FilledButton
+          content={'End'}
+          style={styles.button}
+          onPress={handleNavigateToGameEnd}
+        />
+      </View>
+    );
+  }
+
   if (requesting && isFocused) {
     return <SpinnerType1 />;
   }
@@ -142,28 +149,7 @@ export default function GamePlayScreen({navigation, route}) {
             </Text>
           </FilledCard>
         </View>
-        <View style={styles.action}>
-          <OutlinedButton
-            content={'Lá trước'}
-            style={styles.button}
-            onPress={handleLookBackButtonPressed}
-            disabled={taskTurn === 0}
-          />
-          <FilledButton
-            content={'Lá tiếp theo'}
-            style={styles.button}
-            onPress={
-              taskTurn === totalTasks - 1
-                ? handleNavigateToGameEnd
-                : handleContinueButtonPressed
-            }
-          />
-          <FilledButton
-            content={'End'}
-            style={styles.button}
-            onPress={handleNavigateToGameEnd}
-          />
-        </View>
+        {renderBottomButtons()}
       </ScrollView>
     </SafeAreaView>
   );
@@ -207,5 +193,8 @@ const styles = StyleSheet.create({
   button: {
     minWidth: 120,
     height: 40,
+  },
+  headerButtonIcon: {
+    margin: 5, //TODO: namnt update these field
   },
 });
