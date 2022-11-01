@@ -52,7 +52,11 @@ export default function HomeScreen({navigation}) {
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.contentContainer}>
         <SuggestionList data={suggestData} navigation={navigation} />
-        <SectionHeader content={'Recently'} style={styles.sectionHeader} />
+        <SectionHeader
+          content={'Recently'}
+          style={styles.sectionHeader}
+          onPress={() => alert('close')}
+        />
         <HorizontalCardList data={recentlyData} navigation={navigation} />
         <SectionHeader content={'Popular'} style={styles.sectionHeader} />
         <VerticalCardList data={popularData} navigation={navigation} />

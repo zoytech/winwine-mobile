@@ -1,5 +1,5 @@
 import React from 'react';
-import {View} from 'react-native';
+import {Text} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {Color, ColorVariant, StateLayers, StateLayersVariant} from 'src/themes';
 import DefaultIconButtonStyle from './defaultIconButtonStyle';
@@ -68,10 +68,12 @@ export default function StandardIconButton(props) {
       name: name,
       color: iconColor,
     };
+    const contentStyles = [contentStyle, rawContentStyle];
+    console.log('contentStyle: ', contentStyles);
     return (
       <>
         <Icon {...iconProps} />
-        {content && <View style={contentStyle}>{content}</View>}
+        {content && <Text style={contentStyles}>{content}</Text>}
       </>
     );
   }

@@ -1,22 +1,31 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {Typography} from 'src/themes';
+import {StyleSheet} from 'react-native';
+import {Color, ColorVariant, Typography} from 'src/themes';
+import {StandardIconButton} from 'src/components';
 
 export default function SectionHeader(props) {
-  const {content, contentStyle, style} = props;
+  const {content, contentStyle, style, ...otherProps} = props;
   return (
-    <View style={[styles.container, style]}>
-      <Text style={[styles.content, contentStyle]}>{content}</Text>
-    </View>
+    <StandardIconButton
+      {...otherProps}
+      name={'caretdown'}
+      content={content}
+      contentStyle={[styles.content, contentStyle]}
+      style={[styles.container, style]}
+    />
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    maxWidth: '50%',
   },
   content: {
     ...Typography.label.large,
+    color: Color.light[ColorVariant.surfaceVariant]?.onBase,
+    paddingLeft: 16,
   },
 });

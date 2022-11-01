@@ -10,7 +10,7 @@ const ColorVariant = {
 };
 
 const Color = {
-  light: {
+  dark: {
     [ColorVariant.primary]: {
       base: '#9B3F5A',
       onBase: '#FFFFFF',
@@ -50,7 +50,7 @@ const Color = {
     },
     [ColorVariant.outline]: {base: '#817568'},
   },
-  dark: {
+  light: {
     [ColorVariant.primary]: {
       base: '#FFB1C2',
       onBase: '#600F2C',
