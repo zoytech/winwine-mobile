@@ -60,7 +60,7 @@ export default function GamePlayScreen({navigation, route}) {
           content={deckTitle}
           leadingIcon={'arrowleft'}
           onLeadingIconPress={() => navigation.goBack()}
-          renderRightComponents={renderHeaderRightComponent}
+          renderRightComponents={renderRightComponents}
         />
       ),
     });
@@ -86,7 +86,7 @@ export default function GamePlayScreen({navigation, route}) {
     });
   }
 
-  function renderHeaderRightComponent({iconStyle}) {
+  function renderRightComponents({iconStyle}) {
     return (
       <>
         <StandardIconButton

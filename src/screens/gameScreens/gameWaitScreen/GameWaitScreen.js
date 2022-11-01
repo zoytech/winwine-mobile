@@ -51,7 +51,7 @@ function GameWaitScreen({navigation, route}) {
           content={deckTitle}
           leadingIcon={'arrowleft'}
           onLeadingIconPress={() => navigation.goBack()}
-          renderRightComponents={renderHeaderRightComponent}
+          renderRightComponents={renderRightComponents}
         />
       ),
     });
@@ -87,7 +87,7 @@ function GameWaitScreen({navigation, route}) {
       : `Xem trước ${total} lá bài`;
   }
 
-  function renderHeaderRightComponent({iconStyle}) {
+  function renderRightComponents({iconStyle}) {
     return (
       <>
         <StandardIconButton
