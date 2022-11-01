@@ -20,11 +20,12 @@ function generateStateStyles(pressed, isDisabled, colorVariant) {
   const {base: baseOutlineColor} = Color.light[ColorVariant.outline];
   const {base: baseColor} = Color.light[colorVariant];
   if (pressed) {
+    const level_012 = StateLayers.light[StateLayersVariant.primary]?.level_012;
     return {
       containerStyle: {
         borderColor: baseOutlineColor,
         borderWidth: 0.5,
-        backgroundColor: 'transparent',
+        backgroundColor: level_012,
       },
       contentStyle: {color: baseColor},
     };

@@ -126,11 +126,10 @@ export default function GamePlayScreen({navigation, route}) {
               : handleContinueButtonPressed
           }
         />
-        <TonalButton
+        <OutlinedButton
           content={'End'}
           style={styles.button}
           onPress={handleNavigateToGameEnd}
-          disabled={true}
         />
       </View>
     );

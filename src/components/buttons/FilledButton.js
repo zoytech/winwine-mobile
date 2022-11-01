@@ -14,8 +14,11 @@ function generateStateStyles(pressed, isDisabled, colorVariant) {
   }
   const {onBase: onBaseColor, base: baseColor} = Color.light[colorVariant];
   if (pressed) {
+    const level_012 =
+      StateLayers.light[StateLayersVariant.onPrimary]?.level_012;
+
     return {
-      containerStyle: {backgroundColor: baseColor},
+      containerStyle: {backgroundColor: level_012},
       contentStyle: {color: onBaseColor},
     };
   }
