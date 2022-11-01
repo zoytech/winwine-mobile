@@ -2,12 +2,10 @@ import hexToRgba from 'hex-to-rgba';
 import Color, {ColorVariant} from './color';
 import OpacityLevel from './opacityLevel';
 
-const {base: basePrimary} = Color.light[ColorVariant.primary];
-const {onBase: onSurface} = Color.light[ColorVariant.surface];
-const {onBase: onSurfaceVar} = Color.light[ColorVariant.surfaceVariant];
-
-const {container: secondaryContainer, onContainer: onSecondaryContainer} =
-  Color.light[ColorVariant.secondary];
+const basePrimaryColor = Color.light[ColorVariant.primary]?.base;
+const onSurfaceColor = Color.light[ColorVariant.surface]?.onBase;
+const onSurfaceVarColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
+const secondaryContainerColor = Color.light[ColorVariant.secondary]?.container;
 const {opacity_008, opacity_012, opacity_016, opacity_032} = OpacityLevel;
 
 const StateLayersVariant = {
@@ -24,46 +22,46 @@ const StateLayersVariant = {
 const StateLayers = {
   light: {
     [StateLayersVariant.primary]: {
-      level_1000: hexToRgba(basePrimary, 0),
-      level_008: hexToRgba(basePrimary, opacity_008),
-      level_012: hexToRgba(basePrimary, opacity_012),
-      level_016: hexToRgba(basePrimary, opacity_016),
-      level_032: hexToRgba(basePrimary, opacity_032),
+      level_1000: basePrimaryColor,
+      level_008: hexToRgba(basePrimaryColor, opacity_008),
+      level_012: hexToRgba(basePrimaryColor, opacity_012),
+      level_016: hexToRgba(basePrimaryColor, opacity_016),
+      level_032: hexToRgba(basePrimaryColor, opacity_032),
     },
     [StateLayersVariant.onPrimary]: {
-      level_100: basePrimary,
-      level_008: hexToRgba(basePrimary, 1 - opacity_008),
-      level_012: hexToRgba(basePrimary, 1 - opacity_012),
-      level_016: hexToRgba(basePrimary, 1 - opacity_016),
-      level_032: hexToRgba(basePrimary, 1 - opacity_032),
+      level_100: basePrimaryColor,
+      level_008: hexToRgba(basePrimaryColor, 1 - opacity_008),
+      level_012: hexToRgba(basePrimaryColor, 1 - opacity_012),
+      level_016: hexToRgba(basePrimaryColor, 1 - opacity_016),
+      level_032: hexToRgba(basePrimaryColor, 1 - opacity_032),
     },
     [StateLayersVariant.secondaryContainer]: {
-      level_100: secondaryContainer,
-      level_008: hexToRgba(secondaryContainer, 1 - opacity_008),
-      level_012: hexToRgba(secondaryContainer, 1 - opacity_012),
-      level_016: hexToRgba(secondaryContainer, 1 - opacity_016),
-      level_032: hexToRgba(secondaryContainer, 1 - opacity_032),
+      level_100: secondaryContainerColor,
+      level_008: hexToRgba(secondaryContainerColor, opacity_008),
+      level_012: hexToRgba(secondaryContainerColor, opacity_012),
+      level_016: hexToRgba(secondaryContainerColor, opacity_016),
+      level_032: hexToRgba(secondaryContainerColor, opacity_032),
     },
     [StateLayersVariant.onSecondaryContainer]: {
-      level_100: onSecondaryContainer,
-      level_008: hexToRgba(onSecondaryContainer, opacity_008),
-      level_012: hexToRgba(onSecondaryContainer, opacity_012),
-      level_016: hexToRgba(onSecondaryContainer, opacity_016),
-      level_032: hexToRgba(onSecondaryContainer, opacity_032),
+      level_100: secondaryContainerColor,
+      level_008: hexToRgba(secondaryContainerColor, 1 - opacity_008),
+      level_012: hexToRgba(secondaryContainerColor, 1 - opacity_012),
+      level_016: hexToRgba(secondaryContainerColor, 1 - opacity_016),
+      level_032: hexToRgba(secondaryContainerColor, 1 - opacity_032),
     },
     [StateLayersVariant.onSurface]: {
-      level_100: onSurface,
-      level_008: hexToRgba(onSurface, opacity_008),
-      level_012: hexToRgba(onSurface, opacity_012),
-      level_016: hexToRgba(onSurface, opacity_016),
-      level_032: hexToRgba(onSurface, opacity_032),
+      level_100: onSurfaceColor,
+      level_008: hexToRgba(onSurfaceColor, opacity_008),
+      level_012: hexToRgba(onSurfaceColor, opacity_012),
+      level_016: hexToRgba(onSurfaceColor, opacity_016),
+      level_032: hexToRgba(onSurfaceColor, opacity_032),
     },
     [StateLayersVariant.onSurfaceVar]: {
-      level_100: onSurfaceVar,
-      level_008: hexToRgba(onSurfaceVar, opacity_008),
-      level_012: hexToRgba(onSurfaceVar, opacity_012),
-      level_016: hexToRgba(onSurfaceVar, opacity_016),
-      level_032: hexToRgba(onSurfaceVar, opacity_032),
+      level_100: onSurfaceVarColor,
+      level_008: hexToRgba(onSurfaceVarColor, opacity_008),
+      level_012: hexToRgba(onSurfaceVarColor, opacity_012),
+      level_016: hexToRgba(onSurfaceVarColor, opacity_016),
+      level_032: hexToRgba(onSurfaceVarColor, opacity_032),
     },
   },
 };
