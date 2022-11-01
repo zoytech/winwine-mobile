@@ -1,14 +1,20 @@
 import React from 'react';
-import {Pressable, Text, StyleSheet} from 'react-native';
-import {Color, ColorVariant, Typography} from 'src/themes';
+import {Pressable, StyleSheet, Text} from 'react-native';
+import {
+  Color,
+  ColorVariant,
+  StateLayers,
+  StateLayersVariant,
+  Typography,
+} from 'src/themes';
 
 function generateStateStyles(pressed, isDisabled, colorVariant) {
   if (isDisabled) {
-    const {onBase: onBaseColor, base: baseColor} =
-      Color.light[ColorVariant.surface];
+    const {level_012, level_032} =
+      StateLayers.light[StateLayersVariant.onSurface];
     return {
-      containerStyle: {backgroundColor: baseColor},
-      contentStyle: {color: onBaseColor},
+      containerStyle: {backgroundColor: level_012},
+      contentStyle: {color: level_032},
     };
   }
   const {onBase: onBaseColor, base: baseColor} = Color.light[colorVariant];

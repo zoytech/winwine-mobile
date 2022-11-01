@@ -1,13 +1,15 @@
 import React from 'react';
 import {Text} from 'react-native';
-import {Color, ColorVariant} from 'src/themes';
+import {Color, ColorVariant, StateLayers, StateLayersVariant} from 'src/themes';
 import BaseButton from './BaseButton';
 
 function generateStateStyles(pressed, isDisabled, colorVariant) {
   if (isDisabled) {
-    const {onBase: onBaseColor} = Color.light[ColorVariant.surface];
+    const {level_012, level_032} =
+      StateLayers.light[StateLayersVariant.onSurface];
     return {
-      contentStyle: {color: onBaseColor},
+      containerStyle: {backgroundColor: level_012},
+      contentStyle: {color: level_032},
     };
   }
   const {container: containerColor, onContainer: onContainerColor} =

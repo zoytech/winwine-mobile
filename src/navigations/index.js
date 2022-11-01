@@ -59,7 +59,7 @@ export default function RootNavigator() {
             options={{
               ...headerProps,
               ...headerShadowVisible,
-              header: () => <MediumTopBar />,
+              header: () => <SmallTopBar />,
             }}
           />
         </Stack.Group>

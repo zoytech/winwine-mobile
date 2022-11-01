@@ -50,7 +50,7 @@ export default function MiniCardItem(props) {
         </View>
         <View style={styles.action}>
           <FilledIconButton
-            name={'caretright'}
+            name={'play'}
             contentStyle={buttonStyle}
             style={styles.iconButton}
             onPress={onButtonPress}
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
   iconButton: {
     // width: '50%',
     // aspectRatio: 3,
-    minWidth: '50%',
+    minWidth: '70%',
     minHeight: 3,
     borderRadius: 20,
     paddingVertical: 0,

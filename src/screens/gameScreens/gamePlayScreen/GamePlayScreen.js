@@ -17,8 +17,11 @@ import {
   LargeTopBar,
   MediumTopBar,
   OutlinedButton,
+  SmallTopBar,
   SpinnerType1,
   StandardIconButton,
+  TextButton,
+  TonalButton,
 } from 'src/components';
 import {loadCardDeckById} from 'src/redux/actions';
 import {cardDeckSelector, requestingDeckSelector} from 'src/redux/selectors';
@@ -53,7 +56,7 @@ export default function GamePlayScreen({navigation, route}) {
   useEffect(() => {
     navigation.setOptions({
       header: () => (
-        <MediumTopBar
+        <SmallTopBar
           content={deckTitle}
           leadingIcon={'arrowleft'}
           onLeadingIconPress={() => navigation.goBack()}
@@ -123,10 +126,11 @@ export default function GamePlayScreen({navigation, route}) {
               : handleContinueButtonPressed
           }
         />
-        <FilledButton
+        <TonalButton
           content={'End'}
           style={styles.button}
           onPress={handleNavigateToGameEnd}
+          disabled={true}
         />
       </View>
     );
