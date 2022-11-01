@@ -1,6 +1,6 @@
 import SurfacesColor from './surfacesColor';
 
-const {surface1, surface5} = SurfacesColor.light;
+const {surface1, surface5} = SurfacesColor.dark;
 
 const ShadowPresets = {
   normal: {

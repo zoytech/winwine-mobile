@@ -1,29 +1,32 @@
 import React from 'react';
 import {View} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
-import {Color, ColorVariant} from 'src/themes';
+import {Color, ColorVariant, StateLayers, StateLayersVariant} from 'src/themes';
+import {BaseButton} from 'src/components/buttons';
 import DefaultIconButtonStyle from './defaultIconButtonStyle';
-import {BaseButton} from '../../buttons';
 
 function getStateStyles(isPressed, isDisabled, colorVariant) {
   if (isDisabled) {
-    const {onBase: onBaseColor} = Color.light[ColorVariant.surface];
+    const {level_012, level_032} =
+      StateLayers.light[StateLayersVariant.onSurface];
     return {
       containerStyle: {
         backgroundColor: 'transparent',
-        borderColor: onBaseColor,
+        borderColor: level_012,
         borderWidth: 0.5,
       },
-      contentStyle: {color: onBaseColor},
-      iconColor: onBaseColor,
+      contentStyle: {color: level_032},
+      iconColor: level_032,
     };
   }
   const {onBase: onBaseColor} = Color.light[colorVariant];
   const {base: baseOutlineColor} = Color.light[ColorVariant.outline];
   if (isPressed) {
+    const level_012 =
+      StateLayers.light[StateLayersVariant.onSurfaceVar]?.level_012;
     return {
       containerStyle: {
-        backgroundColor: 'transparent',
+        backgroundColor: level_012,
         borderColor: baseOutlineColor,
         borderWidth: 0.5,
       },
@@ -48,7 +51,7 @@ export default function OutlinedIconButton(props) {
     style,
     contentStyle: rawContentStyle,
     name,
-    colorVariant = ColorVariant.primary,
+    colorVariant = ColorVariant.surface,
     disabled,
     children,
     ...otherProps
