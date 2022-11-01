@@ -6,21 +6,21 @@ import {ScreenKeys} from 'src/navigations/ScreenKeys';
 export default function HorizontalCardList(props) {
   const {style, data, navigation, ...otherProps} = props;
 
-  const handleImageAreaPress = (cardDeck, cardDeckId) => {
+  const handleImageAreaPress = ({cardDeckId, cardDeck}) => {
     navigation.navigate({
       name: ScreenKeys.GAME_WAIT,
       params: {
         deckId: cardDeckId || '',
-        title: cardDeck || '',
+        deckTitle: cardDeck || '',
       },
     });
   };
-  const handleButtonPress = (cardDeck, cardDeckId) => {
+  const handleButtonPress = ({cardDeckId, cardDeck}) => {
     navigation.navigate({
       name: ScreenKeys.GAME_PLAY,
       params: {
         deckId: cardDeckId || '',
-        title: cardDeck || '',
+        deckTitle: cardDeck || '',
       },
     });
   };
@@ -32,8 +32,8 @@ export default function HorizontalCardList(props) {
         {...otherProps}
         key={cardDeckId}
         data={item}
-        onImageAreaPress={() => handleImageAreaPress(cardDeck, cardDeckId)}
-        onButtonPress={() => handleButtonPress(cardDeck, cardDeckId)}
+        onImageAreaPress={() => handleImageAreaPress({cardDeckId, cardDeck})}
+        onButtonPress={() => handleButtonPress({cardDeckId, cardDeck})}
       />
     );
   }

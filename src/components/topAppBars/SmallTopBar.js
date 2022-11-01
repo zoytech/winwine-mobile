@@ -18,6 +18,7 @@ export default function SmallTopBar(props) {
   const {base: surface, onBase: onSurface} = Color.light[ColorVariant.surface];
   const containerStyle = [styles.container, {backgroundColor: surface}, style];
   const defaultContentStyle = [
+    styles.text,
     Typography.title.large,
     {color: onSurface},
     contentStyle,
@@ -33,21 +34,14 @@ export default function SmallTopBar(props) {
 
   return (
     <View {...otherProps} style={containerStyle}>
-      <View style={styles.targetSize}>
-        <StandardIconButton
-          name={leadingIcon}
-          onPress={onLeadingIconPress}
-          style={styles.icon}
-        />
-      </View>
-      <View style={[headerTitleStyle, styles.title]}>
-        <Text
-          style={defaultContentStyle}
-          numberOfLines={1}
-          ellipsizeMode={'tail'}>
-          {content}
-        </Text>
-      </View>
+      <StandardIconButton
+        name={leadingIcon}
+        onPress={onLeadingIconPress}
+        style={styles.icon}
+      />
+      <Text numberOfLines={1} style={defaultContentStyle}>
+        {content}
+      </Text>
       <View style={[styles.rightContainer, rightContainerStyle]}>
         {renderRight({iconStyle: styles.icon})}
       </View>
@@ -62,25 +56,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 64,
   },
-  targetSize: {
-    height: 48,
-    width: 48,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   icon: {
     borderRadius: 0,
     minWidth: 48,
     minHeight: 48,
   },
-  iconDisplay: {
-    flexDirection: 'row',
-  },
   rightContainer: {
-    display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'flex-end',
+    paddingRight: 16,
   },
 });
 

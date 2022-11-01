@@ -9,7 +9,12 @@ import {
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Color, ColorVariant, Typography} from 'src/themes';
-import {FilledButton, SpinnerType1} from 'src/components';
+import {
+  FilledButton,
+  SmallTopBar,
+  SpinnerType1,
+  StandardIconButton,
+} from 'src/components';
 import {loadCardDeckById} from 'src/redux/actions';
 import {NavigatedGameCard} from './components';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
@@ -19,7 +24,7 @@ import {StandardHeader} from '../components';
 const {width: screenWidth} = Dimensions.get('screen');
 
 function GameWaitScreen({navigation, route}) {
-  const deckId = route.params?.deckId;
+  const {deckId, deckTitle} = route.params;
   const cardDeckItem = useSelector(cardDeckSelector);
   const requesting = useSelector(requestingDeckSelector);
   const dispatch = useDispatch();
@@ -29,6 +34,7 @@ function GameWaitScreen({navigation, route}) {
   const baseColor = Color.light[ColorVariant.surface]?.base;
   const textColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
 
+  console.log('first mount');
   const defaultContainerStyle = [
     {backgroundColor: baseColor},
     styles.container,
@@ -38,12 +44,24 @@ function GameWaitScreen({navigation, route}) {
     dispatch(loadCardDeckById(deckId));
   }, [dispatch]);
 
+  useEffect(() => {
+    navigation.setOptions({
+      header: () => (
+        <SmallTopBar
+          content={deckTitle}
+          leadingIcon={'arrowleft'}
+          onLeadingIconPress={() => navigation.goBack()}
+          renderRightComponents={renderHeaderRightComponent}
+        />
+      ),
+    });
+  }, [navigation]);
+
   function handlePressFilledButton() {
     navigation.navigate({
       name: ScreenKeys.GAME_PLAY,
       params: {
-        deckId: deckId && deckId,
-        title: name || '',
+        deckId: deckId,
       },
     });
   }
@@ -67,6 +85,37 @@ function GameWaitScreen({navigation, route}) {
     return total >= MAX_VIEW
       ? `Xem trước ${MAX_VIEW} lá bài`
       : `Xem trước ${total} lá bài`;
+  }
+
+  function renderHeaderRightComponent({iconStyle}) {
+    return (
+      <>
+        <StandardIconButton
+          name={'ellipsis1'}
+          onPress={handleTestDialogButton}
+          style={[iconStyle, styles.headerButtonIcon]}
+        />
+      </>
+    );
+  }
+
+  function renderBottomButtons() {
+    return (
+      <View style={styles.action}>
+        <FilledButton
+          content={'Choi ngay'}
+          style={styles.button}
+          onPress={handlePressFilledButton}
+          contentStyle={Typography.title.large}
+        />
+        <FilledButton
+          content={'Test Dialog'}
+          style={styles.button}
+          onPress={handleTestDialogButton}
+          contentStyle={Typography.title.large}
+        />
+      </View>
+    );
   }
 
   if (requesting) {
@@ -97,20 +146,7 @@ function GameWaitScreen({navigation, route}) {
           onBackwardDisabled={taskTurn === 0}
           onForwardDisabled={taskTurn === totalTasks - 1}
         />
-        <View style={styles.action}>
-          <FilledButton
-            content={'Choi ngay'}
-            style={styles.button}
-            onPress={handlePressFilledButton}
-            contentStyle={Typography.title.large}
-          />
-          <FilledButton
-            content={'Test Dialog'}
-            style={styles.button}
-            onPress={handleTestDialogButton}
-            contentStyle={Typography.title.large}
-          />
-        </View>
+        {renderBottomButtons()}
       </ScrollView>
     </SafeAreaView>
   );
@@ -147,6 +183,11 @@ const styles = StyleSheet.create({
   button: {
     width: 150,
     height: 50,
+  },
+  headerButtonIcon: {
+    borderRadius: 0,
+    minWidth: 48,
+    minHeight: 48,
   },
 });
 

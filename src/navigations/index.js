@@ -11,35 +11,11 @@ import {
   HomeScreen,
 } from 'src/screens';
 import {ScreenKeys} from './ScreenKeys';
-import {
-  CenterAlignedTopBar,
-  SmallTopBar,
-  StandardIconButton,
-} from '../components';
-import {Typography} from '../themes';
+import {CenterAlignedTopBar, SmallTopBar, MediumTopBar} from 'src/components';
 
 const Stack = createNativeStackNavigator();
 
-function HeaderTitleRender(props) {
-  const {route, title: fixedTitle, contentStyle} = props;
-  const dynamicTitle = route.params?.title;
-  const headerContentStyle = [Typography.title.large, contentStyle];
-
-  return dynamicTitle ? (
-    <Text style={headerContentStyle}>{dynamicTitle}</Text>
-  ) : (
-    <Text style={headerContentStyle}>{fixedTitle}</Text>
-  );
-}
-
-function HeaderRightRender(props) {
-  const {name} = props;
-  return <StandardIconButton name={name} onPress={() => alert('alolaloa')} />;
-}
-
 export default function RootNavigator() {
-  const {base, onBase} = Color.light[ColorVariant.surface];
-
   const headerShadowVisible = {
     elevation: 0,
     shadowOpacity: 0,
@@ -71,17 +47,11 @@ export default function RootNavigator() {
           <Stack.Screen
             name={ScreenKeys.GAME_WAIT}
             component={GameWaitScreen}
-            options={({navigation, route}) => ({
-              headerRight: () => <HeaderRightRender name={'setting'} />,
-              headerTitle: () => (
-                <HeaderTitleRender
-                  title={'Good morning'}
-                  route={route}
-                  contentStyle={{color: onBase}}
-                />
-              ),
+            options={{
               ...headerProps,
-            })}
+              ...headerShadowVisible,
+              header: () => <SmallTopBar />,
+            }}
           />
           <Stack.Screen
             name={ScreenKeys.GAME_PLAY}
@@ -89,7 +59,7 @@ export default function RootNavigator() {
             options={{
               ...headerProps,
               ...headerShadowVisible,
-              header: () => <SmallTopBar />,
+              header: () => <MediumTopBar />,
             }}
           />
         </Stack.Group>

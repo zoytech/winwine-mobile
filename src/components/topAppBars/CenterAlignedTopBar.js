@@ -24,7 +24,7 @@ export default function CenterAlignedTopBar(props) {
     contentStyle,
   ];
 
-  function ImagePressable({avatar}) {
+  function renderImagePressable(avatar) {
     const getPressStyle = ({pressed}) => {
       return pressed
         ? [styles.targetSize, styles.opacityPressed]
@@ -51,7 +51,7 @@ export default function CenterAlignedTopBar(props) {
       <View style={[headerTitleStyle, styles.title]}>
         <Text style={defaultContentStyle}>{content}</Text>
       </View>
-      {trailingIcon && <ImagePressable avatar={trailingIcon} />}
+      {renderImagePressable(trailingIcon)}
     </View>
   );
 }

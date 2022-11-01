@@ -14,8 +14,9 @@ import {Color, ColorVariant, Typography} from 'src/themes';
 import {
   FilledButton,
   FilledCard,
+  LargeTopBar,
+  MediumTopBar,
   OutlinedButton,
-  SmallTopBar,
   SpinnerType1,
   StandardIconButton,
 } from 'src/components';
@@ -25,7 +26,7 @@ import {ScreenKeys} from 'src/navigations/ScreenKeys';
 
 const screenWidth = Dimensions.get('screen').width;
 export default function GamePlayScreen({navigation, route}) {
-  const deckId = route.params?.deckId;
+  const {deckId, deckTitle} = route.params;
   const dispatch = useDispatch();
   const cardDeckItem = useSelector(cardDeckSelector);
   const requesting = useSelector(requestingDeckSelector);
@@ -52,8 +53,10 @@ export default function GamePlayScreen({navigation, route}) {
   useEffect(() => {
     navigation.setOptions({
       header: () => (
-        <SmallTopBar
-          content={name}
+        <MediumTopBar
+          content={deckTitle}
+          leadingIcon={'arrowleft'}
+          onLeadingIconPress={() => navigation.goBack()}
           renderRightComponents={renderHeaderRightComponent}
         />
       ),
@@ -84,12 +87,12 @@ export default function GamePlayScreen({navigation, route}) {
     return (
       <>
         <StandardIconButton
-          name={'paperclip'}
+          name={'ellipsis1'}
           onPress={handleNavigateToGameEnd}
           style={[iconStyle, styles.headerButtonIcon]}
         />
         <StandardIconButton
-          name={'sharealt'}
+          name={'ellipsis1'}
           onPress={handleNavigateToGameEnd}
           style={[iconStyle, styles.headerButtonIcon]}
         />
@@ -194,6 +197,8 @@ const styles = StyleSheet.create({
     height: 40,
   },
   headerButtonIcon: {
-    margin: 5, //TODO: namnt update these field
+    borderRadius: 0,
+    minWidth: 48,
+    minHeight: 48,
   },
 });
