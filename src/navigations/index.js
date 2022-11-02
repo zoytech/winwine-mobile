@@ -1,9 +1,9 @@
 import React from 'react';
-import {StyleSheet, Text} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
-import {Color, ColorVariant} from 'src/themes';
 import {
+  ComingSoonDialog,
   EndingGameDialog,
   ExitGameDialog,
   GamePlayScreen,
@@ -11,7 +11,7 @@ import {
   HomeScreen,
 } from 'src/screens';
 import {ScreenKeys} from './ScreenKeys';
-import {CenterAlignedTopBar, SmallTopBar, MediumTopBar} from 'src/components';
+import {CenterAlignedTopBar, SmallTopBar} from 'src/components';
 
 const Stack = createNativeStackNavigator();
 
@@ -71,6 +71,10 @@ export default function RootNavigator() {
           <Stack.Screen
             name={ScreenKeys.DIALOG_GAME_EXIT}
             component={ExitGameDialog}
+          />
+          <Stack.Screen
+            name={ScreenKeys.DIALOG_COMING_SOON}
+            component={ComingSoonDialog}
           />
         </Stack.Group>
       </Stack.Navigator>

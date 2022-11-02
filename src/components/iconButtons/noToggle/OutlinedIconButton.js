@@ -2,7 +2,7 @@ import React from 'react';
 import {View} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {Color, ColorVariant, StateLayers, StateLayersVariant} from 'src/themes';
-import {BaseButton} from 'src/components/buttons';
+import {BaseButton} from 'src/components';
 import DefaultIconButtonStyle from './defaultIconButtonStyle';
 
 function getStateStyles(isPressed, isDisabled, colorVariant) {
@@ -50,6 +50,7 @@ export default function OutlinedIconButton(props) {
     content,
     style,
     contentStyle: rawContentStyle,
+    iconStyle,
     name,
     colorVariant = ColorVariant.surface,
     disabled,

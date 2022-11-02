@@ -2,8 +2,8 @@ import React from 'react';
 import {Text} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {Color, ColorVariant, StateLayers, StateLayersVariant} from 'src/themes';
+import {BaseButton} from 'src/components';
 import DefaultIconButtonStyle from './defaultIconButtonStyle';
-import {BaseButton} from '../../buttons';
 
 function getStateStyles(isPressed, isDisabled, colorVariant) {
   if (isDisabled) {
@@ -42,6 +42,7 @@ export default function StandardIconButton(props) {
     content,
     style,
     contentStyle: rawContentStyle,
+    iconStyle,
     name,
     colorVariant = ColorVariant.surfaceVariant,
     disabled,
@@ -67,6 +68,7 @@ export default function StandardIconButton(props) {
       size: DefaultIconButtonStyle.icon.size,
       name: name,
       color: iconColor,
+      ...iconStyle,
     };
     const contentStyles = [contentStyle, rawContentStyle];
     console.log('contentStyle: ', contentStyles);

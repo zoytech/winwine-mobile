@@ -17,9 +17,6 @@ export default function MiniCardItem(props) {
     style,
     onImageAreaPress = () => {},
     onButtonPress = () => {},
-    titleStyle = Typography.label.large,
-    subTitleStyle = Typography.label.medium,
-    buttonStyle = Typography.label.small,
   } = props;
 
   const {cardDeck: name, tag: tag, uri: uri} = data || {};
@@ -38,22 +35,26 @@ export default function MiniCardItem(props) {
         <View style={styles.headline}>
           {name && (
             <Text
-              style={[titleStyle, {color: textColor}]}
+              style={[Typography.label.large, {color: textColor}]}
               numberOfLines={1}
               ellipsizeMode={'tail'}>
               {name}
             </Text>
           )}
           {tag && (
-            <Text style={[subTitleStyle, {color: textColor}]}>{tag}</Text>
+            <Text style={[Typography.label.medium, {color: textColor}]}>
+              {tag}
+            </Text>
           )}
         </View>
         <View style={styles.action}>
           <FilledIconButton
-            name={'play'}
-            contentStyle={buttonStyle}
-            style={styles.iconButton}
+            name={'caretright'}
+            contentStyle={Typography.label.small}
+            style={styles.iconContainer}
+            iconStyle={styles.icon}
             onPress={onButtonPress}
+            hitSlop={30}
             // disabled={true}
           />
         </View>
@@ -100,18 +101,18 @@ const styles = StyleSheet.create({
     paddingVertical: 0,
     paddingHorizontal: 0,
   },
-  iconButton: {
-    // width: '50%',
-    // aspectRatio: 3,
-    minWidth: '70%',
-    minHeight: 3,
-    borderRadius: 20,
-    paddingVertical: 0,
+  iconContainer: {
+    minWidth: '50%',
+    minHeight: 30,
     paddingHorizontal: 0,
+    paddingVertical: 0,
+    borderRadius: 16,
+  },
+  icon: {
+    size: 16,
   },
   opacityPressed: {
     opacity: 0.75,
-    // backgroundColor: 'white',
     color: Color.light[ColorVariant.primary]?.base,
   },
 });

@@ -1,25 +1,38 @@
 import React, {useState} from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
 import {SuggestionChip} from 'src/components';
+import {ScreenKeys} from 'src/navigations/ScreenKeys';
 
 export default function SuggestionList(props) {
-  const {style, data, onItemPressed = () => {}, ...otherProps} = props;
-  const [selectedItemName, setSelectedItemName] = useState(null);
+  const {
+    style,
+    data,
+    navigation,
+    onItemPressed = () => {},
+    ...otherProps
+  } = props;
+  const [selected, setSelected] = useState(null);
 
-  function handleItemPressed({item, index}) {
-    setSelectedItemName(item?.content);
-    onItemPressed({item, index});
+  function handleItemPressed({content, hashtagId}) {
+    setSelected(hashtagId);
+    if (hashtagId === 'HTG2') {
+      navigation.navigate({
+        name: ScreenKeys.DIALOG_COMING_SOON,
+      });
+      setSelected('HTG1');
+    }
+    onItemPressed({content, hashtagId});
   }
 
-  function renderItem({item, index}) {
-    const {content} = item || {};
+  function renderItem({item}) {
+    const {content, hashtagId} = item || {};
     return (
       <SuggestionChip
         {...otherProps}
-        key={index}
+        key={hashtagId}
         content={content}
-        selected={content === selectedItemName}
-        onPress={() => handleItemPressed({item, index})}
+        selected={hashtagId === selected}
+        onPress={() => handleItemPressed({content, hashtagId})}
       />
     );
   }
@@ -44,6 +57,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   separator: {
-    width: 4,
+    width: 12,
   },
 });

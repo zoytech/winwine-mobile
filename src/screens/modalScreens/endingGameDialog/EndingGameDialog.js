@@ -75,11 +75,13 @@ export default function EndingGameDialog({navigation, route}) {
           <OutlinedButton
             content={'Chơi lại'}
             onPress={handlePressOutlinedButton}
+            style={styles.button}
           />
           <FilledButton
             content={'Chơi bộ mới'}
             contentStyle={Typography.label.large}
             onPress={handlePressFilledButton}
+            style={styles.button}
           />
         </View>
       </OutlinedCard>
@@ -120,5 +122,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
+  },
+  button: {
+    minWidth: 120,
+    height: 40,
+    paddingHorizontal: 0,
   },
 });

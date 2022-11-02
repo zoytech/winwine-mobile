@@ -1,4 +1,5 @@
 import ExitGameDialog from './ExitGameDialog';
+import ComingSoonDialog from './ComingSoonDialog';
 import EndingGameDialog from './endingGameDialog';
 
-export {ExitGameDialog, EndingGameDialog};
+export {ExitGameDialog, EndingGameDialog, ComingSoonDialog};

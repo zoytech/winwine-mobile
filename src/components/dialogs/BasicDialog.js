@@ -8,7 +8,7 @@ import {
   Typography,
 } from 'src/themes';
 import {Divider} from '../divider';
-import {TextButton} from '../buttons';
+import {FilledButton, TextButton} from '../buttons';
 
 const screenWidth = Dimensions.get('screen').width;
 
@@ -24,6 +24,7 @@ export function BasicDialog(props) {
     onSubActionPress,
     style,
     contentStyle,
+    layoutStyle,
     children,
     ...otherProps
   } = props;
@@ -33,7 +34,11 @@ export function BasicDialog(props) {
   const onSurfaceVarColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
   const layoutColor =
     StateLayers.light[StateLayersVariant.onSurface]?.level_032;
-  const containerStyle = [styles.container, {backgroundColor: layoutColor}];
+  const containerStyle = [
+    styles.container,
+    {backgroundColor: layoutColor},
+    layoutStyle,
+  ];
   const dialogStyle = [
     styles.dialog,
     {
@@ -47,10 +52,7 @@ export function BasicDialog(props) {
     {color: onSurfaceVarColor},
     Typography.body.medium,
   ];
-  const actionStyle = [
-    styles.action,
-    {justifyContent: icon ? 'center' : 'flex-end'},
-  ];
+  const actionStyle = [styles.action, {justifyContent: 'flex-end'}];
 
   const iconProps = {
     name: icon,
@@ -59,8 +61,8 @@ export function BasicDialog(props) {
   };
 
   return (
-    <View style={containerStyle}>
-      <View {...otherProps} style={dialogStyle}>
+    <View {...otherProps} style={containerStyle}>
+      <View style={dialogStyle}>
         <View style={styles.icon}>{icon && <Icon {...iconProps} />}</View>
         <View style={styles.headline}>
           {headline && <Text style={headlineStyle}>{headline}</Text>}
@@ -77,7 +79,7 @@ export function BasicDialog(props) {
             style={styles.button}
             onPress={onSubActionPress}
           />
-          <TextButton
+          <FilledButton
             content={mainAction}
             style={styles.button}
             onPress={onMainActionPress}
@@ -112,11 +114,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   action: {
+    width: '100%',
     paddingTop: 24,
     flexDirection: 'row',
-    justifyContent: 'flex-end',
+    alignItems: 'center',
   },
   button: {
-    paddingLeft: 8,
+    margin: 6,
   },
 });

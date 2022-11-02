@@ -14,17 +14,10 @@ import {Color, ColorVariant, Typography} from 'src/themes';
 import {
   FilledButton,
   FilledCard,
-  FilledIconButton,
-  LargeTopBar,
-  MediumTopBar,
   OutlinedButton,
-  OutlinedIconButton,
   SmallTopBar,
   SpinnerType1,
   StandardIconButton,
-  TextButton,
-  TonalButton,
-  TonalIconButton,
 } from 'src/components';
 import {loadCardDeckById} from 'src/redux/actions';
 import {cardDeckSelector, requestingDeckSelector} from 'src/redux/selectors';
