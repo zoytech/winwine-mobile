@@ -3,6 +3,7 @@ import {StyleSheet} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import {
+  BlankScreen,
   ComingSoonDialog,
   EndingGameDialog,
   ExitGameDialog,
@@ -77,6 +78,7 @@ export default function RootNavigator() {
             component={ComingSoonDialog}
           />
         </Stack.Group>
+        <Stack.Screen name={ScreenKeys.BLANK} component={BlankScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

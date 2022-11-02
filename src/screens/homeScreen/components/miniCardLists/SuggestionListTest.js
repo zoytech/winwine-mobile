@@ -12,20 +12,13 @@ export default function SuggestionList(props) {
   const [isSelected, setIsSelected] = useState(false);
 
   console.log('selectedChip: ', selectedChip);
-  // useFocusEffect(
-  //   useCallback(hashtagId => {
-  //     const task = InteractionManager.runAfterInteractions(() => {
-  //       handleItemPressed(hashtagId);
-  //     });
-  //     return setSelectedChip(true) && task.cancel();
-  //   }, []),
-  // );
 
   function handleItemPressed(hashtagId) {
     setSelectedChip(hashtagId);
     if (hashtagId === 'HTG2') {
       navigation.navigate({
         name: ScreenKeys.DIALOG_COMING_SOON,
+        selectedChip: defaultChipId,
       });
     }
   }

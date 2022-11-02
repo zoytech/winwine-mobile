@@ -3,6 +3,7 @@ const ScreenKeys = {
   ROOT: 'ROOT',
   MODAL: 'MODAL',
   HOME: 'HOME',
+  BLANK: 'BLANK',
 
   GAME: 'GAME',
   GAME_PLAY: 'GAME/PLAY',

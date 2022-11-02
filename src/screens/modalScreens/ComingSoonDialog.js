@@ -8,7 +8,7 @@ export default function ComingSoonDialog({route, navigation}) {
   function handleMainActionPress() {
     // navigation.navigator({
     //   name: ScreenKeys.HOME,
-    //   params: {isSelected: setIsSelected(!isSelected)},
+    //   params: {selectedChip: route.params.selectedChip},
     //   merge: true,
     // });
     navigation.goBack();

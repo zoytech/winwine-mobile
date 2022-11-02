@@ -6,7 +6,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import {FilledIconButton, OutlinedCard} from 'src/components';
+import {FilledButton, FilledIconButton, OutlinedCard} from 'src/components';
 import {Color, ColorVariant, Typography} from 'src/themes';
 
 const {width: screenWidth} = Dimensions.get('screen');
@@ -48,11 +48,10 @@ export default function MiniCardItem(props) {
           )}
         </View>
         <View style={styles.action}>
-          <FilledIconButton
-            name={'caretright'}
-            contentStyle={Typography.label.small}
-            style={styles.iconContainer}
-            iconStyle={styles.icon}
+          <FilledButton
+            content={'Xem trước'}
+            contentStyle={Typography.label.large}
+            style={styles.button}
             onPress={onButtonPress}
             hitSlop={30}
             // disabled={true}
