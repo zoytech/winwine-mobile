@@ -22,10 +22,6 @@ export function loadCardDeckList() {
       const suggestData = suggestedHashtagData.value?.data;
       const popularData = popularCardDecksData.value?.data;
       const recentlyData = recentlyCardDecksData.value?.data;
-
-      console.log('suggestedHashtagData: ', suggestData);
-      console.log('popularCardDecksData: ', popularData);
-      console.log('recentlyCardDecksData: ', recentlyData);
       dispatch(fetchDecksSuccess({suggestData, popularData, recentlyData}));
     } catch (error) {
       dispatch(fetchDecksError(error));

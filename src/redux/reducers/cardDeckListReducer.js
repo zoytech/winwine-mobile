@@ -19,7 +19,6 @@ function cardDeckListReducer(state = initialState, action) {
         requesting: true,
       };
     case FETCH_DECKS_SUCCESS:
-      console.log('action: ', payload);
       return {
         ...state,
         requesting: false,

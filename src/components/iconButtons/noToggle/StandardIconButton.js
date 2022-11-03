@@ -71,7 +71,6 @@ export default function StandardIconButton(props) {
       ...iconStyle,
     };
     const contentStyles = [contentStyle, rawContentStyle];
-    console.log('contentStyle: ', contentStyles);
     return (
       <>
         <Icon {...iconProps} />

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
@@ -16,7 +16,6 @@ import {
   VerticalCardList,
 } from './components';
 import avatarTest from 'src/assets/images/preview-package/user.png';
-import {DAY_TO_MS} from 'src/constants';
 
 export default function HomeScreen({navigation}) {
   const dispatch = useDispatch();
@@ -26,48 +25,19 @@ export default function HomeScreen({navigation}) {
   const {suggestData, popularData, recentlyData} = cardDeckList;
 
   const updatedTime = new Date();
-  const [time, setTime] = useState(updatedTime);
-  const [title, setTitle] = useState('');
-  const currentTime = time.valueOf();
-  console.log('currentTime: ', currentTime);
-  let morningTime = time.setHours(6, 0, 0).valueOf();
-  console.log('morningTime: ', morningTime);
-  let afternoonTime = time.setHours(12, 0, 0).valueOf();
-  console.log('afternoonTime: ', afternoonTime);
-  let eveningTime = time.setHours(18, 0, 0).valueOf();
-  console.log('eveningTime: ', eveningTime);
-  let tillMorning = morningTime - currentTime;
-  console.log('tillMorning: ', tillMorning);
-  let tillAfternoon = afternoonTime - currentTime;
-  console.log('tillAfternoon: ', tillAfternoon);
-  let tillEvening = eveningTime - currentTime;
-  console.log('tillEvening: ', tillEvening);
+  let currentHr = updatedTime.getHours();
 
-  useEffect(() => {
-    let timerId = setTimeout(() => {
-      setTime(updatedTime);
-    }, DAY_TO_MS);
-    return () => clearTimeout(timerId);
-  }, []);
-
-  useEffect(() => {
-    let timerId = setTimeout(() => {
-      setTitle('Good morning');
-    }, tillMorning);
-    return () => clearTimeout(timerId);
-  }, [tillMorning]);
-  useEffect(() => {
-    let timerId = setTimeout(() => {
-      setTitle('Good afternoon');
-    }, tillAfternoon);
-    return () => clearTimeout(timerId);
-  }, [tillAfternoon]);
-  useEffect(() => {
-    let timerId = setTimeout(() => {
-      setTitle('Good evening');
-    }, tillEvening);
-    return () => clearTimeout(timerId);
-  }, [tillEvening]);
+  const renderTitle = hr => {
+    if (hr >= 6 && hr <= 12) {
+      return 'Good morning';
+    }
+    if (hr >= 12 && hr <= 18) {
+      return 'Good afternoon';
+    }
+    if (hr >= 18 || hr <= 6) {
+      return 'Good evening';
+    }
+  };
 
   useEffect(() => {
     dispatch(loadCardDeckList());
@@ -80,7 +50,7 @@ export default function HomeScreen({navigation}) {
     navigation.setOptions({
       header: () => (
         <CenterAlignedTopBar
-          content={title}
+          content={renderTitle(currentHr)}
           headerTitleStyle={styles.headerTitle}
           trailingIcon={avatarTest}
           onTrailingIconPress={() => alert('test leading button')}
@@ -126,3 +96,102 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
 });
+
+/*
+useEffect(() => {
+    setTimeout(() => {
+      console.log('title: ', title);
+      if (tillMorning < 0 && tillAfternoon > 0) {
+        setTitle('Good morning');
+      }
+      if (tillAfternoon < 0 && tillEvening > 0) {
+        console.log('title: ', title);
+        setTitle('Good afternoon');
+      }
+      if (tillEvening < 0 || tillMorning > 0) {
+        setTitle('Good evening');
+      }
+      setTime(updatedTime);
+    }, DAY_TO_MS);
+  }, [tillAfternoon, tillMorning, tillEvening, updatedTime]);
+ */
+
+/*
+
+
+  // useMemo(() => {
+  //   setTimeout(() => {
+  //     console.log('title: ', title);
+  //     if (tillMorning < 0 && tillAfternoon > 0) {
+  //       return setTitle('Good morning');
+  //     }
+  //     if (tillAfternoon < 0 && tillEvening > 0) {
+  //       console.log('title: ', title);
+  //       return setTitle('Good afternoon');
+  //     }
+  //     if (tillEvening < 0 || tillMorning > 0) {
+  //       return setTitle('Good evening');
+  //     }
+  //     setTime(updatedTime);
+  //   }, DAY_TO_MS);
+  // }, [tillAfternoon, tillMorning, tillEvening, updatedTime]);
+
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setTime(updatedTime);
+  //   }, DAY_TO_MS);
+  // }, [DAY_TO_MS]);
+  //
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setTitle('Good morning');
+  //     setTime(updatedTime);
+  //   }, tillMorning);
+  // }, [tillMorning]);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setTitle('Good afternoon');
+  //     setTime(updatedTime);
+  //   }, tillAfternoon);
+  // }, [tillAfternoon]);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setTitle('Good evening');
+  //     setTime(updatedTime);
+  //   }, tillEvening);
+  // }, [tillEvening]);
+ */
+
+// const currentTimePoint = updatedTime.valueOf();
+// console.log('currentTime: ', currentTimePoint);
+// let turnToMorning = updatedTime.setHours(6, 0, 0);
+// console.log('morningTime: ', turnToMorning);
+// let turnToAfternoon = updatedTime.setHours(12, 0, 0);
+// console.log('afternoonTime: ', turnToAfternoon);
+// let turnToEvening = updatedTime.setHours(18, 0, 0);
+// console.log('eveningTime: ', turnToEvening);
+// let morning = turnToMorning - currentTimePoint;
+// console.log('tillMorning: ', morning);
+// let afternoon = turnToAfternoon - currentTimePoint;
+// console.log('tillAfternoon: ', afternoon);
+// let evening = turnToEvening - currentTimePoint;
+// console.log('tillEvening: ', evening);
+
+// const countTimeToUpdate = () => {
+//   if (morning < 0 && afternoon > 0) {
+//     console.log('afternoon: ', afternoon);
+//     return afternoon;
+//   } else if (afternoon < 0 && evening > 0) {
+//     console.log('evening: ', evening);
+//     return evening;
+//   }
+//   console.log('morning: ', morning);
+//   return morning;
+// };
+
+// useEffect(() => {
+//   setTimeout(() => {
+//     console.log('check');
+//     renderTitle(0);
+//   }, 1000);
+// }, [currentHr]);
