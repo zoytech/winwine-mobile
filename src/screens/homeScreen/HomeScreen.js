@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
@@ -17,60 +17,65 @@ import {
 } from './components';
 import avatarTest from 'src/assets/images/preview-package/user.png';
 
+function renderTitleByTimeSpan() {
+  const updatedTime = new Date();
+  let currentHr = updatedTime.getHours();
+  const MORNING = 6;
+  const NOON = 12;
+  const EVENING = 18;
+  if (currentHr >= MORNING && currentHr <= NOON) {
+    return 'Good morning';
+  } else if (currentHr >= NOON && currentHr <= EVENING) {
+    return 'Good afternoon';
+  }
+  return 'Good evening';
+}
+
 export default function HomeScreen({navigation}) {
+  const scrolling = useRef();
   const dispatch = useDispatch();
   const cardDeckList = useSelector(cardDeckListSelector);
   const requesting = useSelector(requestingDeckListSelector);
-
   const {suggestData, popularData, recentlyData} = cardDeckList;
-
-  const updatedTime = new Date();
-  let currentHr = updatedTime.getHours();
-
-  const renderTitle = hr => {
-    if (hr >= 6 && hr <= 12) {
-      return 'Good morning';
-    }
-    if (hr >= 12 && hr <= 18) {
-      return 'Good afternoon';
-    }
-    if (hr >= 18 || hr <= 6) {
-      return 'Good evening';
-    }
-  };
 
   useEffect(() => {
     dispatch(loadCardDeckList());
     if (requesting === false) {
       SplashScreen.hide();
     }
-  }, [dispatch]);
+  }, [dispatch, requesting]);
 
   useEffect(() => {
     navigation.setOptions({
-      header: () => (
-        <CenterAlignedTopBar
-          content={renderTitle(currentHr)}
-          headerTitleStyle={styles.headerTitle}
-          trailingIcon={avatarTest}
-          onTrailingIconPress={() => alert('test leading button')}
-        />
-      ),
+      header: () => {
+        return (
+          <CenterAlignedTopBar
+            content={renderTitleByTimeSpan()}
+            headerTitleStyle={styles.headerTitle}
+            trailingIcon={avatarTest}
+            onTrailingIconPress={() => alert('test leading button')}
+            ref={scrolling}
+          />
+        );
+      },
     });
   }, [navigation]);
+
+  const onScrollProps = {
+    onScroll: event => scrolling.current.onScroll(event),
+    scrollEventThrottle: 16,
+  };
 
   if (requesting) {
     return <SpinnerType1 />;
   }
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.contentContainer}>
+      <ScrollView
+        {...onScrollProps}
+        contentContainerStyle={styles.contentContainer}>
         <SuggestionList data={suggestData} navigation={navigation} />
-        <SectionHeader
-          content={'Recently'}
-          style={styles.sectionHeader}
-          onPress={() => alert('close')}
-        />
+        <SectionHeader content={'Recently'} style={styles.sectionHeader} />
         <HorizontalCardList data={recentlyData} navigation={navigation} />
         <SectionHeader content={'Popular'} style={styles.sectionHeader} />
         <VerticalCardList data={popularData} navigation={navigation} />

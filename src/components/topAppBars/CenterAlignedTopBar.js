@@ -1,14 +1,31 @@
-import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
-import {Color, ColorVariant, Typography} from 'src/themes';
-import {StandardIconButton} from 'src/components/iconButtons';
+import {Animated, Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {
+  Color,
+  ColorVariant,
+  StateLayers,
+  StateLayersVariant,
+  Typography,
+} from 'src/themes';
+import {StandardIconButton} from 'src/components';
+import {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react';
 
-export default function CenterAlignedTopBar(props) {
+const CenterAlignedTopBar = forwardRef(function CenterAlignedTopBar(
+  props,
+  ref,
+) {
   const {
     content,
     leadingIcon,
     onLeadingIconPress = () => {},
     trailingIcon,
     onTrailingIconPress = () => {},
+    scrollingEvent,
     style,
     contentStyle,
     headerTitleStyle,
@@ -16,11 +33,45 @@ export default function CenterAlignedTopBar(props) {
     ...otherProps
   } = props;
 
-  const {base: surface, onBase: onSurface} = Color.light[ColorVariant.surface];
-  const containerStyle = [styles.container, {backgroundColor: surface}, style];
+  const [colorChange, setColorChange] = useState(false);
+  const translation = useRef(new Animated.Value(0)).current;
+
+  useImperativeHandle(ref, () => ({
+    onScroll: event => {
+      const scrolling = event.nativeEvent.contentOffset.y;
+      if (scrolling < 100) {
+        setColorChange(false);
+      } else {
+        setColorChange(true);
+      }
+    },
+  }));
+
+  useEffect(() => {
+    Animated.timing(translation, {
+      toValue: colorChange ? 100 : 0,
+      duration: 250,
+      useNativeDriver: false,
+    }).start();
+  }, [colorChange, translation]);
+
+  const {base: surfaceColor, onBase: onSurfaceColor} =
+    Color.light[ColorVariant.surface];
+  const level_012 = StateLayers.light[StateLayersVariant.onSurface]?.level_012;
+  const defaultContainerStyle = [
+    styles.container,
+    {
+      backgroundColor: translation.interpolate({
+        inputRange: [0, 100],
+        outputRange: [surfaceColor, level_012],
+      }),
+    },
+    style,
+  ];
+
   const defaultContentStyle = [
     Typography.title.large,
-    {color: onSurface},
+    {color: onSurfaceColor},
     contentStyle,
   ];
 
@@ -38,7 +89,10 @@ export default function CenterAlignedTopBar(props) {
   }
 
   return (
-    <View {...otherProps} style={containerStyle}>
+    <Animated.View
+      {...otherProps}
+      style={defaultContainerStyle}
+      ref={translation}>
       {leadingIcon && (
         <View style={styles.targetSize}>
           <StandardIconButton
@@ -52,9 +106,10 @@ export default function CenterAlignedTopBar(props) {
         <Text style={defaultContentStyle}>{content}</Text>
       </View>
       {renderImagePressable(trailingIcon)}
-    </View>
+    </Animated.View>
   );
-}
+});
+export default CenterAlignedTopBar;
 
 const styles = StyleSheet.create({
   container: {
