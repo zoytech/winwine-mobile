@@ -1,28 +1,37 @@
 import React, {useState, createContext, useContext} from 'react';
 import {FlatList, View, StyleSheet} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import {BasicDialog, SuggestionChip} from 'src/components';
-import {ScreenKeys} from 'src/navigations/ScreenKeys';
+import {BasicDialogProvider} from '../../../modalScreens';
+
+const ToggleContext = createContext();
+const defaultChipId = 'HTG1';
+
+function ComingSoonContent() {
+  const navigation = useNavigation();
+  const {isSelectedChip, setIsSelectedChip} = useContext(ToggleContext);
+
+  function handleMainActionPress() {
+    setIsSelectedChip(defaultChipId);
+    navigation.goBack();
+  }
+
+  return (
+    <BasicDialogProvider
+      headline={'Exit this game ?'}
+      supportingText={'Leave and return to the home screen.'}
+      mainAction={'EXIT'}
+      onMainActionPress={handleMainActionPress}
+    />
+    // <BasicDialog value={{selectedChip, setSelectedChip}}>
+    //   <BasicDialog.Content onMainActionPress={handleMainActionPress} />
+    // </BasicDialog>
+  );
+}
 
 export default function SuggestionList(props) {
   const {style, data, navigation, route, ...otherProps} = props;
-  const defaultChipId = 'HTG1';
   const [selectedChip, setSelectedChip] = useState(defaultChipId);
-  const ToggleContext = createContext();
-
-  function ComingSoonContent() {
-    const {isSelectedChip, setIsSelectedChip} = useContext(ToggleContext);
-
-    function handleMainActionPress() {
-      setIsSelectedChip(defaultChipId);
-      navigation.goBack();
-    }
-
-    return (
-      <BasicDialog.Container value={{selectedChip, setSelectedChip}}>
-        <BasicDialog.Content onMainActionPress={handleMainActionPress} />
-      </BasicDialog.Container>
-    );
-  }
 
   function handleItemPressed(hashtagId) {
     setSelectedChip(hashtagId);

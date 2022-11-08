@@ -1,8 +1,9 @@
-import {createContext, useContext} from 'react';
+import {createContext} from 'react';
 import {StyleSheet} from 'react-native';
 import {Color, ColorVariant} from 'src/themes';
+import {BasicDialog} from 'src/components';
 
-export default function BasicDialog({children}) {
+export default function BasicDialogProvider() {
   return (
     <BasicDialog.Container style={styles.layout}>
       <BasicDialog.Content />

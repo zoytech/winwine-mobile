@@ -48,11 +48,6 @@ export default function MiniCardItem(props) {
               {name}
             </Text>
           )}
-          {tag && (
-            <Text style={[Typography.label.medium, {color: textColor}]}>
-              {tag}
-            </Text>
-          )}
         </View>
         <View style={styles.action}>
           <FilledButton
