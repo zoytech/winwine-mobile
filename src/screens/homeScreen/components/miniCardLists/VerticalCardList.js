@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import MiniCardItem from './miniCardItem';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
+import MiniCardItem from './MiniCardItem';
 
 export default function VerticalCardList(props) {
   const {style, data, navigation, ...otherProps} = props;

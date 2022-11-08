@@ -24,12 +24,12 @@ import {StandardHeader} from '../components';
 const {width: screenWidth} = Dimensions.get('screen');
 
 function GameWaitScreen({navigation, route}) {
-  const {deckId, deckTitle} = route.params;
+  const deckId = route.params?.deckId;
   const cardDeckItem = useSelector(cardDeckSelector);
   const requesting = useSelector(requestingDeckSelector);
   const dispatch = useDispatch();
   const [taskTurn, setTaskTurn] = useState(0);
-  const {cardDeck: name, tag: tag, tasks: tasks = []} = cardDeckItem || {};
+  const {cardDeck: cardDeck, tag: tag, tasks: tasks = []} = cardDeckItem || {};
   const totalTasks = tasks.length;
   const baseColor = Color.light[ColorVariant.surface]?.base;
   const textColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
@@ -42,13 +42,12 @@ function GameWaitScreen({navigation, route}) {
 
   useEffect(() => {
     dispatch(loadCardDeckById(deckId));
-  }, [dispatch]);
+  }, [dispatch, deckId]);
 
   useEffect(() => {
     navigation.setOptions({
       header: () => (
         <SmallTopBar
-          content={deckTitle}
           leadingIcon={'arrowleft'}
           onLeadingIconPress={() => navigation.goBack()}
           renderRightComponents={renderRightComponents}
@@ -62,6 +61,7 @@ function GameWaitScreen({navigation, route}) {
       name: ScreenKeys.GAME_PLAY,
       params: {
         deckId: deckId,
+        deckTitle: cardDeck || '',
       },
     });
   }
@@ -125,7 +125,7 @@ function GameWaitScreen({navigation, route}) {
     <SafeAreaView style={defaultContainerStyle}>
       <ScrollView contentContainerStyle={styles.scrollView}>
         <StandardHeader
-          head={name}
+          head={cardDeck}
           subHeadLeft={tag}
           subHeadRight={`Tổng số ${totalTasks} lá`}
           headStyle={Typography.title.large}

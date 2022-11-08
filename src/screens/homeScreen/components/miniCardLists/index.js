@@ -1,5 +1,4 @@
-import HorizontalCardList from './HorizontalCardList';
-import SuggestionList from './SuggestionListTest';
 import VerticalCardList from './VerticalCardList';
+import HorizontalCardList from './HorizontalCardList';
 
-export {HorizontalCardList, SuggestionList, VerticalCardList};
+export {VerticalCardList, HorizontalCardList};

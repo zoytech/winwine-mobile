@@ -1,3 +1,3 @@
-import {BasicDialog} from './BasicDialog';
+import BasicDialog from './basicDialog/BasicDialog';
 
 export {BasicDialog};

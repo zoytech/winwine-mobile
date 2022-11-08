@@ -34,26 +34,21 @@ const CenterAlignedTopBar = forwardRef(function CenterAlignedTopBar(
   } = props;
 
   const [colorChange, setColorChange] = useState(false);
-  const translation = useRef(new Animated.Value(0)).current;
+  const scrollYContentOffsetRef = useRef(new Animated.Value(0));
+  const scrollYRef = useRef(0);
 
   useImperativeHandle(ref, () => ({
-    onScroll: event => {
-      const scrolling = event.nativeEvent.contentOffset.y;
-      if (scrolling < 100) {
-        setColorChange(false);
-      } else {
-        setColorChange(true);
-      }
-    },
+    onScroll: Animated.event(
+      [{nativeEvent: {contentOffset: {y: scrollYContentOffsetRef.current}}}],
+      {
+        useNativeDriver: false,
+        listener: event => {
+          scrollYRef.current = event.nativeEvent.contentOffset.y;
+          scrollYContentOffsetRef.current = event.nativeEvent.contentOffset.y;
+        },
+      },
+    ),
   }));
-
-  useEffect(() => {
-    Animated.timing(translation, {
-      toValue: colorChange ? 100 : 0,
-      duration: 250,
-      useNativeDriver: false,
-    }).start();
-  }, [colorChange, translation]);
 
   const {base: surfaceColor, onBase: onSurfaceColor} =
     Color.light[ColorVariant.surface];
@@ -61,10 +56,7 @@ const CenterAlignedTopBar = forwardRef(function CenterAlignedTopBar(
   const defaultContainerStyle = [
     styles.container,
     {
-      backgroundColor: translation.interpolate({
-        inputRange: [0, 100],
-        outputRange: [surfaceColor, level_012],
-      }),
+      backgroundColor: getAnimatedBackground(),
     },
     style,
   ];
@@ -72,8 +64,23 @@ const CenterAlignedTopBar = forwardRef(function CenterAlignedTopBar(
   const defaultContentStyle = [
     Typography.title.large,
     {color: onSurfaceColor},
+
     contentStyle,
   ];
+
+  function getAnimatedBackground() {
+    if (
+      scrollYRef.current > 100 ||
+      !scrollYContentOffsetRef.current ||
+      !scrollYContentOffsetRef.current.interpolate
+    ) {
+      return 'black';
+    }
+    return scrollYContentOffsetRef.current.interpolate({
+      inputRange: [0, 100],
+      outputRange: [surfaceColor, level_012],
+    });
+  }
 
   function renderImagePressable(avatar) {
     const getPressStyle = ({pressed}) => {
@@ -89,10 +96,7 @@ const CenterAlignedTopBar = forwardRef(function CenterAlignedTopBar(
   }
 
   return (
-    <Animated.View
-      {...otherProps}
-      style={defaultContainerStyle}
-      ref={translation}>
+    <Animated.View {...otherProps} style={defaultContainerStyle}>
       {leadingIcon && (
         <View style={styles.targetSize}>
           <StandardIconButton

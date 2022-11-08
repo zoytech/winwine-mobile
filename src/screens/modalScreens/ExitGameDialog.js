@@ -1,4 +1,4 @@
-import {BasicDialog} from 'src/components';
+import {BasicDialogContainer} from 'src/components';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
 
 export default function ExitGameDialog({routes, navigation}) {
@@ -13,7 +13,7 @@ export default function ExitGameDialog({routes, navigation}) {
   }
 
   return (
-    <BasicDialog
+    <BasicDialogContainer
       headline={'Exit this game ?'}
       supportingText={'Leave and return to the home screen.'}
       mainAction={'EXIT'}

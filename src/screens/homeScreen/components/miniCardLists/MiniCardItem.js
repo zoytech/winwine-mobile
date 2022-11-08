@@ -6,19 +6,26 @@ import {
   Text,
   View,
 } from 'react-native';
-import {FilledButton, FilledIconButton, OutlinedCard} from 'src/components';
+import {Icon} from 'react-native-vector-icons/AntDesign';
+import {FilledButton, OutlinedCard} from 'src/components';
 import {Color, ColorVariant, Typography} from 'src/themes';
 
 const {width: screenWidth} = Dimensions.get('screen');
+
+const IconByTagName = {
+  '18+': 'arrowleft',
+};
 
 export default function MiniCardItem(props) {
   const {
     data,
     style,
+    tagName,
     onImageAreaPress = () => {},
     onButtonPress = () => {},
   } = props;
 
+  const iconName = IconByTagName[tagName];
   const {cardDeck: name, tag: tag, uri: uri} = data || {};
   const textColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
 

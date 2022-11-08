@@ -32,7 +32,9 @@ function renderTitleByTimeSpan() {
 }
 
 export default function HomeScreen({navigation}) {
-  const scrolling = useRef();
+  const topBarRef = useRef({
+    onScroll: () => {},
+  });
   const dispatch = useDispatch();
   const cardDeckList = useSelector(cardDeckListSelector);
   const requesting = useSelector(requestingDeckListSelector);
@@ -43,7 +45,7 @@ export default function HomeScreen({navigation}) {
     if (requesting === false) {
       SplashScreen.hide();
     }
-  }, [dispatch, requesting]);
+  }, [dispatch]);
 
   useEffect(() => {
     navigation.setOptions({
@@ -54,17 +56,12 @@ export default function HomeScreen({navigation}) {
             headerTitleStyle={styles.headerTitle}
             trailingIcon={avatarTest}
             onTrailingIconPress={() => alert('test leading button')}
-            ref={scrolling}
+            ref={topBarRef}
           />
         );
       },
     });
   }, [navigation]);
-
-  const onScrollProps = {
-    onScroll: event => scrolling.current.onScroll(event),
-    scrollEventThrottle: 16,
-  };
 
   if (requesting) {
     return <SpinnerType1 />;
@@ -72,7 +69,7 @@ export default function HomeScreen({navigation}) {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
-        {...onScrollProps}
+        onScroll={topBarRef.current.onScroll}
         contentContainerStyle={styles.contentContainer}>
         <SuggestionList data={suggestData} navigation={navigation} />
         <SectionHeader content={'Recently'} style={styles.sectionHeader} />

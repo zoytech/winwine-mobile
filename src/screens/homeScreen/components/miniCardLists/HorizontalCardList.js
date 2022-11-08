@@ -1,6 +1,6 @@
 import React from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
-import MiniCardItem from './miniCardItem';
+import MiniCardItem from './MiniCardItem';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
 
 export default function HorizontalCardList(props) {
