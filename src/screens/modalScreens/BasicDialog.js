@@ -1,12 +1,12 @@
-import {createContext} from 'react';
 import {StyleSheet} from 'react-native';
 import {Color, ColorVariant} from 'src/themes';
 import {BasicDialog} from 'src/components';
 
-export default function BasicDialogProvider() {
+export default function BasicDialogM({route}) {
+  const content = route.params;
   return (
     <BasicDialog.Container style={styles.layout}>
-      <BasicDialog.Content />
+      {content}
     </BasicDialog.Container>
   );
 }

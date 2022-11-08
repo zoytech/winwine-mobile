@@ -1,4 +1,4 @@
-import BasicDialogProvider, {useBasicDialogContext} from './BasicDialogContext';
+import BasicDialogM from './BasicDialog';
 import EndingGameDialog from './endingGameDialog';
 
-export {EndingGameDialog, BasicDialogProvider, useBasicDialogContext};
+export {EndingGameDialog, BasicDialogM};

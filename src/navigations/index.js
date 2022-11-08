@@ -10,6 +10,7 @@ import {
 } from 'src/screens';
 import {ScreenKeys} from './ScreenKeys';
 import {BasicDialog, CenterAlignedTopBar, SmallTopBar} from 'src/components';
+import BasicDialogM from '../screens/modalScreens/BasicDialog';
 
 const Stack = createNativeStackNavigator();
 
@@ -63,7 +64,7 @@ export default function RootNavigator() {
         </Stack.Group>
         <Stack.Screen
           name={ScreenKeys.BASIC_DIALOG}
-          component={BasicDialog.Content}
+          component={BasicDialogM}
           options={{...modalScreenProps}}
         />
         <Stack.Screen name={ScreenKeys.BLANK} component={BlankScreen} />

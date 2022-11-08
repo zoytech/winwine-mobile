@@ -1,31 +1,19 @@
-import React, {useState, createContext, useContext} from 'react';
-import {FlatList, View, StyleSheet} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import React, {createContext, useState} from 'react';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {BasicDialog, SuggestionChip} from 'src/components';
-import {BasicDialogProvider} from '../../../modalScreens';
+import {ScreenKeys} from '../../../../navigations/ScreenKeys';
 
 const ToggleContext = createContext();
 const defaultChipId = 'HTG1';
 
-function ComingSoonContent() {
-  const navigation = useNavigation();
-  const {isSelectedChip, setIsSelectedChip} = useContext(ToggleContext);
-
-  function handleMainActionPress() {
-    setIsSelectedChip(defaultChipId);
-    navigation.goBack();
-  }
-
+function ComingSoonContent({onMainActionPress}) {
   return (
-    <BasicDialogProvider
+    <BasicDialog.Content
       headline={'Exit this game ?'}
       supportingText={'Leave and return to the home screen.'}
       mainAction={'EXIT'}
-      onMainActionPress={handleMainActionPress}
+      onMainActionPress={onMainActionPress}
     />
-    // <BasicDialog value={{selectedChip, setSelectedChip}}>
-    //   <BasicDialog.Content onMainActionPress={handleMainActionPress} />
-    // </BasicDialog>
   );
 }
 
@@ -33,27 +21,48 @@ export default function SuggestionList(props) {
   const {style, data, navigation, route, ...otherProps} = props;
   const [selectedChip, setSelectedChip] = useState(defaultChipId);
 
+  function handleMainDialogPress() {
+    setSelectedChip(defaultChipId);
+    navigation.goBack();
+  }
+
   function handleItemPressed(hashtagId) {
     setSelectedChip(hashtagId);
+    const navigate = navigation.navigate;
     if (hashtagId === 'HTG2') {
-      return <ComingSoonContent />;
+      navigate({
+        name: ScreenKeys.BASIC_DIALOG,
+        params: {
+          content: (
+            <ComingSoonContent onMainActionPress={handleMainDialogPress} />
+          ),
+        },
+      });
+    } else {
+      navigate({
+        name: ScreenKeys.BASIC_DIALOG,
+        params: {
+          content: (
+            <View>
+              <Text>Some other customize view</Text>
+            </View>
+          ),
+        },
+      });
     }
-    return null;
   }
 
   function renderItem({item}, children) {
     const {content, hashtagId} = item || {};
     return (
-      <ToggleContext.Provider>
-        <SuggestionChip
-          {...otherProps}
-          key={hashtagId}
-          content={content}
-          selected={hashtagId === selectedChip}
-          onPress={() => handleItemPressed(hashtagId)}>
-          {children}
-        </SuggestionChip>
-      </ToggleContext.Provider>
+      <SuggestionChip
+        {...otherProps}
+        key={hashtagId}
+        content={content}
+        selected={hashtagId === selectedChip}
+        onPress={() => handleItemPressed(hashtagId)}>
+        {children}
+      </SuggestionChip>
     );
   }
 
