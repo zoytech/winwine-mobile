@@ -44,9 +44,9 @@ function getPartByHour(hour) {
   }
   const validParts = PartTimelines.filter(partName => {
     const part = PartConfigs[partName];
-    return part.startHour < hour;
+    return part.startHour <= hour;
   });
-  return validParts ? PartConfigs[validParts[0]] : null;
+  return validParts ? PartConfigs[validParts[validParts.length - 1]] : null;
 }
 
 function getNextPart(currentPartName) {
@@ -78,8 +78,8 @@ function getDelayTimeout() {
   if (currentPart.name !== PartName.NIGHT) {
     nextTimeDate.setDate(nextTimeDate.getDate() - 1);
   }
-  nextTimeDate.setHours(nextPart.startHour, 0, 0, 0);
 
+  nextTimeDate.setHours(nextPart.startHour, 0, 0, 0);
   return nextTimeDate - nowDate;
 }
 
@@ -91,13 +91,16 @@ export default function usePartOfDay() {
 
   useEffect(() => {
     return () => {
+      // console.log('before timer.current: ', timer.current);
       clearTimeout(timer.current);
+      // console.log('after timer.current: ', timer.current);
     };
   }, []);
 
   useEffect(() => {
     clearTimeout(timer.current);
     const timeout = getDelayTimeout();
+    // console.log('timeout: ', timeout);
     const nextPart = getNextPart(currentPart);
     timer.current = setTimeout(() => {
       setCurrentPart(nextPart);

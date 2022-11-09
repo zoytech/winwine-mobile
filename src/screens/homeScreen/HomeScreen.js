@@ -54,7 +54,7 @@ export default function HomeScreen({navigation}) {
       header: () => {
         return (
           <CenterAlignedTopBar
-            content={nextPart.greetingContent}
+            content={currentPart.greetingContent}
             headerTitleStyle={styles.headerTitle}
             trailingIcon={avatarTest}
             onTrailingIconPress={() => alert('test leading button')}
