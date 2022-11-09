@@ -13,6 +13,7 @@ import {
   HorizontalCardList,
   SectionHeader,
   SuggestionList,
+  usePartOfDay,
   VerticalCardList,
 } from './components';
 import avatarTest from 'src/assets/images/preview-package/user.png';
@@ -38,6 +39,7 @@ export default function HomeScreen({navigation}) {
   const dispatch = useDispatch();
   const cardDeckList = useSelector(cardDeckListSelector);
   const requesting = useSelector(requestingDeckListSelector);
+  const {currentPart, nextPart} = usePartOfDay();
   const {suggestData, popularData, recentlyData} = cardDeckList;
 
   useEffect(() => {
@@ -52,7 +54,7 @@ export default function HomeScreen({navigation}) {
       header: () => {
         return (
           <CenterAlignedTopBar
-            content={renderTitleByTimeSpan()}
+            content={nextPart.greetingContent}
             headerTitleStyle={styles.headerTitle}
             trailingIcon={avatarTest}
             onTrailingIconPress={() => alert('test leading button')}

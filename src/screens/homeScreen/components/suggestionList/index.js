@@ -1,3 +1,3 @@
-import SuggestionList from './SuggestionListTest';
+import SuggestionList from './SuggestionList';
 
 export {SuggestionList};

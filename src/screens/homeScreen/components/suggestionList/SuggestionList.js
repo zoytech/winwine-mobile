@@ -2,26 +2,31 @@ import React, {useState} from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
 import {SuggestionChip} from 'src/components';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
+import ComingSoonDialog from './ComingSoonDialog';
 
 export default function SuggestionList(props) {
-  const {
-    style,
-    data,
-    navigation,
-    onItemPressed = () => {},
-    ...otherProps
-  } = props;
-  const [selected, setSelected] = useState(null);
+  const {style, data, navigation, route, ...otherProps} = props;
+  const defaultChipId = 'HTG1';
+  const [selectedChip, setSelectedChip] = useState(defaultChipId);
 
-  function handleItemPressed({content, hashtagId}) {
-    setSelected(hashtagId);
+  function handleMainDialogPress() {
+    setSelectedChip(defaultChipId);
+    navigation.goBack();
+  }
+
+  function handleItemPressed(hashtagId) {
+    setSelectedChip(hashtagId);
+    const navigate = navigation.navigate;
     if (hashtagId === 'HTG2') {
-      navigation.navigate({
-        name: ScreenKeys.DIALOG_COMING_SOON,
+      navigate({
+        name: ScreenKeys.BASIC_DIALOG,
+        params: {
+          content: (
+            <ComingSoonDialog onMainActionPress={handleMainDialogPress} />
+          ),
+        },
       });
-      setSelected('HTG1');
     }
-    onItemPressed({content, hashtagId});
   }
 
   function renderItem({item}) {
@@ -31,8 +36,8 @@ export default function SuggestionList(props) {
         {...otherProps}
         key={hashtagId}
         content={content}
-        selected={hashtagId === selected}
-        onPress={() => handleItemPressed({content, hashtagId})}
+        selected={hashtagId === selectedChip}
+        onPress={() => handleItemPressed(hashtagId)}
       />
     );
   }

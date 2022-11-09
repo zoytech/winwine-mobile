@@ -1,13 +1,15 @@
-import {StyleSheet} from 'react-native';
+import {LogBox, StyleSheet} from 'react-native';
 import {Color, ColorVariant} from 'src/themes';
-import {BasicDialog} from 'src/components';
+import {BasicDialogContainer} from 'src/components';
 
-export default function BasicDialogM({route}) {
-  const content = route.params;
+LogBox.ignoreLogs([
+  'Non-serializable values were found in the navigation state',
+]);
+
+export default function BasicDialog({route}) {
+  const {content} = route.params;
   return (
-    <BasicDialog.Container style={styles.layout}>
-      {content}
-    </BasicDialog.Container>
+    <BasicDialogContainer style={styles.layout}>{content}</BasicDialogContainer>
   );
 }
 

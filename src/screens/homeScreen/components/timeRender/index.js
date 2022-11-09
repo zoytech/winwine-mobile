@@ -1,3 +1,3 @@
-import TimeRender from './TimeRender';
+import usePartOfDay from './usePartOfDay';
 
-export {TimeRender};
+export {usePartOfDay};

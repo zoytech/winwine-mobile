@@ -1,4 +1,4 @@
-import BasicDialogM from './BasicDialog';
+import BasicDialog from './BasicDialog';
 import EndingGameDialog from './endingGameDialog';
 
-export {EndingGameDialog, BasicDialogM};
+export {EndingGameDialog, BasicDialog};
