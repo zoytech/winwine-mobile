@@ -8,7 +8,7 @@ export default function VerticalCardList(props) {
 
   const handleImageAreaPress = ({cardDeckId, cardDeck}) => {
     navigation.navigate({
-      name: ScreenKeys.GAME_PLAY,
+      name: ScreenKeys.PLAY_GAME,
       params: {
         deckId: cardDeckId || '',
         deckTitle: cardDeck || '',
@@ -17,7 +17,7 @@ export default function VerticalCardList(props) {
   };
   const handleButtonPress = ({cardDeckId, cardDeck}) => {
     navigation.navigate({
-      name: ScreenKeys.GAME_WAIT,
+      name: ScreenKeys.WAIT_GAME,
       params: {
         deckId: cardDeckId || '',
         deckTitle: cardDeck || '',

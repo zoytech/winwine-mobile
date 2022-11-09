@@ -22,6 +22,7 @@ import {
 import {loadCardDeckById} from 'src/redux/actions';
 import {cardDeckSelector, requestingDeckSelector} from 'src/redux/selectors';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
+import {EndingGameDialog, ExitGameDialog} from './components';
 
 const screenWidth = Dimensions.get('screen').width;
 export default function GamePlayScreen({navigation, route}) {
@@ -33,12 +34,6 @@ export default function GamePlayScreen({navigation, route}) {
   const [taskTurn, setTaskTurn] = useState(0);
   const {cardDeck: name, tasks: tasks = []} = cardDeckItem || {};
   const totalTasks = tasks.length;
-  const baseColor = Color.light[ColorVariant.surface]?.base;
-  const textColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
-  const defaultContainerStyle = [
-    {backgroundColor: baseColor},
-    styles.container,
-  ];
 
   useFocusEffect(
     useCallback(() => {
@@ -62,6 +57,12 @@ export default function GamePlayScreen({navigation, route}) {
     });
   }, [navigation]);
 
+  const baseColor = Color.light[ColorVariant.surface]?.base;
+  const textColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
+  const defaultContainerStyle = [
+    {backgroundColor: baseColor},
+    styles.container,
+  ];
   const textStyles = [{color: textColor}, styles.text];
 
   function handleLookBackButtonPressed() {
@@ -72,12 +73,49 @@ export default function GamePlayScreen({navigation, route}) {
     taskTurn !== totalTasks - 1 && setTaskTurn(taskTurn + 1);
   }
 
-  function handleNavigateToGameEnd() {
+  function handleNavigateEndGameDialog() {
+    const handleMainDialogPress = () => {
+      navigation.navigate({
+        name: ScreenKeys.HOME,
+      });
+    };
+    const handleSubDialogPress = () => {
+      navigation.goBack();
+    };
     navigation.navigate({
-      name: ScreenKeys.DIALOG_GAME_END,
+      name: ScreenKeys.CARD_DIALOG,
       params: {
-        deckId: deckId && deckId,
-        title: name || '',
+        content: (
+          <EndingGameDialog
+            data={cardDeckItem}
+            onMainActionPress={handleMainDialogPress}
+            onSubActionPress={handleSubDialogPress}
+          />
+        ),
+      },
+    });
+  }
+
+  function handleNavigateExitGameDialog() {
+    const handleMainDialogPress = () => {
+      navigation.navigate({
+        name: ScreenKeys.HOME,
+      });
+    };
+
+    const handleSubDialogPress = () => {
+      navigation.goBack();
+    };
+
+    navigation.navigate({
+      name: ScreenKeys.BASIC_DIALOG,
+      params: {
+        content: (
+          <ExitGameDialog
+            onMainActionPress={handleMainDialogPress}
+            onSubActionPress={handleSubDialogPress}
+          />
+        ),
       },
     });
   }
@@ -87,17 +125,12 @@ export default function GamePlayScreen({navigation, route}) {
       <>
         <StandardIconButton
           name={'ellipsis1'}
-          onPress={handleNavigateToGameEnd}
+          onPress={handleNavigateExitGameDialog}
           style={[iconStyle, styles.headerButtonIcon]}
         />
         <StandardIconButton
           name={'ellipsis1'}
-          onPress={handleNavigateToGameEnd}
-          style={[iconStyle, styles.headerButtonIcon]}
-        />
-        <StandardIconButton
-          name={'ellipsis1'}
-          onPress={handleNavigateToGameEnd}
+          onPress={handleNavigateEndGameDialog}
           style={[iconStyle, styles.headerButtonIcon]}
         />
       </>
@@ -118,14 +151,9 @@ export default function GamePlayScreen({navigation, route}) {
           style={styles.button}
           onPress={
             taskTurn === totalTasks - 1
-              ? handleNavigateToGameEnd
+              ? handleNavigateEndGameDialog
               : handleContinueButtonPressed
           }
-        />
-        <OutlinedButton
-          content={'End'}
-          style={styles.button}
-          onPress={handleNavigateToGameEnd}
         />
       </View>
     );
@@ -201,3 +229,20 @@ const styles = StyleSheet.create({
     minHeight: 48,
   },
 });
+
+/*
+const handlePressFilledButton = () => {
+    navigation.navigate(ScreenKeys.HOME, {
+      deckId: deckId || '',
+    });
+  };
+  const handlePressOutlinedButton = () => {
+    navigation.navigate({
+      name: ScreenKeys.GAME_PLAY,
+      params: {
+        deckId: deckId || '',
+      },
+      merge: true,
+    });
+  };
+ */

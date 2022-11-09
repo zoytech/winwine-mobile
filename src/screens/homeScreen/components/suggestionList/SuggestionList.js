@@ -14,7 +14,7 @@ export default function SuggestionList(props) {
     navigation.goBack();
   }
 
-  function handleItemPressed(hashtagId) {
+  function handleChipPressed(hashtagId) {
     setSelectedChip(hashtagId);
     const navigate = navigation.navigate;
     if (hashtagId === 'HTG2') {
@@ -37,7 +37,7 @@ export default function SuggestionList(props) {
         key={hashtagId}
         content={content}
         selected={hashtagId === selectedChip}
-        onPress={() => handleItemPressed(hashtagId)}
+        onPress={() => handleChipPressed(hashtagId)}
       />
     );
   }

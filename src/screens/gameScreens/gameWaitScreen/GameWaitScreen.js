@@ -58,7 +58,7 @@ function GameWaitScreen({navigation, route}) {
 
   function handlePressFilledButton() {
     navigation.navigate({
-      name: ScreenKeys.GAME_PLAY,
+      name: ScreenKeys.PLAY_GAME,
       params: {
         deckId: deckId,
         deckTitle: cardDeck || '',
@@ -86,7 +86,6 @@ function GameWaitScreen({navigation, route}) {
       <>
         <StandardIconButton
           name={'ellipsis1'}
-          onPress={handleTestDialogButton}
           style={[iconStyle, styles.headerButtonIcon]}
         />
       </>

@@ -1,16 +1,16 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import {
+  BasicDialog,
   BlankScreen,
+  CardDialog,
   GamePlayScreen,
   GameWaitScreen,
   HomeScreen,
 } from 'src/screens';
 import {ScreenKeys} from './ScreenKeys';
-import {BasicDialog, CenterAlignedTopBar, SmallTopBar} from 'src/components';
-import BasicDialogM from '../screens/modalScreens/BasicDialog';
+import {CenterAlignedTopBar, SmallTopBar} from 'src/components';
 
 const Stack = createNativeStackNavigator();
 
@@ -44,7 +44,7 @@ export default function RootNavigator() {
             }}
           />
           <Stack.Screen
-            name={ScreenKeys.GAME_WAIT}
+            name={ScreenKeys.WAIT_GAME}
             component={GameWaitScreen}
             options={{
               ...headerProps,
@@ -53,7 +53,7 @@ export default function RootNavigator() {
             }}
           />
           <Stack.Screen
-            name={ScreenKeys.GAME_PLAY}
+            name={ScreenKeys.PLAY_GAME}
             component={GamePlayScreen}
             options={{
               ...headerProps,
@@ -62,33 +62,15 @@ export default function RootNavigator() {
             }}
           />
         </Stack.Group>
-        <Stack.Screen
-          name={ScreenKeys.BASIC_DIALOG}
-          component={BasicDialogM}
-          options={{...modalScreenProps}}
-        />
+        <Stack.Group screenOptions={{...modalScreenProps}}>
+          <Stack.Screen
+            name={ScreenKeys.BASIC_DIALOG}
+            component={BasicDialog}
+          />
+          <Stack.Screen name={ScreenKeys.CARD_DIALOG} component={CardDialog} />
+        </Stack.Group>
         <Stack.Screen name={ScreenKeys.BLANK} component={BlankScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  cardOverlay: {
-    opacity: 0.5,
-    backgroundColor: 'black',
-    height: '100%',
-  },
-});
-
-// <Stack.Screen
-//     name={ScreenKeys.GAME_END}
-//     component={EndingGameDialog}
-//     mode={'modal'}
-//     options={{
-//         presentation: 'transparentModal',
-//         headerShown: false,
-//         cardOverlayEnabled: true,
-//         cardStyle: {backgroundColor: 'transparent'},
-//     }}
-// />

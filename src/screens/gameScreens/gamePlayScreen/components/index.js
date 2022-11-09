@@ -1,3 +1,4 @@
 import ExitGameDialog from './ExitGameDialog';
+import EndingGameDialog from './EndingGameDialog';
 
-export {ExitGameDialog};
+export {ExitGameDialog, EndingGameDialog};

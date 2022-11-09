@@ -44,7 +44,7 @@ export default function EndingGameDialog({navigation, route}) {
   };
   const handlePressOutlinedButton = () => {
     navigation.navigate({
-      name: ScreenKeys.GAME_PLAY,
+      name: ScreenKeys.PLAY_GAME,
       params: {
         deckId: deckId || '',
       },
