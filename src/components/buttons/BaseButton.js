@@ -10,11 +10,11 @@ import {
 
 function generateStateStyles(pressed, isDisabled, colorVariant) {
   if (isDisabled) {
-    const level_088 = StateLayers.light[StateLayersVariant.surface]?.level_088;
-    const onSurface = Color.light[ColorVariant.surface]?.onBase;
+    const {level_012: layerColor, level_038: textColor} =
+      StateLayers.light[StateLayersVariant.onSurface];
     return {
-      containerStyle: {backgroundColor: level_088},
-      contentStyle: {color: onSurface},
+      containerStyle: {backgroundColor: layerColor},
+      contentStyle: {color: textColor},
     };
   }
   const {onBase: onBaseColor, base: baseColor} = Color.light[colorVariant];

@@ -18,20 +18,6 @@ import {
 } from './components';
 import avatarTest from 'src/assets/images/preview-package/user.png';
 
-function renderTitleByTimeSpan() {
-  const updatedTime = new Date();
-  let currentHr = updatedTime.getHours();
-  const MORNING = 6;
-  const NOON = 12;
-  const EVENING = 18;
-  if (currentHr >= MORNING && currentHr <= NOON) {
-    return 'Good morning';
-  } else if (currentHr >= NOON && currentHr <= EVENING) {
-    return 'Good afternoon';
-  }
-  return 'Good evening';
-}
-
 export default function HomeScreen({navigation}) {
   const topBarRef = useRef({
     onScroll: () => {},
@@ -102,22 +88,19 @@ const styles = StyleSheet.create({
 });
 
 /*
-useEffect(() => {
-    setTimeout(() => {
-      console.log('title: ', title);
-      if (tillMorning < 0 && tillAfternoon > 0) {
-        setTitle('Good morning');
-      }
-      if (tillAfternoon < 0 && tillEvening > 0) {
-        console.log('title: ', title);
-        setTitle('Good afternoon');
-      }
-      if (tillEvening < 0 || tillMorning > 0) {
-        setTitle('Good evening');
-      }
-      setTime(updatedTime);
-    }, DAY_TO_MS);
-  }, [tillAfternoon, tillMorning, tillEvening, updatedTime]);
+function renderTitleByTimeSpan() {
+  const updatedTime = new Date();
+  let currentHr = updatedTime.getHours();
+  const MORNING = 6;
+  const NOON = 12;
+  const EVENING = 18;
+  if (currentHr >= MORNING && currentHr <= NOON) {
+    return 'Good morning';
+  } else if (currentHr >= NOON && currentHr <= EVENING) {
+    return 'Good afternoon';
+  }
+  return 'Good evening';
+}
  */
 
 /*

@@ -7,7 +7,7 @@ import {
   Typography,
 } from 'src/themes';
 import {StandardIconButton} from 'src/components';
-import {forwardRef, useImperativeHandle, useRef, useState} from 'react';
+import {forwardRef, useImperativeHandle, useRef} from 'react';
 
 const CenterAlignedTopBar = forwardRef(function CenterAlignedTopBar(
   props,
@@ -26,7 +26,6 @@ const CenterAlignedTopBar = forwardRef(function CenterAlignedTopBar(
     children,
     ...otherProps
   } = props;
-
   const scrollYContentOffsetRef = useRef(new Animated.Value(0)).current;
 
   useImperativeHandle(ref, () => ({
@@ -40,7 +39,7 @@ const CenterAlignedTopBar = forwardRef(function CenterAlignedTopBar(
 
   const {base: surfaceColor, onBase: onSurfaceColor} =
     Color.light[ColorVariant.surface];
-  const layerColor = StateLayers.light[StateLayersVariant.surface]?.level_088;
+  const baseColor = Color.light[ColorVariant.secondary]?.container;
   const defaultContainerStyle = [
     styles.container,
     {
@@ -59,7 +58,8 @@ const CenterAlignedTopBar = forwardRef(function CenterAlignedTopBar(
   function getAnimatedBackground() {
     return scrollYContentOffsetRef.interpolate({
       inputRange: [0, 100],
-      outputRange: [surfaceColor, layerColor],
+      outputRange: [surfaceColor, baseColor],
+      extrapolate: 'clamp',
     });
   }
 

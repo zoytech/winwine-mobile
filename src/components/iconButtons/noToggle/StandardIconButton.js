@@ -20,7 +20,7 @@ function getStateStyles(isPressed, isDisabled, colorVariant) {
   const {onBase: onBaseColor} = Color.light[colorVariant];
   if (isPressed) {
     const layerColor =
-      StateLayers.light[StateLayersVariant.onSurfaceVar]?.level_088;
+      StateLayers.light[StateLayersVariant.onSurfaceVar]?.level_012;
     return {
       containerStyle: {
         backgroundColor: layerColor,

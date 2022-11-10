@@ -7,22 +7,23 @@ import DefaultIconButtonStyle from './defaultIconButtonStyle';
 
 function getStateStyles(isPressed, isDisabled, colorVariant) {
   if (isDisabled) {
-    const {level_038, level_012} =
+    const {level_012: layerColor, level_038: textColor} =
       StateLayers.light[StateLayersVariant.onSurface];
     return {
       containerStyle: {
         backgroundColor: 'transparent',
-        borderColor: level_012,
+        borderColor: layerColor,
         borderWidth: 0.5,
       },
-      contentStyle: {color: level_038},
-      iconColor: level_038,
+      contentStyle: {color: textColor},
+      iconColor: textColor,
     };
   }
   const {onBase: onBaseColor} = Color.light[colorVariant];
   const {base: baseOutlineColor} = Color.light[ColorVariant.outline];
   if (isPressed) {
-    const layerColor = StateLayers.light[StateLayersVariant.outline]?.level_088;
+    const layerColor =
+      StateLayers.light[StateLayersVariant.onSurface]?.level_012;
     return {
       containerStyle: {
         backgroundColor: layerColor,

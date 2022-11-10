@@ -27,17 +27,18 @@ const StateLayersVariant = {
 };
 
 function generateStateLayerLevel(color) {
+  const colorCode = color || '';
   return {
-    level_008: hexToRgba(color, opacity_008),
-    level_012: hexToRgba(color, opacity_012),
-    level_016: hexToRgba(color, opacity_016),
-    level_032: hexToRgba(color, opacity_032),
-    level_038: hexToRgba(color, opacity_038),
-    level_068: hexToRgba(color, 1 - opacity_032),
-    level_084: hexToRgba(color, 1 - opacity_016),
-    level_088: hexToRgba(color, 1 - opacity_012),
-    level_092: hexToRgba(color, 1 - opacity_008),
-    level_100: hexToRgba(color, 1),
+    level_008: hexToRgba(colorCode, opacity_008),
+    level_012: hexToRgba(colorCode, opacity_012),
+    level_016: hexToRgba(colorCode, opacity_016),
+    level_032: hexToRgba(colorCode, opacity_032),
+    level_038: hexToRgba(colorCode, opacity_038),
+    level_068: hexToRgba(colorCode, 1 - opacity_032),
+    level_084: hexToRgba(colorCode, 1 - opacity_016),
+    level_088: hexToRgba(colorCode, 1 - opacity_012),
+    level_092: hexToRgba(colorCode, 1 - opacity_008),
+    level_100: hexToRgba(colorCode, 1),
   };
 }
 

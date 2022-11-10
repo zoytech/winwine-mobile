@@ -15,6 +15,6 @@ export default function BasicDialog({route}) {
 
 const styles = StyleSheet.create({
   layout: {
-    backgroundColor: Color.light[ColorVariant.background].base,
+    // backgroundColor: Color.light[ColorVariant.background].base,
   },
 });
