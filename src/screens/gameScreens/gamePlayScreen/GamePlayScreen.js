@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {
   Dimensions,
+  Pressable,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -167,13 +168,15 @@ export default function GamePlayScreen({navigation, route}) {
             {`Lá thứ ${taskTurn + 1}/${totalTasks}`}
           </Text>
         </View>
-        <View style={styles.gameCardLayout}>
+        <Pressable
+          style={styles.gameCardLayout}
+          onPress={handleContinueButtonPressed}>
           <FilledCard style={styles.gameCard}>
             <Text style={[Typography.body.large, textStyles]}>
               {tasks[taskTurn]?.task}
             </Text>
           </FilledCard>
-        </View>
+        </Pressable>
         {renderBottomButtons()}
       </ScrollView>
     </SafeAreaView>
