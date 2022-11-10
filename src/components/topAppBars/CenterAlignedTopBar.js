@@ -7,13 +7,7 @@ import {
   Typography,
 } from 'src/themes';
 import {StandardIconButton} from 'src/components';
-import {
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from 'react';
+import {forwardRef, useImperativeHandle, useRef, useState} from 'react';
 
 const CenterAlignedTopBar = forwardRef(function CenterAlignedTopBar(
   props,
@@ -33,19 +27,13 @@ const CenterAlignedTopBar = forwardRef(function CenterAlignedTopBar(
     ...otherProps
   } = props;
 
-  const [colorChange, setColorChange] = useState(false);
-  const scrollYContentOffsetRef = useRef(new Animated.Value(0));
-  const scrollYRef = useRef(0);
+  const scrollYContentOffsetRef = useRef(new Animated.Value(0)).current;
 
   useImperativeHandle(ref, () => ({
     onScroll: Animated.event(
-      [{nativeEvent: {contentOffset: {y: scrollYContentOffsetRef.current}}}],
+      [{nativeEvent: {contentOffset: {y: scrollYContentOffsetRef}}}],
       {
         useNativeDriver: false,
-        listener: event => {
-          scrollYRef.current = event.nativeEvent.contentOffset.y;
-          scrollYContentOffsetRef.current = event.nativeEvent.contentOffset.y;
-        },
       },
     ),
   }));
@@ -69,14 +57,7 @@ const CenterAlignedTopBar = forwardRef(function CenterAlignedTopBar(
   ];
 
   function getAnimatedBackground() {
-    if (
-      scrollYRef.current > 100 ||
-      !scrollYContentOffsetRef.current ||
-      !scrollYContentOffsetRef.current.interpolate
-    ) {
-      return 'black';
-    }
-    return scrollYContentOffsetRef.current.interpolate({
+    return scrollYContentOffsetRef.interpolate({
       inputRange: [0, 100],
       outputRange: [surfaceColor, level_012],
     });
