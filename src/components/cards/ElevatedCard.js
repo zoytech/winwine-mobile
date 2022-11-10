@@ -1,25 +1,24 @@
 import React from 'react';
-import {Shadow} from 'react-native-shadow-2';
-import {ShadowPresets, SurfacesColor} from 'src/themes';
+import {SurfacesColor} from 'src/themes';
 import DefaultCardStyle from './defaultCardStyle';
+import {View} from 'react-native';
 
 export default function ElevatedCard(props) {
   const {style, containerStyle, children, ...otherProps} = props;
 
-  const shadowProps = ShadowPresets.normal;
   const surfaceColor = SurfacesColor.light?.surface1;
   const childrenStyle = [
     DefaultCardStyle.container,
-    {backgroundColor: surfaceColor},
+    {
+      backgroundColor: surfaceColor,
+      elevation: 3,
+      borderRadius: 1,
+    },
     style,
   ];
   return (
-    <Shadow
-      {...otherProps}
-      {...shadowProps}
-      style={childrenStyle}
-      containerStyle={containerStyle}>
+    <View {...otherProps} style={childrenStyle}>
       {children}
-    </Shadow>
+    </View>
   );
 }
