@@ -1,20 +1,18 @@
 import React from 'react';
 import {View} from 'react-native';
-import {StateLayers, StateLayersVariant} from 'src/themes';
+import {Color, ColorVariant} from 'src/themes';
 import DefaultCardStyle from './defaultCardStyle';
 
 export default function OutlinedCard(props) {
   const {style, children, ...otherProps} = props;
 
-  const layerColor = StateLayers.light[StateLayersVariant.outline]?.level_012;
-  const layerBackgroundC =
-    StateLayers.light[StateLayersVariant.surface]?.level_012;
-
+  const outlineColor = Color.light[ColorVariant.outline]?.base;
+  const surfaceColor = Color.light[ColorVariant.surface]?.base;
   const containerStyle = [
     DefaultCardStyle.container,
     {
-      backgroundColor: layerBackgroundC,
-      borderColor: layerColor,
+      backgroundColor: surfaceColor,
+      borderColor: outlineColor,
       borderWidth: 0.5,
     },
     style,
@@ -25,8 +23,3 @@ export default function OutlinedCard(props) {
     </View>
   );
 }
-
-/*
-const outlineColor = Color.light[ColorVariant.outline]?.base;
-  const surfaceColor = Color.light[ColorVariant.surface]?.base;
- */
