@@ -27,8 +27,6 @@ export default function SecondaryChip(props) {
   } = props;
 
   const elevationVariant = Elevations.light,
-    stateLayersOnSecondary = StateLayersVariant.secondaryContainer,
-    stateLayersOnSurface = StateLayersVariant.onSurface,
     shadowStyle = ShadowPresets.normal;
 
   function generateStateStyles(pressed, isDisabled, isDragged) {
@@ -36,23 +34,25 @@ export default function SecondaryChip(props) {
     const defaultContentStyle = typographyVariant;
     const {elevation1, elevation2, elevation3} = elevationVariant;
     if (isDisabled) {
-      const {level_012, level_032} = StateLayers.light[stateLayersOnSurface];
+      const {level_088, level_064} =
+        StateLayers.light[StateLayersVariant.surface];
       return {
         containerStyle: [
           defaultContainerStyle,
-          {backgroundColor: level_012},
+          {backgroundColor: level_088},
           style,
         ],
         contentStyle: [
           defaultContentStyle,
-          {color: level_032},
+          {color: level_064},
           rawContentStyle,
         ],
       };
     }
 
     const {container, onContainer} = Color.light[colorVariant];
-    const {level_008, level_016} = StateLayers.light[stateLayersOnSecondary];
+    const {level_008, level_016} =
+      StateLayers.light[StateLayersVariant.secondaryContainer];
     if (pressed) {
       return {
         containerStyle: [

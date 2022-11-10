@@ -5,10 +5,10 @@ import BaseButton from './BaseButton';
 
 function generateStateStyles(pressed, isDisabled, colorVariant) {
   if (isDisabled) {
-    const {level_032} = StateLayers.light[StateLayersVariant.onSurface];
+    const onSurface = Color.light[ColorVariant.surface]?.onBase;
     return {
       containerStyle: {backgroundColor: 'transparent'},
-      contentStyle: {color: level_032},
+      contentStyle: {color: onSurface},
     };
   }
   const {base: baseColor} = Color.light[colorVariant];

@@ -2,11 +2,16 @@ import hexToRgba from 'hex-to-rgba';
 import Color, {ColorVariant} from './color';
 import OpacityLevel from './opacityLevel';
 
-const basePrimaryColor = Color.light[ColorVariant.primary]?.base;
-const surfaceColor = Color.light[ColorVariant.surface]?.base;
-const surfaceVarColor = Color.light[ColorVariant.surfaceVariant]?.base;
-const secondaryContainerColor = Color.light[ColorVariant.secondary]?.container;
-const {opacity_008, opacity_012, opacity_016, opacity_032} = OpacityLevel;
+const {base: basePrimary, onBase: onBasePrimary} =
+  Color.light[ColorVariant.primary];
+const {container: containerSec, onContainer: onContainerSec} =
+  Color.light[ColorVariant.secondary];
+const {base: surface, onBase: onSurface} = Color.light[ColorVariant.surface];
+const {base: surfaceVar, onBase: onSurfaceVar} =
+  Color.light[ColorVariant.surfaceVariant];
+const {base: outline, onBase: onOutline} = Color.light[ColorVariant.outline];
+const {opacity_008, opacity_012, opacity_016, opacity_032, opacity_038} =
+  OpacityLevel;
 
 const StateLayersVariant = {
   primary: 'primary',
@@ -15,69 +20,58 @@ const StateLayersVariant = {
   onSurface: 'onSurface',
   surfaceVar: 'surfaceVar',
   onSurfaceVar: 'onSurfaceVar',
+  outline: 'outline',
+  onOutline: 'onOutline',
   secondaryContainer: 'secondaryContainer',
   onSecondaryContainer: 'onSecondaryContainer',
 };
 
-//commment: state layer sẽ trừ đi lươơn opacity của màu đó
+function generateStateLayerLevel(color) {
+  return {
+    level_008: hexToRgba(color, opacity_008),
+    level_012: hexToRgba(color, opacity_012),
+    level_016: hexToRgba(color, opacity_016),
+    level_032: hexToRgba(color, opacity_032),
+    level_038: hexToRgba(color, opacity_038),
+    level_068: hexToRgba(color, 1 - opacity_032),
+    level_084: hexToRgba(color, 1 - opacity_016),
+    level_088: hexToRgba(color, 1 - opacity_012),
+    level_092: hexToRgba(color, 1 - opacity_008),
+    level_100: hexToRgba(color, 1),
+  };
+}
 
 const StateLayers = {
   light: {
     [StateLayersVariant.primary]: {
-      level_1000: basePrimaryColor,
-      level_008: hexToRgba(basePrimaryColor, opacity_008),
-      level_012: hexToRgba(basePrimaryColor, opacity_012),
-      level_016: hexToRgba(basePrimaryColor, opacity_016),
-      level_032: hexToRgba(basePrimaryColor, opacity_032),
+      ...generateStateLayerLevel(basePrimary),
     },
     [StateLayersVariant.onPrimary]: {
-      level_100: basePrimaryColor,
-      level_008: hexToRgba(basePrimaryColor, 1 - opacity_008),
-      level_012: hexToRgba(basePrimaryColor, 1 - opacity_012),
-      level_016: hexToRgba(basePrimaryColor, 1 - opacity_016),
-      level_032: hexToRgba(basePrimaryColor, 1 - opacity_032),
+      ...generateStateLayerLevel(onBasePrimary),
     },
     [StateLayersVariant.secondaryContainer]: {
-      level_100: secondaryContainerColor,
-      level_008: hexToRgba(secondaryContainerColor, opacity_008),
-      level_012: hexToRgba(secondaryContainerColor, opacity_012),
-      level_016: hexToRgba(secondaryContainerColor, opacity_016),
-      level_032: hexToRgba(secondaryContainerColor, opacity_032),
+      ...generateStateLayerLevel(containerSec),
     },
     [StateLayersVariant.onSecondaryContainer]: {
-      level_100: secondaryContainerColor,
-      level_008: hexToRgba(secondaryContainerColor, 1 - opacity_008),
-      level_012: hexToRgba(secondaryContainerColor, 1 - opacity_012),
-      level_016: hexToRgba(secondaryContainerColor, 1 - opacity_016),
-      level_032: hexToRgba(secondaryContainerColor, 1 - opacity_032),
+      ...generateStateLayerLevel(onContainerSec),
     },
     [StateLayersVariant.surface]: {
-      level_100: surfaceColor,
-      level_008: hexToRgba(surfaceColor, opacity_008),
-      level_012: hexToRgba(surfaceColor, opacity_012),
-      level_016: hexToRgba(surfaceColor, opacity_016),
-      level_032: hexToRgba(surfaceColor, opacity_032),
+      ...generateStateLayerLevel(surface),
     },
     [StateLayersVariant.onSurface]: {
-      level_100: surfaceColor,
-      level_008: hexToRgba(surfaceColor, 1 - opacity_008),
-      level_012: hexToRgba(surfaceColor, 1 - opacity_012),
-      level_016: hexToRgba(surfaceColor, 1 - opacity_016),
-      level_032: hexToRgba(surfaceColor, 1 - opacity_032),
+      ...generateStateLayerLevel(onSurface),
     },
     [StateLayersVariant.surfaceVar]: {
-      level_100: surfaceVarColor,
-      level_008: hexToRgba(surfaceVarColor, opacity_008),
-      level_012: hexToRgba(surfaceVarColor, opacity_012),
-      level_016: hexToRgba(surfaceVarColor, opacity_016),
-      level_032: hexToRgba(surfaceVarColor, opacity_032),
+      ...generateStateLayerLevel(surfaceVar),
     },
     [StateLayersVariant.onSurfaceVar]: {
-      level_100: surfaceVarColor,
-      level_008: hexToRgba(surfaceVarColor, 1 - opacity_008),
-      level_012: hexToRgba(surfaceVarColor, 1 - opacity_012),
-      level_016: hexToRgba(surfaceVarColor, 1 - opacity_016),
-      level_032: hexToRgba(surfaceVarColor, 1 - opacity_032),
+      ...generateStateLayerLevel(onSurfaceVar),
+    },
+    [StateLayersVariant.outline]: {
+      ...generateStateLayerLevel(outline),
+    },
+    [StateLayersVariant.onOutline]: {
+      ...generateStateLayerLevel(onOutline),
     },
   },
 };

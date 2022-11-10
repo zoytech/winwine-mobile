@@ -1,7 +1,6 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Dimensions,
-  InteractionManager,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -9,15 +8,19 @@ import {
   View,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {useFocusEffect} from '@react-navigation/native';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {
   FilledButton,
   FilledCard,
+  FilledIconButton,
   OutlinedButton,
+  OutlinedIconButton,
   SmallTopBar,
   SpinnerType1,
   StandardIconButton,
+  TextButton,
+  TonalButton,
+  TonalIconButton,
 } from 'src/components';
 import {loadCardDeckById} from 'src/redux/actions';
 import {cardDeckSelector, requestingDeckSelector} from 'src/redux/selectors';
@@ -32,17 +35,17 @@ export default function GamePlayScreen({navigation, route}) {
   const requesting = useSelector(requestingDeckSelector);
   const isFocused = navigation.isFocused();
   const [taskTurn, setTaskTurn] = useState(0);
-  const {cardDeck: name, tasks: tasks = []} = cardDeckItem || {};
+  const {
+    tag: tag,
+    uri: uri,
+    cardDeck: headline,
+    tasks: tasks = [],
+  } = cardDeckItem || {};
   const totalTasks = tasks.length;
 
-  useFocusEffect(
-    useCallback(() => {
-      const task = InteractionManager.runAfterInteractions(() => {
-        dispatch(loadCardDeckById(deckId));
-      });
-      return setTaskTurn(0) && task.cancel();
-    }, [dispatch]),
-  );
+  useEffect(() => {
+    dispatch(loadCardDeckById(deckId));
+  }, [dispatch]);
 
   useEffect(() => {
     navigation.setOptions({
@@ -81,13 +84,16 @@ export default function GamePlayScreen({navigation, route}) {
     };
     const handleSubDialogPress = () => {
       navigation.goBack();
+      setTaskTurn(0);
     };
     navigation.navigate({
       name: ScreenKeys.CARD_DIALOG,
       params: {
         content: (
           <EndingGameDialog
-            data={cardDeckItem}
+            headline={headline}
+            subHeadLeft={tag}
+            media={uri}
             onMainActionPress={handleMainDialogPress}
             onSubActionPress={handleSubDialogPress}
           />
@@ -126,11 +132,6 @@ export default function GamePlayScreen({navigation, route}) {
         <StandardIconButton
           name={'ellipsis1'}
           onPress={handleNavigateExitGameDialog}
-          style={[iconStyle, styles.headerButtonIcon]}
-        />
-        <StandardIconButton
-          name={'ellipsis1'}
-          onPress={handleNavigateEndGameDialog}
           style={[iconStyle, styles.headerButtonIcon]}
         />
       </>

@@ -6,8 +6,7 @@ const screenWidth = Dimensions.get('screen').width;
 function BasicDialogContainer(props) {
   const {layoutStyle, children, ...otherProps} = props;
 
-  const layoutColor =
-    StateLayers.light[StateLayersVariant.onSurface]?.level_032;
+  const layoutColor = StateLayers.light[StateLayersVariant.surface]?.level_068;
   const containerStyle = [
     styles.container,
     {backgroundColor: layoutColor},

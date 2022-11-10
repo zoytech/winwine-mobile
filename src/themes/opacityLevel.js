@@ -6,6 +6,7 @@ const OpacityLevel = {
   opacity_014: 0.14,
   opacity_016: 0.16,
   opacity_032: 0.32,
+  opacity_038: 0.38,
 };
 
 export default OpacityLevel;

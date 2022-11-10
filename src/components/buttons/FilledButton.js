@@ -5,20 +5,19 @@ import BaseButton from './BaseButton';
 
 function generateStateStyles(pressed, isDisabled, colorVariant) {
   if (isDisabled) {
-    const {level_012, level_032} =
-      StateLayers.light[StateLayersVariant.onSurface];
+    const level_088 = StateLayers.light[StateLayersVariant.surface]?.level_088;
+    const onSurface = Color.light[ColorVariant.surface]?.onBase;
     return {
-      containerStyle: {backgroundColor: level_012},
-      contentStyle: {color: level_032},
+      containerStyle: {backgroundColor: level_088},
+      contentStyle: {color: onSurface},
     };
   }
   const {onBase: onBaseColor, base: baseColor} = Color.light[colorVariant];
   if (pressed) {
-    const level_012 =
-      StateLayers.light[StateLayersVariant.onPrimary]?.level_012;
+    const layerColor = StateLayers.light[StateLayersVariant.primary]?.level_088;
 
     return {
-      containerStyle: {backgroundColor: level_012},
+      containerStyle: {backgroundColor: layerColor},
       contentStyle: {color: onBaseColor},
     };
   }

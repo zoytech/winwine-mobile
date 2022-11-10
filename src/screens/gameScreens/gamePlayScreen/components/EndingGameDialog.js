@@ -3,17 +3,23 @@ import {CardDialogContent} from 'src/components';
 
 export default function EndingGameDialog(props) {
   const {
+    headline,
+    subHeadLeft,
+    media,
     onMainActionPress = () => {},
     onSubActionPress = () => {},
-    data,
   } = props;
-  const {tag: tag, uri: uri, cardDeck: headline} = data || {};
+  // const dispatch = useDispatch();
+  // const cardDeckItem = useSelector(cardDeckSelector);
+  // useEffect(() => {
+  //   dispatch(loadCardDeckById(id));
+  // }, [dispatch]);
 
   return (
     <CardDialogContent
       headline={headline}
-      subHeadLeft={tag}
-      media={uri}
+      subHeadLeft={subHeadLeft}
+      media={media}
       supportingText={'Bạn đã chơi hết rồi'}
       mainAction={'Play new deck'}
       subAction={'Play again'}

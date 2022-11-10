@@ -27,8 +27,6 @@ export default function PrimaryChip(props) {
   } = props;
 
   const stateLayersPrimary = StateLayersVariant.primary,
-    stateLayersOnSurface = StateLayersVariant.onSurface,
-    stateLayersOnSurfaceVar = StateLayersVariant.onSurfaceVar,
     shadowStyle = ShadowPresets.normal;
 
   function generateStateStyles(pressed, isDisabled, isDragged) {
@@ -36,22 +34,24 @@ export default function PrimaryChip(props) {
     const defaultContentStyle = typographyVariant;
     const baseColor = Color.light[colorVariant]?.base;
     if (isDisabled) {
-      const {level_012, level_032} = StateLayers.light[stateLayersOnSurface];
+      const {level_088, level_064} =
+        StateLayers.light[StateLayersVariant.surface];
       return {
         containerStyle: [
           defaultContainerStyle,
-          {backgroundColor: level_012},
+          {backgroundColor: level_088},
           style,
         ],
         contentStyle: [
           defaultContentStyle,
-          {color: level_032},
+          {color: level_064},
           rawContentStyle,
         ],
       };
     }
     const {surface1} = SurfacesColor.light;
-    const {level_100} = StateLayers.light[stateLayersOnSurfaceVar];
+    const level_100 =
+      StateLayers.light[StateLayersVariant.surfaceVar]?.level_100;
     const {level_012, level_016} = StateLayers.light[stateLayersPrimary];
     if (pressed) {
       return {

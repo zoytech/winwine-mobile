@@ -40,7 +40,7 @@ const CenterAlignedTopBar = forwardRef(function CenterAlignedTopBar(
 
   const {base: surfaceColor, onBase: onSurfaceColor} =
     Color.light[ColorVariant.surface];
-  const level_012 = StateLayers.light[StateLayersVariant.onSurface]?.level_012;
+  const layerColor = StateLayers.light[StateLayersVariant.surface]?.level_088;
   const defaultContainerStyle = [
     styles.container,
     {
@@ -59,7 +59,7 @@ const CenterAlignedTopBar = forwardRef(function CenterAlignedTopBar(
   function getAnimatedBackground() {
     return scrollYContentOffsetRef.interpolate({
       inputRange: [0, 100],
-      outputRange: [surfaceColor, level_012],
+      outputRange: [surfaceColor, layerColor],
     });
   }
 
