@@ -47,7 +47,6 @@ export default function HeaderShowByScroll(props) {
   }, [navigation]);
 
   function handleScrolling(event) {
-    console.log('event: ', event);
     const scrolling = event.nativeEvent.contentOffset.y;
     if (scrolling < 100) {
       setHeaderShown(true);

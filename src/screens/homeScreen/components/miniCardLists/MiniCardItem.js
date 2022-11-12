@@ -9,11 +9,12 @@ import {
 import {Icon} from 'react-native-vector-icons/AntDesign';
 import {FilledButton, OutlinedCard} from 'src/components';
 import {Color, ColorVariant, Typography} from 'src/themes';
+import {TagName} from '../../../components';
 
 const {width: screenWidth} = Dimensions.get('screen');
 
 const IconByTagName = {
-  '18+': 'arrowleft',
+  '18+': 'tag',
 };
 
 export default function MiniCardItem(props) {
@@ -48,6 +49,7 @@ export default function MiniCardItem(props) {
               {name}
             </Text>
           )}
+          <TagName content={tag} />
         </View>
         <View style={styles.action}>
           <FilledButton

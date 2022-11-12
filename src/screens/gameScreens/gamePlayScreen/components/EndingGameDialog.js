@@ -1,5 +1,6 @@
 import React from 'react';
 import {CardDialogContent} from 'src/components';
+import {TagName} from '../../../components';
 
 export default function EndingGameDialog(props) {
   const {
@@ -9,16 +10,15 @@ export default function EndingGameDialog(props) {
     onMainActionPress = () => {},
     onSubActionPress = () => {},
   } = props;
-  // const dispatch = useDispatch();
-  // const cardDeckItem = useSelector(cardDeckSelector);
-  // useEffect(() => {
-  //   dispatch(loadCardDeckById(id));
-  // }, [dispatch]);
+
+  function renderSubHeadLeft() {
+    return <TagName content={subHeadLeft} />;
+  }
 
   return (
     <CardDialogContent
       headline={headline}
-      subHeadLeft={subHeadLeft}
+      subHeadLeft={renderSubHeadLeft()}
       media={media}
       supportingText={'Bạn đã chơi hết rồi'}
       mainAction={'Play new deck'}

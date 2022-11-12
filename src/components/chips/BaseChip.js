@@ -71,8 +71,6 @@ export default function BaseChip(props) {
   } = props;
 
   function getContainerStyle({pressed}) {
-    console.log(typeof RightComponent);
-
     return [
       defaultChipStyle.container,
       generateStateStyles(selected, pressed, disabled)?.containerStyle,

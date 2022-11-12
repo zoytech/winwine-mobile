@@ -1,6 +1,7 @@
 import {StyleSheet, Text, View} from 'react-native';
 import {FilledIconButton, StandardCard} from 'src/components';
 import {Color, ColorVariant} from 'src/themes';
+import {TagName} from '../../components';
 
 export default function StandardHeader(props) {
   const {
@@ -29,9 +30,12 @@ export default function StandardHeader(props) {
         {head && <Text style={headStyles}>{head}</Text>}
         <View style={styles.subHead}>
           {subHeadLeft && (
-            <Text style={[subHeadStyles, styles.subHeadLeft]}>
-              {subHeadLeft}
-            </Text>
+            <TagName
+              content={subHeadLeft}
+              icon={'tago'}
+              style={styles.subHeadLeft}
+              contentStyle={subHeadStyles}
+            />
           )}
           {subHeadRight && <Text style={subHeadStyles}>{subHeadRight}</Text>}
         </View>
