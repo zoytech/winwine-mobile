@@ -1,11 +1,38 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
 import BaseChip from './BaseChip';
+import {StandardIconButton} from 'src/components';
+import defaultChipStyle from './defaultChipStyle';
+import {Color, ColorVariant} from 'src/themes';
 
 export default function AssistChip(props) {
-  const {style, ...otherProps} = props;
-  return <BaseChip {...otherProps} style={[styles.container, style]} />;
+  const {icon, iconStyle, img, imgStyle, style, ...otherProps} = props;
+
+  function renderLeftComponent() {
+    const primary = Color.light[ColorVariant.primary]?.base;
+    const iconProps = {
+      name: icon,
+      size: 18,
+      color: primary,
+      ...iconStyle,
+    };
+    const {iconContainer, leftComponent} = defaultChipStyle;
+    return (
+      <>
+        {icon && (
+          <StandardIconButton
+            iconStyle={iconProps}
+            style={[iconContainer, leftComponent]}
+          />
+        )}
+      </>
+    );
+  }
+
+  return (
+    <BaseChip
+      {...otherProps}
+      style={style}
+      LeftComponent={renderLeftComponent()}
+    />
+  );
 }
-const styles = StyleSheet.create({
-  container: {},
-});

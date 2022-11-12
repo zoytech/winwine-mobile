@@ -1,6 +1,11 @@
 import React, {useState} from 'react';
 import {Animated, StyleSheet, View} from 'react-native';
-import {SuggestionChip} from 'src/components';
+import {
+  AssistChip,
+  FilterChip,
+  InputChip,
+  SuggestionChip,
+} from 'src/components';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import ComingSoonDialog from './ComingSoonDialog';
 
@@ -32,7 +37,7 @@ export default function SuggestionList(props) {
   function renderItem({item}) {
     const {content, hashtagId} = item || {};
     return (
-      <SuggestionChip
+      <FilterChip
         {...otherProps}
         key={hashtagId}
         content={content}

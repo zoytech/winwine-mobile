@@ -73,9 +73,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     justifyContent: 'center',
   },
-  topAppBar: {
-    // position: 'absolute',
-  },
   sectionHeader: {
     justifyContent: 'flex-start',
   },

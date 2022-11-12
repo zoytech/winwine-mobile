@@ -8,6 +8,7 @@ import {
   StateLayersVariant,
   Typography,
 } from 'src/themes';
+import defaultChipStyle from './defaultChipStyle';
 
 function generateStateStyles(selected, pressed, disabled) {
   if (disabled) {
@@ -69,8 +70,10 @@ export default function BaseChip(props) {
   } = props;
 
   function getContainerStyle({pressed}) {
+    console.log(typeof RightComponent);
+
     return [
-      styles.container,
+      defaultChipStyle.container,
       generateStateStyles(selected, pressed, disabled)?.containerStyle,
       style,
     ];
@@ -82,15 +85,16 @@ export default function BaseChip(props) {
       pressed,
       disabled,
     )?.contentStyle;
+    const contentStyle = [
+      typographyVariant,
+      stateContentStyle,
+      rawContentStyle,
+    ];
     return (
       <>
         {children}
         {LeftComponent}
-        {content && (
-          <Text style={[typographyVariant, stateContentStyle, rawContentStyle]}>
-            {content}
-          </Text>
-        )}
+        {content && <Text style={contentStyle}>{content}</Text>}
         {RightComponent}
       </>
     );
@@ -102,23 +106,3 @@ export default function BaseChip(props) {
     </Pressable>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    height: 32,
-    borderRadius: 8,
-    paddingHorizontal: 16,
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'relative',
-  },
-  stateLayerView: {
-    ...StyleSheet.absoluteFill,
-    backgroundColor: 'red',
-  },
-  icon: {
-    paddingHorizontal: 8,
-    width: 18,
-    height: 18,
-  },
-});

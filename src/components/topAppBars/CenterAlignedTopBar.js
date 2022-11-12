@@ -163,24 +163,3 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
 });
-
-/*
- {trailingLeftIcon && (
-          <StandardIconButton
-            name={trailingLeftIcon}
-            style={styles.trailingIcon}
-          />
-        )}
-        {trailingMiddleIcon && (
-          <StandardIconButton
-            name={trailingMiddleIcon}
-            style={styles.trailingIcon}
-          />
-        )}
-        {trailingRightIcon && (
-          <StandardIconButton
-            name={trailingRightIcon}
-            style={styles.trailingIcon}
-          />
-        )}
- */
