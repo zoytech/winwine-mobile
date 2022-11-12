@@ -36,7 +36,7 @@ const CenterAlignedTopBar = forwardRef(function CenterAlignedTopBar(
 
   const {base: surfaceColor, onBase: onSurfaceColor} =
     Color.light[ColorVariant.surface];
-  const baseColor = Color.light[ColorVariant.secondary]?.container;
+  const baseColor = Color.light[ColorVariant.primary]?.base;
   const topBarAnimation = {
     backgroundColor: scrollYContentOffsetRef.interpolate({
       inputRange: [0, SCROLL_DISTANCE],

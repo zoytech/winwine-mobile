@@ -1,5 +1,5 @@
 import React from 'react';
-import {Pressable, StyleSheet, Text} from 'react-native';
+import {Pressable, Text} from 'react-native';
 
 import {
   Color,
@@ -40,13 +40,14 @@ function generateStateStyles(selected, pressed, disabled) {
     };
   } else {
     const onSurfaceVar = Color.light[ColorVariant.surfaceVariant]?.onBase;
+    const surface = Color.light[ColorVariant.surface]?.base;
     const layerColor =
       StateLayers.light[StateLayersVariant.surfaceVar]?.level_012;
     const outlineColor = Color.light[ColorVariant.outline]?.base;
 
     return {
       containerStyle: {
-        backgroundColor: pressed ? layerColor : 'transparent',
+        backgroundColor: pressed ? layerColor : surface,
         borderColor: outlineColor,
         borderWidth: 0.5,
       },

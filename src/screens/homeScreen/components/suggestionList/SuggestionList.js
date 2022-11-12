@@ -1,11 +1,6 @@
 import React, {useState} from 'react';
 import {Animated, StyleSheet, View} from 'react-native';
-import {
-  AssistChip,
-  FilterChip,
-  InputChip,
-  SuggestionChip,
-} from 'src/components';
+import {SuggestionChip} from 'src/components';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import ComingSoonDialog from './ComingSoonDialog';
 
@@ -37,10 +32,11 @@ export default function SuggestionList(props) {
   function renderItem({item}) {
     const {content, hashtagId} = item || {};
     return (
-      <FilterChip
+      <SuggestionChip
         {...otherProps}
         key={hashtagId}
         content={content}
+        style={styles.chip}
         selected={hashtagId === selectedChip}
         onPress={() => handleChipPressed(hashtagId)}
       />
@@ -69,5 +65,8 @@ const styles = StyleSheet.create({
   },
   separator: {
     width: 12,
+  },
+  chip: {
+    borderRadius: 50,
   },
 });

@@ -12,8 +12,8 @@ export function loadCardDeckList() {
       dispatch(fetchDecksRequest());
       const [
         suggestedHashtagData,
-        popularCardDecksData,
         recentlyCardDecksData,
+        popularCardDecksData,
       ] = await allSettled([
         API.getSuggestedHashtag(),
         API.getRecentlyCardDecks(),

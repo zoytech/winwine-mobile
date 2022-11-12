@@ -35,13 +35,7 @@ export default function HomeScreen({navigation}) {
   useEffect(() => {
     navigation.setOptions({
       header: () => {
-        return (
-          <CustomTopAppBar
-            navigation={navigation}
-            ref={topBarRef}
-            style={styles.topAppBar}
-          />
-        );
+        return <CustomTopAppBar navigation={navigation} ref={topBarRef} />;
       },
     });
   }, [navigation]);
