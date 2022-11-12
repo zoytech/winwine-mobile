@@ -8,26 +8,23 @@ import {
   requestingDeckListSelector,
 } from 'src/redux/selectors';
 import {loadCardDeckList} from 'src/redux/actions';
-import {CenterAlignedTopBar, SpinnerType1} from 'src/components';
+import {SpinnerType1} from 'src/components';
 import {
+  CustomTopAppBar,
   HorizontalCardList,
   SectionHeader,
-  SuggestionList,
-  usePartOfDay,
   VerticalCardList,
 } from './components';
-import avatarTest from 'src/assets/images/preview-package/user.png';
 
 export default function HomeScreen({navigation}) {
   const topBarRef = useRef({
     onScroll: () => {},
   });
+
   const dispatch = useDispatch();
   const cardDeckList = useSelector(cardDeckListSelector);
   const requesting = useSelector(requestingDeckListSelector);
-  const {currentPart, nextPart} = usePartOfDay();
-  const {suggestData, popularData, recentlyData} = cardDeckList;
-
+  const {popularData, recentlyData} = cardDeckList;
   useEffect(() => {
     dispatch(loadCardDeckList());
     if (requesting === false) {
@@ -39,12 +36,10 @@ export default function HomeScreen({navigation}) {
     navigation.setOptions({
       header: () => {
         return (
-          <CenterAlignedTopBar
-            content={currentPart.greetingContent}
-            headerTitleStyle={styles.headerTitle}
-            trailingIcon={avatarTest}
-            onTrailingIconPress={() => alert('test leading button')}
+          <CustomTopAppBar
+            navigation={navigation}
             ref={topBarRef}
+            style={styles.topAppBar}
           />
         );
       },
@@ -59,7 +54,6 @@ export default function HomeScreen({navigation}) {
       <ScrollView
         onScroll={topBarRef.current.onScroll}
         contentContainerStyle={styles.contentContainer}>
-        <SuggestionList data={suggestData} navigation={navigation} />
         <SectionHeader content={'Recently'} style={styles.sectionHeader} />
         <HorizontalCardList data={recentlyData} navigation={navigation} />
         <SectionHeader content={'Popular'} style={styles.sectionHeader} />
@@ -79,10 +73,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     justifyContent: 'center',
   },
-  sectionHeader: {
-    justifyContent: 'flex-start',
+  topAppBar: {
+    // position: 'absolute',
   },
-  headerTitle: {
+  sectionHeader: {
     justifyContent: 'flex-start',
   },
 });

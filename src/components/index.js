@@ -6,3 +6,4 @@ export * from './dialogs';
 export * from './divider';
 export * from './spinner';
 export * from './topAppBars';
+export * from './utils';

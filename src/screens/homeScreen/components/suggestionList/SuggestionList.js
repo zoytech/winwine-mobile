@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {FlatList, StyleSheet, View} from 'react-native';
+import {FlatList, StyleSheet, View, Animated} from 'react-native';
 import {SuggestionChip} from 'src/components';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import ComingSoonDialog from './ComingSoonDialog';
@@ -43,7 +43,7 @@ export default function SuggestionList(props) {
   }
 
   return (
-    <FlatList
+    <Animated.FlatList
       horizontal={true}
       listKey={true}
       showsVerticalScrollIndicator={false}
@@ -59,6 +59,7 @@ export default function SuggestionList(props) {
 const styles = StyleSheet.create({
   contentContainer: {
     paddingVertical: 16,
+    paddingLeft: 16,
     justifyContent: 'center',
   },
   separator: {

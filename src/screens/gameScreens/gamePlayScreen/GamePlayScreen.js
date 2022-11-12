@@ -170,7 +170,11 @@ export default function GamePlayScreen({navigation, route}) {
         </View>
         <Pressable
           style={styles.gameCardLayout}
-          onPress={handleContinueButtonPressed}>
+          onPress={
+            taskTurn === totalTasks - 1
+              ? handleNavigateEndGameDialog
+              : handleContinueButtonPressed
+          }>
           <FilledCard style={styles.gameCard}>
             <Text style={[Typography.body.large, textStyles]}>
               {tasks[taskTurn]?.task}

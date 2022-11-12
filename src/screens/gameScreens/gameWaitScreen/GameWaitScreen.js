@@ -47,11 +47,22 @@ function GameWaitScreen({navigation, route}) {
   useEffect(() => {
     navigation.setOptions({
       header: () => (
-        <SmallTopBar
-          leadingIcon={'arrowleft'}
-          onLeadingIconPress={() => navigation.goBack()}
-          renderRightComponents={renderRightComponents}
-        />
+        <>
+          <SmallTopBar
+            leadingIcon={'arrowleft'}
+            onLeadingIconPress={() => navigation.goBack()}
+            renderRightComponents={renderRightComponents}
+          />
+          <StandardHeader
+            head={cardDeck}
+            subHeadLeft={tag}
+            subHeadRight={`Tổng số ${totalTasks} lá`}
+            headStyle={Typography.title.large}
+            subHeadStyle={Typography.label.large}
+            style={styles.header}
+            containerStyle={styles.header}
+          />
+        </>
       ),
     });
   }, [navigation]);
@@ -111,15 +122,6 @@ function GameWaitScreen({navigation, route}) {
   return (
     <SafeAreaView style={defaultContainerStyle}>
       <ScrollView contentContainerStyle={styles.scrollView}>
-        <StandardHeader
-          head={cardDeck}
-          subHeadLeft={tag}
-          subHeadRight={`Tổng số ${totalTasks} lá`}
-          headStyle={Typography.title.large}
-          subHeadStyle={Typography.label.large}
-          style={styles.header}
-          containerStyle={styles.header}
-        />
         <View style={styles.supportingText}>
           <Text style={[Typography.title.medium, {color: textColor}]}>
             {previewNumberOfCard(totalTasks)}

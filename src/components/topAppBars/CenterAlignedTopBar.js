@@ -1,14 +1,10 @@
+import React, {forwardRef, useImperativeHandle, useRef, useState} from 'react';
 import {Animated, Image, Pressable, StyleSheet, Text, View} from 'react-native';
-import {
-  Color,
-  ColorVariant,
-  StateLayers,
-  StateLayersVariant,
-  Typography,
-} from 'src/themes';
+import {Color, ColorVariant, Typography} from 'src/themes';
 import {StandardIconButton} from 'src/components';
-import {forwardRef, useImperativeHandle, useRef} from 'react';
 
+const MAIN_HEIGHT = 64;
+const CONFIG_VALUE = 100;
 const CenterAlignedTopBar = forwardRef(function CenterAlignedTopBar(
   props,
   ref,
@@ -19,49 +15,72 @@ const CenterAlignedTopBar = forwardRef(function CenterAlignedTopBar(
     onLeadingIconPress = () => {},
     trailingIcon,
     onTrailingIconPress = () => {},
-    scrollingEvent,
     style,
     contentStyle,
     headerTitleStyle,
     children,
     ...otherProps
   } = props;
+
   const scrollYContentOffsetRef = useRef(new Animated.Value(0)).current;
+  const [subHeight, setSubHeight] = useState(0);
+  const totalHeight = subHeight + MAIN_HEIGHT;
+  const SCROLL_DISTANCE = totalHeight - MAIN_HEIGHT + CONFIG_VALUE;
 
   useImperativeHandle(ref, () => ({
-    onScroll: Animated.event(
-      [{nativeEvent: {contentOffset: {y: scrollYContentOffsetRef}}}],
-      {
-        useNativeDriver: false,
-      },
-    ),
+    onScroll: e => {
+      const offsetY = e.nativeEvent.contentOffset.y;
+      scrollYContentOffsetRef.setValue(offsetY);
+    },
   }));
 
   const {base: surfaceColor, onBase: onSurfaceColor} =
     Color.light[ColorVariant.surface];
   const baseColor = Color.light[ColorVariant.secondary]?.container;
-  const defaultContainerStyle = [
-    styles.container,
-    {
-      backgroundColor: getAnimatedBackground(),
-    },
-    style,
-  ];
+  const topBarAnimation = {
+    backgroundColor: scrollYContentOffsetRef.interpolate({
+      inputRange: [0, SCROLL_DISTANCE],
+      outputRange: [surfaceColor, baseColor],
+      extrapolate: 'clamp',
+    }),
+    height: scrollYContentOffsetRef.interpolate({
+      inputRange: [0, SCROLL_DISTANCE],
+      outputRange: [totalHeight, subHeight],
+      extrapolate: 'clamp',
+    }),
+  };
+  const mainTopBarAnimation = {
+    transform: [
+      {
+        translateY: scrollYContentOffsetRef.interpolate({
+          inputRange: [0, SCROLL_DISTANCE],
+          outputRange: [0, -MAIN_HEIGHT],
+          extrapolate: 'clamp',
+        }),
+      },
+    ],
+  };
+  const subTopBarAnimation = {
+    transform: [
+      {
+        translateY: scrollYContentOffsetRef.interpolate({
+          inputRange: [0, SCROLL_DISTANCE],
+          outputRange: [0, -MAIN_HEIGHT],
+          extrapolate: 'clamp',
+        }),
+      },
+    ],
+  };
+
+  const defaultContainerStyle = [styles.container, topBarAnimation, style];
 
   const defaultContentStyle = [
     Typography.title.large,
     {color: onSurfaceColor},
-
     contentStyle,
   ];
-
-  function getAnimatedBackground() {
-    return scrollYContentOffsetRef.interpolate({
-      inputRange: [0, 100],
-      outputRange: [surfaceColor, baseColor],
-      extrapolate: 'clamp',
-    });
-  }
+  const mainTopBarStyle = [styles.mainTopBar, mainTopBarAnimation];
+  const subTopBarStyle = [styles.mainTopBar, subTopBarAnimation];
 
   function renderImagePressable(avatar) {
     const getPressStyle = ({pressed}) => {
@@ -76,32 +95,54 @@ const CenterAlignedTopBar = forwardRef(function CenterAlignedTopBar(
     );
   }
 
+  function renderChildren() {
+    const handleOnlayoutOfChild = event => {
+      setSubHeight(event.nativeEvent.layout.height);
+    };
+    return (
+      <Animated.View
+        style={subTopBarStyle}
+        onLayout={event => handleOnlayoutOfChild(event)}>
+        {children}
+      </Animated.View>
+    );
+  }
+
   return (
-    <Animated.View {...otherProps} style={defaultContainerStyle}>
-      {leadingIcon && (
-        <View style={styles.targetSize}>
-          <StandardIconButton
-            name={leadingIcon}
-            onPress={onLeadingIconPress}
-            style={styles.icon}
-          />
+    <Animated.ScrollView {...otherProps} style={defaultContainerStyle}>
+      <Animated.View style={mainTopBarStyle}>
+        {leadingIcon && (
+          <View style={styles.targetSize}>
+            <StandardIconButton
+              name={leadingIcon}
+              onPress={onLeadingIconPress}
+              style={styles.icon}
+            />
+          </View>
+        )}
+        <View style={[headerTitleStyle, styles.title]}>
+          <Text style={defaultContentStyle}>{content}</Text>
         </View>
-      )}
-      <View style={[headerTitleStyle, styles.title]}>
-        <Text style={defaultContentStyle}>{content}</Text>
-      </View>
-      {renderImagePressable(trailingIcon)}
-    </Animated.View>
+        {renderImagePressable(trailingIcon)}
+      </Animated.View>
+      {renderChildren()}
+    </Animated.ScrollView>
   );
 });
 export default CenterAlignedTopBar;
 
 const styles = StyleSheet.create({
   container: {
+    flexDirection: 'column',
+  },
+  item: {
+    justifyContent: 'flex-start',
+  },
+  mainTopBar: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: 64,
+    height: MAIN_HEIGHT,
   },
   targetSize: {
     height: 48,
