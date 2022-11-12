@@ -1,6 +1,6 @@
-import {Animated, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {CenterAlignedTopBar, SpinnerType1, withAnimated} from 'src/components';
+import {CenterAlignedTopBar, SpinnerType1} from 'src/components';
 import avatarTest from 'src/assets/images/preview-package/user.png';
 import {SuggestionList} from '../suggestionList';
 import {loadCardDeckList} from 'src/redux/actions';
@@ -9,7 +9,7 @@ import {
   cardDeckListSelector,
   requestingDeckListSelector,
 } from 'src/redux/selectors';
-import {forwardRef, useEffect, useImperativeHandle, useRef} from 'react';
+import {forwardRef, useEffect} from 'react';
 
 const HEADER_MIN_HEIGHT = 64;
 
