@@ -1,53 +1,55 @@
 import React from 'react';
 import {Pressable, StyleSheet, Text} from 'react-native';
 
-import {Color, ColorVariant, Typography} from 'src/themes';
+import {
+  Color,
+  ColorVariant,
+  StateLayers,
+  StateLayersVariant,
+  Typography,
+} from 'src/themes';
 
-const ChipVariant = {
-  OUTLINED: 'OUTLINED',
-  ELEVATED: 'ELEVATED',
-};
-
-function generateStateStyles(
-  selected,
-  pressed,
-  disabled,
-  selectedColorVariant,
-  colorVariant,
-) {
+function generateStateStyles(selected, pressed, disabled) {
   if (disabled) {
-    const {base: baseColor, onBase: onBaseColor} =
-      Color.light[ColorVariant.surface];
+    const {level_012: layerColor, level_038: textColor} =
+      StateLayers.light[StateLayersVariant.onSurface];
     return {
-      containerStyle: {backgroundColor: baseColor, opacity: 0.5},
-      contentStyle: {color: onBaseColor},
+      containerStyle: {
+        borderColor: layerColor,
+        borderWidth: 0.5,
+        backgroundColor: 'transparent',
+      },
+      contentStyle: {color: textColor},
+      componentStyle: {opacity: textColor},
     };
   }
 
   if (selected) {
     const {container: containerColor, onContainer: onContainerColor} =
-      Color.light[selectedColorVariant];
-    if (pressed) {
-      return {
-        containerStyle: {backgroundColor: containerColor},
-        contentStyle: {color: onContainerColor},
-      };
-    }
+      Color.light[ColorVariant.secondary];
+    const layerColor =
+      StateLayers.light[StateLayersVariant.secondaryContainer]?.level_088;
     return {
-      containerStyle: {backgroundColor: containerColor},
-      contentStyle: {color: onContainerColor},
+      containerStyle: {
+        backgroundColor: pressed ? layerColor : containerColor,
+      },
+      contentStyle: {
+        color: onContainerColor,
+      },
     };
   } else {
-    const {base: baseColor, onBase: onBaseColor} = Color.light[colorVariant];
-    if (pressed) {
-      return {
-        containerStyle: {backgroundColor: baseColor},
-        contentStyle: {color: onBaseColor},
-      };
-    }
+    const onSurfaceVar = Color.light[ColorVariant.surfaceVariant]?.onBase;
+    const layerColor =
+      StateLayers.light[StateLayersVariant.surfaceVar]?.level_012;
+    const outlineColor = Color.light[ColorVariant.outline]?.base;
+
     return {
-      containerStyle: {backgroundColor: baseColor},
-      contentStyle: {color: onBaseColor},
+      containerStyle: {
+        backgroundColor: pressed ? layerColor : 'transparent',
+        borderColor: outlineColor,
+        borderWidth: 0.5,
+      },
+      contentStyle: {color: onSurfaceVar},
     };
   }
 }
@@ -60,12 +62,7 @@ export default function BaseChip(props) {
     children,
     style,
     contentStyle: rawContentStyle,
-
-    selectedColorVariant = ColorVariant.secondary,
-    colorVariant = ColorVariant.surfaceVariant,
-    chipVariant = ChipVariant.ELEVATED,
     typographyVariant = Typography.label.large,
-
     selected = false,
     disabled,
     ...otherProps
@@ -74,13 +71,7 @@ export default function BaseChip(props) {
   function getContainerStyle({pressed}) {
     return [
       styles.container,
-      generateStateStyles(
-        selected,
-        pressed,
-        disabled,
-        selectedColorVariant,
-        colorVariant,
-      )?.containerStyle,
+      generateStateStyles(selected, pressed, disabled)?.containerStyle,
       style,
     ];
   }
@@ -90,8 +81,6 @@ export default function BaseChip(props) {
       selected,
       pressed,
       disabled,
-      selectedColorVariant,
-      colorVariant,
     )?.contentStyle;
     return (
       <>

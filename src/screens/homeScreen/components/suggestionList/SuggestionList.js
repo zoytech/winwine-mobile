@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {FlatList, StyleSheet, View, Animated} from 'react-native';
+import {Animated, StyleSheet, View} from 'react-native';
 import {SuggestionChip} from 'src/components';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import ComingSoonDialog from './ComingSoonDialog';
