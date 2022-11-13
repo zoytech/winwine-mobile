@@ -1,7 +1,7 @@
 import React, {forwardRef, useImperativeHandle, useRef, useState} from 'react';
-import {Animated, Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {Animated, StyleSheet, Text, View} from 'react-native';
 import {Color, ColorVariant, Typography} from 'src/themes';
-import {StandardIconButton} from 'src/components';
+import {BaseAvatarButton, StandardIconButton} from 'src/components';
 
 const MAIN_HEIGHT = 64;
 const CONFIG_VALUE = 100;
@@ -82,19 +82,6 @@ const CenterAlignedTopBar = forwardRef(function CenterAlignedTopBar(
   const mainTopBarStyle = [styles.mainTopBar, mainTopBarAnimation];
   const subTopBarStyle = [styles.mainTopBar, subTopBarAnimation];
 
-  function renderImagePressable(avatar) {
-    const getPressStyle = ({pressed}) => {
-      return pressed
-        ? [styles.targetSize, styles.opacityPressed]
-        : styles.targetSize;
-    };
-    return (
-      <Pressable style={getPressStyle} onPress={onTrailingIconPress}>
-        <Image source={avatar} style={styles.avatarIcon} />
-      </Pressable>
-    );
-  }
-
   function renderChildren() {
     const handleOnlayoutOfChild = event => {
       setSubHeight(event.nativeEvent.layout.height);
@@ -123,7 +110,12 @@ const CenterAlignedTopBar = forwardRef(function CenterAlignedTopBar(
         <View style={[headerTitleStyle, styles.title]}>
           <Text style={defaultContentStyle}>{content}</Text>
         </View>
-        {renderImagePressable(trailingIcon)}
+        <BaseAvatarButton
+          avatar={trailingIcon}
+          onPress={onTrailingIconPress}
+          style={styles.targetSize}
+          avatarStyle={styles.avatarIcon}
+        />
       </Animated.View>
       {renderChildren()}
     </Animated.ScrollView>
@@ -157,9 +149,5 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     width: 30,
     height: 30,
-    resizeMode: 'cover',
-  },
-  opacityPressed: {
-    opacity: 0.5,
   },
 });

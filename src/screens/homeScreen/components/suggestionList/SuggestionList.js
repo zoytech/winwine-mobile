@@ -1,8 +1,14 @@
 import React, {useState} from 'react';
-import {Animated, StyleSheet, View} from 'react-native';
-import {SuggestionChip} from 'src/components';
+import {FlatList, StyleSheet, View} from 'react-native';
+import {
+  AssistChip,
+  FilterChip,
+  InputChip,
+  SuggestionChip,
+} from 'src/components';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import ComingSoonDialog from './ComingSoonDialog';
+import avatarTest from 'src/assets/images/preview-package/user.png';
 
 export default function SuggestionList(props) {
   const {style, data, navigation, route, ...otherProps} = props;
@@ -39,12 +45,15 @@ export default function SuggestionList(props) {
         style={styles.chip}
         selected={hashtagId === selectedChip}
         onPress={() => handleChipPressed(hashtagId)}
+        hasTrailingIcon={true}
+        icon={'github'}
+        // image={avatarTest}
       />
     );
   }
 
   return (
-    <Animated.FlatList
+    <FlatList
       horizontal={true}
       listKey={true}
       showsVerticalScrollIndicator={false}
