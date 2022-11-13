@@ -35,6 +35,7 @@ export default function StandardHeader(props) {
               icon={'tago'}
               style={styles.subHeadLeft}
               contentStyle={subHeadStyles}
+              iconStyle={styles.tagIcon}
             />
           )}
           {subHeadRight && <Text style={subHeadStyles}>{subHeadRight}</Text>}
@@ -70,6 +71,9 @@ const styles = StyleSheet.create({
   },
   subHeadLeft: {
     width: '50%',
+  },
+  tagIcon: {
+    paddingRight: 10,
   },
 });
 

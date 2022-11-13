@@ -1,4 +1,5 @@
 import React from 'react';
+import {StyleSheet} from 'react-native';
 import {CardDialogContent} from 'src/components';
 import {TagName} from '../../../components';
 
@@ -12,7 +13,7 @@ export default function EndingGameDialog(props) {
   } = props;
 
   function renderSubHeadLeft() {
-    return <TagName content={subHeadLeft} />;
+    return <TagName content={subHeadLeft} iconStyle={styles.icon} />;
   }
 
   return (
@@ -28,6 +29,12 @@ export default function EndingGameDialog(props) {
     />
   );
 }
+
+const styles = StyleSheet.create({
+  icon: {
+    paddingRight: 10,
+  },
+});
 /*
 const handlePressOutlinedButton = () => {
     navigation.navigate({
