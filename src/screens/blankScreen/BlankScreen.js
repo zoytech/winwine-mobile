@@ -1,33 +1,44 @@
-import React, {useEffect} from 'react';
-import {SafeAreaView, StyleSheet} from 'react-native';
-import {Color, ColorVariant} from 'src/themes';
-import avatarTest from 'src/assets/images/preview-package/user.png';
-import {CenterAlignedTopBar} from 'src/components';
+import Animated, {
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
+import {Button, View} from 'react-native';
+import React from 'react';
 
-export default function HomeScreen({navigation}) {
-  useEffect(() => {
-    navigation.setOptions({
-      header: () => (
-        <CenterAlignedTopBar
-          content={'Good morning'}
-          headerTitleStyle={styles.headerTitle}
-          trailingIcon={avatarTest}
-          onTrailingIconPress={() => alert('test leading button')}
-        />
-      ),
-    });
-  }, [navigation]);
+export default function AnimatedStyleUpdateExample(props) {
+  const randomWidth = useSharedValue(10);
 
-  return <SafeAreaView style={styles.container} />;
+  const config = {
+    duration: 500,
+    easing: Easing.bezier(0.5, 0.01, 0, 1),
+  };
+
+  const style = useAnimatedStyle(() => {
+    return {
+      width: withTiming(randomWidth.value, config),
+    };
+  });
+
+  return (
+    <View
+      style={{
+        flex: 1,
+        flexDirection: 'column',
+      }}>
+      <Animated.View
+        style={[
+          {width: 100, height: 80, backgroundColor: 'black', margin: 30},
+          style,
+        ]}
+      />
+      <Button
+        title="toggle"
+        onPress={() => {
+          randomWidth.value = Math.random() * 350;
+        }}
+      />
+    </View>
+  );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    height: '100%',
-    backgroundColor: Color.light[ColorVariant.background].base,
-  },
-  headerTitle: {
-    justifyContent: 'flex-start',
-  },
-});
