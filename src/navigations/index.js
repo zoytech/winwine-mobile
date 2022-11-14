@@ -12,6 +12,7 @@ import {
 import {ScreenKeys} from './ScreenKeys';
 import {CenterAlignedTopBar, SmallTopBar} from 'src/components';
 
+// registerScreens();
 const Stack = createNativeStackNavigator();
 
 export default function RootNavigator() {

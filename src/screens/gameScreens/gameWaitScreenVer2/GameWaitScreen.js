@@ -1,12 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {
-  Dimensions,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {Dimensions, SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {
@@ -110,7 +103,7 @@ function GameWaitScreen({navigation, route}) {
   }
   return (
     <SafeAreaView style={defaultContainerStyle}>
-      <ScrollView contentContainerStyle={styles.scrollView}>
+      <View contentContainerStyle={styles.scrollView}>
         <StandardHeader
           head={cardDeck}
           subHeadLeft={tag}
@@ -134,10 +127,14 @@ function GameWaitScreen({navigation, route}) {
           onForwardDisabled={taskTurn === totalTasks - 1}
         />
         {renderBottomButtons()}
-      </ScrollView>
+      </View>
     </SafeAreaView>
   );
 }
+
+/*
+
+ */
 
 const styles = StyleSheet.create({
   container: {

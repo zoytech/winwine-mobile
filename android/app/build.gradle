@@ -1,4 +1,6 @@
 apply plugin: "com.android.application"
+apply plugin: 'kotlin-android'
+
 
 import com.android.build.OutputFile
 import org.apache.tools.ant.taskdefs.condition.Os
@@ -270,6 +272,8 @@ dependencies {
     }
     implementation project(':react-native-splash-screen')
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.25'
+    implementation 'androidx.core:core-ktx:1.5.0'
+        implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.5.20'
 
 
     if (enableHermes) {

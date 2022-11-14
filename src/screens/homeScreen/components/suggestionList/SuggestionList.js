@@ -1,14 +1,8 @@
 import React, {useState} from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
-import {
-  AssistChip,
-  FilterChip,
-  InputChip,
-  SuggestionChip,
-} from 'src/components';
+import {SuggestionChip} from 'src/components';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import ComingSoonDialog from './ComingSoonDialog';
-import avatarTest from 'src/assets/images/preview-package/user.png';
 
 export default function SuggestionList(props) {
   const {style, data, navigation, route, ...otherProps} = props;
