@@ -12,7 +12,6 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {
   FilledButton,
-  FilledCard,
   OutlinedButton,
   SmallTopBar,
   SpinnerType1,
@@ -22,6 +21,7 @@ import {loadCardDeckById} from 'src/redux/actions';
 import {cardDeckSelector, requestingDeckSelector} from 'src/redux/selectors';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import {EndingGameDialog, ExitGameDialog} from './components';
+import {SwipeableGameCard} from '../components';
 
 const screenWidth = Dimensions.get('screen').width;
 export default function GamePlayScreen({navigation, route}) {
@@ -156,6 +156,8 @@ export default function GamePlayScreen({navigation, route}) {
     );
   }
 
+  console.log('tasks: ', tasks);
+
   if (requesting && isFocused) {
     return <SpinnerType1 />;
   }
@@ -174,12 +176,14 @@ export default function GamePlayScreen({navigation, route}) {
             taskTurn === totalTasks - 1
               ? handleNavigateEndGameDialog
               : handleContinueButtonPressed
-          }>
-          <FilledCard style={styles.gameCard}>
-            <Text style={[Typography.body.large, textStyles]}>
-              {tasks[taskTurn]?.task}
-            </Text>
-          </FilledCard>
+          }
+          disabled={true}>
+          <SwipeableGameCard
+            data={tasks}
+            taskTurn={taskTurn}
+            style={styles.gameCardLayout}
+            contentStyle={textStyles}
+          />
         </Pressable>
         {renderBottomButtons()}
       </ScrollView>
@@ -202,8 +206,7 @@ const styles = StyleSheet.create({
   },
   gameCardLayout: {
     width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
+    aspectRatio: 0.85,
   },
   gameCard: {
     width: '80%',

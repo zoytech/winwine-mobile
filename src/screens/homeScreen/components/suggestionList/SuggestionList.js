@@ -57,7 +57,6 @@ export default function SuggestionList(props) {
       horizontal={true}
       listKey={true}
       showsVerticalScrollIndicator={false}
-      showsHorizontalScrollIndicator={false}
       ItemSeparatorComponent={<View style={styles.separator} />}
       contentContainerStyle={[styles.contentContainer]}
       style={[styles.container, style]}
