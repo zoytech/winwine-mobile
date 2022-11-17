@@ -21,9 +21,9 @@ import {loadCardDeckById} from 'src/redux/actions';
 import {cardDeckSelector, requestingDeckSelector} from 'src/redux/selectors';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import {EndingGameDialog, ExitGameDialog} from './components';
-import {SwipeableGameCard} from '../components';
+import {SwipeableGameCard, SwipeableGameCard2} from '../components';
 
-const screenWidth = Dimensions.get('screen').width;
+const {width: screenWidth, height: screenHeight} = Dimensions.get('screen');
 export default function GamePlayScreen({navigation, route}) {
   const {deckId, deckTitle} = route.params;
   const dispatch = useDispatch();
@@ -62,7 +62,7 @@ export default function GamePlayScreen({navigation, route}) {
     {backgroundColor: baseColor},
     styles.container,
   ];
-  const textStyles = [{color: textColor}, styles.text];
+  const textStyles = [Typography.body.large, {color: textColor}, styles.text];
 
   function handleLookBackButtonPressed() {
     taskTurn !== 0 && setTaskTurn(taskTurn - 1);
@@ -156,8 +156,6 @@ export default function GamePlayScreen({navigation, route}) {
     );
   }
 
-  console.log('tasks: ', tasks);
-
   if (requesting && isFocused) {
     return <SpinnerType1 />;
   }
@@ -170,21 +168,12 @@ export default function GamePlayScreen({navigation, route}) {
             {`Lá thứ ${taskTurn + 1}/${totalTasks}`}
           </Text>
         </View>
-        <Pressable
+
+        <SwipeableGameCard2
+          data={tasks}
+          taskTurn={taskTurn}
           style={styles.gameCardLayout}
-          onPress={
-            taskTurn === totalTasks - 1
-              ? handleNavigateEndGameDialog
-              : handleContinueButtonPressed
-          }
-          disabled={true}>
-          <SwipeableGameCard
-            data={tasks}
-            taskTurn={taskTurn}
-            style={styles.gameCardLayout}
-            contentStyle={textStyles}
-          />
-        </Pressable>
+        />
         {renderBottomButtons()}
       </ScrollView>
     </SafeAreaView>
@@ -205,13 +194,9 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
   },
   gameCardLayout: {
-    width: '100%',
-    aspectRatio: 0.85,
-  },
-  gameCard: {
-    width: '80%',
-    aspectRatio: 6 / 10,
-    justifyContent: 'center',
+    width: screenWidth,
+    height: screenWidth * 1.3,
+    paddingVertical: 16,
   },
   action: {
     width: '100%',
@@ -235,6 +220,17 @@ const styles = StyleSheet.create({
     minHeight: 48,
   },
 });
+
+/*
+ <SwipeableGameCard
+            data={tasks}
+            taskTurn={taskTurn}
+            style={styles.gameCardLayout}
+            itemStyle={styles.gameCardItem}
+            cardStyle={styles.gameCard}
+            contentStyle={textStyles}
+          />
+ */
 
 /*
 const handlePressFilledButton = () => {

@@ -8,8 +8,6 @@ const styles = StyleSheet.create({
   itemContainer: {justifyContent: 'center'},
 });
 
-const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
-
 function useConstructor(callBack = () => {}) {
   const [hasBeenCalled, setHasBeenCalled] = useState(false);
   if (hasBeenCalled) {
@@ -32,7 +30,6 @@ function Carousel(props, ref) {
     inActiveOpacity = 0.8,
     inverted = false,
     initialIndex = 0,
-    bounces = true,
     showsHorizontalScrollIndicator = false,
     keyExtractor = (item, index) => index.toString(),
     renderItem = () => {},
@@ -243,14 +240,12 @@ function Carousel(props, ref) {
   }
 
   return (
-    <AnimatedFlatList
+    <Animated.FlatList
       {...otherProps}
       ref={scrollViewRef}
       data={data}
       style={containerStyle}
       horizontal={true}
-      inverted={inverted}
-      bounces={bounces}
       decelerationRate={0}
       initialScrollIndex={initialIndex}
       automaticallyAdjustContentInsets={false}

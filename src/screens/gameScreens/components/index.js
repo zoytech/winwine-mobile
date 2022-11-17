@@ -1,4 +1,5 @@
 import StandardHeader from './StandardHeader';
-import SwipeableGameCard from './SwipeableGameCard2';
+import SwipeableGameCard2 from './SwipeableGameCard2';
+import SwipeableGameCard from './SwipeableGameCard';
 
-export {StandardHeader, SwipeableGameCard};
+export {StandardHeader, SwipeableGameCard2, SwipeableGameCard};

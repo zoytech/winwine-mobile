@@ -1,23 +1,44 @@
 import {Dimensions, Pressable, StyleSheet, Text} from 'react-native';
 import {Carousel, FilledCard} from 'src/components';
 import {useRef} from 'react';
-import {Typography} from '../../../themes';
+import {Typography} from 'src/themes';
 
-const {width: windowWidth} = Dimensions.get('window');
+const {width: screenWidth, height: screenHeight} = Dimensions.get('screen');
+const SEPARATOR_WIDTH = 32;
+const ITEM_WIDTH = screenWidth * 0.8;
 
 export default function SwipeableGameCard(props) {
-  const {data, taskTurn, style, contentStyle, ...otherProps} = props;
+  const {
+    data,
+    taskTurn,
+    style,
+    itemStyle,
+    contentStyle,
 
+    onBackScroll = () => {},
+    onNextScroll = () => {},
+    ...otherProps
+  } = props;
+  const defaultContainerStyle = [styles.container, style];
+  const defaultItemStyle = [styles.gameCard, itemStyle];
+  console.log('taskTurn: ', taskTurn);
   const carouselRef = useRef(null);
-  const renderItem = ({item, index}) => {
+
+  // function handleMovingNextItemPress() {
+  //
+  //   onBackScroll(currentIndex - 1);
+  //   onNextScroll(currentIndex + 1);
+  // }
+
+  const renderItem = ({item}) => {
     return (
       <Pressable
         {...otherProps}
-        style={styles.item}
+        style={styles.gameCardItem}
         onPress={() => {
-          carouselRef.current.scrollToIndex(index);
+          carouselRef.current.scrollToIndex(taskTurn);
         }}>
-        <FilledCard {...otherProps} style={styles.gameCard}>
+        <FilledCard {...otherProps} style={defaultItemStyle}>
           <Text style={[Typography.body.large, contentStyle]}>
             {item?.task}
           </Text>
@@ -30,69 +51,32 @@ export default function SwipeableGameCard(props) {
       ref={carouselRef}
       data={data}
       renderItem={renderItem}
-      style={styles.carousel}
-      itemWidth={windowWidth * 0.8}
-      containerWidth={windowWidth}
-      separatorWidth={0}
+      style={defaultContainerStyle}
+      itemWidth={ITEM_WIDTH}
+      containerWidth={screenWidth}
+      separatorWidth={SEPARATOR_WIDTH}
     />
   );
 }
 const styles = StyleSheet.create({
-  gameCard: {
-    width: '80%',
-    height: '100%',
-    borderWidth: 0.5,
-    backgroundColor: 'yellow',
-  },
   container: {
-    width: '100%',
-    aspectRatio: 0.85,
+    width: screenWidth,
+    height: screenHeight * 0.7,
   },
   contentContainer: {
     justifyContent: 'center',
     alignItems: 'center',
   },
-
-  text: {
-    textAlign: 'center',
+  gameCardItem: {
+    justifyContent: 'center',
+  },
+  gameCard: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
     paddingHorizontal: 32,
   },
-  carousel: {
-    flexGrow: 0,
-    height: 150,
-    backgroundColor: 'coral',
+  text: {
+    textAlign: 'center',
   },
 });
-
-/*
-
- <View>
-        <FlatList
-          data={data}
-          horizontal={true}
-          listKey={true}
-          renderItem={renderGameCardItem}
-          contentContainerStyle={styles.contentContainer}
-        />
-      </View>
-*/
-
-/*
- <ScrollView
-      {...otherProps}
-      style={[styles.container, style]}
-      contentContainerStyle={styles.contentContainer}
-      decelerationRate={'fast'}
-      disableIntervalMomentum={true}>
-      <FilledCard {...otherProps} style={styles.gameCard}>
-        <Text style={[Typography.body.large, styles.text, contentStyle]}>
-          {data[taskTurn]?.task}
-        </Text>
-      </FilledCard>
-      <FilledCard {...otherProps} style={styles.gameCard}>
-        <Text style={[Typography.body.large, contentStyle]}>
-          {data[taskTurn]?.task}
-        </Text>
-      </FilledCard>
-    </ScrollView>
- */
