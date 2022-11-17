@@ -1,13 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {
-  Dimensions,
-  Pressable,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
+import {Dimensions, SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {
@@ -21,7 +13,7 @@ import {loadCardDeckById} from 'src/redux/actions';
 import {cardDeckSelector, requestingDeckSelector} from 'src/redux/selectors';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import {EndingGameDialog, ExitGameDialog} from './components';
-import {SwipeableGameCard, SwipeableGameCard2} from '../components';
+import {SwipeableGameCard3} from '../components';
 
 const {width: screenWidth, height: screenHeight} = Dimensions.get('screen');
 export default function GamePlayScreen({navigation, route}) {
@@ -29,7 +21,9 @@ export default function GamePlayScreen({navigation, route}) {
   const dispatch = useDispatch();
   const cardDeckItem = useSelector(cardDeckSelector);
   const requesting = useSelector(requestingDeckSelector);
-  const isFocused = navigation.isFocused();
+  const carouselRef = useRef({
+    index: 0,
+  });
   const [taskTurn, setTaskTurn] = useState(0);
   const {
     tag: tag,
@@ -156,26 +150,25 @@ export default function GamePlayScreen({navigation, route}) {
     );
   }
 
-  if (requesting && isFocused) {
+  if (requesting) {
     return <SpinnerType1 />;
   }
 
   return (
     <SafeAreaView style={defaultContainerStyle}>
-      <ScrollView contentContainerStyle={styles.scrollView}>
+      <View contentContainerStyle={styles.scrollView}>
         <View style={styles.header}>
           <Text style={[Typography.label.large, textStyles]}>
             {`Lá thứ ${taskTurn + 1}/${totalTasks}`}
           </Text>
         </View>
-
-        <SwipeableGameCard2
+        <SwipeableGameCard3
           data={tasks}
           taskTurn={taskTurn}
           style={styles.gameCardLayout}
         />
         {renderBottomButtons()}
-      </ScrollView>
+      </View>
     </SafeAreaView>
   );
 }
