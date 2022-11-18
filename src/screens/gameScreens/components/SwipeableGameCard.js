@@ -1,13 +1,5 @@
-import {
-  Animated,
-  Dimensions,
-  FlatList,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import {FilledCard} from 'src/components';
+import {Dimensions, StyleSheet, View} from 'react-native';
+import Carousel from 'react-native-snap-carousel';
 import {useRef} from 'react';
 
 const screenWidth = Dimensions.get('screen').width;
@@ -18,6 +10,7 @@ const CURRENT_ITEM_TRANSLATE_Y = 48;
 export default function SwipeableGameCard(props) {
   const {
     data,
+    renderItem,
     taskTurn,
     style,
     contentStyle,
@@ -27,44 +20,9 @@ export default function SwipeableGameCard(props) {
     ...otherProps
   } = props;
 
-  const separatorStyle = [styles.separator, separatorWidth];
-  const defaultItemStyle = [styles.gameCard, itemStyle];
-  const defaultCardStyle = [styles.gameCard, cardStyle];
-
-  function renderGameCardItem(data) {
-    return (
-      <FilledCard {...otherProps} style={defaultCardStyle}>
-        <Text style={[styles.text, contentStyle]}>{data?.task}</Text>
-      </FilledCard>
-    );
-  }
-
-  function renderSwipealbeView({item, index}) {
-    return (
-      <Pressable>
-        <Animated.View style={[defaultItemStyle]}>
-          {renderGameCardItem(item)}
-        </Animated.View>
-      </Pressable>
-    );
-  }
-
-  return (
-    <FlatList
-      data={data}
-      renderItem={renderSwipealbeView}
-      style={[styles.container, style]}
-      contentContainerStyle={styles.contentContainer}
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      keyExtractor={item => item?.cardId}
-      ItemSeparatorComponent={<View style={separatorStyle} />}
-      decelerationRate={0}
-      renderToHardwareTextureAndroid
-      snapToInterval={ITEM_WIDTH}
-      snapToAlignment="start"
-    />
-  );
+  const carouselRef = useRef(null);
+  // return <View />;
+  return <Carousel ref={carouselRef} data={data} renderItem={renderItem} />;
 }
 const styles = StyleSheet.create({
   container: {

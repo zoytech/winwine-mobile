@@ -1,46 +1,37 @@
-import {useCallback, useEffect, useRef, useState} from 'react';
-import {Dimensions, FlatList, Pressable, StyleSheet, View} from 'react-native';
-import GameCardItem from './GameCardItem';
+import {
+  forwardRef,
+  useCallback,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react';
+import {Dimensions, FlatList, StyleSheet} from 'react-native';
 
 const screenWidth = Dimensions.get('screen')?.width;
 
-export default function SwipeableGameCard3(props) {
+function SwipeableGameCard3(props, ref) {
   const {
     data,
-    taskTurn,
+    renderItem,
     style,
-    itemStyle,
-    itemWidth = screenWidth * 0.8,
-    centerAlign = (screenWidth - itemWidth) / 2,
-    contentStyle,
-    ...otherProps
+    itemWidth = screenWidth,
+    onScrollEnd = () => {},
   } = props;
-  const [index, setIndex] = useState(0);
-  const indexRef = useRef(index);
-  indexRef.current = index;
-  const defaultContainerStyle = [
-    styles.container,
-    {
-      backgroundColor: 'gold',
-    },
-    style,
-  ];
-  const defaultItemStyle = [
-    styles.item,
-    {
-      width: screenWidth,
-      paddingHorizontal: centerAlign,
-      borderColor: 'green',
-      borderWidth: 0.5,
-    },
-    itemStyle,
-  ];
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const currentIndexRef = useRef({index: 0});
+  const scrollViewRef = useRef(null);
+  currentIndexRef.current = currentIndex;
+  const defaultContainerStyle = [styles.container, style];
+  useImperativeHandle(ref, () => ({
+    scrollToIndex: scrollToIndex,
+  }));
   const onScroll = useCallback(event => {
     getIndexAccordingToScrollDistance(event);
   }, []);
-  useEffect(() => {
-    console.log('index: ', index);
-  }, [index]);
+
+  // function getItemOffset(index) {
+  //   return index * itemWidth;
+  // }
 
   const flatListOptimizationProps = {
     initialNumToRender: 0,
@@ -52,12 +43,27 @@ export default function SwipeableGameCard3(props) {
     getItemLayout: useCallback(
       (_, index) => ({
         index,
-        length: screenWidth,
-        offset: index * screenWidth,
+        length: itemWidth,
+        offset: index * itemWidth, //getItemOffset
       }),
-      [],
+      [itemWidth],
     ),
   };
+
+  function scrollToIndex(index) {
+    if (index < 0 || index >= data.length) {
+      return;
+    }
+    onScrollEnd && onScrollEnd(data[index], index);
+    currentIndexRef.current = index;
+    setTimeout(() => {
+      scrollViewRef.current &&
+        scrollViewRef.current.scrollToOffset({
+          offset: index * itemWidth,
+          animated: true,
+        });
+    });
+  }
 
   function getIndexAccordingToScrollDistance(event) {
     const itemSize = event.nativeEvent.layoutMeasurement.width;
@@ -65,38 +71,28 @@ export default function SwipeableGameCard3(props) {
     const roundIndex = Math.round(indexByDistance);
     const distance = Math.abs(roundIndex - indexByDistance);
     const isNoMansLand = distance < 0.4;
-    if (roundIndex !== indexRef.current && !isNoMansLand) {
-      setIndex(roundIndex);
+    if (roundIndex !== currentIndexRef.current && !isNoMansLand) {
+      setCurrentIndex(roundIndex);
     }
   }
-
-  const renderItem = ({item, cardId}) => {
-    return (
-      <Pressable {...otherProps} style={defaultItemStyle} key={cardId}>
-        <GameCardItem
-          content={item?.task}
-          style={{width: itemWidth}}
-          contentStyle={contentStyle}
-        />
-      </Pressable>
-    );
-  };
 
   return (
     <FlatList
       data={data}
       renderItem={renderItem}
-      itemSize={itemWidth}
       horizontal
       pagingEnabled
       showsHorizontalScrollIndicator={false}
       style={defaultContainerStyle}
-      // ItemSeparatorComponent={<View style={{width: centerAlign * 2}} />}
       onScroll={onScroll}
+      ref={scrollViewRef}
       {...flatListOptimizationProps}
     />
   );
 }
+
+export default forwardRef(SwipeableGameCard3);
+
 const styles = StyleSheet.create({
   contentContainer: {
     justifyContent: 'center',
