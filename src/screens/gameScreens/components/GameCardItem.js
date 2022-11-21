@@ -12,10 +12,15 @@ export default function GameCardItem(props) {
     ...otherProps
   } = props;
   const containerStyle = [styles.container, style];
+  const defaultContentStyle = [
+    Typography.body.large,
+    styles.text,
+    contentStyle,
+  ];
   return (
     <Pressable onPress={() => onPress(index)}>
       <FilledCard {...otherProps} style={containerStyle}>
-        <Text style={[Typography.body.large, contentStyle]}>{content}</Text>
+        <Text style={defaultContentStyle}>{content}</Text>
       </FilledCard>
     </Pressable>
   );
@@ -23,6 +28,10 @@ export default function GameCardItem(props) {
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
+    paddingHorizontal: 32,
+  },
+  text: {
+    textAlign: 'center',
     paddingHorizontal: 32,
   },
 });

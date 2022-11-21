@@ -1,4 +1,4 @@
 import GamePlayScreen from './gamePlayScreen/GamePlayScreen';
-import GameWaitScreen from './gameWaitScreenVer2/GameWaitScreen';
+import GameWaitScreen from './gameWaitScreen/GameWaitScreen';
 
 export {GamePlayScreen, GameWaitScreen};
