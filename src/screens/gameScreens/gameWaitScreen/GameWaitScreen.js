@@ -9,19 +9,15 @@ import {
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Color, ColorVariant, Typography} from 'src/themes';
-import {
-  FilledButton,
-  SmallTopBar,
-  SpinnerType1,
-  StandardIconButton,
-} from 'src/components';
+import {FilledButton, SpinnerType1, StandardIconButton} from 'src/components';
 import {loadCardDeckById} from 'src/redux/actions';
-import {NavigatedGameCard} from './components';
+import {CustomTopAppBar} from './components';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import {cardDeckSelector, requestingDeckSelector} from 'src/redux/selectors';
-import {StandardHeader} from '../components';
+import {StandardHeader, SwipeableGameCard} from '../components';
 
 const {width: screenWidth} = Dimensions.get('screen');
+const INITIAL_INDEX = 0;
 
 function GameWaitScreen({navigation, route}) {
   const deckId = route.params?.deckId;
@@ -46,13 +42,7 @@ function GameWaitScreen({navigation, route}) {
 
   useEffect(() => {
     navigation.setOptions({
-      header: () => (
-        <SmallTopBar
-          leadingIcon={'arrowleft'}
-          onLeadingIconPress={() => navigation.goBack()}
-          renderRightComponents={renderRightComponents}
-        />
-      ),
+      header: () => <CustomTopAppBar />,
     });
   }, [navigation]);
 
@@ -66,20 +56,14 @@ function GameWaitScreen({navigation, route}) {
     });
   }
 
-  function handleBackwardButtonPressed() {
-    taskTurn !== 0 && setTaskTurn(taskTurn - 1);
-  }
-
-  function handleForwardButtonPressed() {
-    taskTurn !== totalTasks - 1 && setTaskTurn(taskTurn + 1);
-  }
-
   function previewNumberOfCard(total) {
     const MAX_VIEW = 10;
     return total >= MAX_VIEW
       ? `Xem trước ${MAX_VIEW} lá bài`
       : `Xem trước ${total} lá bài`;
   }
+
+  function onScrollEnd(item, index) {}
 
   function renderRightComponents({iconStyle}) {
     return (
@@ -125,9 +109,11 @@ function GameWaitScreen({navigation, route}) {
             {previewNumberOfCard(totalTasks)}
           </Text>
         </View>
-        <NavigatedGameCard
+        <SwipeableGameCard
+          data={tasks}
+          initialIndex={INITIAL_INDEX}
           style={styles.navigatedGameCard}
-          content={tasks[taskTurn]?.task}
+          onScrollEnd={(item, index) => onScrollEnd(item, index)}
           onBackwardPressed={handleBackwardButtonPressed}
           onForwardPressed={handleForwardButtonPressed}
           onBackwardDisabled={taskTurn === 0}
