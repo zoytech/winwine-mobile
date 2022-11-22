@@ -5,11 +5,11 @@ import {StandardIconButton} from 'src/components/iconButtons';
 export default function MediumTopBar(props) {
   const {
     content,
+    subContent,
     leadingIcon,
     onLeadingIconPress = () => {},
     style,
     contentStyle,
-    headerTitleStyle,
     rightContainerStyle,
     renderRightComponents,
     ...otherProps
@@ -23,12 +23,41 @@ export default function MediumTopBar(props) {
     },
     style,
   ];
-  const defaultContentStyle = [
-    styles.text,
+  const actionBarStyle = [
+    styles.actionBar,
+    getDisplayOfHeader(subContent)?.container,
+  ];
+  const titleBarStyle = [
+    styles.titleBar,
+    getDisplayOfHeader(subContent)?.headerContainer,
+  ];
+
+  const mainContentStyle = [
     Typography.headline.small,
+    {color: onSurface},
+    getDisplayOfHeader(subContent)?.headerText,
+    contentStyle,
+  ];
+
+  const subContentStyle = [
+    Typography.title.small,
     {color: onSurface},
     contentStyle,
   ];
+
+  function getDisplayOfHeader(subHeader) {
+    return {
+      container: {
+        alignItems: subHeader ? 'flex-end' : 'center',
+      },
+      headerContainer: {
+        justifyContent: subHeader ? 'flex-start' : 'center',
+      },
+      headerText: {
+        alignSelf: subHeader && 'center',
+      },
+    };
+  }
 
   function renderRight({iconStyle}) {
     //Can add more style if needed, not just iconStyle, Example: defaultContentStyle,...
@@ -38,20 +67,33 @@ export default function MediumTopBar(props) {
     return renderRightComponents;
   }
 
+  function renderSubContent(subHeader) {
+    return (
+      <View>
+        {subHeader && (
+          <Text numberOfLines={1} style={subContentStyle}>
+            {subHeader}
+          </Text>
+        )}
+      </View>
+    );
+  }
+
   return (
     <View {...otherProps} style={containerStyle}>
-      <View style={styles.actionBar}>
+      <View style={actionBarStyle}>
         <StandardIconButton
           name={leadingIcon}
           onPress={onLeadingIconPress}
           style={styles.icon}
         />
+        {subContent && renderSubContent(subContent)}
         <View style={[styles.rightContainer, rightContainerStyle]}>
           {renderRight({iconStyle: styles.icon})}
         </View>
       </View>
-      <View style={styles.titleBar}>
-        <Text numberOfLines={1} style={defaultContentStyle}>
+      <View style={titleBarStyle}>
+        <Text numberOfLines={1} style={mainContentStyle}>
           {content}
         </Text>
       </View>
@@ -69,12 +111,11 @@ const styles = StyleSheet.create({
   titleBar: {
     height: '50%',
     paddingHorizontal: 16,
-    justifyContent: 'flex-end',
+    alignItems: 'flex-start',
   },
   actionBar: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
   },
   icon: {
     borderRadius: 0,
