@@ -2,8 +2,9 @@ import {StyleSheet} from 'react-native';
 import {Carousel} from 'src/components';
 import {forwardRef, useImperativeHandle, useRef, useState} from 'react';
 import GameCardItem from './GameCardItem';
+import SwipeableGameCard3 from './SwipeableGameCard3';
 
-function SwipeableGameCard2(props, ref) {
+function SwipeableGameCardImplement(props, ref) {
   const {
     data,
     initialIndex,
@@ -40,7 +41,7 @@ function SwipeableGameCard2(props, ref) {
   }
 
   function handleResetIndex() {
-    carouselRef.current.scrollToIndex(initialIndex);
+    carouselRef.current.scrollToIndex(0);
   }
 
   function handleScrollEnd(item, index) {
@@ -53,6 +54,7 @@ function SwipeableGameCard2(props, ref) {
       <GameCardItem
         {...otherProps}
         content={item?.task}
+        style={{backgroundColor: 'yellow'}}
         itemWidth={itemWidth}
         contentStyle={contentStyle}
       />
@@ -60,7 +62,7 @@ function SwipeableGameCard2(props, ref) {
   }
 
   return (
-    <Carousel
+    <SwipeableGameCard3
       initialIndex={initialIndex}
       ref={carouselRef}
       data={data}
@@ -68,6 +70,7 @@ function SwipeableGameCard2(props, ref) {
       style={defaultContainerStyle}
       itemWidth={itemWidth}
       containerWidth={containerWidth}
+      separatorWidth={separatorWidth}
       onScrollEnd={handleScrollEnd}
     />
   );
@@ -76,12 +79,12 @@ function SwipeableGameCard2(props, ref) {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    paddingTop: 60,
+    backgroundColor: 'lightblue',
   },
-  contentContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+  // contentContainer: {
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  // },
 });
 
-export default forwardRef(SwipeableGameCard2);
+export default forwardRef(SwipeableGameCardImplement);

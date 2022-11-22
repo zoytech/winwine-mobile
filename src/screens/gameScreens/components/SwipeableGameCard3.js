@@ -5,33 +5,34 @@ import {
   useRef,
   useState,
 } from 'react';
-import {Dimensions, FlatList, StyleSheet} from 'react-native';
-
-const screenWidth = Dimensions.get('screen')?.width;
+import {FlatList, StyleSheet, View} from 'react-native';
 
 function SwipeableGameCard3(props, ref) {
   const {
     data,
     renderItem,
+    initialIndex,
     style,
-    itemWidth = screenWidth,
+    itemWidth,
+    containerWidth,
+    separatorWidth,
     onScrollEnd = () => {},
   } = props;
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const currentIndexRef = useRef({index: 0});
+  const [currentIndex, setCurrentIndex] = useState(initialIndex);
+  const currentIndexRef = useRef(initialIndex);
   const scrollViewRef = useRef(null);
   currentIndexRef.current = currentIndex;
-  const defaultContainerStyle = [styles.container, style];
+  const defaultContainerStyle = [
+    styles.container,
+    {paddingHorizontal: separatorWidth},
+    style,
+  ];
   useImperativeHandle(ref, () => ({
     scrollToIndex: scrollToIndex,
   }));
   const onScroll = useCallback(event => {
     getIndexAccordingToScrollDistance(event);
   }, []);
-
-  // function getItemOffset(index) {
-  //   return index * itemWidth;
-  // }
 
   const flatListOptimizationProps = {
     initialNumToRender: 0,
@@ -86,6 +87,9 @@ function SwipeableGameCard3(props, ref) {
       style={defaultContainerStyle}
       onScroll={onScroll}
       ref={scrollViewRef}
+      ItemSeparatorComponent={
+        <View style={{width: separatorWidth * 2, backgroundColor: 'red'}} />
+      }
       {...flatListOptimizationProps}
     />
   );
@@ -101,8 +105,5 @@ const styles = StyleSheet.create({
   item: {
     justifyContent: 'center',
     height: '100%',
-  },
-  text: {
-    textAlign: 'center',
   },
 });
