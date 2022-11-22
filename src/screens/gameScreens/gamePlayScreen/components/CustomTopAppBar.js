@@ -1,18 +1,11 @@
 import {StyleSheet} from 'react-native';
-import {SmallTopBar, StandardIconButton} from 'src/components';
+import {MediumTopBar, StandardIconButton} from 'src/components';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import {ExitGameDialog} from './index';
 
 export default function CustomTopAppBar(props) {
-  const {
-    navigation,
-    routes,
-    content,
-    style,
-    contentStyle,
-    onResetIndex = () => {},
-    ...otherProps
-  } = props;
+  const {navigation, routes, content, style, contentStyle, ...otherProps} =
+    props;
 
   function renderRightComponents({iconStyle}) {
     return (
@@ -34,7 +27,6 @@ export default function CustomTopAppBar(props) {
     };
     const handleSubDialogPress = () => {
       navigation.goBack();
-      onResetIndex && onResetIndex();
     };
     navigation.navigate({
       name: ScreenKeys.BASIC_DIALOG,
@@ -50,9 +42,10 @@ export default function CustomTopAppBar(props) {
   }
 
   return (
-    <SmallTopBar
+    <MediumTopBar
       {...otherProps}
       content={content}
+      subContent={'BẠN ĐANG CHƠI BỘ'}
       leadingIcon={'arrowleft'}
       onLeadingIconPress={() => navigation.goBack()}
       renderRightComponents={renderRightComponents}

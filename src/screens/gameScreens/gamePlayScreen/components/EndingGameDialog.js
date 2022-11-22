@@ -22,8 +22,8 @@ export default function EndingGameDialog(props) {
       subHeadLeft={renderSubHeadLeft()}
       media={media}
       supportingText={'Bạn đã chơi hết rồi'}
-      mainAction={'Play new deck'}
-      subAction={'Play again'}
+      mainAction={'Chơi bộ mới'}
+      subAction={'Chơi lại'}
       onMainActionPress={onMainActionPress}
       onSubActionPress={onSubActionPress}
     />
