@@ -1,29 +1,78 @@
-import {Dimensions, StyleSheet, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import Carousel from 'react-native-snap-carousel';
-import {useRef} from 'react';
+import {forwardRef, useImperativeHandle, useRef, useState} from 'react';
+import GameCardItem from './GameCardItem';
 
-const screenWidth = Dimensions.get('screen').width;
-const SPACING = 5;
-const ITEM_WIDTH = screenWidth * 0.8; // Item is a square. Therefore, its height and width are of the same length.
-const BORDER_RADIUS = 20;
-const CURRENT_ITEM_TRANSLATE_Y = 48;
-export default function SwipeableGameCard(props) {
+function SwipeableGameCard(props, ref) {
   const {
     data,
-    renderItem,
-    taskTurn,
+    initialIndex,
     style,
-    contentStyle,
-    itemStyle,
-    cardStyle,
+    itemWidth,
+    containerWidth,
     separatorWidth,
+    contentStyle,
+    onSnapToItem = () => {},
     ...otherProps
   } = props;
-
+  const [currentIndex, setCurrentIndex] = useState(initialIndex);
+  const defaultContainerStyle = [styles.container, style];
   const carouselRef = useRef(null);
-  // return <View />;
-  return <Carousel ref={carouselRef} data={data} renderItem={renderItem} />;
+
+  useImperativeHandle(ref, () => ({
+    scrollToCurrent: handleScrollToCurrent,
+    scrollToNext: handleScrollToNext,
+    scrollToPrevious: handleScrollToPrevious,
+    resetIndex: handleResetIndex,
+  }));
+
+  function handleScrollToCurrent() {
+    carouselRef.current.scrollToIndex(currentIndex);
+  }
+
+  function handleScrollToNext() {
+    carouselRef.current.scrollToIndex(currentIndex + 1);
+  }
+
+  function handleScrollToPrevious() {
+    carouselRef.current.scrollToIndex(currentIndex - 1);
+  }
+
+  function handleResetIndex() {
+    carouselRef.current.scrollToIndex(initialIndex);
+  }
+
+  function handleSnapToItem(index) {
+    setCurrentIndex(index);
+    onSnapToItem && onSnapToItem(index);
+  }
+
+  function renderItem({item, index}) {
+    return (
+      <GameCardItem
+        {...otherProps}
+        content={item?.task}
+        itemWidth={itemWidth}
+        contentStyle={contentStyle}
+      />
+    );
+  }
+
+  return (
+    <Carousel
+      {...otherProps}
+      ref={carouselRef}
+      initialNumToRender={initialIndex}
+      data={data}
+      renderItem={renderItem}
+      style={defaultContainerStyle}
+      itemWidth={itemWidth}
+      sliderWidth={containerWidth}
+      onSnapToItem={handleSnapToItem}
+    />
+  );
 }
+
 const styles = StyleSheet.create({
   container: {
     width: 300,
@@ -47,18 +96,7 @@ const styles = StyleSheet.create({
   },
 });
 
-/*
-
- <View>
-        <FlatList
-          data={data}
-          horizontal={true}
-          listKey={true}
-          renderItem={renderGameCardItem}
-          contentContainerStyle={styles.contentContainer}
-        />
-      </View>
-*/
+export default forwardRef(SwipeableGameCard);
 
 /*
  <ScrollView

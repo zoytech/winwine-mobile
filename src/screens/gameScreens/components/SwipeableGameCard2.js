@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Pressable, StyleSheet} from 'react-native';
 import {Carousel} from 'src/components';
 import {forwardRef, useImperativeHandle, useRef, useState} from 'react';
 import GameCardItem from './GameCardItem';
@@ -13,12 +13,13 @@ function SwipeableGameCard2(props, ref) {
     separatorWidth,
     contentStyle,
     onScrollEnd = () => {},
+    onItemPress = () => {},
     ...otherProps
   } = props;
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const defaultContainerStyle = [styles.container, style];
   const carouselRef = useRef(null);
-  // const tasksLength = data.length;
+  const dataLength = data.length;
 
   useImperativeHandle(ref, () => ({
     scrollToCurrent: handleScrollToCurrent,
@@ -32,7 +33,9 @@ function SwipeableGameCard2(props, ref) {
   }
 
   function handleScrollToNext() {
-    carouselRef.current.scrollToIndex(currentIndex + 1);
+    currentIndex !== dataLength - 1
+      ? carouselRef.current.scrollToIndex(currentIndex + 1)
+      : carouselRef.current.scrollToIndex(currentIndex + 2);
   }
 
   function handleScrollToPrevious() {
@@ -50,12 +53,14 @@ function SwipeableGameCard2(props, ref) {
 
   function renderItem({item, index}) {
     return (
-      <GameCardItem
-        {...otherProps}
-        content={item?.task}
-        itemWidth={itemWidth}
-        contentStyle={contentStyle}
-      />
+      <Pressable onPress={onItemPress}>
+        <GameCardItem
+          {...otherProps}
+          content={item?.task}
+          itemWidth={itemWidth}
+          contentStyle={contentStyle}
+        />
+      </Pressable>
     );
   }
 
@@ -66,6 +71,7 @@ function SwipeableGameCard2(props, ref) {
       data={data}
       renderItem={renderItem}
       style={defaultContainerStyle}
+      contentContainerStyle={styles.contentContainer}
       itemWidth={itemWidth}
       containerWidth={containerWidth}
       onScrollEnd={handleScrollEnd}
@@ -74,10 +80,7 @@ function SwipeableGameCard2(props, ref) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    paddingTop: 60,
-  },
+  container: {},
   contentContainer: {
     justifyContent: 'center',
     alignItems: 'center',
