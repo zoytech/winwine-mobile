@@ -1,7 +1,5 @@
-import {Dimensions, Pressable, StyleSheet, View} from 'react-native';
+import {Pressable, StyleSheet, View} from 'react-native';
 import {Color, ColorVariant} from 'src/themes';
-
-const screenWidth = Dimensions.get('screen')?.width;
 
 export default function CardDetermination(props) {
   const {
@@ -50,7 +48,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   progressBar: {
-    width: '80%',
     aspectRatio: 12,
     borderWidth: 2,
     borderRadius: 5,

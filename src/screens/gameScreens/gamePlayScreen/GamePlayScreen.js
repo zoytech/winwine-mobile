@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {Dimensions, SafeAreaView, StyleSheet, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Color, ColorVariant, Typography} from 'src/themes';
-import {FilledButton, OutlinedButton, SpinnerType1} from 'src/components';
+import {SpinnerType1} from 'src/components';
 import {loadCardDeckById} from 'src/redux/actions';
 import {cardDeckSelector, requestingDeckSelector} from 'src/redux/selectors';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
@@ -18,27 +18,6 @@ const {width: screenWidth, height: screenHeight} = Dimensions.get('screen');
 const cardWidth = screenWidth * 0.8;
 const separatorWidth = screenWidth - cardWidth;
 const INITIAL_INDEX = 0;
-const counterSize = 100;
-
-function Pagination({index}) {
-  return (
-    <View style={styles.pagination} pointerEvents="none">
-      {tasks.map((_, i) => {
-        return (
-          <View
-            key={i}
-            style={[
-              styles.paginationDot,
-              index === i
-                ? styles.paginationDotActive
-                : styles.paginationDotInactive,
-            ]}
-          />
-        );
-      })}
-    </View>
-  );
-}
 
 export default function GamePlayScreen({navigation, route}) {
   const {deckId, deckTitle} = route.params;
@@ -56,7 +35,7 @@ export default function GamePlayScreen({navigation, route}) {
   const [showIndex, setShowIndex] = useState(INITIAL_INDEX);
   const [showIndicatorInfo, setShowIndicatorInfo] = useState(false);
 
-  const dataLength = tasks.length;
+  const dataLength = tasks ? tasks.length : 0;
 
   const baseColor = Color.light[ColorVariant.surface]?.base;
   const textColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
@@ -66,7 +45,7 @@ export default function GamePlayScreen({navigation, route}) {
   ];
   const defaultContentStyle = [Typography.title.medium, {color: textColor}];
   const progressBarWidth = screenWidth * 0.8;
-  const percentValue = showIndex / dataLength;
+  const percentValue = dataLength !== 0 ? (showIndex + 1) / dataLength : 0;
   const indicatedPartWidth = progressBarWidth * percentValue;
   useEffect(() => {
     dispatch(loadCardDeckById(deckId));
@@ -180,12 +159,11 @@ const styles = StyleSheet.create({
   progressBar: {
     width: '100%',
     aspectRatio: 6,
-  },
-  counter: {
-    alignSelf: 'center',
-    backgroundColor: 'lightpink',
-    position: 'relative',
-  },
+  }, // counter: {
+  //   alignSelf: 'center',
+  //   backgroundColor: 'lightpink',
+  //   position: 'relative',
+  // },
   card: {
     paddingVertical: separatorWidth / 2,
     width: '100%',
@@ -202,22 +180,21 @@ const styles = StyleSheet.create({
   button: {
     minWidth: 120,
     height: 40,
-  },
-  paginationDotActive: {backgroundColor: 'blue'},
-  paginationDotInactive: {backgroundColor: 'red'},
-  pagination: {
-    position: 'absolute',
-    bottom: 8,
-    width: '100%',
-    justifyContent: 'center',
-    flexDirection: 'row',
-  },
-  paginationDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    marginHorizontal: 2,
-  },
+  }, // paginationDotActive: {backgroundColor: 'blue'},
+  // paginationDotInactive: {backgroundColor: 'red'},
+  // pagination: {
+  //   position: 'absolute',
+  //   bottom: 8,
+  //   width: '100%',
+  //   justifyContent: 'center',
+  //   flexDirection: 'row',
+  // },
+  // paginationDot: {
+  //   width: 8,
+  //   height: 8,
+  //   borderRadius: 4,
+  //   marginHorizontal: 2,
+  // },
 });
 
 /*
@@ -238,4 +215,26 @@ const styles = StyleSheet.create({
             style={styles.counter}
             counterSize={counterSize}
           />
+ */
+
+/*
+function Pagination({index}) {
+  return (
+    <View style={styles.pagination} pointerEvents="none">
+      {tasks.map((_, i) => {
+        return (
+          <View
+            key={i}
+            style={[
+              styles.paginationDot,
+              index === i
+                ? styles.paginationDotActive
+                : styles.paginationDotInactive,
+            ]}
+          />
+        );
+      })}
+    </View>
+  );
+}
  */
