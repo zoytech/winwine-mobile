@@ -2,12 +2,12 @@ import ExitGameDialog from './ExitGameDialog';
 import EndingGameDialog from './EndingGameDialog';
 import CustomTopAppBar from './CustomTopAppBar';
 import CardDetermination from './CardDetermination';
-import GameCardItem from '../../components/GameCardItem';
+import InfoProgressIndicator from './InfoProgressIndicator';
 
 export {
   ExitGameDialog,
   EndingGameDialog,
   CustomTopAppBar,
-  GameCardItem,
   CardDetermination,
+  InfoProgressIndicator,
 };

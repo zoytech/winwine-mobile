@@ -1,19 +1,24 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Dimensions, SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import {Dimensions, SafeAreaView, StyleSheet, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {FilledButton, OutlinedButton, SpinnerType1} from 'src/components';
 import {loadCardDeckById} from 'src/redux/actions';
 import {cardDeckSelector, requestingDeckSelector} from 'src/redux/selectors';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
-import {CustomTopAppBar, EndingGameDialog} from './components';
+import {
+  CardDetermination,
+  CustomTopAppBar,
+  EndingGameDialog,
+  InfoProgressIndicator,
+} from './components';
 import {SwipeableGameCard} from '../components';
 
-const screenWidth = Dimensions.get('screen')?.width;
-const itemWidth = screenWidth;
-const cardWidth = itemWidth * 0.8;
-const centerAlign = (screenWidth - cardWidth) / 2;
-const INITIAL_INDEX = 1;
+const {width: screenWidth, height: screenHeight} = Dimensions.get('screen');
+const cardWidth = screenWidth * 0.8;
+const separatorWidth = screenWidth - cardWidth;
+const INITIAL_INDEX = 0;
+const counterSize = 100;
 
 function Pagination({index}) {
   return (
@@ -46,10 +51,12 @@ export default function GamePlayScreen({navigation, route}) {
     cardDeck: headline,
     tasks: tasks = [],
   } = cardDeckItem || {};
-  const tasksLength = tasks.length;
   const carouselRef = useRef(null);
   const [disabled, setDisabled] = useState(true);
   const [showIndex, setShowIndex] = useState(INITIAL_INDEX);
+  const [showIndicatorInfo, setShowIndicatorInfo] = useState(false);
+
+  const dataLength = tasks.length;
 
   const baseColor = Color.light[ColorVariant.surface]?.base;
   const textColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
@@ -57,8 +64,10 @@ export default function GamePlayScreen({navigation, route}) {
     {backgroundColor: baseColor},
     styles.container,
   ];
-  const textStyles = [Typography.body.large, {color: textColor}, styles.text];
-
+  const defaultContentStyle = [Typography.title.medium, {color: textColor}];
+  const progressBarWidth = screenWidth * 0.8;
+  const percentValue = showIndex / dataLength;
+  const indicatedPartWidth = progressBarWidth * percentValue;
   useEffect(() => {
     dispatch(loadCardDeckById(deckId));
   }, [dispatch]);
@@ -66,18 +75,10 @@ export default function GamePlayScreen({navigation, route}) {
   useEffect(() => {
     navigation.setOptions({
       header: () => (
-        <CustomTopAppBar
-          content={deckTitle}
-          navigation={navigation}
-          onResetIndex={handleResetIndex}
-        />
+        <CustomTopAppBar content={deckTitle} navigation={navigation} />
       ),
     });
   }, [navigation]);
-
-  function handleResetIndex() {
-    carouselRef && carouselRef.current.resetIndex();
-  }
 
   function handleNavigateEndGameDialog() {
     const handleMainDialogPress = () => {
@@ -105,57 +106,59 @@ export default function GamePlayScreen({navigation, route}) {
     });
   }
 
-  function renderBottomButtons() {
-    const handlePreviousButtonPressed = () => {
-      carouselRef && carouselRef.current.scrollToPrevious();
-    };
+  function handleShowIndicatorInfo() {
+    setShowIndicatorInfo(true);
+  }
 
-    const handleNextButtonPressed = () => {
-      carouselRef && carouselRef.current.scrollToNext();
-    };
-    return (
-      <View style={styles.action}>
-        <OutlinedButton
-          content={'Lá trước'}
-          style={styles.button}
-          onPress={handlePreviousButtonPressed}
-          disabled={disabled}
-        />
-        <FilledButton
-          content={'Lá tiếp theo'}
-          style={styles.button}
-          onPress={handleNextButtonPressed}
-        />
-      </View>
-    );
+  function handleNotShowIndicatorInfo() {
+    setShowIndicatorInfo(false);
+  }
+
+  function handleCardItemPressed() {
+    showIndex !== dataLength - 1
+      ? carouselRef && carouselRef.current.scrollToNext()
+      : handleNavigateEndGameDialog();
   }
 
   function handleOnScrollEnd(item, index) {
-    showIndex === tasksLength && handleNavigateEndGameDialog();
+    showIndex === dataLength && handleNavigateEndGameDialog();
     index === 0 ? setDisabled(true) : setDisabled(false);
-    setShowIndex(index + 1);
+    setShowIndex(index);
   }
 
   if (requesting) {
     return <SpinnerType1 />;
   }
-
   return (
     <SafeAreaView style={defaultContainerStyle}>
       <View contentContainerStyle={styles.scrollView}>
-        <View style={styles.header}>
-          <Text style={[Typography.label.large, textStyles]}>
-            {`Lá thứ ${showIndex}/${tasksLength}`}
-          </Text>
+        <View style={styles.progressBar}>
+          <CardDetermination
+            onPressIn={handleShowIndicatorInfo}
+            onPressOut={handleNotShowIndicatorInfo}
+            contentStyle={defaultContentStyle}
+            progressBarWidth={progressBarWidth}
+            indicatedPartWidth={indicatedPartWidth}>
+            {showIndicatorInfo && (
+              <InfoProgressIndicator
+                content={`${showIndex + 1} per ${dataLength}`}
+              />
+            )}
+          </CardDetermination>
         </View>
         <SwipeableGameCard
           data={tasks}
           ref={carouselRef}
-          style={styles.gameCardLayout}
+          style={styles.card}
+          contentStyle={defaultContentStyle}
+          itemWidth={cardWidth}
+          containerWidth={screenWidth}
+          separatorWidth={separatorWidth}
           onScrollEnd={(item, index) => handleOnScrollEnd(item, index)}
+          onItemPress={handleCardItemPressed}
           initialIndex={INITIAL_INDEX}
         />
-        {renderBottomButtons()}
+        {/*{renderBottomButtons()}*/}
       </View>
     </SafeAreaView>
   );
@@ -164,28 +167,29 @@ export default function GamePlayScreen({navigation, route}) {
 const styles = StyleSheet.create({
   container: {
     width: screenWidth,
+    flex: 1,
   },
   scrollView: {
     justifyContent: 'center',
     alignItems: 'center',
   },
-  item: {
-    justifyContent: 'center',
-    width: itemWidth,
-    height: itemWidth * 1.4,
-    borderColor: 'green',
-    borderWidth: 0.5,
-    paddingHorizontal: centerAlign,
-  },
-  header: {
+  mainContent: {
     width: '100%',
-    height: itemWidth / 7,
-    paddingVertical: 16,
-    alignItems: 'center',
+    flexDirection: 'column',
   },
-  gameCardLayout: {
-    width: screenWidth,
-    height: screenWidth * 1.3,
+  progressBar: {
+    width: '100%',
+    aspectRatio: 6,
+  },
+  counter: {
+    alignSelf: 'center',
+    backgroundColor: 'lightpink',
+    position: 'relative',
+  },
+  card: {
+    paddingVertical: separatorWidth / 2,
+    width: '100%',
+    aspectRatio: 0.7, // paddingHorizontal: separatorWidth / 2,
   },
   action: {
     width: '100%',
@@ -228,18 +232,10 @@ const styles = StyleSheet.create({
  */
 
 /*
-const handlePressFilledButton = () => {
-    navigation.navigate(ScreenKeys.HOME, {
-      deckId: deckId || '',
-    });
-  };
-  const handlePressOutlinedButton = () => {
-    navigation.navigate({
-      name: ScreenKeys.GAME_PLAY,
-      params: {
-        deckId: deckId || '',
-      },
-      merge: true,
-    });
-  };
+<CardCounter
+            content={`${showIndex + 1} per ${dataLength}`}
+            contentStyle={defaultContentStyle}
+            style={styles.counter}
+            counterSize={counterSize}
+          />
  */
