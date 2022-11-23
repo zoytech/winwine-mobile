@@ -1,5 +1,5 @@
 import React, {forwardRef, useImperativeHandle, useRef, useState} from 'react';
-import {Animated, Dimensions, FlatList, StyleSheet} from 'react-native';
+import {Animated, Dimensions, StyleSheet} from 'react-native';
 
 const {width: windowWidth} = Dimensions.get('window');
 const styles = StyleSheet.create({
@@ -35,6 +35,7 @@ function CarouselNam(props, ref) {
     onScrollEnd = () => {},
     onScrollBeginDrag = () => {},
     onScrollEndDrag = () => {},
+    onFinalItem = () => {},
     ...otherProps
   } = props;
   const scrollViewRef = useRef(null);
@@ -86,8 +87,11 @@ function CarouselNam(props, ref) {
   }
 
   function scrollToIndex(index) {
-    if (index < 0 || index >= dataLength) {
+    if (index < 0 || index > dataLength) {
       return;
+    }
+    if (index === dataLength) {
+      onFinalItem && onFinalItem(data[index], index);
     }
     onScrollEnd && onScrollEnd(data[index], index);
     currentIndexRef.current = index;
