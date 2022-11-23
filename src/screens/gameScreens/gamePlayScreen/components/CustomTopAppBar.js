@@ -46,6 +46,7 @@ export default function CustomTopAppBar(props) {
       {...otherProps}
       content={content}
       subContent={'BẠN ĐANG CHƠI BỘ'}
+      style={styles.container}
       leadingIcon={'arrowleft'}
       onLeadingIconPress={() => navigation.goBack()}
       renderRightComponents={renderRightComponents}
@@ -54,6 +55,9 @@ export default function CustomTopAppBar(props) {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    height: 100,
+  },
   headerButtonIcon: {
     borderRadius: 20,
     minWidth: 48,

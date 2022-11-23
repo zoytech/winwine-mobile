@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 5,
     justifyContent: 'center',
+    overflow: 'hidden',
   },
   loadedPart: {
     height: '100%',
