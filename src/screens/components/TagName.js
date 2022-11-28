@@ -9,8 +9,7 @@ export default function TagName(props) {
     name: icon,
     size: 12,
     color: onBase,
-    style: styles.icon,
-    ...iconStyle,
+    style: [styles.icon, iconStyle],
   };
   const defaultContainerStyle = [styles.container, style];
   return (

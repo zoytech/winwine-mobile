@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   Dimensions,
   SafeAreaView,
@@ -11,30 +11,44 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {FilledButton, SpinnerType1, StandardIconButton} from 'src/components';
 import {loadCardDeckById} from 'src/redux/actions';
-import {CustomTopAppBar} from './components';
+import {
+  CustomTopAppBar,
+  HeaderButtons,
+  HeaderImage,
+  HeaderInformation,
+} from './components';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import {cardDeckSelector, requestingDeckSelector} from 'src/redux/selectors';
-import {StandardHeader, SwipeableGameCard} from '../components';
+import {SwipeableGameCard} from '../components';
+import avatarImg from '../../../assets/images/preview-package/user.png';
 
-const {width: screenWidth} = Dimensions.get('screen');
+const screenWidth = Dimensions.get('screen')?.width;
+const cardWidth = screenWidth * 0.75;
+const separatorWidth = screenWidth - cardWidth;
 const INITIAL_INDEX = 0;
+const MAX_VIEW = 10;
 
 function GameWaitScreen({navigation, route}) {
-  const deckId = route.params?.deckId;
+  const {deckId, deckTitle} = route.params;
   const cardDeckItem = useSelector(cardDeckSelector);
   const requesting = useSelector(requestingDeckSelector);
   const dispatch = useDispatch();
-  const [taskTurn, setTaskTurn] = useState(0);
-  const {cardDeck: cardDeck, tag: tag, tasks: tasks = []} = cardDeckItem || {};
-  const totalTasks = tasks.length;
+  const [showIndex, setShowIndex] = useState(INITIAL_INDEX);
+  const carouselRef = useRef(null);
+  const {
+    cardDeck: cardDeck,
+    tag: tag,
+    uri: source,
+    tasks: tasks = [],
+  } = cardDeckItem || {};
+  const dataLength = tasks ? tasks.length : 0;
+  const userName = 'Thành Nam nè';
+  const avatar = avatarImg;
+  const description =
+    'alo con oaihf jahf ia fhaj uafujh jhaj afjhjafj alo con oaihf jahf ia fhaj uafujh jhaj afjhjafj';
+  const likes = 12;
   const baseColor = Color.light[ColorVariant.surface]?.base;
   const textColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
-
-  console.log('first mount');
-  const defaultContainerStyle = [
-    {backgroundColor: baseColor},
-    styles.container,
-  ];
 
   useEffect(() => {
     dispatch(loadCardDeckById(deckId));
@@ -42,9 +56,17 @@ function GameWaitScreen({navigation, route}) {
 
   useEffect(() => {
     navigation.setOptions({
-      header: () => <CustomTopAppBar />,
+      header: () => (
+        <CustomTopAppBar content={deckTitle} navigation={navigation} />
+      ),
     });
   }, [navigation]);
+
+  const defaultContainerStyle = [
+    {backgroundColor: baseColor},
+    styles.container,
+  ];
+  const defaultContentStyle = [Typography.title.medium, {color: textColor}];
 
   function handlePressFilledButton() {
     navigation.navigate({
@@ -56,37 +78,80 @@ function GameWaitScreen({navigation, route}) {
     });
   }
 
-  function previewNumberOfCard(total) {
-    const MAX_VIEW = 10;
-    return total >= MAX_VIEW
-      ? `Xem trước ${MAX_VIEW} lá bài`
-      : `Xem trước ${total} lá bài`;
+  function getPreviewCardNumber(total) {
+    return total >= MAX_VIEW ? MAX_VIEW : total;
   }
 
-  function onScrollEnd(item, index) {}
+  function renderPreviewNumber(total) {
+    return (
+      <Text style={[Typography.title.medium, {color: textColor}]}>
+        {`Xem trước ${getPreviewCardNumber(total)} lá bài`}
+      </Text>
+    );
+  }
 
-  function renderRightComponents({iconStyle}) {
+  function getPreviewDataItem(total) {
+    const showLimitedCard = getPreviewCardNumber(total);
+    return tasks.slice(0, showLimitedCard);
+  }
+
+  function renderHeaderLeftButtons({iconStyle}) {
+    const handleStaringDeckPress = () => {
+      console.log('starProps');
+    };
+    const handleDownloadDeckPress = () => {
+      console.log('downloadProps');
+    };
+    const handleNavigateMoreActionPress = () => {
+      console.log('moreActionProps');
+    };
+    const starProps = {
+      name: 'staro',
+      onPress: handleStaringDeckPress,
+      selected: true,
+      style: iconStyle,
+    };
+    const downloadProps = {
+      name: 'download',
+      onPress: handleDownloadDeckPress,
+      selected: true,
+      style: iconStyle,
+    };
+    const moreActionProps = {
+      name: 'ellipsis1',
+      onPress: handleNavigateMoreActionPress,
+      style: iconStyle,
+    };
     return (
       <>
-        <StandardIconButton
-          name={'ellipsis1'}
-          style={[iconStyle, styles.headerButtonIcon]}
-        />
+        <StandardIconButton {...starProps} />
+        <StandardIconButton {...downloadProps} />
+        <StandardIconButton {...moreActionProps} />
       </>
     );
   }
 
-  function renderBottomButtons() {
+  function renderHeaderRightButtons({buttonStyle, contentButtonStyle}) {
     return (
-      <View style={styles.action}>
-        <FilledButton
-          content={'Choi ngay'}
-          style={styles.button}
-          onPress={handlePressFilledButton}
-          contentStyle={Typography.title.large}
-        />
-      </View>
+      <FilledButton
+        content={'Chơi ngay'}
+        style={buttonStyle}
+        contentStyle={contentButtonStyle}
+        onPress={() => {
+          console.log('Play now ');
+        }}
+      />
     );
+  }
+
+  function handleCardItemPressed() {
+    showIndex !== dataLength - 1 &&
+      carouselRef &&
+      carouselRef.current.scrollToNext();
+  }
+
+  function handleOnScrollEnd(item, index) {
+    setShowIndex(index);
   }
 
   if (requesting) {
@@ -95,31 +160,39 @@ function GameWaitScreen({navigation, route}) {
   return (
     <SafeAreaView style={defaultContainerStyle}>
       <ScrollView contentContainerStyle={styles.scrollView}>
-        <StandardHeader
-          head={cardDeck}
-          subHeadLeft={tag}
-          subHeadRight={`Tổng số ${totalTasks} lá`}
-          headStyle={Typography.title.large}
-          subHeadStyle={Typography.label.large}
-          style={styles.header}
-          containerStyle={styles.header}
-        />
+        <View style={styles.header}>
+          <HeaderImage source={source} />
+          <HeaderInformation
+            head={cardDeck}
+            tag={tag}
+            total={dataLength}
+            userName={userName}
+            avatar={avatar}
+            description={description}
+            totalLike={likes}
+            headStyle={Typography.headline.small}
+            contentStyle={Typography.label.large}
+          />
+          <HeaderButtons
+            renderLeftComponents={renderHeaderLeftButtons}
+            renderRightComponents={renderHeaderRightButtons}
+          />
+        </View>
         <View style={styles.supportingText}>
-          <Text style={[Typography.title.medium, {color: textColor}]}>
-            {previewNumberOfCard(totalTasks)}
-          </Text>
+          {renderPreviewNumber(dataLength)}
         </View>
         <SwipeableGameCard
-          data={tasks}
+          data={getPreviewDataItem(dataLength)}
+          ref={carouselRef}
+          style={styles.card}
+          contentStyle={defaultContentStyle}
+          itemWidth={cardWidth}
+          containerWidth={screenWidth}
+          separatorWidth={separatorWidth}
+          onScrollEnd={(item, index) => handleOnScrollEnd(item, index)}
+          onItemPress={handleCardItemPressed}
           initialIndex={INITIAL_INDEX}
-          style={styles.navigatedGameCard}
-          onScrollEnd={(item, index) => onScrollEnd(item, index)}
-          onBackwardPressed={handleBackwardButtonPressed}
-          onForwardPressed={handleForwardButtonPressed}
-          onBackwardDisabled={taskTurn === 0}
-          onForwardDisabled={taskTurn === totalTasks - 1}
         />
-        {renderBottomButtons()}
       </ScrollView>
     </SafeAreaView>
   );
@@ -135,7 +208,10 @@ const styles = StyleSheet.create({
   },
   header: {
     width: '100%',
-    aspectRatio: 4,
+    aspectRatio: 0.9,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   supportingText: {
     width: '100%',
@@ -143,8 +219,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  navigatedGameCard: {
-    width: '100%',
+  card: {
+    paddingVertical: 16,
+    // backgroundColor: 'green',
   },
   action: {
     width: '100%',
@@ -154,8 +231,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   button: {
-    width: 150,
+    width: 200,
     height: 50,
+    borderRadius: 20,
+  },
+  buttonContent: {
+    textTransform: 'uppercase',
+    fontWeight: 'bold',
   },
   headerButtonIcon: {
     borderRadius: 0,

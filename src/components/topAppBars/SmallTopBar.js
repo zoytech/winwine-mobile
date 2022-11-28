@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View, Text} from 'react-native';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {StandardIconButton} from 'src/components/iconButtons';
 
@@ -12,13 +12,13 @@ export default function SmallTopBar(props) {
     headerTitleStyle,
     rightContainerStyle,
     renderRightComponents,
+    renderMiddleComponent,
     ...otherProps
   } = props;
 
   const {base: surface, onBase: onSurface} = Color.light[ColorVariant.surface];
   const containerStyle = [styles.container, {backgroundColor: surface}, style];
   const defaultContentStyle = [
-    styles.text,
     Typography.title.large,
     {color: onSurface},
     contentStyle,

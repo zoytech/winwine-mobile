@@ -6,7 +6,6 @@ import {
   Text,
   View,
 } from 'react-native';
-import {Icon} from 'react-native-vector-icons/AntDesign';
 import {FilledButton, OutlinedCard} from 'src/components';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {TagName} from '../../../components';

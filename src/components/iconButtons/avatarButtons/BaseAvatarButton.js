@@ -1,14 +1,14 @@
 import {Image, Pressable, StyleSheet} from 'react-native';
 
 export default function BaseAvatarButton(props) {
-  const {avatar, style, contentStyle, avatarStyle, onPress, ...otherProps} =
-    props;
+  const {avatar, style, contentStyle, onPress, ...otherProps} = props;
   const getPressStyle = ({pressed}) => {
     return [styles.container, pressed && styles.opacityPressed, style];
   };
+  const avatarStyle = [styles.avatarIcon, contentStyle];
   return (
     <Pressable {...otherProps} style={getPressStyle} onPress={onPress}>
-      <Image source={avatar} style={styles.avatarIcon} />
+      <Image source={avatar} style={avatarStyle} />
     </Pressable>
   );
 }

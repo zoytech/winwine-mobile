@@ -1,61 +1,34 @@
 import {StyleSheet} from 'react-native';
 import {SmallTopBar, StandardIconButton} from 'src/components';
-import {ScreenKeys} from 'src/navigations/ScreenKeys';
-import {ExitGameDialog} from './index';
 
 export default function CustomTopAppBar(props) {
-  const {
-    navigation,
-    routes,
-    content,
-    style,
-    contentStyle,
-    onResetIndex = () => {},
-    ...otherProps
-  } = props;
+  const {navigation, routes, content, style, contentStyle, ...otherProps} =
+    props;
+
+  function handleShowSelectionList() {
+    alert('handleShowSelectionList');
+  }
 
   function renderRightComponents({iconStyle}) {
     return (
       <>
         <StandardIconButton
           name={'ellipsis1'}
-          onPress={handleNavigateExitGameDialog}
+          onPress={handleShowSelectionList}
           style={[iconStyle, styles.headerButtonIcon]}
         />
       </>
     );
   }
 
-  function handleNavigateExitGameDialog() {
-    const handleMainDialogPress = () => {
-      navigation.navigate({
-        name: ScreenKeys.HOME,
-      });
-    };
-    const handleSubDialogPress = () => {
-      navigation.goBack();
-      onResetIndex && onResetIndex();
-    };
-    navigation.navigate({
-      name: ScreenKeys.BASIC_DIALOG,
-      params: {
-        content: (
-          <ExitGameDialog
-            onMainActionPress={handleMainDialogPress}
-            onSubActionPress={handleSubDialogPress}
-          />
-        ),
-      },
-    });
-  }
-
   return (
     <SmallTopBar
       {...otherProps}
-      content={content}
+      content={''}
       leadingIcon={'arrowleft'}
       onLeadingIconPress={() => navigation.goBack()}
       renderRightComponents={renderRightComponents}
+      style={style}
     />
   );
 }
@@ -66,4 +39,5 @@ const styles = StyleSheet.create({
     minWidth: 48,
     minHeight: 48,
   },
+  image: {},
 });

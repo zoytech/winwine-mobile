@@ -14,7 +14,7 @@ import {
 } from './components';
 import {SwipeableGameCard} from '../components';
 
-const {width: screenWidth, height: screenHeight} = Dimensions.get('screen');
+const screenWidth = Dimensions.get('screen')?.width;
 const cardWidth = screenWidth * 0.8;
 const separatorWidth = screenWidth - cardWidth;
 const INITIAL_INDEX = 0;
@@ -31,7 +31,6 @@ export default function GamePlayScreen({navigation, route}) {
     tasks: tasks = [],
   } = cardDeckItem || {};
   const carouselRef = useRef(null);
-  const [disabled, setDisabled] = useState(true);
   const [showIndex, setShowIndex] = useState(INITIAL_INDEX);
   const [showIndicatorInfo, setShowIndicatorInfo] = useState(false);
 
@@ -101,7 +100,6 @@ export default function GamePlayScreen({navigation, route}) {
 
   function handleOnScrollEnd(item, index) {
     showIndex === dataLength && handleNavigateEndGameDialog();
-    index === 0 ? setDisabled(true) : setDisabled(false);
     setShowIndex(index);
   }
 
