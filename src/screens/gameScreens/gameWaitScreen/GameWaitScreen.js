@@ -35,6 +35,10 @@ function GameWaitScreen({navigation, route}) {
   const dispatch = useDispatch();
   const [showIndex, setShowIndex] = useState(INITIAL_INDEX);
   const carouselRef = useRef(null);
+  const scrollViewRef = useRef({
+    onScroll: () => {},
+  });
+  const [imageHeight, setImageHeight] = useState(0);
   const {
     cardDeck: cardDeck,
     tag: tag,
@@ -54,13 +58,25 @@ function GameWaitScreen({navigation, route}) {
     dispatch(loadCardDeckById(deckId));
   }, [dispatch, deckId]);
 
+  // const onScroll = useCallback(() => {
+  //   if (scrollViewRef.current === undefined) {
+  //     return;
+  //   }
+  //   scrollViewRef.current.onScroll;
+  // }, []);
+
   useEffect(() => {
     navigation.setOptions({
       header: () => (
-        <CustomTopAppBar content={deckTitle} navigation={navigation} />
+        <CustomTopAppBar
+          content={deckTitle}
+          navigation={navigation}
+          ref={scrollViewRef}
+          scrollDistance={imageHeight}
+        />
       ),
     });
-  }, [navigation]);
+  }, [navigation, imageHeight]);
 
   const defaultContainerStyle = [
     {backgroundColor: baseColor},
@@ -84,7 +100,7 @@ function GameWaitScreen({navigation, route}) {
 
   function renderPreviewNumber(total) {
     return (
-      <Text style={[Typography.title.medium, {color: textColor}]}>
+      <Text style={defaultContentStyle}>
         {`Xem trước ${getPreviewCardNumber(total)} lá bài`}
       </Text>
     );
@@ -154,14 +170,30 @@ function GameWaitScreen({navigation, route}) {
     setShowIndex(index);
   }
 
+  // function handleOnScrollView() {
+  //   onScroll: scrollViewRef.current.onScroll;
+  // }
+
+  function handleOnLayoutImage(event) {
+    setImageHeight(event.nativeEvent.layout.height);
+  }
+
+  console.log('onScroll: ', scrollViewRef.current);
+
   if (requesting) {
     return <SpinnerType1 />;
   }
   return (
     <SafeAreaView style={defaultContainerStyle}>
-      <ScrollView contentContainerStyle={styles.scrollView}>
+      <ScrollView
+        contentContainerStyle={styles.scrollView}
+        onScroll={scrollViewRef.current.onScroll}>
         <View style={styles.header}>
-          <HeaderImage source={source} />
+          <HeaderImage
+            // ref={scrollViewRef}
+            source={source}
+            onLayoutImage={e => handleOnLayoutImage(e)}
+          />
           <HeaderInformation
             head={cardDeck}
             tag={tag}
@@ -208,7 +240,7 @@ const styles = StyleSheet.create({
   },
   header: {
     width: '100%',
-    aspectRatio: 0.9,
+    aspectRatio: 0.8,
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -223,10 +255,10 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     // backgroundColor: 'green',
   },
-  action: {
+  suggestingDeck: {
     width: '100%',
-    aspectRatio: 4,
-    flexDirection: 'row',
+    aspectRatio: 1.5,
+    flexDirection: 'column',
     justifyContent: 'space-evenly',
     alignItems: 'center',
   },

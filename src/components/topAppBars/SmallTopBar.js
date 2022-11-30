@@ -1,4 +1,4 @@
-import {StyleSheet, View, Text} from 'react-native';
+import {Animated, StyleSheet, View} from 'react-native';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {StandardIconButton} from 'src/components/iconButtons';
 
@@ -7,45 +7,54 @@ export default function SmallTopBar(props) {
     content,
     leadingIcon,
     onLeadingIconPress = () => {},
+    onLayoutTopAppBar = () => {},
     style,
     contentStyle,
     headerTitleStyle,
     rightContainerStyle,
-    renderRightComponents,
-    renderMiddleComponent,
+    RightComponents,
+    CenterComponents,
     ...otherProps
   } = props;
 
-  const {base: surface, onBase: onSurface} = Color.light[ColorVariant.surface];
-  const containerStyle = [styles.container, {backgroundColor: surface}, style];
+  const {base: backgroundColor, onBase: contentColor} =
+    Color.light[ColorVariant.surface];
+  const containerStyle = [
+    styles.container,
+    {backgroundColor: backgroundColor},
+    style,
+  ];
   const defaultContentStyle = [
     Typography.title.large,
-    {color: onSurface},
+    {color: contentColor},
     contentStyle,
   ];
 
   function renderRight({iconStyle}) {
     //Can add more style if needed, not just iconStyle, Example: defaultContentStyle,...
-    if (typeof renderRightComponents === 'function') {
-      return renderRightComponents({iconStyle});
+    if (typeof RightComponents === 'function') {
+      return RightComponents({iconStyle});
     }
-    return renderRightComponents;
+    return RightComponents;
   }
 
   return (
-    <View {...otherProps} style={containerStyle}>
+    <Animated.View
+      {...otherProps}
+      style={containerStyle}
+      onLayout={e => onLayoutTopAppBar(e)}>
       <StandardIconButton
         name={leadingIcon}
         onPress={onLeadingIconPress}
         style={styles.icon}
       />
-      <Text numberOfLines={1} style={defaultContentStyle}>
+      <Animated.Text numberOfLines={1} style={defaultContentStyle}>
         {content}
-      </Text>
+      </Animated.Text>
       <View style={[styles.rightContainer, rightContainerStyle]}>
         {renderRight({iconStyle: styles.icon})}
       </View>
-    </View>
+    </Animated.View>
   );
 }
 

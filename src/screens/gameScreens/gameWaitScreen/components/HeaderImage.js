@@ -1,18 +1,56 @@
-import {Image, StyleSheet, View} from 'react-native';
+import {forwardRef, useImperativeHandle, useRef} from 'react';
+import {Animated, StyleSheet} from 'react-native';
 import {Color, ColorVariant} from 'src/themes';
 
-export default function HeaderImage(props) {
-  const {source, children, style, ...otherProps} = props;
+function HeaderImage(props, ref) {
+  const {
+    source,
+    children,
+    style,
+    onLayoutImage = () => {},
+    ...otherProps
+  } = props;
+  const animatedValue = useRef(new Animated.Value(0)).current;
   const imageBorderColor = Color.light[ColorVariant.primary]?.onBase;
+
+  useImperativeHandle(ref, () => ({
+    onScroll: e => {
+      const offsetY = e.nativeEvent.contentOffset.y;
+      animatedValue.setValue(offsetY);
+    },
+  }));
+
+  const imageHeaderAnimation = {
+    transform: [
+      {
+        scaleX: animatedValue.interpolate({
+          inputRange: [0, 100],
+          outputRange: [1, 0],
+          extrapolate: 'clamp',
+        }),
+      },
+    ],
+    opacity: animatedValue.interpolate({
+      inputRange: [0, 50],
+      outputRange: [1, 0],
+      extrapolate: 'clamp',
+    }),
+  };
+
   const containerStyle = [
     styles.container,
     {borderColor: imageBorderColor},
     style,
+    imageHeaderAnimation,
   ];
+
   return (
-    <View {...otherProps} style={containerStyle}>
-      <Image source={{uri: source}} style={styles.image} />
-    </View>
+    <Animated.View
+      {...otherProps}
+      style={containerStyle}
+      onLayout={onLayoutImage}>
+      <Animated.Image source={{uri: source}} style={styles.image} />
+    </Animated.View>
   );
 }
 
@@ -31,3 +69,5 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
 });
+
+export default forwardRef(HeaderImage);

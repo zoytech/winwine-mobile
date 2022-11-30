@@ -87,11 +87,8 @@ function CarouselNam(props, ref) {
   }
 
   function scrollToIndex(index) {
-    if (index < 0 || index > dataLength) {
+    if (index < 0 || index >= dataLength) {
       return;
-    }
-    if (index === dataLength) {
-      onFinalItem && onFinalItem(data[index], index);
     }
     onScrollEnd && onScrollEnd(data[index], index);
     currentIndexRef.current = index;

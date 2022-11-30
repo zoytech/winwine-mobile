@@ -45,6 +45,7 @@ export default function HeaderInformation(props) {
     const textProps = {
       numberOfLines: 2,
     };
+
     return (
       <View>
         {head ? (

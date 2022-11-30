@@ -25,7 +25,7 @@ const CenterAlignedTopBar = forwardRef(function CenterAlignedTopBar(
   const scrollYContentOffsetRef = useRef(new Animated.Value(0)).current;
   const [subHeight, setSubHeight] = useState(0);
   const totalHeight = subHeight + MAIN_HEIGHT;
-  const SCROLL_DISTANCE = totalHeight - MAIN_HEIGHT + CONFIG_VALUE;
+  const scrollDistance = totalHeight - MAIN_HEIGHT + CONFIG_VALUE;
 
   useImperativeHandle(ref, () => ({
     onScroll: e => {
@@ -39,12 +39,12 @@ const CenterAlignedTopBar = forwardRef(function CenterAlignedTopBar(
   const baseColor = Color.light[ColorVariant.primary]?.base;
   const topBarAnimation = {
     backgroundColor: scrollYContentOffsetRef.interpolate({
-      inputRange: [0, SCROLL_DISTANCE],
+      inputRange: [0, scrollDistance],
       outputRange: [surfaceColor, baseColor],
       extrapolate: 'clamp',
     }),
     height: scrollYContentOffsetRef.interpolate({
-      inputRange: [0, SCROLL_DISTANCE],
+      inputRange: [0, scrollDistance],
       outputRange: [totalHeight, subHeight],
       extrapolate: 'clamp',
     }),
@@ -53,7 +53,7 @@ const CenterAlignedTopBar = forwardRef(function CenterAlignedTopBar(
     transform: [
       {
         translateY: scrollYContentOffsetRef.interpolate({
-          inputRange: [0, SCROLL_DISTANCE],
+          inputRange: [0, scrollDistance],
           outputRange: [0, -MAIN_HEIGHT],
           extrapolate: 'clamp',
         }),
@@ -64,7 +64,7 @@ const CenterAlignedTopBar = forwardRef(function CenterAlignedTopBar(
     transform: [
       {
         translateY: scrollYContentOffsetRef.interpolate({
-          inputRange: [0, SCROLL_DISTANCE],
+          inputRange: [0, scrollDistance],
           outputRange: [0, -MAIN_HEIGHT],
           extrapolate: 'clamp',
         }),
