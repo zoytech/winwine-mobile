@@ -1,4 +1,4 @@
-import {forwardRef, useImperativeHandle, useRef} from 'react';
+import {forwardRef, useImperativeHandle, useRef, useState} from 'react';
 import {Animated, StyleSheet} from 'react-native';
 import {Color, ColorVariant} from 'src/themes';
 
@@ -11,6 +11,7 @@ function HeaderImage(props, ref) {
     ...otherProps
   } = props;
   const animatedValue = useRef(new Animated.Value(0)).current;
+  const [imageHeight, setImageHeight] = useState(0);
   const imageBorderColor = Color.light[ColorVariant.primary]?.onBase;
 
   useImperativeHandle(ref, () => ({
@@ -19,19 +20,20 @@ function HeaderImage(props, ref) {
       animatedValue.setValue(offsetY);
     },
   }));
+  console.log('imageHeight: ', imageHeight);
 
   const imageHeaderAnimation = {
     transform: [
       {
         scaleX: animatedValue.interpolate({
-          inputRange: [0, 100],
+          inputRange: [0, imageHeight],
           outputRange: [1, 0],
           extrapolate: 'clamp',
         }),
       },
     ],
     opacity: animatedValue.interpolate({
-      inputRange: [0, 50],
+      inputRange: [0, imageHeight],
       outputRange: [1, 0],
       extrapolate: 'clamp',
     }),
@@ -44,11 +46,16 @@ function HeaderImage(props, ref) {
     imageHeaderAnimation,
   ];
 
+  function handleOnLayoutImage(event) {
+    setImageHeight(event.nativeEvent.layout.height);
+    onLayoutImage(event);
+  }
+
   return (
     <Animated.View
       {...otherProps}
       style={containerStyle}
-      onLayout={onLayoutImage}>
+      onLayout={e => handleOnLayoutImage(e)}>
       <Animated.Image source={{uri: source}} style={styles.image} />
     </Animated.View>
   );

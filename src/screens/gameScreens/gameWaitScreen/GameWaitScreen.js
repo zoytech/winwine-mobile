@@ -190,7 +190,7 @@ function GameWaitScreen({navigation, route}) {
         onScroll={scrollViewRef.current.onScroll}>
         <View style={styles.header}>
           <HeaderImage
-            // ref={scrollViewRef}
+            ref={scrollViewRef}
             source={source}
             onLayoutImage={e => handleOnLayoutImage(e)}
           />
