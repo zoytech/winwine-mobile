@@ -8,10 +8,10 @@ export default function SmallTopBar(props) {
     leadingIcon,
     onLeadingIconPress = () => {},
     onLayoutTopAppBar = () => {},
+    topHeight,
+    bottomHeight,
     style,
     contentStyle,
-    headerTitleStyle,
-    rightContainerStyle,
     RightComponents,
     CenterComponents,
     ...otherProps
@@ -26,9 +26,15 @@ export default function SmallTopBar(props) {
   ];
   const defaultContentStyle = [
     Typography.title.large,
-    {color: contentColor},
+    {
+      color: contentColor,
+    },
     contentStyle,
   ];
+
+  const topPartStyle = [styles.topPart, {height: topHeight}];
+
+  // const bottomPartStyle = [styles.bottomPart, {height: bottomHeight}];
 
   function renderRight({iconStyle}) {
     //Can add more style if needed, not just iconStyle, Example: defaultContentStyle,...
@@ -38,32 +44,50 @@ export default function SmallTopBar(props) {
     return RightComponents;
   }
 
+  function renderCenter({centerStyle}) {
+    //Can add more style if needed, not just iconStyle, Example: defaultContentStyle,...
+    if (typeof CenterComponents === 'function') {
+      return CenterComponents({centerStyle});
+    }
+    return CenterComponents;
+  }
+
   return (
     <Animated.View
       {...otherProps}
       style={containerStyle}
       onLayout={e => onLayoutTopAppBar(e)}>
-      <StandardIconButton
-        name={leadingIcon}
-        onPress={onLeadingIconPress}
-        style={styles.icon}
-      />
-      <Animated.Text numberOfLines={1} style={defaultContentStyle}>
-        {content}
-      </Animated.Text>
-      <View style={[styles.rightContainer, rightContainerStyle]}>
-        {renderRight({iconStyle: styles.icon})}
-      </View>
+      <Animated.View style={topPartStyle}>
+        <StandardIconButton
+          name={leadingIcon}
+          onPress={onLeadingIconPress}
+          style={styles.icon}
+        />
+        {content && (
+          <Animated.Text numberOfLines={1} style={defaultContentStyle}>
+            {content}
+          </Animated.Text>
+        )}
+        <View style={[styles.rightContainer]}>
+          {renderRight({iconStyle: styles.icon})}
+        </View>
+      </Animated.View>
+      {renderCenter({centerStyle: styles.bottomPart})}
     </Animated.View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  topPart: {
+    width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: 64,
   },
   icon: {
     borderRadius: 0,
@@ -73,6 +97,15 @@ const styles = StyleSheet.create({
   rightContainer: {
     flexDirection: 'row',
     paddingRight: 16,
+  },
+  bottomPart: {
+    width: '100%',
+    alignItems: 'center',
+  },
+  centerItem: {
+    flexDirection: 'row',
+    alignSelf: 'center',
+    backgroundColor: 'red',
   },
 });
 

@@ -1,33 +1,20 @@
 import {Animated, StyleSheet} from 'react-native';
 import {SmallTopBar, StandardIconButton, withAnimated} from 'src/components';
-import {
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from 'react';
+import {forwardRef, useImperativeHandle, useRef, useState} from 'react';
+import {HeaderImage} from './index';
 
 const SmallTopBarAnimated = withAnimated(SmallTopBar);
+const HEADER_HEIGHT = 64;
+const CONFIG_HEIGHT = 40;
 
 function CustomTopAppBar(props, ref) {
-  const {
-    navigation,
-    routes,
-    content,
-    scrollDistance,
-    style,
-    contentStyle,
-    ...otherProps
-  } = props;
+  const {navigation, routes, content, source, style, ...otherProps} = props;
   const [showContent, setShowContent] = useState(false);
-  const [topAppBarHeight, setTopAppBarHeight] = useState(0);
-  const [distance, setDistance] = useState(0);
+  const [imageHeight, setImageHeight] = useState(0);
   const animatedValue = useRef(new Animated.Value(0)).current;
-  useEffect(() => {
-    setDistance(scrollDistance + topAppBarHeight);
-  }, [scrollDistance, topAppBarHeight]);
-  console.log('distance: ', distance);
+  const bottomHeight = imageHeight + CONFIG_HEIGHT;
+  const defaultAppBarHeight = bottomHeight + HEADER_HEIGHT;
+  const scrollDistance = defaultAppBarHeight / 2;
 
   function handleShowSelectionList() {
     alert('handleShowSelectionList');
@@ -37,7 +24,7 @@ function CustomTopAppBar(props, ref) {
     onScroll: event => {
       const offsetY = event.nativeEvent.contentOffset.y;
       animatedValue.setValue(offsetY);
-      if (offsetY >= distance) {
+      if (offsetY >= defaultAppBarHeight) {
         setShowContent(true);
       } else {
         setShowContent(false);
@@ -45,17 +32,52 @@ function CustomTopAppBar(props, ref) {
     },
   }));
 
+  const containerAnimation = {
+    height: animatedValue.interpolate({
+      inputRange: [0, 250],
+      outputRange: [bottomHeight, 0],
+      extrapolate: 'clamp',
+    }),
+  };
+
   const contentAnimation = {
     opacity: animatedValue.interpolate({
-      inputRange: [distance, 350],
+      inputRange: [250, 400],
       outputRange: [0, 1],
       extrapolate: 'clamp',
     }),
   };
 
-  function handleOnLayoutTopAppBar(event) {
-    setTopAppBarHeight(event.nativeEvent.layout.height);
-  }
+  const imageAnimation = {
+    transform: [
+      {
+        translateY: animatedValue.interpolate({
+          inputRange: [0, defaultAppBarHeight],
+          outputRange: [0, -500],
+          extrapolate: 'clamp',
+        }),
+      },
+      {
+        scaleX: animatedValue.interpolate({
+          inputRange: [0, imageHeight],
+          outputRange: [1, 0.5],
+          extrapolate: 'clamp',
+        }),
+      },
+      {
+        scaleY: animatedValue.interpolate({
+          inputRange: [0, imageHeight],
+          outputRange: [1, 0.5],
+          extrapolate: 'clamp',
+        }),
+      },
+    ],
+    opacity: animatedValue.interpolate({
+      inputRange: [imageHeight, defaultAppBarHeight],
+      outputRange: [1, 0],
+      extrapolate: 'clamp',
+    }),
+  };
 
   function renderRightComponents({iconStyle}) {
     return (
@@ -67,6 +89,28 @@ function CustomTopAppBar(props, ref) {
     );
   }
 
+  function renderCenterComponents({centerStyle}) {
+    const bottomStyle = [
+      centerStyle,
+      containerAnimation,
+      {backgroundColor: 'lime'},
+    ];
+    const handleOnLayoutImage = event => {
+      setImageHeight(event.nativeEvent.layout.height);
+    };
+    return (
+      showContent === false && (
+        <Animated.View style={bottomStyle}>
+          <HeaderImage
+            source={source}
+            onLayoutImage={handleOnLayoutImage}
+            style={imageAnimation}
+          />
+        </Animated.View>
+      )
+    );
+  }
+
   return (
     <SmallTopBarAnimated
       {...otherProps}
@@ -75,8 +119,10 @@ function CustomTopAppBar(props, ref) {
       leadingIcon={'arrowleft'}
       onLeadingIconPress={() => navigation.goBack()}
       RightComponents={renderRightComponents}
+      CenterComponents={renderCenterComponents}
       style={[style]}
-      onLayoutTopAppBar={handleOnLayoutTopAppBar}
+      topHeight={HEADER_HEIGHT}
+      bottomHeight={bottomHeight}
     />
   );
 }
@@ -88,7 +134,6 @@ const styles = StyleSheet.create({
     minHeight: 48,
   },
   content: {},
-  image: {},
 });
 
 export default forwardRef(CustomTopAppBar);

@@ -15,25 +15,26 @@ export default function VerticalCardList(props) {
       },
     });
   };
-  const handleButtonPress = ({cardDeckId, cardDeck}) => {
+  const handleButtonPress = ({cardDeckId, cardDeck, uri}) => {
     navigation.navigate({
       name: ScreenKeys.WAIT_GAME,
       params: {
         deckId: cardDeckId || '',
         deckTitle: cardDeck || '',
+        deckSource: uri || '',
       },
     });
   };
 
   function renderItem(item) {
-    const {cardDeckId, cardDeck} = item;
+    const {cardDeckId, cardDeck, uri} = item;
     return (
       <MiniCardItem
         {...otherProps}
         key={cardDeckId}
         data={item}
         onImageAreaPress={() => handleImageAreaPress({cardDeckId, cardDeck})}
-        onButtonPress={() => handleButtonPress({cardDeckId, cardDeck})}
+        onButtonPress={() => handleButtonPress({cardDeckId, cardDeck, uri})}
       />
     );
   }

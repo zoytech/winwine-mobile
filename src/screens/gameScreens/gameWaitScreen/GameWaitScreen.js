@@ -29,7 +29,7 @@ const INITIAL_INDEX = 0;
 const MAX_VIEW = 10;
 
 function GameWaitScreen({navigation, route}) {
-  const {deckId, deckTitle} = route.params;
+  const {deckId, deckTitle, deckSource} = route.params;
   const cardDeckItem = useSelector(cardDeckSelector);
   const requesting = useSelector(requestingDeckSelector);
   const dispatch = useDispatch();
@@ -38,7 +38,6 @@ function GameWaitScreen({navigation, route}) {
   const scrollViewRef = useRef({
     onScroll: () => {},
   });
-  const [imageHeight, setImageHeight] = useState(0);
   const {
     cardDeck: cardDeck,
     tag: tag,
@@ -70,13 +69,13 @@ function GameWaitScreen({navigation, route}) {
       header: () => (
         <CustomTopAppBar
           content={deckTitle}
+          source={deckSource}
           navigation={navigation}
           ref={scrollViewRef}
-          scrollDistance={imageHeight}
         />
       ),
     });
-  }, [navigation, imageHeight]);
+  }, [navigation]);
 
   const defaultContainerStyle = [
     {backgroundColor: baseColor},
@@ -170,16 +169,6 @@ function GameWaitScreen({navigation, route}) {
     setShowIndex(index);
   }
 
-  // function handleOnScrollView() {
-  //   onScroll: scrollViewRef.current.onScroll;
-  // }
-
-  function handleOnLayoutImage(event) {
-    setImageHeight(event.nativeEvent.layout.height);
-  }
-
-  console.log('onScroll: ', scrollViewRef.current);
-
   if (requesting) {
     return <SpinnerType1 />;
   }
@@ -189,11 +178,6 @@ function GameWaitScreen({navigation, route}) {
         contentContainerStyle={styles.scrollView}
         onScroll={scrollViewRef.current.onScroll}>
         <View style={styles.header}>
-          <HeaderImage
-            ref={scrollViewRef}
-            source={source}
-            onLayoutImage={e => handleOnLayoutImage(e)}
-          />
           <HeaderInformation
             head={cardDeck}
             tag={tag}
@@ -240,7 +224,7 @@ const styles = StyleSheet.create({
   },
   header: {
     width: '100%',
-    aspectRatio: 0.8,
+    aspectRatio: 1.6,
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'space-between',
