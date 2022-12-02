@@ -35,7 +35,6 @@ function CarouselNam(props, ref) {
     onScrollEnd = () => {},
     onScrollBeginDrag = () => {},
     onScrollEndDrag = () => {},
-    onFinalItem = () => {},
     ...otherProps
   } = props;
   const scrollViewRef = useRef(null);

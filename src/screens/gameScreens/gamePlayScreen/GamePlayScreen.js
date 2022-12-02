@@ -32,8 +32,7 @@ export default function GamePlayScreen({navigation, route}) {
   } = cardDeckItem || {};
   const carouselRef = useRef(null);
   const [showIndex, setShowIndex] = useState(INITIAL_INDEX);
-  const [showIndicatorInfo, setShowIndicatorInfo] = useState(false);
-
+  const [showIndicatorInfo, setShowIndicatorInfo] = useState(true);
   const dataLength = tasks ? tasks.length : 0;
 
   const baseColor = Color.light[ColorVariant.surface]?.base;
@@ -44,8 +43,11 @@ export default function GamePlayScreen({navigation, route}) {
   ];
   const defaultContentStyle = [Typography.title.medium, {color: textColor}];
   const progressBarWidth = screenWidth * 0.8;
-  const percentValue = dataLength !== 0 ? (showIndex + 1) / dataLength : 0;
+  const percentValue = dataLength !== 0 && (showIndex + 1) / dataLength;
   const indicatedPartWidth = progressBarWidth * percentValue;
+  const minFragmentWidth = dataLength !== 0 && 1 / dataLength;
+  const indicatedArrowWidth = progressBarWidth * minFragmentWidth;
+
   useEffect(() => {
     dispatch(loadCardDeckById(deckId));
   }, [dispatch]);
@@ -110,18 +112,21 @@ export default function GamePlayScreen({navigation, route}) {
     <SafeAreaView style={defaultContainerStyle}>
       <View contentContainerStyle={styles.scrollView}>
         <View style={styles.progressBar}>
+          {showIndicatorInfo && (
+            <InfoProgressIndicator
+              content={`${showIndex + 1} per ${dataLength}`}
+              progressBarWidth={progressBarWidth}
+              indicatedArrowWidth={indicatedArrowWidth}
+              indicatedPartWidth={indicatedPartWidth}
+            />
+          )}
           <CardDetermination
             onPressIn={handleShowIndicatorInfo}
             onPressOut={handleNotShowIndicatorInfo}
             contentStyle={defaultContentStyle}
             progressBarWidth={progressBarWidth}
-            indicatedPartWidth={indicatedPartWidth}>
-            {showIndicatorInfo && (
-              <InfoProgressIndicator
-                content={`${showIndex + 1} per ${dataLength}`}
-              />
-            )}
-          </CardDetermination>
+            indicatedPartWidth={indicatedPartWidth}
+          />
         </View>
         <SwipeableGameCard
           data={tasks}
@@ -157,11 +162,10 @@ const styles = StyleSheet.create({
   progressBar: {
     width: '100%',
     aspectRatio: 6,
-  }, // counter: {
-  //   alignSelf: 'center',
-  //   backgroundColor: 'lightpink',
-  //   position: 'relative',
-  // },
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
   card: {
     paddingVertical: separatorWidth / 2,
     width: '100%',
@@ -178,7 +182,15 @@ const styles = StyleSheet.create({
   button: {
     minWidth: 120,
     height: 40,
-  }, // paginationDotActive: {backgroundColor: 'blue'},
+  },
+  indicatorLine: {
+    height: 32,
+    backgroundColor: 'blue',
+    width: 1,
+    position: 'absolute',
+  },
+
+  // paginationDotActive: {backgroundColor: 'blue'},
   // paginationDotInactive: {backgroundColor: 'red'},
   // pagination: {
   //   position: 'absolute',

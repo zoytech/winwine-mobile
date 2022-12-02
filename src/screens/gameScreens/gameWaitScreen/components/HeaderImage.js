@@ -1,27 +1,77 @@
 import {Animated, StyleSheet} from 'react-native';
 import {Color, ColorVariant} from 'src/themes';
+import {forwardRef, useImperativeHandle, useRef, useState} from 'react';
 
-export default function HeaderImage(props) {
+function HeaderImage(props, ref) {
   const {
     source,
     children,
     style,
     onLayoutImage = () => {},
+    onShowContent = () => {},
     ...otherProps
   } = props;
+  const animatedValue = useRef(new Animated.Value(0)).current;
   const imageBorderColor = Color.light[ColorVariant.primary]?.onBase;
+  const [imageHeight, setImageHeight] = useState(0);
+  const halfImageHeight = imageHeight / 2;
+  useImperativeHandle(ref, () => ({
+    onScroll: event => {
+      const offsetY = event.nativeEvent.contentOffset.y;
+      animatedValue.setValue(offsetY);
+      // offsetY > imageHeight && event.preventDefault();
+      onShowContent(event);
+    },
+  }));
+
+  const imageAnimation = {
+    transform: [
+      {
+        translateY: animatedValue.interpolate({
+          inputRange: [0, halfImageHeight, imageHeight],
+          outputRange: [0, 0, -64],
+          extrapolate: 'clamp',
+        }),
+      },
+      {
+        scaleX: animatedValue.interpolate({
+          inputRange: [0, halfImageHeight],
+          outputRange: [1, 0.75],
+          extrapolate: 'clamp',
+        }),
+      },
+      {
+        scaleY: animatedValue.interpolate({
+          inputRange: [0, halfImageHeight],
+          outputRange: [1, 0.75],
+          extrapolate: 'clamp',
+        }),
+      },
+    ],
+    opacity: animatedValue.interpolate({
+      inputRange: [0, imageHeight],
+      outputRange: [1, 0],
+      extrapolate: 'clamp',
+    }),
+  };
 
   const containerStyle = [
     styles.container,
+    imageAnimation,
     {borderColor: imageBorderColor},
     style,
   ];
+
+  function handleOnLayoutImage(event) {
+    setImageHeight(event.nativeEvent.layout.height);
+    onLayoutImage(event);
+  }
 
   return (
     <Animated.View
       {...otherProps}
       style={containerStyle}
-      onLayout={e => onLayoutImage(e)}>
+      onLayout={e => handleOnLayoutImage(e)}>
       <Animated.Image source={{uri: source}} style={styles.image} />
     </Animated.View>
   );
@@ -42,3 +92,4 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
 });
+export default forwardRef(HeaderImage);

@@ -1,20 +1,30 @@
+import {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react';
 import {Animated, StyleSheet} from 'react-native';
 import {SmallTopBar, StandardIconButton, withAnimated} from 'src/components';
-import {forwardRef, useImperativeHandle, useRef, useState} from 'react';
-import {HeaderImage} from './index';
 
 const SmallTopBarAnimated = withAnimated(SmallTopBar);
 const HEADER_HEIGHT = 64;
 const CONFIG_HEIGHT = 40;
 
 function CustomTopAppBar(props, ref) {
-  const {navigation, routes, content, source, style, ...otherProps} = props;
+  const {
+    navigation,
+    routes,
+    content,
+    imageHeight,
+    source,
+    style,
+    ...otherProps
+  } = props;
   const [showContent, setShowContent] = useState(false);
-  const [imageHeight, setImageHeight] = useState(0);
   const animatedValue = useRef(new Animated.Value(0)).current;
   const bottomHeight = imageHeight + CONFIG_HEIGHT;
-  const defaultAppBarHeight = bottomHeight + HEADER_HEIGHT;
-  const scrollDistance = defaultAppBarHeight / 2;
 
   function handleShowSelectionList() {
     alert('handleShowSelectionList');
@@ -24,7 +34,7 @@ function CustomTopAppBar(props, ref) {
     onScroll: event => {
       const offsetY = event.nativeEvent.contentOffset.y;
       animatedValue.setValue(offsetY);
-      if (offsetY >= defaultAppBarHeight) {
+      if (offsetY >= imageHeight) {
         setShowContent(true);
       } else {
         setShowContent(false);
@@ -32,49 +42,10 @@ function CustomTopAppBar(props, ref) {
     },
   }));
 
-  const containerAnimation = {
-    height: animatedValue.interpolate({
-      inputRange: [0, 250],
-      outputRange: [bottomHeight, 0],
-      extrapolate: 'clamp',
-    }),
-  };
-
   const contentAnimation = {
     opacity: animatedValue.interpolate({
-      inputRange: [250, 400],
+      inputRange: [bottomHeight, bottomHeight + CONFIG_HEIGHT],
       outputRange: [0, 1],
-      extrapolate: 'clamp',
-    }),
-  };
-
-  const imageAnimation = {
-    transform: [
-      {
-        translateY: animatedValue.interpolate({
-          inputRange: [0, defaultAppBarHeight],
-          outputRange: [0, -500],
-          extrapolate: 'clamp',
-        }),
-      },
-      {
-        scaleX: animatedValue.interpolate({
-          inputRange: [0, imageHeight],
-          outputRange: [1, 0.5],
-          extrapolate: 'clamp',
-        }),
-      },
-      {
-        scaleY: animatedValue.interpolate({
-          inputRange: [0, imageHeight],
-          outputRange: [1, 0.5],
-          extrapolate: 'clamp',
-        }),
-      },
-    ],
-    opacity: animatedValue.interpolate({
-      inputRange: [imageHeight, defaultAppBarHeight],
-      outputRange: [1, 0],
       extrapolate: 'clamp',
     }),
   };
@@ -89,28 +60,6 @@ function CustomTopAppBar(props, ref) {
     );
   }
 
-  function renderCenterComponents({centerStyle}) {
-    const bottomStyle = [
-      centerStyle,
-      containerAnimation,
-      {backgroundColor: 'lime'},
-    ];
-    const handleOnLayoutImage = event => {
-      setImageHeight(event.nativeEvent.layout.height);
-    };
-    return (
-      showContent === false && (
-        <Animated.View style={bottomStyle}>
-          <HeaderImage
-            source={source}
-            onLayoutImage={handleOnLayoutImage}
-            style={imageAnimation}
-          />
-        </Animated.View>
-      )
-    );
-  }
-
   return (
     <SmallTopBarAnimated
       {...otherProps}
@@ -119,7 +68,6 @@ function CustomTopAppBar(props, ref) {
       leadingIcon={'arrowleft'}
       onLeadingIconPress={() => navigation.goBack()}
       RightComponents={renderRightComponents}
-      CenterComponents={renderCenterComponents}
       style={[style]}
       topHeight={HEADER_HEIGHT}
       bottomHeight={bottomHeight}

@@ -34,10 +34,11 @@ function GameWaitScreen({navigation, route}) {
   const requesting = useSelector(requestingDeckSelector);
   const dispatch = useDispatch();
   const [showIndex, setShowIndex] = useState(INITIAL_INDEX);
+  const [imageHeight, setImageHeight] = useState(0);
   const carouselRef = useRef(null);
-  const scrollViewRef = useRef({
-    onScroll: () => {},
-  });
+  const scrollViewRef = useRef([]);
+
+  const myRef = useRef([]);
   const {
     cardDeck: cardDeck,
     tag: tag,
@@ -57,13 +58,6 @@ function GameWaitScreen({navigation, route}) {
     dispatch(loadCardDeckById(deckId));
   }, [dispatch, deckId]);
 
-  // const onScroll = useCallback(() => {
-  //   if (scrollViewRef.current === undefined) {
-  //     return;
-  //   }
-  //   scrollViewRef.current.onScroll;
-  // }, []);
-
   useEffect(() => {
     navigation.setOptions({
       header: () => (
@@ -72,26 +66,17 @@ function GameWaitScreen({navigation, route}) {
           source={deckSource}
           navigation={navigation}
           ref={scrollViewRef}
+          imageHeight={imageHeight}
         />
       ),
     });
-  }, [navigation]);
+  }, [navigation, imageHeight]);
 
   const defaultContainerStyle = [
     {backgroundColor: baseColor},
     styles.container,
   ];
   const defaultContentStyle = [Typography.title.medium, {color: textColor}];
-
-  function handlePressFilledButton() {
-    navigation.navigate({
-      name: ScreenKeys.PLAY_GAME,
-      params: {
-        deckId: deckId,
-        deckTitle: cardDeck || '',
-      },
-    });
-  }
 
   function getPreviewCardNumber(total) {
     return total >= MAX_VIEW ? MAX_VIEW : total;
@@ -147,14 +132,22 @@ function GameWaitScreen({navigation, route}) {
   }
 
   function renderHeaderRightButtons({buttonStyle, contentButtonStyle}) {
+    const handlePressFilledButton = () => {
+      navigation.navigate({
+        name: ScreenKeys.PLAY_GAME,
+        params: {
+          deckId: deckId,
+          deckTitle: cardDeck || '',
+        },
+      });
+    };
+
     return (
       <FilledButton
         content={'Chơi ngay'}
         style={buttonStyle}
         contentStyle={contentButtonStyle}
-        onPress={() => {
-          console.log('Play now ');
-        }}
+        onPress={handlePressFilledButton}
       />
     );
   }
@@ -169,6 +162,10 @@ function GameWaitScreen({navigation, route}) {
     setShowIndex(index);
   }
 
+  function handleOnLayoutImage(event) {
+    setImageHeight(event.nativeEvent.layout.height);
+  }
+
   if (requesting) {
     return <SpinnerType1 />;
   }
@@ -178,6 +175,7 @@ function GameWaitScreen({navigation, route}) {
         contentContainerStyle={styles.scrollView}
         onScroll={scrollViewRef.current.onScroll}>
         <View style={styles.header}>
+          <HeaderImage source={source} onLayoutImage={handleOnLayoutImage} />
           <HeaderInformation
             head={cardDeck}
             tag={tag}
@@ -224,7 +222,7 @@ const styles = StyleSheet.create({
   },
   header: {
     width: '100%',
-    aspectRatio: 1.6,
+    aspectRatio: 0.9,
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'space-between',

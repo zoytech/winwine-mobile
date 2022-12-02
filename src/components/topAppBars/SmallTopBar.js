@@ -34,8 +34,6 @@ export default function SmallTopBar(props) {
 
   const topPartStyle = [styles.topPart, {height: topHeight}];
 
-  // const bottomPartStyle = [styles.bottomPart, {height: bottomHeight}];
-
   function renderRight({iconStyle}) {
     //Can add more style if needed, not just iconStyle, Example: defaultContentStyle,...
     if (typeof RightComponents === 'function') {
