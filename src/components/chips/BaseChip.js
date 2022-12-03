@@ -73,17 +73,17 @@ export default function BaseChip(props) {
   function getContainerStyle({pressed}) {
     return [
       defaultChipStyle.container,
-      generateStateStyles(selected, pressed, disabled)?.containerStyle,
+      generateStateStyles({selected, pressed, disabled})?.containerStyle,
       style,
     ];
   }
 
   function renderContent({pressed}) {
-    const stateContentStyle = generateStateStyles(
+    const stateContentStyle = generateStateStyles({
       selected,
       pressed,
       disabled,
-    )?.contentStyle;
+    })?.contentStyle;
     const contentStyle = [
       typographyVariant,
       stateContentStyle,

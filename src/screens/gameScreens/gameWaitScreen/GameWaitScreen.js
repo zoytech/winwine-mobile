@@ -9,7 +9,12 @@ import {
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Color, ColorVariant, Typography} from 'src/themes';
-import {FilledButton, SpinnerType1, StandardIconButton} from 'src/components';
+import {
+  FilledButton,
+  SpinnerType1,
+  StandardIconButton,
+  StandardIconToggle,
+} from 'src/components';
 import {loadCardDeckById} from 'src/redux/actions';
 import {
   CustomTopAppBar,
@@ -107,14 +112,13 @@ function GameWaitScreen({navigation, route}) {
     };
     const starProps = {
       name: 'staro',
+      selectedName: 'star',
       onPress: handleStaringDeckPress,
-      selected: true,
       style: iconStyle,
     };
     const downloadProps = {
       name: 'download',
       onPress: handleDownloadDeckPress,
-      selected: true,
       style: iconStyle,
     };
     const moreActionProps = {
@@ -124,8 +128,8 @@ function GameWaitScreen({navigation, route}) {
     };
     return (
       <>
-        <StandardIconButton {...starProps} />
-        <StandardIconButton {...downloadProps} />
+        <StandardIconToggle {...starProps} />
+        <StandardIconToggle {...downloadProps} />
         <StandardIconButton {...moreActionProps} />
       </>
     );
