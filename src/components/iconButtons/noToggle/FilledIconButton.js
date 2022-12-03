@@ -5,8 +5,8 @@ import {Color, ColorVariant, StateLayers, StateLayersVariant} from 'src/themes';
 import {BaseButton} from 'src/components';
 import DefaultIconButtonStyle from './defaultIconButtonStyle';
 
-function getStateStyles(isPressed, isDisabled, colorVariant) {
-  if (isDisabled) {
+function getStateStyles({pressed, disabled}) {
+  if (disabled) {
     const {level_038, level_012} =
       StateLayers.light[StateLayersVariant.onSurface];
     return {
@@ -15,17 +15,12 @@ function getStateStyles(isPressed, isDisabled, colorVariant) {
       iconColor: level_038,
     };
   }
-  const {onBase: onBaseColor, base: baseColor} = Color.light[colorVariant];
-  if (isPressed) {
-    const layerColor = StateLayers.light[StateLayersVariant.primary]?.level_088;
-    return {
-      containerStyle: {backgroundColor: layerColor},
-      contentStyle: {color: onBaseColor},
-      iconColor: onBaseColor,
-    };
-  }
+  const {onBase: onBaseColor, base: baseColor} =
+    Color.light[ColorVariant.primary];
+  const layerColor = StateLayers.light[StateLayersVariant.primary]?.level_088;
+
   return {
-    containerStyle: {backgroundColor: baseColor},
+    containerStyle: {backgroundColor: pressed ? layerColor : baseColor},
     contentStyle: {color: onBaseColor},
     iconColor: onBaseColor,
   };
@@ -38,7 +33,6 @@ export default function FilledIconButton(props) {
     contentStyle: rawContentStyle,
     iconStyle,
     name,
-    colorVariant = ColorVariant.primary,
     disabled,
     children,
     ...otherProps
@@ -47,17 +41,16 @@ export default function FilledIconButton(props) {
   function getContainerStyle({pressed}) {
     return [
       DefaultIconButtonStyle.container,
-      getStateStyles(pressed, disabled, colorVariant)?.containerStyle,
+      getStateStyles({pressed, disabled})?.containerStyle,
       style,
     ];
   }
 
   function renderContent({pressed}) {
-    const {contentStyle, iconColor} = getStateStyles(
+    const {contentStyle, iconColor} = getStateStyles({
       pressed,
       disabled,
-      colorVariant,
-    );
+    });
     const iconProps = {
       size: DefaultIconButtonStyle.icon.size,
       name: name,

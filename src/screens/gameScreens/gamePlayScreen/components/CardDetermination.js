@@ -32,11 +32,6 @@ export default function CardDetermination(props) {
       backgroundColor: baseColor,
     },
   ];
-  const iconProps = {
-    name: 'arrowup',
-    color: outlineColor,
-    size: 32,
-  };
 
   return (
     <View {...otherProps} style={containerStyle}>

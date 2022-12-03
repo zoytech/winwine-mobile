@@ -5,8 +5,8 @@ import {Color, ColorVariant, StateLayers, StateLayersVariant} from 'src/themes';
 import {BaseButton} from 'src/components';
 import DefaultIconButtonStyle from './defaultIconButtonStyle';
 
-function getStateStyles(isPressed, isDisabled, colorVariant) {
-  if (isDisabled) {
+function getStateStyles({pressed, disabled}) {
+  if (disabled) {
     const level_038 =
       StateLayers.light[StateLayersVariant.onSurface]?.level_038;
     return {
@@ -17,21 +17,12 @@ function getStateStyles(isPressed, isDisabled, colorVariant) {
       iconColor: level_038,
     };
   }
-  const {onBase: onBaseColor} = Color.light[colorVariant];
-  if (isPressed) {
-    const layerColor =
-      StateLayers.light[StateLayersVariant.onSurfaceVar]?.level_012;
-    return {
-      containerStyle: {
-        backgroundColor: layerColor,
-      },
-      contentStyle: {color: onBaseColor},
-      iconColor: onBaseColor,
-    };
-  }
+  const onBaseColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
+  const layerColor =
+    StateLayers.light[StateLayersVariant.onSurfaceVar]?.level_012;
   return {
     containerStyle: {
-      backgroundColor: 'transparent',
+      backgroundColor: pressed ? layerColor : 'transparent',
     },
     contentStyle: {color: onBaseColor},
     iconColor: onBaseColor,
@@ -45,8 +36,8 @@ export default function StandardIconButton(props) {
     contentStyle: rawContentStyle,
     iconStyle,
     name,
-    colorVariant = ColorVariant.surfaceVariant,
     disabled,
+    selected,
     children,
     ...otherProps
   } = props;
@@ -54,17 +45,19 @@ export default function StandardIconButton(props) {
   function getContainerStyle({pressed}) {
     return [
       DefaultIconButtonStyle.container,
-      getStateStyles(pressed, disabled, colorVariant)?.containerStyle,
+      getStateStyles({
+        pressed,
+        disabled,
+      })?.containerStyle,
       style,
     ];
   }
 
   function renderContent({pressed}) {
-    const {contentStyle, iconColor} = getStateStyles(
+    const {contentStyle, iconColor} = getStateStyles({
       pressed,
       disabled,
-      colorVariant,
-    );
+    });
     const iconProps = {
       size: DefaultIconButtonStyle.icon.size,
       name: name,

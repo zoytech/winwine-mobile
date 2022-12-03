@@ -5,8 +5,8 @@ import {Color, ColorVariant, StateLayers, StateLayersVariant} from 'src/themes';
 import {BaseButton} from 'src/components';
 import DefaultIconButtonStyle from './defaultIconButtonStyle';
 
-function getStateStyles(isPressed, isDisabled, colorVariant) {
-  if (isDisabled) {
+function getStateStyles({pressed, disabled}) {
+  if (disabled) {
     const {level_012: layerColor, level_038: textColor} =
       StateLayers.light[StateLayersVariant.onSurface];
     return {
@@ -19,24 +19,12 @@ function getStateStyles(isPressed, isDisabled, colorVariant) {
       iconColor: textColor,
     };
   }
-  const {onBase: onBaseColor} = Color.light[colorVariant];
+  const {onBase: onBaseColor} = Color.light[ColorVariant.surface];
   const {base: baseOutlineColor} = Color.light[ColorVariant.outline];
-  if (isPressed) {
-    const layerColor =
-      StateLayers.light[StateLayersVariant.onSurface]?.level_012;
-    return {
-      containerStyle: {
-        backgroundColor: layerColor,
-        borderColor: baseOutlineColor,
-        borderWidth: 0.5,
-      },
-      contentStyle: {color: onBaseColor},
-      iconColor: onBaseColor,
-    };
-  }
+  const layerColor = StateLayers.light[StateLayersVariant.onSurface]?.level_012;
   return {
     containerStyle: {
-      backgroundColor: 'transparent',
+      backgroundColor: pressed ? layerColor : 'transparent',
       borderColor: baseOutlineColor,
       borderWidth: 0.5,
     },
@@ -52,7 +40,6 @@ export default function OutlinedIconButton(props) {
     contentStyle: rawContentStyle,
     iconStyle,
     name,
-    colorVariant = ColorVariant.surface,
     disabled,
     children,
     ...otherProps
@@ -61,17 +48,16 @@ export default function OutlinedIconButton(props) {
   function getContainerStyle({pressed}) {
     return [
       DefaultIconButtonStyle.container,
-      getStateStyles(pressed, disabled, colorVariant)?.containerStyle,
+      getStateStyles({pressed, disabled})?.containerStyle,
       style,
     ];
   }
 
   function renderContent({pressed}) {
-    const {contentStyle, iconColor} = getStateStyles(
+    const {contentStyle, iconColor} = getStateStyles({
       pressed,
       disabled,
-      colorVariant,
-    );
+    });
     const iconProps = {
       size: DefaultIconButtonStyle.icon.size,
       name: name,
