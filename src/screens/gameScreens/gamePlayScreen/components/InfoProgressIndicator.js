@@ -15,8 +15,6 @@ export default function InfoProgressIndicator(props) {
   } = props;
   const {base: baseColor, onBase: onBaseColor} =
     Color.light[ColorVariant.primary];
-  console.log('indicatedPartWidth: ', indicatedPartWidth);
-  console.log('indicatedArrowWidth: ', indicatedArrowWidth);
 
   const outlineColor = Color.light[ColorVariant.outline];
   const contentContainerStyle = [
