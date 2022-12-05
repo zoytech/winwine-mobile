@@ -38,8 +38,8 @@ function getStateStyles({pressed, disabled, selected}) {
     containerStyle: {
       backgroundColor: pressed ? surVarStateLayer : baseColor,
     },
-    contentStyle: {color: disabled ? textLayer : onBaseColor},
-    iconColor: disabled ? textLayer : onBaseColor,
+    contentStyle: {color: onBaseColor},
+    iconColor: onBaseColor,
   };
 }
 
@@ -56,7 +56,7 @@ export default function TonalIconToggle(props) {
     ...otherProps
   } = props;
 
-  const [selected, setSelected] = useState(true);
+  const [selected, setSelected] = useState(false);
 
   function getContainerStyle({pressed}) {
     return [
@@ -84,6 +84,7 @@ export default function TonalIconToggle(props) {
       size: DefaultIconButtonStyle.icon.size,
       name: selectedName && selected ? selectedName : name,
       color: iconColor,
+      ...iconStyle,
     };
     return (
       <>

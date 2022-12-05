@@ -21,7 +21,7 @@ function getStateStyles({pressed, disabled, selected}) {
     Color.light[ColorVariant.primary];
   const baseSurVarColor = Color.light[ColorVariant.surfaceVariant]?.base;
   const baseSurVarLayer =
-    StateLayers.light[StateLayersVariant.primary]?.level_088;
+    StateLayers.light[StateLayersVariant.surfaceVar]?.level_088;
   if (selected) {
     const primaryLayer =
       StateLayers.light[StateLayersVariant.primary]?.level_088;
@@ -53,7 +53,7 @@ export default function FilledIconToggle(props) {
     ...otherProps
   } = props;
 
-  const [selected, setSelected] = useState(true);
+  const [selected, setSelected] = useState(false);
 
   function getContainerStyle({pressed}) {
     return [

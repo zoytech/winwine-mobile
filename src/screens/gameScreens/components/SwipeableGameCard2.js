@@ -74,6 +74,7 @@ function SwipeableGameCard2(props, ref) {
       contentContainerStyle={styles.contentContainer}
       itemWidth={itemWidth}
       containerWidth={containerWidth}
+      separatorWidth={separatorWidth}
       onScrollEnd={handleScrollEnd}
     />
   );

@@ -145,7 +145,7 @@ function CarouselNam(props, ref) {
     return halfContainerWidth;
   }
 
-  function getMidPontInterpolate(index, animatedOffset) {
+  function getMidPointInterpolate(index, animatedOffset) {
     return (
       index * (itemWidth + itemTotalMarginBothSide) +
       halfItemWidth -
@@ -153,10 +153,10 @@ function CarouselNam(props, ref) {
     );
   }
 
-  function getStartPontInterpolate(index, midPoint) {
-    if (index === 1) {
-      return 0;
-    }
+  function getStartPointInterpolate(index, midPoint) {
+    // if (index === 1) {
+    //   return 0;
+    // }
     if (isLastItem(index)) {
       return (
         (dataLength - 2) * (itemWidth + itemTotalMarginBothSide) +
@@ -185,8 +185,8 @@ function CarouselNam(props, ref) {
 
   function getItemAnimatedStyle(index) {
     const animatedOffset = getAnimatedOffset(index);
-    const midPoint = getMidPontInterpolate(index, animatedOffset);
-    const startPoint = getStartPontInterpolate(index, midPoint);
+    const midPoint = getMidPointInterpolate(index, animatedOffset);
+    const startPoint = getStartPointInterpolate(index, midPoint);
     const endPoint = getEndPointInterpolate(index, midPoint);
     const animatedOpacity = {
       opacity: xOffsetRef.current.interpolate({

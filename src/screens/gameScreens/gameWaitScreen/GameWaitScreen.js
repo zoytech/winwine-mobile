@@ -26,10 +26,12 @@ import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import {cardDeckSelector, requestingDeckSelector} from 'src/redux/selectors';
 import {SwipeableGameCard} from '../components';
 import avatarImg from '../../../assets/images/preview-package/user.png';
+import {CardDetermination} from '../gamePlayScreen/components';
 
 const screenWidth = Dimensions.get('screen')?.width;
-const cardWidth = screenWidth * 0.75;
-const separatorWidth = screenWidth - cardWidth;
+const CONTAINER_WIDTH = 320;
+const cardWidth = CONTAINER_WIDTH * 0.85;
+const SEPARATOR_WIDTH = 10;
 const INITIAL_INDEX = 0;
 const MAX_VIEW = 10;
 
@@ -207,8 +209,8 @@ function GameWaitScreen({navigation, route}) {
           style={styles.card}
           contentStyle={defaultContentStyle}
           itemWidth={cardWidth}
-          containerWidth={screenWidth}
-          separatorWidth={separatorWidth}
+          containerWidth={CONTAINER_WIDTH}
+          separatorWidth={SEPARATOR_WIDTH}
           onScrollEnd={(item, index) => handleOnScrollEnd(item, index)}
           onItemPress={handleCardItemPressed}
           initialIndex={INITIAL_INDEX}
@@ -241,7 +243,7 @@ const styles = StyleSheet.create({
   },
   card: {
     paddingVertical: 16,
-    // backgroundColor: 'green',
+    paddingBottom: 48,
   },
   suggestingDeck: {
     width: '100%',

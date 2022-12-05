@@ -89,6 +89,7 @@ export default function OutlinedIconToggle(props) {
       size: DefaultIconButtonStyle.icon.size,
       name: selectedName && selected ? selectedName : name,
       color: iconColor,
+      ...iconStyle,
     };
     return (
       <>

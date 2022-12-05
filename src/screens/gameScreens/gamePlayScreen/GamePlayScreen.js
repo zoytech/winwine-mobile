@@ -1,8 +1,18 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Dimensions, SafeAreaView, StyleSheet, View} from 'react-native';
+import {
+  Dimensions,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  View,
+} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Color, ColorVariant, Typography} from 'src/themes';
-import {SpinnerType1} from 'src/components';
+import {
+  FilledIconToggle,
+  SpinnerType1,
+  StandardIconButton,
+} from 'src/components';
 import {loadCardDeckById} from 'src/redux/actions';
 import {cardDeckSelector, requestingDeckSelector} from 'src/redux/selectors';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
@@ -15,8 +25,9 @@ import {
 import {SwipeableGameCard} from '../components';
 
 const screenWidth = Dimensions.get('screen')?.width;
-const cardWidth = screenWidth * 0.8;
-const separatorWidth = screenWidth - cardWidth;
+const CONTAINER_WIDTH = 320;
+const cardWidth = 275;
+const SEPARATOR_WIDTH = 10;
 const INITIAL_INDEX = 0;
 
 export default function GamePlayScreen({navigation, route}) {
@@ -94,15 +105,51 @@ export default function GamePlayScreen({navigation, route}) {
     setShowIndicatorInfo(false);
   }
 
-  function handleCardItemPressed() {
-    showIndex !== dataLength - 1
-      ? carouselRef && carouselRef.current.scrollToNext()
-      : handleNavigateEndGameDialog();
-  }
-
   function handleOnScrollEnd(item, index) {
     showIndex === dataLength && handleNavigateEndGameDialog();
     setShowIndex(index);
+  }
+
+  function renderBottomButtons() {
+    const handleBackwardPress = () => {
+      showIndex !== 0 && carouselRef && carouselRef.current.scrollToPrevious();
+    };
+
+    const handleRatingTaskPress = () => {
+      alert('handleRatingQuestion');
+    };
+    const handleForwardPress = () => {
+      showIndex !== dataLength - 1
+        ? carouselRef && carouselRef.current.scrollToNext()
+        : handleNavigateEndGameDialog();
+    };
+    const smallIconProps = {
+      iconStyle: {size: 30},
+      style: styles.smallIcon,
+    };
+    const ratingProps = {
+      name: 'staro',
+      selectedName: 'star',
+      onPress: handleRatingTaskPress,
+      iconStyle: {size: 42},
+      style: styles.largeIcon,
+    };
+    return (
+      <>
+        <StandardIconButton
+          {...smallIconProps}
+          name={'stepbackward'}
+          onPress={handleBackwardPress}
+          disabled={showIndex === 0}
+        />
+        <FilledIconToggle {...ratingProps} />
+        <StandardIconButton
+          {...smallIconProps}
+          name={'stepforward'}
+          onPress={handleForwardPress}
+        />
+      </>
+    );
   }
 
   if (requesting) {
@@ -110,11 +157,12 @@ export default function GamePlayScreen({navigation, route}) {
   }
   return (
     <SafeAreaView style={defaultContainerStyle}>
-      <View contentContainerStyle={styles.scrollView}>
+      <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.progressBar}>
           {showIndicatorInfo && (
             <InfoProgressIndicator
-              content={`${showIndex + 1} per ${dataLength}`}
+              content={showIndex + 1}
+              endContent={dataLength}
               progressBarWidth={progressBarWidth}
               indicatedArrowWidth={indicatedArrowWidth}
               indicatedPartWidth={indicatedPartWidth}
@@ -134,14 +182,13 @@ export default function GamePlayScreen({navigation, route}) {
           style={styles.card}
           contentStyle={defaultContentStyle}
           itemWidth={cardWidth}
-          containerWidth={screenWidth}
-          separatorWidth={separatorWidth}
+          containerWidth={CONTAINER_WIDTH}
+          separatorWidth={SEPARATOR_WIDTH}
           onScrollEnd={(item, index) => handleOnScrollEnd(item, index)}
-          onItemPress={handleCardItemPressed}
           initialIndex={INITIAL_INDEX}
         />
-        {/*{renderBottomButtons()}*/}
-      </View>
+        <View style={styles.action}>{renderBottomButtons()}</View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -149,7 +196,6 @@ export default function GamePlayScreen({navigation, route}) {
 const styles = StyleSheet.create({
   container: {
     width: screenWidth,
-    flex: 1,
   },
   scrollView: {
     justifyContent: 'center',
@@ -167,21 +213,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   card: {
-    paddingVertical: separatorWidth / 2,
-    width: '100%',
-    aspectRatio: 0.7, // paddingHorizontal: separatorWidth / 2,
+    paddingTop: 32,
   },
   action: {
     width: '100%',
     aspectRatio: 3,
+    paddingVertical: 32,
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    paddingVertical: 16,
   },
-  button: {
-    minWidth: 120,
-    height: 40,
+  largeIcon: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+  },
+  smallIcon: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
   },
   indicatorLine: {
     height: 32,
