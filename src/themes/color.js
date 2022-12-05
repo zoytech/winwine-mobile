@@ -7,6 +7,7 @@ const ColorVariant = {
   surface: 'surface',
   surfaceVariant: 'surfaceVariant',
   outline: 'outline',
+  inverse: 'inverse',
 };
 
 const Color = {
@@ -49,6 +50,11 @@ const Color = {
       onBase: '#4A4643',
     },
     [ColorVariant.outline]: {base: '#817568'},
+    [ColorVariant.inverse]: {
+      surface: '#352F30', //20
+      onSurface: '#FAEEEF', //95
+      primary: '#FFB1C0', //80
+    },
   },
   dark: {
     [ColorVariant.primary]: {
@@ -89,6 +95,11 @@ const Color = {
       onBase: '#D6C2C4',
     },
     [ColorVariant.outline]: {base: '#9E8C8F'},
+    [ColorVariant.inverse]: {
+      surface: '#FAEEEF',
+      onSurface: '#352F30',
+      primary: '#AE2954',
+    },
   },
 };
 
