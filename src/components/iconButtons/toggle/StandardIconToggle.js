@@ -52,7 +52,6 @@ export default function StandardIconToggle(props) {
     name,
     selectedName,
     disabled,
-    onSelectedItem = () => {},
     children,
     ...otherProps
   } = props;
@@ -72,7 +71,6 @@ export default function StandardIconToggle(props) {
 
   function handleButtonToggle() {
     setSelected(!selected);
-    onSelectedItem();
   }
 
   function renderContent({pressed}) {
@@ -99,6 +97,7 @@ export default function StandardIconToggle(props) {
   return (
     <BaseButton
       {...otherProps}
+      disabled={disabled}
       onPressOut={handleButtonToggle}
       style={getContainerStyle}>
       {renderContent}

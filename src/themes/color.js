@@ -46,7 +46,7 @@ const Color = {
       onBase: '#1D1B1A',
     },
     [ColorVariant.surfaceVariant]: {
-      base: '#E8E1DD',
+      base: '#F3DDE0',
       onBase: '#4A4643',
     },
     [ColorVariant.outline]: {base: '#817568'},
@@ -92,12 +92,12 @@ const Color = {
     },
     [ColorVariant.surfaceVariant]: {
       base: '#514346',
-      onBase: '#D6C2C4',
+      onBase: '#524345',
     },
     [ColorVariant.outline]: {base: '#9E8C8F'},
     [ColorVariant.inverse]: {
-      surface: '#FAEEEF',
-      onSurface: '#352F30',
+      surface: '#ECE0E0',
+      onSurface: '#201A1B',
       primary: '#AE2954',
     },
   },

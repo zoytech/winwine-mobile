@@ -102,7 +102,7 @@ function GameWaitScreen({navigation, route}) {
 
   function renderHeaderLeftButtons({iconStyle}) {
     const handleStaringDeckPress = () => {
-      console.log('starProps');
+      console.log('starProps 123');
     };
     const handleDownloadDeckPress = () => {
       console.log('downloadProps');
@@ -117,12 +117,14 @@ function GameWaitScreen({navigation, route}) {
       style: iconStyle,
     };
     const downloadProps = {
-      name: 'download',
+      name: 'downcircleo',
+      selectedName: 'downcircle',
       onPress: handleDownloadDeckPress,
       style: iconStyle,
     };
     const moreActionProps = {
       name: 'ellipsis1',
+      selectedName: 'ellipsis1',
       onPress: handleNavigateMoreActionPress,
       style: iconStyle,
     };

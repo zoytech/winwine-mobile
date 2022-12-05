@@ -71,6 +71,8 @@ const styles = StyleSheet.create({
   icon: {
     minWidth: 30,
     minHeight: 30,
-    borderRadius: 30 / 2,
+    width: 40,
+    height: 40,
+    borderRadius: 40 / 2,
   },
 });

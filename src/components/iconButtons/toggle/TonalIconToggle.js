@@ -1,28 +1,45 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Text} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {Color, ColorVariant, StateLayers, StateLayersVariant} from 'src/themes';
 import {BaseButton} from 'src/components';
 import DefaultIconButtonStyle from './defaultIconButtonStyle';
 
-function getStateStyles({pressed, disabled}) {
+function getStateStyles({pressed, disabled, selected}) {
   if (disabled) {
-    const {level_038, level_012} =
+    const {level_012: layerColor, level_038: textColor} =
       StateLayers.light[StateLayersVariant.onSurface];
     return {
-      containerStyle: {backgroundColor: level_012},
-      contentStyle: {color: level_038},
-      iconColor: level_038,
+      containerStyle: {
+        backgroundColor: layerColor,
+      },
+      contentStyle: {color: textColor},
+      iconColor: textColor,
     };
   }
-  const {container: containerColor, onContainer: onContainerColor} =
-    Color.light[ColorVariant.secondary];
-  const stateLayer =
+  const {base: baseColor, onBase: onBaseColor} =
+    Color.light[ColorVariant.surfaceVariant];
+  const secondStateLayer =
     StateLayers.light[StateLayersVariant.secondaryContainer]?.level_088;
+  const surVarStateLayer =
+    StateLayers.light[StateLayersVariant.surfaceVar]?.level_088;
+  if (selected) {
+    const {container: containerColor, onContainer: onContainerColor} =
+      Color.light[ColorVariant.secondary];
+    return {
+      containerStyle: {
+        backgroundColor: pressed ? secondStateLayer : containerColor,
+      },
+      contentStyle: {color: onContainerColor},
+      iconColor: onContainerColor,
+    };
+  }
   return {
-    containerStyle: {backgroundColor: pressed ? stateLayer : containerColor},
-    contentStyle: {color: onContainerColor},
-    iconColor: onContainerColor,
+    containerStyle: {
+      backgroundColor: pressed ? surVarStateLayer : baseColor,
+    },
+    contentStyle: {color: disabled ? textLayer : onBaseColor},
+    iconColor: disabled ? textLayer : onBaseColor,
   };
 }
 
@@ -33,27 +50,39 @@ export default function TonalIconToggle(props) {
     contentStyle: rawContentStyle,
     iconStyle,
     name,
-    disabled,
+    selectedName,
+    disabled = false,
     children,
     ...otherProps
   } = props;
 
+  const [selected, setSelected] = useState(true);
+
   function getContainerStyle({pressed}) {
     return [
       DefaultIconButtonStyle.container,
-      getStateStyles({pressed, disabled})?.containerStyle,
+      getStateStyles({
+        pressed,
+        disabled,
+        selected,
+      })?.containerStyle,
       style,
     ];
+  }
+
+  function handleButtonToggle() {
+    setSelected(!selected);
   }
 
   function renderContent({pressed}) {
     const {contentStyle, iconColor} = getStateStyles({
       pressed,
       disabled,
+      selected,
     });
     const iconProps = {
       size: DefaultIconButtonStyle.icon.size,
-      name: name,
+      name: selectedName && selected ? selectedName : name,
       color: iconColor,
     };
     return (
@@ -67,7 +96,11 @@ export default function TonalIconToggle(props) {
   }
 
   return (
-    <BaseButton {...otherProps} style={getContainerStyle}>
+    <BaseButton
+      {...otherProps}
+      onPressOut={handleButtonToggle}
+      disabled={disabled}
+      style={getContainerStyle}>
       {renderContent}
     </BaseButton>
   );

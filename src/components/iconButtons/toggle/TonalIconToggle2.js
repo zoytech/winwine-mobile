@@ -1,67 +1,61 @@
 import React, {useState} from 'react';
-import {View} from 'react-native';
+import {Text} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {Color, ColorVariant, StateLayers, StateLayersVariant} from 'src/themes';
 import {BaseButton} from 'src/components';
 import DefaultIconButtonStyle from './defaultIconButtonStyle';
 
 function getStateStyles({pressed, disabled, selected}) {
-  if (disabled) {
-    const {level_012: layerColor, level_038: textColor} =
-      StateLayers.light[StateLayersVariant.onSurface];
-    return {
-      containerStyle: {
-        backgroundColor: selected ? layerColor : 'transparent',
-        borderColor: layerColor,
-        borderWidth: 0.5,
-      },
-      contentStyle: {color: textColor},
-      iconColor: textColor,
-    };
-  }
-  const {onBase: onBaseColor} = Color.light[ColorVariant.surface];
-  const {base: baseOutlineColor} = Color.light[ColorVariant.outline];
-  const layerColor = StateLayers.light[StateLayersVariant.onSurface]?.level_012;
-
+  const {level_038: textLayer, level_012: fillLayer} =
+    StateLayers.light[StateLayersVariant.onSurface];
+  const {base: baseColor, onBase: onBaseColor} =
+    Color.light[ColorVariant.surfaceVariant];
+  const secondStateLayer =
+    StateLayers.light[StateLayersVariant.secondaryContainer]?.level_088;
+  const surVarStateLayer =
+    StateLayers.light[StateLayersVariant.surfaceVar]?.level_088;
   if (selected) {
-    const {surface: surfaceInv, onSurface: onSurfaceInv} =
-      Color.light[ColorVariant.inverse];
-    const layerInvColor =
-      StateLayers.light[StateLayersVariant.surfaceInv]?.level_088;
-
+    const {container: containerColor, onContainer: onContainerColor} =
+      Color.light[ColorVariant.secondary];
     return {
       containerStyle: {
-        backgroundColor: pressed ? layerInvColor : surfaceInv,
+        backgroundColor: disabled
+          ? fillLayer
+          : pressed
+          ? secondStateLayer
+          : containerColor,
       },
-      contentStyle: {color: onSurfaceInv},
-      iconColor: onSurfaceInv,
+      contentStyle: {color: disabled ? textLayer : onContainerColor},
+      iconColor: disabled ? textLayer : onContainerColor,
     };
   }
-
   return {
     containerStyle: {
-      backgroundColor: pressed ? layerColor : 'transparent',
-      borderColor: baseOutlineColor,
-      borderWidth: 0.5,
+      backgroundColor: disabled
+        ? fillLayer
+        : pressed
+        ? surVarStateLayer
+        : baseColor,
     },
-    contentStyle: {color: onBaseColor},
-    iconColor: onBaseColor,
+    contentStyle: {color: disabled ? textLayer : onBaseColor},
+    iconColor: disabled ? textLayer : onBaseColor,
   };
 }
 
-export default function OutlinedIconToggle(props) {
+export default function TonalIconToggle(props) {
   const {
     content,
-    name,
-    selectedName,
     style,
     contentStyle: rawContentStyle,
     iconStyle,
-    disabled,
+    name,
+    selectedName,
+    disabled = false,
     children,
     ...otherProps
   } = props;
-  const [selected, setSelected] = useState(false);
+
+  const [selected, setSelected] = useState(true);
 
   function getContainerStyle({pressed}) {
     return [
@@ -93,7 +87,9 @@ export default function OutlinedIconToggle(props) {
     return (
       <>
         <Icon {...iconProps} />
-        {content && <View style={contentStyle}>{content}</View>}
+        {content && (
+          <Text style={[contentStyle, rawContentStyle]}>{content}</Text>
+        )}
       </>
     );
   }

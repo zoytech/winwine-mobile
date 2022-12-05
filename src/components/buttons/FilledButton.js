@@ -13,6 +13,7 @@ function generateStateStyles(pressed, isDisabled, colorVariant) {
     };
   }
   const {onBase: onBaseColor, base: baseColor} = Color.light[colorVariant];
+
   if (pressed) {
     const layerColor = StateLayers.light[StateLayersVariant.primary]?.level_088;
 

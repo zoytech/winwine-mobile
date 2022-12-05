@@ -1,16 +1,10 @@
-import {
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from 'react';
+import {forwardRef, useImperativeHandle, useRef, useState} from 'react';
 import {Animated, StyleSheet} from 'react-native';
 import {SmallTopBar, StandardIconButton, withAnimated} from 'src/components';
 
 const SmallTopBarAnimated = withAnimated(SmallTopBar);
 const HEADER_HEIGHT = 64;
-const CONFIG_HEIGHT = 40;
+const CONFIG_HEIGHT = 50;
 
 function CustomTopAppBar(props, ref) {
   const {
@@ -50,16 +44,6 @@ function CustomTopAppBar(props, ref) {
     }),
   };
 
-  function renderRightComponents({iconStyle}) {
-    return (
-      <StandardIconButton
-        name={'ellipsis1'}
-        onPress={handleShowSelectionList}
-        style={[iconStyle, styles.headerButtonIcon]}
-      />
-    );
-  }
-
   return (
     <SmallTopBarAnimated
       {...otherProps}
@@ -67,7 +51,6 @@ function CustomTopAppBar(props, ref) {
       contentStyle={contentAnimation}
       leadingIcon={'arrowleft'}
       onLeadingIconPress={() => navigation.goBack()}
-      RightComponents={renderRightComponents}
       style={[style]}
       topHeight={HEADER_HEIGHT}
       bottomHeight={bottomHeight}
