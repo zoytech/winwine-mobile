@@ -76,6 +76,7 @@ function SwipeableGameCard2(props, ref) {
       containerWidth={containerWidth}
       separatorWidth={separatorWidth}
       onScrollEnd={handleScrollEnd}
+      initialNumToRender={7}
     />
   );
 }

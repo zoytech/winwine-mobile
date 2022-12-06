@@ -161,7 +161,7 @@ export default function GamePlayScreen({navigation, route}) {
         <View style={styles.progressBar}>
           {showIndicatorInfo && (
             <InfoProgressIndicator
-              content={showIndex + 1}
+              content={`${showIndex + 1} per ${dataLength}`}
               endContent={dataLength}
               progressBarWidth={progressBarWidth}
               indicatedArrowWidth={indicatedArrowWidth}

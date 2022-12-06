@@ -2,9 +2,43 @@ import {StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {Color, ColorVariant, Typography} from 'src/themes';
 
+function IndicatorComponent(props) {
+  const {content, contentStyle, style} = props;
+  const {base: baseColor, onBase: onBaseColor} =
+    Color.light[ColorVariant.primary];
+  const outlineColor = Color.light[ColorVariant.outline];
+
+  const defaultContainerStyle = [
+    styles.contentContainer,
+    {backgroundColor: onBaseColor, borderColor: outlineColor, borderWidth: 0.5},
+    style,
+  ];
+  const defaultContentStyle = [
+    Typography.label.medium,
+    {color: baseColor},
+    contentStyle,
+  ];
+  const iconProps = {
+    name: 'down',
+    color: baseColor,
+    size: 12,
+  };
+  return (
+    <View style={styles.component}>
+      <View style={defaultContainerStyle}>
+        {content && <Text style={defaultContentStyle}>{content}</Text>}
+      </View>
+      <View style={styles.iconContainer}>
+        <Icon {...iconProps} />
+      </View>
+    </View>
+  );
+}
+
 export default function InfoProgressIndicator(props) {
   const {
     content,
+    endContent,
     progressBarWidth,
     indicatedArrowWidth,
     indicatedPartWidth,
@@ -13,46 +47,27 @@ export default function InfoProgressIndicator(props) {
     children,
     ...otherProps
   } = props;
-  const {base: baseColor, onBase: onBaseColor} =
-    Color.light[ColorVariant.primary];
 
-  const outlineColor = Color.light[ColorVariant.outline];
-  const contentContainerStyle = [
-    styles.contentContainer,
-    {backgroundColor: onBaseColor, borderColor: outlineColor, borderWidth: 0.5},
-  ];
   const defaultContainerStyle = [
     styles.container,
-    {width: progressBarWidth + indicatedArrowWidth * 2},
+    {width: progressBarWidth + indicatedArrowWidth * 10},
     style,
-  ];
-  const defaultContentStyle = [
-    contentStyle,
-    Typography.label.medium,
-    {color: baseColor},
   ];
   const indicatorSliderStyle = [
     styles.slider,
-    {width: indicatedArrowWidth * 2 + indicatedPartWidth * 2},
+    {
+      width: indicatedArrowWidth * 10 + indicatedPartWidth * 2,
+    },
   ];
-
-  const iconProps = {
-    name: 'down',
-    color: baseColor,
-    size: 12,
-  };
 
   return (
     <View {...otherProps} style={defaultContainerStyle}>
       <View style={indicatorSliderStyle}>
-        <View style={styles.component}>
-          <View style={contentContainerStyle}>
-            {content && <Text style={defaultContentStyle}>{content}</Text>}
-          </View>
-          <View style={styles.iconContainer}>
-            <Icon {...iconProps} />
-          </View>
-        </View>
+        <IndicatorComponent
+          content={content}
+          contentStyle={contentStyle}
+          style={style}
+        />
       </View>
     </View>
   );
@@ -65,8 +80,7 @@ const styles = StyleSheet.create({
   },
   slider: {
     height: '100%',
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end',
+    flexDirection: 'row',
   },
   component: {
     width: '100%',
@@ -74,6 +88,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    overflow: 'visible',
   },
   contentContainer: {
     minWidth: 30,
@@ -87,8 +102,3 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-/*
-<View style={iconContainerStyle}>
-          <Icon {...iconProps} />
-        </View>
- */
