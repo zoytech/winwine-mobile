@@ -18,7 +18,7 @@ import {
   VerticalCardList,
   VerticalCardList2,
 } from './components';
-import loadCardDeckList2 from '../../redux/actions/loadCardDeckList2';
+import loadCardDeckList2 from 'src/redux/actions/loadCardDeckList2';
 
 export default function HomeScreen({navigation}) {
   const topBarRef = useRef({

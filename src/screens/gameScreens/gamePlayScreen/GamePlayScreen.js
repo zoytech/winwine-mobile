@@ -17,10 +17,10 @@ import {loadCardDeckById} from 'src/redux/actions';
 import {cardDeckSelector, requestingDeckSelector} from 'src/redux/selectors';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import {
-  CardDetermination,
+  CardProgressTrace,
   CustomTopAppBar,
   EndingGameDialog,
-  InfoProgressIndicator,
+  IndicatorTrace,
 } from './components';
 import {SwipeableGameCard} from '../components';
 
@@ -160,7 +160,7 @@ export default function GamePlayScreen({navigation, route}) {
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.progressBar}>
           {showIndicatorInfo && (
-            <InfoProgressIndicator
+            <IndicatorTrace
               content={`${showIndex + 1} per ${dataLength}`}
               endContent={dataLength}
               progressBarWidth={progressBarWidth}
@@ -168,7 +168,7 @@ export default function GamePlayScreen({navigation, route}) {
               indicatedPartWidth={indicatedPartWidth}
             />
           )}
-          <CardDetermination
+          <CardProgressTrace
             onPressIn={handleShowIndicatorInfo}
             onPressOut={handleNotShowIndicatorInfo}
             contentStyle={defaultContentStyle}

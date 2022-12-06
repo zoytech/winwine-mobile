@@ -26,7 +26,7 @@ import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import {cardDeckSelector, requestingDeckSelector} from 'src/redux/selectors';
 import {SwipeableGameCard} from '../components';
 import avatarImg from '../../../assets/images/preview-package/user.png';
-import {CardDetermination} from '../gamePlayScreen/components';
+import {CardProgressTrace} from '../gamePlayScreen/components';
 
 const screenWidth = Dimensions.get('screen')?.width;
 const CONTAINER_WIDTH = 320;

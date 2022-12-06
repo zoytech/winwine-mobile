@@ -1,8 +1,7 @@
-import {Pressable, StyleSheet, View} from 'react-native';
-import Icon from 'react-native-vector-icons/AntDesign';
+import {StyleSheet, View} from 'react-native';
 import {Color, ColorVariant} from 'src/themes';
 
-export default function CardDetermination(props) {
+export default function CardProgressTrace(props) {
   const {
     content,
     children,
@@ -28,7 +27,6 @@ export default function CardDetermination(props) {
     styles.loadedPart,
     {
       width: indicatedPartWidth,
-      // borderWidth: 0.5,
       backgroundColor: baseColor,
     },
   ];

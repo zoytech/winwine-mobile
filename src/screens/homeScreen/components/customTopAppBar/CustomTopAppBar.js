@@ -1,6 +1,7 @@
+import {forwardRef, useEffect} from 'react';
 import {StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {CenterAlignedTopBar, SpinnerType1} from 'src/components';
+import {CenterTopBar, SpinnerType1} from 'src/components';
 import avatarTest from 'src/assets/images/preview-package/user.png';
 import {SuggestionList} from '../suggestionList';
 import {loadCardDeckList} from 'src/redux/actions';
@@ -9,11 +10,10 @@ import {
   cardDeckListSelector,
   requestingDeckListSelector,
 } from 'src/redux/selectors';
-import {forwardRef, useEffect} from 'react';
 
 const HEADER_MIN_HEIGHT = 64;
 
-const CustomTopAppBar = forwardRef(function CustomTopAppBar(props, ref) {
+function CustomTopAppBar(props, ref) {
   const {navigation, style, ...otherProps} = props;
   const dispatch = useDispatch();
   const cardDeckList = useSelector(cardDeckListSelector);
@@ -26,10 +26,10 @@ const CustomTopAppBar = forwardRef(function CustomTopAppBar(props, ref) {
   }, [dispatch]);
 
   if (requesting) {
-    <SpinnerType1 style={{height: HEADER_MIN_HEIGHT}} />;
+    return <SpinnerType1 style={{height: HEADER_MIN_HEIGHT}} />;
   }
   return (
-    <CenterAlignedTopBar
+    <CenterTopBar
       {...otherProps}
       content={currentPart.greetingContent}
       style={[styles.container, style]}
@@ -42,10 +42,9 @@ const CustomTopAppBar = forwardRef(function CustomTopAppBar(props, ref) {
         navigation={navigation}
         style={styles.suggestion}
       />
-    </CenterAlignedTopBar>
+    </CenterTopBar>
   );
-});
-export default CustomTopAppBar;
+}
 
 const styles = StyleSheet.create({
   container: {},
@@ -56,3 +55,4 @@ const styles = StyleSheet.create({
     height: HEADER_MIN_HEIGHT,
   },
 });
+export default forwardRef(CustomTopAppBar);

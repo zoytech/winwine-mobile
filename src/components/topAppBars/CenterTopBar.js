@@ -5,10 +5,8 @@ import {BaseAvatarButton, StandardIconButton} from 'src/components';
 
 const MAIN_HEIGHT = 64;
 const CONFIG_VALUE = 100;
-const CenterAlignedTopBar = forwardRef(function CenterAlignedTopBar(
-  props,
-  ref,
-) {
+
+function CenterTopBar(props, ref) {
   const {
     content,
     leadingIcon,
@@ -120,8 +118,7 @@ const CenterAlignedTopBar = forwardRef(function CenterAlignedTopBar(
       {renderChildren()}
     </Animated.ScrollView>
   );
-});
-export default CenterAlignedTopBar;
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -151,3 +148,5 @@ const styles = StyleSheet.create({
     height: 30,
   },
 });
+
+export default forwardRef(CenterTopBar);
