@@ -10,7 +10,7 @@ import {
 } from 'src/themes';
 import defaultChipStyle from './defaultChipStyle';
 
-function generateStateStyles(selected, pressed, disabled) {
+function generateStateStyles({selected, pressed, disabled}) {
   if (disabled) {
     const {level_012: layerColor, level_038: textColor} =
       StateLayers.light[StateLayersVariant.onSurface];
