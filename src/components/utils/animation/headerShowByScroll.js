@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {Animated, SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import {Color, ColorVariant} from 'src/themes';
-import {CenterAlignedTopBar} from 'src/components';
+import {CenterTopBar} from 'src/components';
 
 export default function HeaderShowByScroll(props) {
   const {
@@ -32,7 +32,7 @@ export default function HeaderShowByScroll(props) {
           transform: [{translateY: translation}],
         };
         return (
-          <CenterAlignedTopBar
+          <CenterTopBar
             {...otherProps}
             content={content}
             headerTitleStyle={styles.headerTitle}

@@ -2,13 +2,13 @@ import React, {useEffect} from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
 import {Color, ColorVariant} from 'src/themes';
 import avatarTest from 'src/assets/images/preview-package/user.png';
-import {CenterAlignedTopBar} from 'src/components';
+import {CenterTopBar} from 'src/components';
 
 export default function HomeScreen({navigation}) {
   useEffect(() => {
     navigation.setOptions({
       header: () => (
-        <CenterAlignedTopBar
+        <CenterTopBar
           content={'Good morning'}
           headerTitleStyle={styles.headerTitle}
           trailingIcon={avatarTest}

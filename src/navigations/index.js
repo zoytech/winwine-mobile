@@ -10,7 +10,7 @@ import {
   HomeScreen,
 } from 'src/screens';
 import {ScreenKeys} from './ScreenKeys';
-import {CenterAlignedTopBar, SmallTopBar} from 'src/components';
+import {CenterTopBar, SmallTopBar} from 'src/components';
 
 const Stack = createNativeStackNavigator();
 
@@ -40,7 +40,7 @@ export default function RootNavigator() {
             options={{
               ...headerProps,
               ...headerShadowVisible,
-              header: () => <CenterAlignedTopBar />,
+              header: () => <CenterTopBar />,
             }}
           />
           <Stack.Screen
