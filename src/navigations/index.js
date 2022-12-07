@@ -1,76 +1,66 @@
 import React from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
-import {
-  BasicDialog,
-  BlankScreen,
-  CardDialog,
-  GamePlayScreen,
-  GameWaitScreen,
-  HomeScreen,
-} from 'src/screens';
+import Icon from 'react-native-vector-icons/AntDesign';
+import {BlankScreen} from 'src/screens';
 import {ScreenKeys} from './ScreenKeys';
-import {CenterTopBar, SmallTopBar} from 'src/components';
+import {Text, View} from 'react-native';
+import HomeStackScreen from './HomeStackScreen';
+import TabBarScreen from './TabBarScreen';
 
-const Stack = createNativeStackNavigator();
+const Tab = createMaterialBottomTabNavigator();
+
+function DetailsScreen() {
+  return (
+    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <Text>Details!</Text>
+    </View>
+  );
+}
 
 export default function RootNavigator() {
-  const headerShadowVisible = {
-    elevation: 0,
-    shadowOpacity: 0,
-    borderBottomWidth: 0,
-  };
-
-  const headerProps = {
-    headerBackTitleVisible: false,
-  };
-  const modalScreenProps = {
-    presentation: 'transparentModal',
-    cardOverlayEnable: false,
-    headerShown: false,
-  };
-
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={ScreenKeys.HOME}>
-        <Stack.Group>
-          <Stack.Screen
-            name={ScreenKeys.HOME}
-            component={HomeScreen}
-            options={{
-              ...headerProps,
-              ...headerShadowVisible,
-              header: () => <CenterTopBar />,
-            }}
-          />
-          <Stack.Screen
-            name={ScreenKeys.WAIT_GAME}
-            component={GameWaitScreen}
-            options={{
-              ...headerProps,
-              ...headerShadowVisible,
-              header: () => <SmallTopBar />,
-            }}
-          />
-          <Stack.Screen
-            name={ScreenKeys.PLAY_GAME}
-            component={GamePlayScreen}
-            options={{
-              ...headerProps,
-              ...headerShadowVisible,
-              header: () => <SmallTopBar />,
-            }}
-          />
-        </Stack.Group>
-        <Stack.Group screenOptions={{...modalScreenProps}}>
-          <Stack.Screen
-            name={ScreenKeys.BASIC_DIALOG}
-            component={BasicDialog}
-          />
-          <Stack.Screen name={ScreenKeys.CARD_DIALOG} component={CardDialog} />
-        </Stack.Group>
-        <Stack.Screen name={ScreenKeys.BLANK} component={BlankScreen} />
-      </Stack.Navigator>
+      {/*<Tab.Navigator tabBar={props => <TabBarScreen {...props} />}>*/}
+      {/*  <Tab.Screen name={'HomeStackScreen'} component={HomeStackScreen} />*/}
+      {/*  <Tab.Screen name={ScreenKeys.BLANK} component={BlankScreen} />{' '}*/}
+      {/*  <Tab.Screen name={'DetailsScreen'} component={DetailsScreen} />*/}
+      {/*</Tab.Navigator>*/}
+      <Tab.Navigator
+        initialRouteName={'HomeStackScreen'}
+        activeColor="#e91e63"
+        barStyle={{backgroundColor: 'lime'}}>
+        <Tab.Screen
+          name={'HomeStackScreen'}
+          component={HomeStackScreen}
+          options={{
+            tabBarLabel: 'Home',
+            tabBarIcon: ({color}) => (
+              <Icon name="home" color={color} size={26} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name={ScreenKeys.BLANK}
+          component={BlankScreen}
+          options={{
+            tabBarLabel: 'Blank',
+            tabBarIcon: ({color}) => (
+              <Icon name="pluscircle" color={color} size={26} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name={'Detail'}
+          component={DetailsScreen}
+          options={{
+            tabBarLabel: 'Detail',
+            tabBarIcon: ({color}) => (
+              <Icon name="switcher" color={color} size={26} />
+            ),
+          }}
+        />
+      </Tab.Navigator>
     </NavigationContainer>
   );
 }
