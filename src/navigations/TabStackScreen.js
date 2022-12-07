@@ -5,12 +5,18 @@ import HomeStackScreen from './HomeStackScreen';
 import {BlankScreen} from '../screens';
 import {ScreenKeys} from './ScreenKeys';
 import TestScreen from '../screens/TestScreen';
-import {StateLayers, StateLayersVariant, Typography} from '../themes';
+import {
+  Color,
+  ColorVariant,
+  StateLayers,
+  StateLayersVariant,
+  Typography,
+} from '../themes';
 
 const Tab = createMaterialBottomTabNavigator();
 
 function TabScreenIcon(props) {
-  const {color, focused, name, size} = props;
+  const {color, name, size} = props;
   const iconProps = {
     name: name ? name : 'arrow',
     size: size ? size : 26,
@@ -20,17 +26,31 @@ function TabScreenIcon(props) {
 }
 
 function TabBarLabel({content}) {
-  return <Text style={styles.label}>{content}</Text>;
+  const {base: primaryColor, onBase: onPrimaryColor} =
+    Color.light[ColorVariant.primary];
+  return <Text style={[styles.label, {color: onPrimaryColor}]}>{content}</Text>;
 }
 
 export default function TabStackScreen() {
-  const barColor = StateLayers.light[StateLayersVariant.background]?.level_068;
-  const barStyle = [styles.bar, {backgroundColor: barColor}];
+  const backgroundLayer =
+    StateLayers.light[StateLayersVariant.background]?.level_068;
+  const primaryLayer = StateLayers.light[StateLayersVariant.primary]?.level_068;
+  const {base: primaryColor, onBase: onPrimaryColor} =
+    Color.light[ColorVariant.primary];
+  const secondColor = Color.light[ColorVariant.secondary]?.container;
+
+  const barStyle = [styles.bar, {backgroundColor: primaryLayer}];
+  const screenOptionsProps = {
+    tabBarColor: backgroundLayer,
+  };
   return (
     <Tab.Navigator
       initialRouteName={'HomeStackScreen'}
-      activeColor="#e91e63"
-      barStyle={barStyle}>
+      activeColor={primaryColor}
+      inactiveColor={secondColor}
+      shifting={true}
+      barStyle={barStyle}
+      screenOptions={screenOptionsProps}>
       <Tab.Screen
         name={'HomeStackScreen'}
         component={HomeStackScreen}
@@ -62,6 +82,7 @@ export default function TabStackScreen() {
 const styles = StyleSheet.create({
   bar: {
     position: 'absolute',
+    height: 70,
   },
   label: {
     ...Typography.label.large,
