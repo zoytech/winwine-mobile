@@ -15,6 +15,7 @@ const {
   onSurface: onSurfaceInv,
   primary: primaryInv,
 } = Color.light[ColorVariant.inverse];
+const background = Color.light[ColorVariant.background]?.base;
 
 const {opacity_008, opacity_012, opacity_016, opacity_032, opacity_038} =
   OpacityLevel;
@@ -33,6 +34,7 @@ const StateLayersVariant = {
   surfaceInv: 'surfaceInv',
   onSurfaceInv: 'onSurfaceInv',
   primaryInv: 'primaryInv',
+  background: 'background',
 };
 
 function generateStateLayerLevel(color) {
@@ -91,6 +93,9 @@ const StateLayers = {
     },
     [StateLayersVariant.primaryInv]: {
       ...generateStateLayerLevel(primaryInv),
+    },
+    [StateLayersVariant.background]: {
+      ...generateStateLayerLevel(background),
     },
   },
 };
