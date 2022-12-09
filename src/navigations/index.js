@@ -1,6 +1,6 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import TabStackScreen from './TabStackScreen';
+import {TabStackScreen} from './tabStackScreen';
 
 export default function RootNavigator() {
   return (

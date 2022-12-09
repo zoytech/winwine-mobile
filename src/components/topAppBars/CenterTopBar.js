@@ -32,15 +32,10 @@ function CenterTopBar(props, ref) {
     },
   }));
 
-  const {base: surfaceColor, onBase: onSurfaceColor} =
-    Color.light[ColorVariant.surface];
+  const {base: background, onBase: onBackground} =
+    Color.light[ColorVariant.background];
   const baseColor = Color.light[ColorVariant.primary]?.base;
   const topBarAnimation = {
-    backgroundColor: scrollYContentOffsetRef.interpolate({
-      inputRange: [0, scrollDistance],
-      outputRange: [surfaceColor, baseColor],
-      extrapolate: 'clamp',
-    }),
     height: scrollYContentOffsetRef.interpolate({
       inputRange: [0, scrollDistance],
       outputRange: [totalHeight, subHeight],
@@ -70,11 +65,16 @@ function CenterTopBar(props, ref) {
     ],
   };
 
-  const defaultContainerStyle = [styles.container, topBarAnimation, style];
+  const defaultContainerStyle = [
+    styles.container,
+    {backgroundColor: background},
+    topBarAnimation,
+    style,
+  ];
 
   const defaultContentStyle = [
     Typography.title.large,
-    {color: onSurfaceColor},
+    {color: onBackground},
     contentStyle,
   ];
   const mainTopBarStyle = [styles.mainTopBar, mainTopBarAnimation];

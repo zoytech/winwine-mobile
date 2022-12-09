@@ -1,17 +1,18 @@
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {StyleSheet, Text} from 'react-native';
-import HomeStackScreen from './HomeStackScreen';
-import {BlankScreen} from '../screens';
-import {ScreenKeys} from './ScreenKeys';
-import TestScreen from '../screens/TestScreen';
+import HomeStackScreen from '../stackScreens/HomeStackScreen';
+import {BlankScreen} from '../../screens';
+import {ScreenKeys} from '../ScreenKeys';
+import TestScreen from '../../screens/TestScreen';
 import {
   Color,
   ColorVariant,
   StateLayers,
   StateLayersVariant,
   Typography,
-} from '../themes';
+} from '../../themes';
+import BlankStackScreen from '../stackScreens/BlankStackScreen';
 
 const Tab = createMaterialBottomTabNavigator();
 

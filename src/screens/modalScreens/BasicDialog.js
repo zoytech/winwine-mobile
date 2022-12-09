@@ -1,5 +1,4 @@
 import {LogBox, StyleSheet} from 'react-native';
-import {Color, ColorVariant} from 'src/themes';
 import {BasicDialogContainer} from 'src/components';
 
 LogBox.ignoreLogs([

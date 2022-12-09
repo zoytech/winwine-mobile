@@ -7,7 +7,7 @@ module.exports = {
         root: ['./src'],
         alias: {
           // define aliases to shorten the import paths
-          'src/components': './src/components',
+          'src/components': './src/stackScreens',
           'src/constants': './src/constants',
           'src/navigations': './src/navigations',
           'src/services': './src/services',

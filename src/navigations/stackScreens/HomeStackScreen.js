@@ -1,6 +1,5 @@
-import {ScreenKeys} from './ScreenKeys';
+import {ScreenKeys} from '../ScreenKeys';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-
 import {
   BasicDialog,
   BlankScreen,
@@ -8,20 +7,24 @@ import {
   GamePlayScreen,
   GameWaitScreen,
   HomeScreen,
-} from '../screens';
+} from 'src/screens';
+import {CenterTopBar, MediumTopBar, SmallTopBar} from 'src/components';
+import {useLayoutEffect} from 'react';
+import hideBottomTabBarMethod from '../hideBottomTabBarMethod';
 
 const HomeStack = createNativeStackNavigator();
 
-export default function HomeStackScreen() {
-  const headerShadowVisible = {
-    elevation: 0,
-    shadowOpacity: 0,
-    borderBottomWidth: 0,
-  };
+export default function HomeStackScreen({navigation, route}) {
+  useLayoutEffect(() => {
+    const tabHiddenRoutes = [
+      ScreenKeys.PLAY_GAME,
+      ScreenKeys.WAIT_GAME,
+      ScreenKeys.CARD_DIALOG,
+      ScreenKeys.BASIC_DIALOG,
+    ];
+    hideBottomTabBarMethod({navigation, route, tabHiddenRoutes});
+  }, [navigation, route]);
 
-  const headerProps = {
-    headerBackTitleVisible: false,
-  };
   const modalScreenProps = {
     presentation: 'transparentModal',
     cardOverlayEnable: false,
@@ -34,24 +37,21 @@ export default function HomeStackScreen() {
           name={ScreenKeys.HOME}
           component={HomeScreen}
           options={{
-            ...headerProps,
-            ...headerShadowVisible,
+            header: () => <CenterTopBar />,
           }}
         />
         <HomeStack.Screen
           name={ScreenKeys.WAIT_GAME}
           component={GameWaitScreen}
           options={{
-            ...headerProps,
-            ...headerShadowVisible,
+            header: () => <MediumTopBar />,
           }}
         />
         <HomeStack.Screen
           name={ScreenKeys.PLAY_GAME}
           component={GamePlayScreen}
           options={{
-            ...headerProps,
-            ...headerShadowVisible,
+            header: () => <SmallTopBar />,
           }}
         />
       </HomeStack.Group>

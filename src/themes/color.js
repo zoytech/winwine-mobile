@@ -40,7 +40,6 @@ const Color = {
       base: '#FFFBFF',
       onBase: '#1D1B1A',
     },
-
     [ColorVariant.surface]: {
       base: '#FFFBFF',
       onBase: '#1D1B1A',

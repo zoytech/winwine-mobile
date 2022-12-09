@@ -8,6 +8,7 @@ const ScreenKeys = {
 
   BASIC_DIALOG: 'DIALOG/BASIC',
   CARD_DIALOG: 'DIALOG/CARD',
+  MAIN_DIALOG: 'DIALOG/MAIN',
 };
 
 export {ScreenKeys};

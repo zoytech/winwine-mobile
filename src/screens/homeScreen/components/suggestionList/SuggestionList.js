@@ -46,7 +46,7 @@ export default function SuggestionList(props) {
         selected={hashtagId === selectedChip}
         onPress={() => handleChipPressed(hashtagId)}
         hasTrailingIcon={true}
-        icon={'github'}
+        // icon={'github'}
         // image={avatarTest}
       />
     );
