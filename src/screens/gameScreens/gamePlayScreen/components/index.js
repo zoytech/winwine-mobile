@@ -1,6 +1,6 @@
 import ExitGameDialog from './ExitGameDialog';
 import EndingGameDialog from './EndingGameDialog';
-import CustomTopAppBar from './CustomTopAppBar';
+import GamePlayTopAppBar from './GamePlayTopAppBar';
 
 export * from './indicatorComponents';
-export {ExitGameDialog, EndingGameDialog, CustomTopAppBar};
+export {ExitGameDialog, EndingGameDialog, GamePlayTopAppBar};

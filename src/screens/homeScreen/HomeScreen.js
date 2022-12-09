@@ -12,7 +12,7 @@ import {
 import {loadCardDeckList} from 'src/redux/actions';
 import {SpinnerType1} from 'src/components';
 import {
-  CustomTopAppBar,
+  HomeTopAppBar,
   HorizontalCardList,
   SectionHeader,
   VerticalCardList,
@@ -49,7 +49,7 @@ export default function HomeScreen({navigation}) {
   useEffect(() => {
     navigation.setOptions({
       header: () => {
-        return <CustomTopAppBar navigation={navigation} ref={topBarRef} />;
+        return <HomeTopAppBar navigation={navigation} ref={topBarRef} />;
       },
     });
   }, [navigation]);

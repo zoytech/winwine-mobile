@@ -1,12 +1,12 @@
 import {forwardRef, useImperativeHandle, useRef, useState} from 'react';
 import {Animated, StyleSheet} from 'react-native';
-import {SmallTopBar, StandardIconButton, withAnimated} from 'src/components';
+import {SmallTopBar, withAnimated} from 'src/components';
 
 const SmallTopBarAnimated = withAnimated(SmallTopBar);
 const HEADER_HEIGHT = 64;
 const CONFIG_HEIGHT = 50;
 
-function CustomTopAppBar(props, ref) {
+function GameWaitTopAppBar(props, ref) {
   const {
     navigation,
     routes,
@@ -38,7 +38,7 @@ function CustomTopAppBar(props, ref) {
 
   const contentAnimation = {
     opacity: animatedValue.interpolate({
-      inputRange: [bottomHeight, bottomHeight + CONFIG_HEIGHT],
+      inputRange: [200, 200 + CONFIG_HEIGHT],
       outputRange: [0, 1],
       extrapolate: 'clamp',
     }),
@@ -67,4 +67,4 @@ const styles = StyleSheet.create({
   content: {},
 });
 
-export default forwardRef(CustomTopAppBar);
+export default forwardRef(GameWaitTopAppBar);

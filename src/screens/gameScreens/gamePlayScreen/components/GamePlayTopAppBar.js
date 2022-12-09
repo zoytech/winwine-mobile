@@ -3,7 +3,7 @@ import {MediumTopBar, StandardIconButton} from 'src/components';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import {ExitGameDialog} from './index';
 
-export default function CustomTopAppBar(props) {
+export default function GamePlayTopAppBar(props) {
   const {navigation, routes, content, style, contentStyle, ...otherProps} =
     props;
 

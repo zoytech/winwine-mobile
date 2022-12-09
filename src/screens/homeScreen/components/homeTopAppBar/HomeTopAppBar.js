@@ -13,7 +13,7 @@ import {
 
 const HEADER_MIN_HEIGHT = 64;
 
-function CustomTopAppBar(props, ref) {
+function HomeTopAppBar(props, ref) {
   const {navigation, style, ...otherProps} = props;
   const dispatch = useDispatch();
   const cardDeckList = useSelector(cardDeckListSelector);
@@ -55,4 +55,4 @@ const styles = StyleSheet.create({
     height: HEADER_MIN_HEIGHT,
   },
 });
-export default forwardRef(CustomTopAppBar);
+export default forwardRef(HomeTopAppBar);

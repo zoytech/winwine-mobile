@@ -17,7 +17,7 @@ import {
 } from 'src/components';
 import {loadCardDeckById} from 'src/redux/actions';
 import {
-  CustomTopAppBar,
+  GameWaitTopAppBar,
   HeaderButtons,
   HeaderImage,
   HeaderInformation,
@@ -25,8 +25,7 @@ import {
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import {cardDeckSelector, requestingDeckSelector} from 'src/redux/selectors';
 import {SwipeableGameCard} from '../components';
-import avatarImg from '../../../assets/images/preview-package/user.png';
-import {CardProgressTrace} from '../gamePlayScreen/components';
+import avatarImg from 'src/assets/images/preview-package/user.png';
 
 const screenWidth = Dimensions.get('screen')?.width;
 const CONTAINER_WIDTH = 320;
@@ -68,7 +67,7 @@ function GameWaitScreen({navigation, route}) {
   useEffect(() => {
     navigation.setOptions({
       header: () => (
-        <CustomTopAppBar
+        <GameWaitTopAppBar
           content={deckTitle}
           source={deckSource}
           navigation={navigation}
@@ -172,6 +171,7 @@ function GameWaitScreen({navigation, route}) {
 
   function handleOnLayoutImage(event) {
     setImageHeight(event.nativeEvent.layout.height);
+    console.log('imageHeight: ', imageHeight);
   }
 
   if (requesting) {

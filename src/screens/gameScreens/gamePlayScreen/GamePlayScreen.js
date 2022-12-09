@@ -18,8 +18,8 @@ import {cardDeckSelector, requestingDeckSelector} from 'src/redux/selectors';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import {
   CardProgressTrace,
-  CustomTopAppBar,
   EndingGameDialog,
+  GamePlayTopAppBar,
   IndicatorTrace,
 } from './components';
 import {SwipeableGameCard} from '../components';
@@ -66,7 +66,7 @@ export default function GamePlayScreen({navigation, route}) {
   useEffect(() => {
     navigation.setOptions({
       header: () => (
-        <CustomTopAppBar content={deckTitle} navigation={navigation} />
+        <GamePlayTopAppBar content={deckTitle} navigation={navigation} />
       ),
     });
   }, [navigation]);

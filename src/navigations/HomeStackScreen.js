@@ -1,19 +1,21 @@
-import {ScreenKeys} from '../ScreenKeys';
+import {ScreenKeys} from './ScreenKeys';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {
   BasicDialog,
-  BlankScreen,
   CardDialog,
   GamePlayScreen,
   GameWaitScreen,
   HomeScreen,
 } from 'src/screens';
-import {CenterTopBar, MediumTopBar, SmallTopBar} from 'src/components';
 import {useLayoutEffect} from 'react';
-import hideBottomTabBarMethod from '../hideBottomTabBarMethod';
+import hideBottomTabBarMethod from './hideBottomTabBarMethod';
+import {
+  GamePlayTopAppBar,
+  GameWaitTopAppBar,
+  HomeTopAppBar,
+} from 'src/screens/headerComponents';
 
 const HomeStack = createNativeStackNavigator();
-
 export default function HomeStackScreen({navigation, route}) {
   useLayoutEffect(() => {
     const tabHiddenRoutes = [
@@ -31,31 +33,31 @@ export default function HomeStackScreen({navigation, route}) {
     headerShown: false,
   };
   return (
-    <HomeStack.Navigator initialRouteName={ScreenKeys.HOME}>
-      <HomeStack.Group>
+    <HomeStack.Navigator>
+      <HomeStack.Group initialRouteName={ScreenKeys.HOME}>
         <HomeStack.Screen
           name={ScreenKeys.HOME}
           component={HomeScreen}
           options={{
-            header: () => <CenterTopBar />,
+            header: () => <HomeTopAppBar />,
           }}
         />
         <HomeStack.Screen
           name={ScreenKeys.WAIT_GAME}
           component={GameWaitScreen}
           options={{
-            header: () => <MediumTopBar />,
+            header: () => <GameWaitTopAppBar />,
           }}
         />
         <HomeStack.Screen
           name={ScreenKeys.PLAY_GAME}
           component={GamePlayScreen}
           options={{
-            header: () => <SmallTopBar />,
+            header: () => <GamePlayTopAppBar />,
           }}
         />
       </HomeStack.Group>
-      <HomeStack.Group screenOptions={{...modalScreenProps}}>
+      <HomeStack.Group screenOptions={modalScreenProps}>
         <HomeStack.Screen
           name={ScreenKeys.BASIC_DIALOG}
           component={BasicDialog}
@@ -65,7 +67,6 @@ export default function HomeStackScreen({navigation, route}) {
           component={CardDialog}
         />
       </HomeStack.Group>
-      <HomeStack.Screen name={ScreenKeys.BLANK} component={BlankScreen} />
     </HomeStack.Navigator>
   );
 }
