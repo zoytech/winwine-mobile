@@ -1,4 +1,5 @@
 import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
+import defaultTabContainerStyle from './defaultTabContainerStyle';
 
 export default function hideBottomTabBarMethod({
   navigation,
@@ -12,5 +13,10 @@ export default function hideBottomTabBarMethod({
       tabBarStyle: {display: 'none'},
     });
   };
-  return tabHiddenRoutes.includes(routeName) && hideTabBar();
+  const showTabBar = () => {
+    navigationSetOptions({
+      tabBarStyle: defaultTabContainerStyle,
+    });
+  };
+  return tabHiddenRoutes.includes(routeName) ? hideTabBar() : showTabBar();
 }

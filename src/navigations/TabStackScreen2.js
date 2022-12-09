@@ -1,6 +1,5 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {StyleSheet} from 'react-native';
-import {Color, ColorVariant} from 'src/themes';
 import TestScreen from '../screens/TestScreen';
 import {TabScreenIcon, TabScreenLabel} from './components';
 import HomeStackScreen from './HomeStackScreen';
@@ -10,15 +9,9 @@ import {ScreenKeys} from './ScreenKeys';
 const Tab = createBottomTabNavigator();
 
 export default function TabStackScreen2() {
-  const surfaceColor = Color.light[ColorVariant.surface]?.base;
-  const containerStyle = [styles.container, {backgroundColor: surfaceColor}];
-  const itemStyleProps = {
-    tabBarItemStyle: styles.item,
-  };
   const screenOptionsProps = {
     headerShown: false,
-    tabBarStyle: containerStyle,
-    ...itemStyleProps,
+    tabBarItemStyle: styles.item,
   };
   return (
     <Tab.Navigator
@@ -53,15 +46,6 @@ export default function TabStackScreen2() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    position: 'absolute',
-    width: '100%',
-    height: 80,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingTop: 12,
-    paddingBottom: 16,
-  },
   item: {
     flexDirection: 'column',
     justifyContent: 'center',
