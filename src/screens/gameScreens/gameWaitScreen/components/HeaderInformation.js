@@ -1,7 +1,7 @@
 import {StyleSheet, Text, View} from 'react-native';
 import {BaseAvatarButton} from 'src/components';
 import {Color, ColorVariant} from 'src/themes';
-import {TagName} from '../../../components';
+import LikeIcon from './LikeIcon';
 
 export default function HeaderInformation(props) {
   const {
@@ -20,6 +20,7 @@ export default function HeaderInformation(props) {
   } = props;
   const textColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
   const totalCard = `${total} lá`;
+  const likes = `${totalLike}`;
   const containerStyle = [styles.container, style];
   const subContentStyle = [{color: textColor}, contentStyle];
 
@@ -69,12 +70,11 @@ export default function HeaderInformation(props) {
         {renderSeparatorLine()}
         {total ? <Text style={subContentStyle}>{totalCard}</Text> : null}
         {renderSeparatorLine()}
-        {totalLike ? (
-          <TagName
-            icon={'like1'}
-            content={`${totalLike}`}
+        {likes ? (
+          <LikeIcon
             contentStyle={subContentStyle}
-            iconStyle={styles.likeIcon}
+            content={likes}
+            iconStyle={styles.icon}
           />
         ) : null}
       </View>
