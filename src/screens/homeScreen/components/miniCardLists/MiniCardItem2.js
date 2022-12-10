@@ -1,24 +1,8 @@
-import {
-  Dimensions,
-  Image,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import {FilledButton, OutlinedCard} from 'src/components';
 import {Color, ColorVariant, Typography} from 'src/themes';
+import {defaultOfDeck, widthOf} from 'src/constants';
 import {TagName} from '../../../components';
-import member1 from 'src/assets/images/preview-package/member1.jpg';
-
-const {width: screenWidth} = Dimensions.get('screen');
-
-const DefaultName = {
-  cardDeckName: 'Bộ bài số 15',
-  cardDeckDescription: `Dưới đây là mô tả của ${DefaultName?.cardDeckName}`,
-  cardDeckTag: '',
-  cardDeckImage: member1,
-};
 
 export default function MiniCardItem2(props) {
   const {
@@ -28,11 +12,10 @@ export default function MiniCardItem2(props) {
     onButtonPress = () => {},
   } = props;
 
-  const {
-    cardDeckName: cardDeckName,
-    cardDeckImage: cardDeckImage,
-    cardDeckTag: cardDeckTag,
-  } = data || {};
+  const {cardDeckName, cardDeckImage, cardDeckTag} = data || {};
+  const deckName = cardDeckName ? cardDeckName : defaultOfDeck?.TITLE;
+  const deckTag = cardDeckTag ? cardDeckTag : defaultOfDeck?.TAG;
+  const deckImage = cardDeckImage ? {uri: cardDeckImage} : defaultOfDeck?.IMAGE;
   const textColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
 
   function getContainerStyle({pressed}) {
@@ -43,27 +26,16 @@ export default function MiniCardItem2(props) {
     <OutlinedCard style={[styles.container, style]}>
       <Pressable style={getContainerStyle} onPress={onImageAreaPress}>
         <View style={styles.media}>
-          <Image
-            source={
-              cardDeckImage
-                ? {
-                    uri: cardDeckImage,
-                  }
-                : DefaultName?.cardDeckImage
-            }
-            style={styles.image}
-          />
+          <Image source={deckImage} style={styles.image} />
         </View>
         <View style={styles.headline}>
           <Text
             style={[Typography.label.large, {color: textColor}]}
             numberOfLines={1}
             ellipsizeMode={'tail'}>
-            {cardDeckName ? cardDeckName : DefaultName?.cardDeckName}
+            {deckName}
           </Text>
-          <TagName
-            content={cardDeckTag ? cardDeckTag : DefaultName?.cardDeckTag}
-          />
+          <TagName content={deckTag} />
         </View>
         <View style={styles.action}>
           <FilledButton
@@ -82,7 +54,7 @@ export default function MiniCardItem2(props) {
 
 const styles = StyleSheet.create({
   container: {
-    width: screenWidth * 0.35,
+    width: widthOf?.SCREEN * 0.35,
     aspectRatio: 0.67,
     overflow: 'hidden',
     marginBottom: 16,

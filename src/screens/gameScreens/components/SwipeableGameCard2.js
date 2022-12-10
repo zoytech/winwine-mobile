@@ -1,6 +1,7 @@
+import {forwardRef, useImperativeHandle, useRef, useState} from 'react';
 import {Pressable, StyleSheet} from 'react-native';
 import {Carousel} from 'src/components';
-import {forwardRef, useImperativeHandle, useRef, useState} from 'react';
+import {defaultOf} from 'src/constants';
 import GameCardItem from './GameCardItem';
 
 function SwipeableGameCard2(props, ref) {
@@ -19,7 +20,7 @@ function SwipeableGameCard2(props, ref) {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const defaultContainerStyle = [styles.container, style];
   const carouselRef = useRef(null);
-  const dataLength = data.length;
+  const dataLength = data.length ? data.length : defaultOf.DATA_LENGTH;
 
   useImperativeHandle(ref, () => ({
     scrollToCurrent: handleScrollToCurrent,
@@ -29,21 +30,21 @@ function SwipeableGameCard2(props, ref) {
   }));
 
   function handleScrollToCurrent() {
-    carouselRef.current.scrollToIndex(currentIndex);
+    carouselRef.current?.scrollToIndex(currentIndex);
   }
 
   function handleScrollToNext() {
     currentIndex !== dataLength - 1
-      ? carouselRef.current.scrollToIndex(currentIndex + 1)
-      : carouselRef.current.scrollToIndex(currentIndex + 2);
+      ? carouselRef.current?.scrollToIndex(currentIndex + 1)
+      : carouselRef.current?.scrollToIndex(currentIndex + 2);
   }
 
   function handleScrollToPrevious() {
-    carouselRef.current.scrollToIndex(currentIndex - 1);
+    carouselRef.current?.scrollToIndex(currentIndex - 1);
   }
 
   function handleResetIndex() {
-    carouselRef.current.scrollToIndex(initialIndex);
+    carouselRef.current?.scrollToIndex(initialIndex);
   }
 
   function handleScrollEnd(item, index) {

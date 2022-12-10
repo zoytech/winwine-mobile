@@ -24,7 +24,6 @@ export default function HomeScreen({navigation}) {
   const topBarRef = useRef({
     onScroll: () => {},
   });
-
   const dispatch = useDispatch();
   const cardDeckList = useSelector(cardDeckListSelector);
   const requesting = useSelector(requestingDeckListSelector);
@@ -60,7 +59,7 @@ export default function HomeScreen({navigation}) {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
-        onScroll={topBarRef.current.onScroll}
+        onScroll={topBarRef.current?.onScroll}
         contentContainerStyle={styles.contentContainer}>
         <SectionHeader content={'Recently'} style={styles.sectionHeader} />
         <HorizontalCardList data={recentlyData} navigation={navigation} />

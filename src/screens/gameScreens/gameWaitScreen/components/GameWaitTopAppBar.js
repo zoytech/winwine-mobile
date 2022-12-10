@@ -1,10 +1,10 @@
 import {forwardRef, useImperativeHandle, useRef, useState} from 'react';
 import {Animated, StyleSheet} from 'react-native';
 import {SmallTopBar, withAnimated} from 'src/components';
+import {heightOf} from 'src/constants';
 
 const SmallTopBarAnimated = withAnimated(SmallTopBar);
-const HEADER_HEIGHT = 64;
-const CONFIG_HEIGHT = 50;
+const CONFIG_VALUE = 50;
 
 function GameWaitTopAppBar(props, ref) {
   const {
@@ -18,7 +18,9 @@ function GameWaitTopAppBar(props, ref) {
   } = props;
   const [showContent, setShowContent] = useState(false);
   const animatedValue = useRef(new Animated.Value(0)).current;
-  const bottomHeight = imageHeight + CONFIG_HEIGHT;
+  const minHeight = heightOf?.MIN_HEADER;
+  const imgHeight = imageHeight ? imageHeight : heightOf?.IMAGE;
+  const bottomHeight = imgHeight + minHeight;
 
   function handleShowSelectionList() {
     alert('handleShowSelectionList');
@@ -28,7 +30,7 @@ function GameWaitTopAppBar(props, ref) {
     onScroll: event => {
       const offsetY = event.nativeEvent.contentOffset.y;
       animatedValue.setValue(offsetY);
-      if (offsetY >= imageHeight) {
+      if (offsetY >= imgHeight) {
         setShowContent(true);
       } else {
         setShowContent(false);
@@ -38,7 +40,7 @@ function GameWaitTopAppBar(props, ref) {
 
   const contentAnimation = {
     opacity: animatedValue.interpolate({
-      inputRange: [200, 200 + CONFIG_HEIGHT],
+      inputRange: [imgHeight, imgHeight + CONFIG_VALUE],
       outputRange: [0, 1],
       extrapolate: 'clamp',
     }),
@@ -52,7 +54,7 @@ function GameWaitTopAppBar(props, ref) {
       leadingIcon={'arrowleft'}
       onLeadingIconPress={() => navigation.goBack()}
       style={[style]}
-      topHeight={HEADER_HEIGHT}
+      topHeight={minHeight}
       bottomHeight={bottomHeight}
     />
   );

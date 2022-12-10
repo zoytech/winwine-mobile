@@ -2,9 +2,10 @@ import React, {forwardRef, useImperativeHandle, useRef, useState} from 'react';
 import {Animated, StyleSheet, Text, View} from 'react-native';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {BaseAvatarButton, StandardIconButton} from 'src/components';
+import {defaultOf, heightOf} from 'src/constants';
 
-const MAIN_HEIGHT = 64;
 const CONFIG_VALUE = 100;
+const standardHeight = heightOf?.MIN_HEADER;
 
 function CenterTopBar(props, ref) {
   const {
@@ -19,11 +20,11 @@ function CenterTopBar(props, ref) {
     children,
     ...otherProps
   } = props;
-
+  const reverseStandardHeight = -standardHeight;
   const scrollYContentOffsetRef = useRef(new Animated.Value(0)).current;
   const [subHeight, setSubHeight] = useState(0);
-  const totalHeight = subHeight + MAIN_HEIGHT;
-  const scrollDistance = totalHeight - MAIN_HEIGHT + CONFIG_VALUE;
+  const totalHeight = subHeight + standardHeight;
+  const scrollDistance = totalHeight - standardHeight + CONFIG_VALUE;
 
   useImperativeHandle(ref, () => ({
     onScroll: e => {
@@ -34,7 +35,6 @@ function CenterTopBar(props, ref) {
 
   const {base: background, onBase: onBackground} =
     Color.light[ColorVariant.background];
-  const baseColor = Color.light[ColorVariant.primary]?.base;
   const topBarAnimation = {
     height: scrollYContentOffsetRef.interpolate({
       inputRange: [0, scrollDistance],
@@ -47,7 +47,7 @@ function CenterTopBar(props, ref) {
       {
         translateY: scrollYContentOffsetRef.interpolate({
           inputRange: [0, scrollDistance],
-          outputRange: [0, -MAIN_HEIGHT],
+          outputRange: [0, reverseStandardHeight],
           extrapolate: 'clamp',
         }),
       },
@@ -58,7 +58,7 @@ function CenterTopBar(props, ref) {
       {
         translateY: scrollYContentOffsetRef.interpolate({
           inputRange: [0, scrollDistance],
-          outputRange: [0, -MAIN_HEIGHT],
+          outputRange: [0, reverseStandardHeight],
           extrapolate: 'clamp',
         }),
       },
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: MAIN_HEIGHT,
+    height: standardHeight,
   },
   targetSize: {
     height: 48,

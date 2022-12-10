@@ -1,6 +1,7 @@
+import {forwardRef, useImperativeHandle, useRef, useState} from 'react';
 import {Animated, StyleSheet} from 'react-native';
 import {Color, ColorVariant} from 'src/themes';
-import {forwardRef, useImperativeHandle, useRef, useState} from 'react';
+import {heightOf} from 'src/constants';
 
 function HeaderImage(props, ref) {
   const {
@@ -13,8 +14,9 @@ function HeaderImage(props, ref) {
   } = props;
   const animatedValue = useRef(new Animated.Value(0)).current;
   const imageBorderColor = Color.light[ColorVariant.primary]?.onBase;
-  const [imageHeight, setImageHeight] = useState(0);
+  const [imageHeight, setImageHeight] = useState(heightOf?.IMAGE);
   const halfImageHeight = imageHeight / 2;
+  const reverseHeaderpHeight = -heightOf?.MIN_HEADER;
   useImperativeHandle(ref, () => ({
     onScroll: event => {
       const offsetY = event.nativeEvent.contentOffset.y;
@@ -29,7 +31,7 @@ function HeaderImage(props, ref) {
       {
         translateY: animatedValue.interpolate({
           inputRange: [0, halfImageHeight, imageHeight],
-          outputRange: [0, 0, -64],
+          outputRange: [0, 0, reverseHeaderpHeight],
           extrapolate: 'clamp',
         }),
       },
@@ -72,7 +74,7 @@ function HeaderImage(props, ref) {
       {...otherProps}
       style={containerStyle}
       onLayout={e => handleOnLayoutImage(e)}>
-      <Animated.Image source={{uri: source}} style={styles.image} />
+      <Animated.Image source={source} style={styles.image} />
     </Animated.View>
   );
 }

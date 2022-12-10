@@ -1,12 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {
-  Dimensions,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {
@@ -25,14 +18,22 @@ import {
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import {cardDeckSelector, requestingDeckSelector} from 'src/redux/selectors';
 import {SwipeableGameCard} from '../components';
-import avatarImg from 'src/assets/images/preview-package/user.png';
+import {
+  defaultOf,
+  defaultOfCard,
+  defaultOfDeck,
+  defaultOfUser,
+  heightOf,
+  widthOf,
+} from 'src/constants';
 
-const screenWidth = Dimensions.get('screen')?.width;
-const CONTAINER_WIDTH = 320;
-const cardWidth = CONTAINER_WIDTH * 0.85;
-const SEPARATOR_WIDTH = 10;
+const width = {
+  CONTAINER: 320,
+  CARD: 320 * 0.85,
+  SEPARATOR: 10,
+};
 const INITIAL_INDEX = 0;
-const MAX_VIEW = 10;
+const MAX_PREVIEW = 10;
 
 function GameWaitScreen({navigation, route}) {
   const {deckId, deckTitle, deckSource} = route.params;
@@ -40,23 +41,25 @@ function GameWaitScreen({navigation, route}) {
   const requesting = useSelector(requestingDeckSelector);
   const dispatch = useDispatch();
   const [showIndex, setShowIndex] = useState(INITIAL_INDEX);
-  const [imageHeight, setImageHeight] = useState(0);
+  const [imageHeight, setImageHeight] = useState(heightOf?.IMAGE);
   const carouselRef = useRef(null);
   const scrollViewRef = useRef([]);
-
-  const myRef = useRef([]);
-  const {
-    cardDeck: cardDeck,
-    tag: tag,
-    uri: source,
-    tasks: tasks = [],
-  } = cardDeckItem || {};
-  const dataLength = tasks ? tasks.length : 0;
-  const userName = 'Thành Nam nè';
-  const avatar = avatarImg;
-  const description =
-    'alo con oaihf jahf ia fhaj uafujh jhaj afjhjafj alo con oaihf jahf ia fhaj uafujh jhaj afjhjafj';
-  const likes = 12;
+  const {cardDeck, tag, uri, tasks} = cardDeckItem || {};
+  const {TITLE, TAG, IMAGE, DESCRIPTION, LIKES} = defaultOfDeck;
+  const deck = {
+    title: cardDeck ? cardDeck : TITLE,
+    tag: tag ? tag : TAG,
+    image: uri ? {uri: uri} : IMAGE,
+    description: DESCRIPTION,
+    likes: LIKES,
+  };
+  const data = tasks ? tasks : defaultOfCard?.EMPTY;
+  const dataLength = tasks ? tasks.length : defaultOf?.initDataLength;
+  const {NAME, AVATAR} = defaultOfUser;
+  const user = {
+    name: NAME,
+    avatar: AVATAR,
+  };
   const baseColor = Color.light[ColorVariant.surface]?.base;
   const textColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
 
@@ -85,7 +88,7 @@ function GameWaitScreen({navigation, route}) {
   const defaultContentStyle = [Typography.title.medium, {color: textColor}];
 
   function getPreviewCardNumber(total) {
-    return total >= MAX_VIEW ? MAX_VIEW : total;
+    return total >= MAX_PREVIEW ? MAX_PREVIEW : total;
   }
 
   function renderPreviewNumber(total) {
@@ -98,7 +101,7 @@ function GameWaitScreen({navigation, route}) {
 
   function getPreviewDataItem(total) {
     const showLimitedCard = getPreviewCardNumber(total);
-    return tasks.slice(0, showLimitedCard);
+    return data.slice(INITIAL_INDEX, showLimitedCard);
   }
 
   function renderHeaderLeftButtons({iconStyle}) {
@@ -144,7 +147,8 @@ function GameWaitScreen({navigation, route}) {
         name: ScreenKeys.PLAY_GAME,
         params: {
           deckId: deckId,
-          deckTitle: cardDeck || '',
+          deckTitle: deckTitle ? deckTitle : TITLE,
+          deckSource: deckSource ? deckSource : IMAGE,
         },
       });
     };
@@ -183,15 +187,18 @@ function GameWaitScreen({navigation, route}) {
         contentContainerStyle={styles.scrollView}
         onScroll={scrollViewRef.current.onScroll}>
         <View style={styles.header}>
-          <HeaderImage source={source} onLayoutImage={handleOnLayoutImage} />
+          <HeaderImage
+            source={deck?.image}
+            onLayoutImage={handleOnLayoutImage}
+          />
           <HeaderInformation
-            head={cardDeck}
-            tag={tag}
+            head={deck?.title}
+            tag={deck?.tag}
             total={dataLength}
-            userName={userName}
-            avatar={avatar}
-            description={description}
-            totalLike={likes}
+            userName={user?.name}
+            avatar={user?.avatar}
+            description={deck?.description}
+            totalLike={deck?.likes}
             headStyle={Typography.headline.small}
             contentStyle={Typography.label.large}
           />
@@ -208,9 +215,9 @@ function GameWaitScreen({navigation, route}) {
           ref={carouselRef}
           style={styles.card}
           contentStyle={defaultContentStyle}
-          itemWidth={cardWidth}
-          containerWidth={CONTAINER_WIDTH}
-          separatorWidth={SEPARATOR_WIDTH}
+          itemWidth={width?.CARD}
+          containerWidth={width?.CONTAINER}
+          separatorWidth={width?.SEPARATOR}
           onScrollEnd={(item, index) => handleOnScrollEnd(item, index)}
           onItemPress={handleCardItemPressed}
           initialIndex={INITIAL_INDEX}
@@ -222,7 +229,7 @@ function GameWaitScreen({navigation, route}) {
 
 const styles = StyleSheet.create({
   container: {
-    width: screenWidth,
+    width: widthOf?.SCREEN,
   },
   scrollView: {
     justifyContent: 'center',

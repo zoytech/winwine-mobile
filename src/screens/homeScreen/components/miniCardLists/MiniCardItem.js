@@ -1,16 +1,8 @@
-import {
-  Dimensions,
-  Image,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import {FilledButton, OutlinedCard} from 'src/components';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {TagName} from '../../../components';
-
-const {width: screenWidth} = Dimensions.get('screen');
+import {defaultOfDeck, widthOf} from 'src/constants';
 
 const IconByTagName = {
   '18+': 'tag',
@@ -20,13 +12,16 @@ export default function MiniCardItem(props) {
   const {
     data,
     style,
-    tagName,
     onImageAreaPress = () => {},
     onButtonPress = () => {},
   } = props;
 
-  const iconName = IconByTagName[tagName];
-  const {cardDeck: name, tag: tag, uri: uri} = data || {};
+  const {cardDeck, tag, uri} = data || {};
+  const deckTitle = cardDeck ? cardDeck : defaultOfDeck?.TITLE;
+  const deckTag = tag ? tag : defaultOfDeck?.TAG;
+  const deckImage = uri ? {uri: uri} : defaultOfDeck?.IMAGE;
+  const iconName = IconByTagName[deckTag];
+
   const textColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
 
   function getContainerStyle({pressed}) {
@@ -37,18 +32,18 @@ export default function MiniCardItem(props) {
     <OutlinedCard style={[styles.container, style]}>
       <Pressable style={getContainerStyle} onPress={onImageAreaPress}>
         <View style={styles.media}>
-          <Image source={{uri: uri}} style={styles.image} />
+          <Image source={deckImage} style={styles.image} />
         </View>
         <View style={styles.headline}>
-          {name && (
+          {deckTitle && (
             <Text
               style={[Typography.label.large, {color: textColor}]}
               numberOfLines={1}
               ellipsizeMode={'tail'}>
-              {name}
+              {deckTitle}
             </Text>
           )}
-          <TagName content={tag} />
+          <TagName content={deckTag} />
         </View>
         <View style={styles.action}>
           <FilledButton
@@ -67,7 +62,7 @@ export default function MiniCardItem(props) {
 
 const styles = StyleSheet.create({
   container: {
-    width: screenWidth * 0.35,
+    width: widthOf?.SCREEN * 0.35,
     aspectRatio: 0.67,
     overflow: 'hidden',
     marginBottom: 16,

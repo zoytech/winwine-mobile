@@ -1,29 +1,27 @@
 import React, {useState} from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
-import {
-  AssistChip,
-  FilterChip,
-  InputChip,
-  SuggestionChip,
-} from 'src/components';
+import {SuggestionChip} from 'src/components';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import ComingSoonDialog from './ComingSoonDialog';
-import avatarTest from 'src/assets/images/preview-package/user.png';
+
+const chipId = {
+  DRINKING_GAME: 'HTG1',
+  TRUTH_DARE: 'HTG2',
+};
 
 export default function SuggestionList(props) {
   const {style, data, navigation, route, ...otherProps} = props;
-  const defaultChipId = 'HTG1';
-  const [selectedChip, setSelectedChip] = useState(defaultChipId);
+  const [selectedChip, setSelectedChip] = useState(chipId?.DRINKING_GAME);
 
   function handleMainDialogPress() {
-    setSelectedChip(defaultChipId);
+    setSelectedChip(chipId?.DRINKING_GAME);
     navigation.goBack();
   }
 
   function handleChipPressed(hashtagId) {
     setSelectedChip(hashtagId);
     const navigate = navigation.navigate;
-    if (hashtagId === 'HTG2') {
+    if (hashtagId === chipId?.TRUTH_DARE) {
       navigate({
         name: ScreenKeys.BASIC_DIALOG,
         params: {

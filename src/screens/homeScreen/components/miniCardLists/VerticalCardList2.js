@@ -2,16 +2,19 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import MiniCardItem2 from './MiniCardItem2';
+import {defaultOfDeck} from 'src/constants';
 
 export default function VerticalCardList2(props) {
   const {style, data = [], navigation, ...otherProps} = props;
+  const {TITLE, IMAGE} = defaultOfDeck;
 
-  const handleImageAreaPress = ({cardDeckId, cardDeckName}) => {
+  const handleImageAreaPress = ({cardDeckId, cardDeckName, cardDeckImage}) => {
     navigation.navigate({
       name: ScreenKeys.PLAY_GAME,
       params: {
-        deckId: cardDeckId || '',
-        deckTitle: cardDeckName || '',
+        deckId: cardDeckId ? cardDeckId : '',
+        deckTitle: cardDeckName ? cardDeckName : TITLE,
+        deckSource: cardDeckImage ? {uri: cardDeckImage} : IMAGE,
       },
     });
   };
@@ -19,26 +22,22 @@ export default function VerticalCardList2(props) {
     navigation.navigate({
       name: ScreenKeys.WAIT_GAME,
       params: {
-        deckId: cardDeckId || '',
-        deckTitle: cardDeckName || '',
-        deckSource: cardDeckImage || '',
+        deckId: cardDeckId ? cardDeckId : '',
+        deckTitle: cardDeckName ? cardDeckName : TITLE,
+        deckSource: cardDeckImage ? {uri: cardDeckImage} : IMAGE,
       },
     });
   };
 
   function renderItem(item) {
-    const {cardDeckId, cardDeckName, cardDeckImage} = item || {};
+    const cardDeckId = item?.cardDeckId;
     return (
       <MiniCardItem2
         {...otherProps}
         key={cardDeckId}
         data={item}
-        onImageAreaPress={() =>
-          handleImageAreaPress({cardDeckId, cardDeckName})
-        }
-        onButtonPress={() =>
-          handleButtonPress({cardDeckId, cardDeckName, cardDeckImage})
-        }
+        onImageAreaPress={() => handleImageAreaPress(item)}
+        onButtonPress={() => handleButtonPress(item)}
       />
     );
   }

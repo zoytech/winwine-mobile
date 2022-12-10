@@ -2,7 +2,6 @@ import {forwardRef, useEffect} from 'react';
 import {StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {CenterTopBar, SpinnerType1} from 'src/components';
-import avatarTest from 'src/assets/images/preview-package/user.png';
 import {SuggestionList} from '../suggestionList';
 import {loadCardDeckList} from 'src/redux/actions';
 import {usePartOfDay} from '../usePartOfDay';
@@ -10,8 +9,9 @@ import {
   cardDeckListSelector,
   requestingDeckListSelector,
 } from 'src/redux/selectors';
+import {defaultOfUser, heightOf} from 'src/constants';
 
-const HEADER_MIN_HEIGHT = 64;
+const minHeight = heightOf?.MIN_HEADER;
 
 function HomeTopAppBar(props, ref) {
   const {navigation, style, ...otherProps} = props;
@@ -26,7 +26,7 @@ function HomeTopAppBar(props, ref) {
   }, [dispatch]);
 
   if (requesting) {
-    return <SpinnerType1 style={{height: HEADER_MIN_HEIGHT}} />;
+    return <SpinnerType1 style={{height: minHeight}} />;
   }
   return (
     <CenterTopBar
@@ -34,7 +34,7 @@ function HomeTopAppBar(props, ref) {
       content={currentPart.greetingContent}
       style={[styles.container, style]}
       headerTitleStyle={styles.headerTitle}
-      trailingIcon={avatarTest}
+      trailingIcon={defaultOfUser?.AVATAR}
       onTrailingIconPress={() => alert('test leading button')}
       ref={ref}>
       <SuggestionList
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   suggestion: {
-    height: HEADER_MIN_HEIGHT,
+    height: minHeight,
   },
 });
 export default forwardRef(HomeTopAppBar);

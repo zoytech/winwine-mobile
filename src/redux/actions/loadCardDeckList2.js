@@ -3,7 +3,7 @@ import {
   FETCH_DECKS_REQUEST_2,
   FETCH_DECKS_SUCCESS_2,
 } from '../constants/cardDeckList';
-import {HOST_DOMAIN, RESOURCE_PATH} from 'src/constants';
+import {api, HOST_DOMAIN, RESOURCE_PATH} from 'src/constants';
 
 async function getPopularCardDecks(url = '', data = {}) {
   const response = await fetch(url, {
@@ -18,13 +18,13 @@ async function getPopularCardDecks(url = '', data = {}) {
 export default function loadCardDeckList2() {
   return async dispatch => {
     try {
-      await getPopularCardDecks(
-        `${HOST_DOMAIN}/${RESOURCE_PATH}/card-decks`,
-      ).then(data => {
-        const cardDecksData = data?.data;
-        dispatch(fetchDecksRequest());
-        dispatch(fetchDecksSuccess(cardDecksData));
-      });
+      await getPopularCardDecks(`${api?.HOST}/${api?.PATH}/card-decks`).then(
+        data => {
+          const cardDecksData = data?.data;
+          dispatch(fetchDecksRequest());
+          dispatch(fetchDecksSuccess(cardDecksData));
+        },
+      );
     } catch (error) {
       dispatch(fetchDecksError(error));
     }

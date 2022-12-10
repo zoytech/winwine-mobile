@@ -1,11 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {
-  Dimensions,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  View,
-} from 'react-native';
+import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {
@@ -17,6 +11,13 @@ import {loadCardDeckById} from 'src/redux/actions';
 import {cardDeckSelector, requestingDeckSelector} from 'src/redux/selectors';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import {
+  defaultOf,
+  defaultOfCard,
+  defaultOfDeck,
+  defaultOfUser,
+  widthOf,
+} from 'src/constants';
+import {
   CardProgressTrace,
   EndingGameDialog,
   GamePlayTopAppBar,
@@ -24,10 +25,13 @@ import {
 } from './components';
 import {SwipeableGameCard} from '../components';
 
-const screenWidth = Dimensions.get('screen')?.width;
-const CONTAINER_WIDTH = 320;
-const cardWidth = 275;
-const SEPARATOR_WIDTH = 10;
+const screenWidth = widthOf?.SCREEN;
+const width = {
+  CONTAINER: 320,
+  CARD: 275,
+  SEPARATOR: 10,
+};
+
 const INITIAL_INDEX = 0;
 
 export default function GamePlayScreen({navigation, route}) {
@@ -35,16 +39,26 @@ export default function GamePlayScreen({navigation, route}) {
   const dispatch = useDispatch();
   const cardDeckItem = useSelector(cardDeckSelector);
   const requesting = useSelector(requestingDeckSelector);
-  const {
-    tag: tag,
-    uri: uri,
-    cardDeck: headline,
-    tasks: tasks = [],
-  } = cardDeckItem || {};
   const carouselRef = useRef(null);
   const [showIndex, setShowIndex] = useState(INITIAL_INDEX);
   const [showIndicatorInfo, setShowIndicatorInfo] = useState(true);
-  const dataLength = tasks ? tasks.length : 0;
+
+  const {cardDeck, tag, uri, tasks} = cardDeckItem || {};
+  const {TITLE, TAG, IMAGE} = defaultOfDeck;
+  const deck = {
+    title: cardDeck ? cardDeck : TITLE,
+    tag: tag ? tag : TAG,
+    image: uri ? {uri: uri} : IMAGE,
+  };
+  const taskList = tasks ? tasks : defaultOfCard?.EMPTY;
+  const defaultLength = defaultOf?.initDataLength;
+  const dataLength = tasks ? tasks.length : defaultLength;
+  const progressBarWidth = screenWidth * 0.8;
+  const percentValue =
+    dataLength !== defaultLength && (showIndex + 1) / dataLength;
+  const indicatedPartWidth = progressBarWidth * percentValue;
+  const minFragmentWidth = dataLength !== defaultLength && 1 / dataLength;
+  const indicatedArrowWidth = progressBarWidth * minFragmentWidth;
 
   const baseColor = Color.light[ColorVariant.surface]?.base;
   const textColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
@@ -53,11 +67,6 @@ export default function GamePlayScreen({navigation, route}) {
     styles.container,
   ];
   const defaultContentStyle = [Typography.title.medium, {color: textColor}];
-  const progressBarWidth = screenWidth * 0.8;
-  const percentValue = dataLength !== 0 && (showIndex + 1) / dataLength;
-  const indicatedPartWidth = progressBarWidth * percentValue;
-  const minFragmentWidth = dataLength !== 0 && 1 / dataLength;
-  const indicatedArrowWidth = progressBarWidth * minFragmentWidth;
 
   useEffect(() => {
     dispatch(loadCardDeckById(deckId));
@@ -86,9 +95,9 @@ export default function GamePlayScreen({navigation, route}) {
       params: {
         content: (
           <EndingGameDialog
-            headline={headline}
-            subHeadLeft={tag}
-            media={uri}
+            headline={deck?.title}
+            subHeadLeft={deck?.tag}
+            media={deck?.image}
             onMainActionPress={handleMainDialogPress}
             onSubActionPress={handleSubDialogPress}
           />
@@ -112,7 +121,9 @@ export default function GamePlayScreen({navigation, route}) {
 
   function renderBottomButtons() {
     const handleBackwardPress = () => {
-      showIndex !== 0 && carouselRef && carouselRef.current.scrollToPrevious();
+      showIndex !== INITIAL_INDEX &&
+        carouselRef &&
+        carouselRef.current.scrollToPrevious();
     };
 
     const handleRatingTaskPress = () => {
@@ -140,7 +151,7 @@ export default function GamePlayScreen({navigation, route}) {
           {...smallIconProps}
           name={'stepbackward'}
           onPress={handleBackwardPress}
-          disabled={showIndex === 0}
+          disabled={showIndex === INITIAL_INDEX}
         />
         <FilledIconToggle {...ratingProps} />
         <StandardIconButton
@@ -177,13 +188,13 @@ export default function GamePlayScreen({navigation, route}) {
           />
         </View>
         <SwipeableGameCard
-          data={tasks}
+          data={taskList}
           ref={carouselRef}
           style={styles.card}
           contentStyle={defaultContentStyle}
-          itemWidth={cardWidth}
-          containerWidth={CONTAINER_WIDTH}
-          separatorWidth={SEPARATOR_WIDTH}
+          itemWidth={width?.CARD}
+          containerWidth={width?.CONTAINER}
+          separatorWidth={width?.SEPARATOR}
           onScrollEnd={(item, index) => handleOnScrollEnd(item, index)}
           initialIndex={INITIAL_INDEX}
         />
