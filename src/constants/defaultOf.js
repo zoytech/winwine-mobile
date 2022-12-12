@@ -15,6 +15,7 @@ const defaultOfDeck = {
 };
 const defaultOfCard = {
   EMPTY: ['Bộ bài chưa có câu hỏi'],
+  SERVER: ['Mất kết nối'],
 };
 const defaultOfUser = {
   AVATAR: avatarImg,

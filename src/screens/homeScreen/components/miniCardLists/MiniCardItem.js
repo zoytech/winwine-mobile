@@ -43,7 +43,7 @@ export default function MiniCardItem(props) {
               {deckTitle}
             </Text>
           )}
-          <TagName content={deckTag} />
+          <Text>{deckTag}</Text>
         </View>
         <View style={styles.action}>
           <FilledButton

@@ -53,7 +53,7 @@ function GameWaitScreen({navigation, route}) {
     description: DESCRIPTION,
     likes: LIKES,
   };
-  const data = tasks ? tasks : defaultOfCard?.EMPTY;
+  const data = tasks ? tasks : [];
   const dataLength = tasks ? tasks.length : defaultOf?.initDataLength;
   const {NAME, AVATAR} = defaultOfUser;
   const user = {

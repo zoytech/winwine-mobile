@@ -50,7 +50,7 @@ export default function GamePlayScreen({navigation, route}) {
     tag: tag ? tag : TAG,
     image: uri ? {uri: uri} : IMAGE,
   };
-  const taskList = tasks ? tasks : defaultOfCard?.EMPTY;
+  const taskList = tasks ? tasks : [];
   const defaultLength = defaultOf?.initDataLength;
   const dataLength = tasks ? tasks.length : defaultLength;
   const progressBarWidth = screenWidth * 0.8;

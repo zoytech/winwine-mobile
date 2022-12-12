@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {CardDialogContent} from 'src/components';
-import {TagName} from '../../../components';
+import TagName from './TagName';
 
 export default function EndingGameDialog(props) {
   const {

@@ -35,7 +35,7 @@ export default function MiniCardItem2(props) {
             ellipsizeMode={'tail'}>
             {deckName}
           </Text>
-          <TagName content={deckTag} />
+          <Text>{deckTag}</Text>
         </View>
         <View style={styles.action}>
           <FilledButton
