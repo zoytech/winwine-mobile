@@ -2,9 +2,8 @@ import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import {FilledButton, OutlinedCard} from 'src/components';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {defaultOfDeck, widthOf} from 'src/constants';
-import {TagName} from '../../../components';
 
-export default function MiniCardItem2(props) {
+export default function MiniCardItem(props) {
   const {
     data,
     style,

@@ -1,10 +1,10 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
-import MiniCardItem2 from './MiniCardItem2';
+import MiniCardItem from './MiniCardItem';
 import {defaultOfDeck} from 'src/constants';
 
-export default function VerticalCardList2(props) {
+export default function CardDeckList(props) {
   const {style, data = [], navigation, ...otherProps} = props;
   const {TITLE, IMAGE} = defaultOfDeck;
 
@@ -32,7 +32,7 @@ export default function VerticalCardList2(props) {
   function renderItem(item) {
     const cardDeckId = item?.cardDeckId;
     return (
-      <MiniCardItem2
+      <MiniCardItem
         {...otherProps}
         key={cardDeckId}
         data={item}

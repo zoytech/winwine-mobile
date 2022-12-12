@@ -4,7 +4,6 @@ import {Color, ColorVariant} from 'src/themes';
 
 export default function LikeIcon(props) {
   const {content, style, contentStyle, iconStyle} = props;
-  console.log('content: ', content);
   const onBase = Color.light[ColorVariant.surface]?.onBase;
   const iconProps = {
     name: 'like1',

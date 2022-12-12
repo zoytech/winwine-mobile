@@ -3,7 +3,6 @@ import {Color, ColorVariant} from 'src/themes';
 
 export default function Divider(props) {
   const {style, ...otherProps} = props;
-  console.log('dividerStyle: ', dividerStyle);
   return <View {...otherProps} style={[...dividerStyle, style]} />;
 }
 

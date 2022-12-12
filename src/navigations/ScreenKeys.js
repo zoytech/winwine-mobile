@@ -2,9 +2,11 @@ const ScreenKeys = {
   ROOT: 'ROOT',
   HOME: 'HOME',
   BLANK: 'BLANK',
+  LIBRARY: 'LIBRARY',
 
   HOME_STACK: 'HomeStackScreen',
   BLANK_STACK: 'BlankStackScreen',
+  LIBRARY_STACK: 'LibraryStackScreen',
 
   PLAY_GAME: 'GAME/PLAY',
   WAIT_GAME: 'GAME/WAIT',

@@ -2,7 +2,7 @@ import React, {forwardRef, useImperativeHandle, useRef, useState} from 'react';
 import {Animated, StyleSheet, Text, View} from 'react-native';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {BaseAvatarButton, StandardIconButton} from 'src/components';
-import {defaultOf, heightOf} from 'src/constants';
+import {heightOf} from 'src/constants';
 
 const CONFIG_VALUE = 100;
 const standardHeight = heightOf?.MIN_HEADER;
