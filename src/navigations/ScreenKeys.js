@@ -2,6 +2,7 @@ const ScreenKeys = {
   ROOT: 'ROOT',
   HOME: 'HOME',
   BLANK: 'BLANK',
+  AUTHENTICATION: 'AUTHENTICATION',
 
   HOME_STACK: 'HomeStackScreen',
   BLANK_STACK: 'BlankStackScreen',
