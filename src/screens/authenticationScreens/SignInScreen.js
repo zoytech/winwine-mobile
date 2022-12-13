@@ -14,6 +14,7 @@ import {
 import {useEffect, useState} from 'react';
 import {FilledButton} from 'src/components';
 import {authentication, widthOf} from 'src/constants';
+import {FaceBookButton} from './components';
 
 export default function SignInScreen() {
   const [gettingLoginStatus, setGettingLoginStatus] = useState(false);
@@ -137,6 +138,9 @@ export default function SignInScreen() {
               {renderSignoutButton()}
             </View>
           </View>
+          <View style={styles.sectionContainer}>
+            <FaceBookButton />
+          </View>
         </ScrollView>
       </SafeAreaView>
     );
@@ -156,6 +160,7 @@ const styles = StyleSheet.create({
   },
   sectionContainer: {
     backgroundColor: 'coral',
+    height: 200,
   },
   buttonContainer: {
     backgroundColor: 'gold',
