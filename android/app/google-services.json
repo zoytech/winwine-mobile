@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "121361459683",
+    "project_id": "winwinemobile",
+    "storage_bucket": "winwinemobile.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:121361459683:android:27476c5a07b1a78b5f18d6",
+        "android_client_info": {
+          "package_name": "com.winwinemobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "121361459683-q783h0apv0p6l44h1kh6t2uhka28909j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.winwinemobile",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "121361459683-m0h3biqbqvji8a9fq6f09p9pjeh0fe96.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyActCPdsQfLkiwBNQU1R9eM4k1tqLfjk4c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "121361459683-m0h3biqbqvji8a9fq6f09p9pjeh0fe96.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

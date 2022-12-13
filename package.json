@@ -11,6 +11,8 @@
     "postinstall": "rndebugger-open"
   },
   "dependencies": {
+    "@react-native-firebase/app": "^16.4.6",
+    "@react-native-firebase/auth": "^16.4.6",
     "@react-navigation/bottom-tabs": "^6.5.0",
     "@react-navigation/material-bottom-tabs": "^6.2.8",
     "@react-navigation/native": "^6.0.13",
