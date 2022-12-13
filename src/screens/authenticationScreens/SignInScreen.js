@@ -1,8 +1,7 @@
 import {
-  Button,
+  ActivityIndicator,
   SafeAreaView,
   ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
   View,
@@ -12,35 +11,60 @@ import {
   GoogleSigninButton,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
-import auth from '@react-native-firebase/auth';
 import {useEffect, useState} from 'react';
-import {FilledButton} from '../../components';
+import {FilledButton} from 'src/components';
+import {authentication, widthOf} from 'src/constants';
 
 export default function SignInScreen() {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [gettingLoginStatus, setGettingLoginStatus] = useState(false);
   const [userInfo, setUserInfo] = useState([]);
   const {Size, Color} = GoogleSigninButton;
 
   useEffect(() => {
     GoogleSignin.configure({
-      scopes: ['email'], // what API you want to access on behalf of the user, default is email and profile
-      webClientId:
-        '418977770929-g9ou7r9eva1u78a3anassxxxxxxx.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
-      offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
+      scopes: ['email'],
+      webClientId: authentication?.WEB_CLIENT_ID,
+      offlineAccess: true,
     });
+    isSignedInCheck();
   }, []);
+
+  async function isSignedInCheck() {
+    const isSignedIn = await GoogleSignin.isSignedIn();
+    if (isSignedIn) {
+      alert('User is already signed in');
+      // Set User Info if user is already signed in
+      getCurrentUserInfo();
+    } else {
+      console.log('Please Login');
+    }
+    setGettingLoginStatus(false);
+  }
+
+  async function getCurrentUserInfo() {
+    try {
+      let info = await GoogleSignin.signInSilently();
+      console.log('User Info --> ', info);
+      setUserInfo(info);
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_REQUIRED) {
+        alert('User has not signed in yet');
+        console.log('User has not signed in yet');
+      } else {
+        alert("Unable to get user's info");
+        console.log("Unable to get user's info");
+      }
+    }
+  }
 
   async function handleGoogleSigninPressed() {
     try {
       await GoogleSignin.hasPlayServices();
-      const {accessToken, idToken} = await GoogleSignin.signIn();
-      setLoggedIn(true);
-      const credential = auth.GoogleAuthProvider.credential(
-        idToken,
-        accessToken,
-      );
-      await auth().signInWithCredential(credential);
+      const userData = await GoogleSignin.signIn();
+      console.log('userInfo: ', userData);
+      setUserInfo(userData);
     } catch (error) {
+      console.log('Message', JSON.stringify(error));
       const {SIGN_IN_CANCELLED, IN_PROGRESS, PLAY_SERVICES_NOT_AVAILABLE} =
         statusCodes;
       if (error.code === SIGN_IN_CANCELLED) {
@@ -50,20 +74,21 @@ export default function SignInScreen() {
       } else if (error.code === PLAY_SERVICES_NOT_AVAILABLE) {
         alert('PLAY_SERVICES_NOT_AVAILABLE');
       } else {
-        alert('some other errors');
+        alert(error.message);
       }
     }
   }
 
   async function handleGoogleSignoutPressed() {
+    setGettingLoginStatus(true);
     try {
       await GoogleSignin.revokeAccess();
-      await GoogleSignin.signout();
-      setLoggedIn(false);
+      await GoogleSignin.signOut();
       setUserInfo([]);
     } catch (error) {
       console.log('error from signout: ', error);
     }
+    setGettingLoginStatus(false);
   }
 
   function renderGoogleSigninButton() {
@@ -79,7 +104,7 @@ export default function SignInScreen() {
   function renderSignoutButton() {
     return (
       <>
-        {loggedIn && (
+        {gettingLoginStatus && (
           <FilledButton
             onPress={handleGoogleSignoutPressed}
             content={'Logout'}
@@ -90,29 +115,51 @@ export default function SignInScreen() {
     );
   }
 
-  return (
-    <>
-      <StatusBar barStyle="dark-content" />
+  if (gettingLoginStatus) {
+    return (
+      <View style={styles.container}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
+  } else {
+    return (
       <SafeAreaView>
         <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
+          contentInsetAdjustmentBehavior={'automatic'}
+          style={styles.container}
+          contentContainerStyle={styles.contentContainer}>
           <View style={styles.body}>
             <View style={styles.sectionContainer}>
               {renderGoogleSigninButton()}
             </View>
             <View style={styles.buttonContainer}>
-              {!loggedIn && <Text>You are currently logged out</Text>}
+              {!gettingLoginStatus && <Text>You are currently logged out</Text>}
               {renderSignoutButton()}
             </View>
           </View>
         </ScrollView>
       </SafeAreaView>
-    </>
-  );
+    );
+  }
 }
 
 const styles = StyleSheet.create({
+  container: {
+    width: widthOf?.SCREEN,
+    aspectRatio: 3 / 16,
+    flexDirection: 'column',
+    backgroundColor: 'green',
+  },
+  contentContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  sectionContainer: {
+    backgroundColor: 'coral',
+  },
+  buttonContainer: {
+    backgroundColor: 'gold',
+  },
   button: {
     width: 192,
     height: 48,
