@@ -11,7 +11,7 @@ import {
   GoogleSignin,
   GoogleSigninButton,
   statusCodes,
-} from 'react-native-google-signin';
+} from '@react-native-google-signin/google-signin';
 import {useEffect, useState} from 'react';
 import {FilledButton} from '../../components';
 
