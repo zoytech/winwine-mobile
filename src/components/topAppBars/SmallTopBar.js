@@ -13,7 +13,7 @@ export default function SmallTopBar(props) {
     style,
     contentStyle,
     RightComponents,
-    CenterComponents,
+    BottomComponents,
     ...otherProps
   } = props;
 
@@ -42,12 +42,12 @@ export default function SmallTopBar(props) {
     return RightComponents;
   }
 
-  function renderCenter({centerStyle}) {
+  function renderCenter({bottomContainerStyle}) {
     //Can add more style if needed, not just iconStyle, Example: defaultContentStyle,...
-    if (typeof CenterComponents === 'function') {
-      return CenterComponents({centerStyle});
+    if (typeof BottomComponents === 'function') {
+      return BottomComponents({bottomContainerStyle});
     }
-    return CenterComponents;
+    return BottomComponents;
   }
 
   return (
@@ -70,7 +70,7 @@ export default function SmallTopBar(props) {
           {renderRight({iconStyle: styles.icon})}
         </View>
       </Animated.View>
-      {renderCenter({centerStyle: styles.bottomPart})}
+      {renderCenter({bottomContainerStyle: styles.bottomPart})}
     </Animated.View>
   );
 }

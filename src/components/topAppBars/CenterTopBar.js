@@ -1,10 +1,9 @@
-import React, {forwardRef, useImperativeHandle, useRef, useState} from 'react';
+import React, {forwardRef} from 'react';
 import {Animated, StyleSheet, Text, View} from 'react-native';
 import {Color, ColorVariant, Typography} from 'src/themes';
-import {BaseAvatarButton, StandardIconButton} from 'src/components';
+import {StandardIconButton} from 'src/components';
 import {heightOf} from 'src/constants';
 
-const CONFIG_VALUE = 100;
 const standardHeight = heightOf?.MIN_HEADER;
 
 function CenterTopBar(props, ref) {
@@ -12,63 +11,22 @@ function CenterTopBar(props, ref) {
     content,
     leadingIcon,
     onLeadingIconPress = () => {},
-    trailingIcon,
-    onTrailingIconPress = () => {},
+    onLayoutOfBottomComponent = () => {},
+    RightComponents,
+    children,
     style,
     contentStyle,
     headerTitleStyle,
-    children,
+    componentStyle,
     ...otherProps
   } = props;
-  const reverseStandardHeight = -standardHeight;
-  const scrollYContentOffsetRef = useRef(new Animated.Value(0)).current;
-  const [subHeight, setSubHeight] = useState(0);
-  const totalHeight = subHeight + standardHeight;
-  const scrollDistance = totalHeight - standardHeight + CONFIG_VALUE;
-
-  useImperativeHandle(ref, () => ({
-    onScroll: e => {
-      const offsetY = e.nativeEvent.contentOffset.y;
-      scrollYContentOffsetRef.setValue(offsetY);
-    },
-  }));
 
   const {base: background, onBase: onBackground} =
     Color.light[ColorVariant.background];
-  const topBarAnimation = {
-    height: scrollYContentOffsetRef.interpolate({
-      inputRange: [0, scrollDistance],
-      outputRange: [totalHeight, subHeight],
-      extrapolate: 'clamp',
-    }),
-  };
-  const mainTopBarAnimation = {
-    transform: [
-      {
-        translateY: scrollYContentOffsetRef.interpolate({
-          inputRange: [0, scrollDistance],
-          outputRange: [0, reverseStandardHeight],
-          extrapolate: 'clamp',
-        }),
-      },
-    ],
-  };
-  const subTopBarAnimation = {
-    transform: [
-      {
-        translateY: scrollYContentOffsetRef.interpolate({
-          inputRange: [0, scrollDistance],
-          outputRange: [0, reverseStandardHeight],
-          extrapolate: 'clamp',
-        }),
-      },
-    ],
-  };
 
   const defaultContainerStyle = [
     styles.container,
     {backgroundColor: background},
-    topBarAnimation,
     style,
   ];
 
@@ -77,25 +35,20 @@ function CenterTopBar(props, ref) {
     {color: onBackground},
     contentStyle,
   ];
-  const mainTopBarStyle = [styles.mainTopBar, mainTopBarAnimation];
-  const subTopBarStyle = [styles.mainTopBar, subTopBarAnimation];
+  const defaultHeaderContentStyle = [styles.title, headerTitleStyle];
+  const topBarComponentStyle = [styles.topBarComponent, componentStyle];
 
-  function renderChildren() {
-    const handleOnlayoutOfChild = event => {
-      setSubHeight(event.nativeEvent.layout.height);
-    };
-    return (
-      <Animated.View
-        style={subTopBarStyle}
-        onLayout={event => handleOnlayoutOfChild(event)}>
-        {children}
-      </Animated.View>
-    );
+  function renderRights({iconStyle}) {
+    //Can add more style if needed, not just iconStyle, Example: defaultContentStyle,...
+    if (typeof RightComponents === 'function') {
+      return RightComponents({iconStyle});
+    }
+    return RightComponents;
   }
 
-  return (
-    <Animated.ScrollView {...otherProps} style={defaultContainerStyle}>
-      <Animated.View style={mainTopBarStyle}>
+  function renderLeadingIcon() {
+    return (
+      <>
         {leadingIcon && (
           <View style={styles.targetSize}>
             <StandardIconButton
@@ -105,17 +58,24 @@ function CenterTopBar(props, ref) {
             />
           </View>
         )}
-        <View style={[headerTitleStyle, styles.title]}>
+      </>
+    );
+  }
+
+  return (
+    <Animated.ScrollView {...otherProps} style={defaultContainerStyle}>
+      <Animated.View style={topBarComponentStyle}>
+        {renderLeadingIcon()}
+        <View style={defaultHeaderContentStyle}>
           <Text style={defaultContentStyle}>{content}</Text>
         </View>
-        <BaseAvatarButton
-          avatar={trailingIcon}
-          onPress={onTrailingIconPress}
-          style={styles.targetSize}
-          avatarStyle={styles.avatarIcon}
-        />
+        {renderRights({iconStyle: styles.avatarIcon})}
       </Animated.View>
-      {renderChildren()}
+      <Animated.View
+        style={topBarComponentStyle}
+        onLayout={event => onLayoutOfBottomComponent(event)}>
+        {children}
+      </Animated.View>
     </Animated.ScrollView>
   );
 }
@@ -127,7 +87,7 @@ const styles = StyleSheet.create({
   item: {
     justifyContent: 'flex-start',
   },
-  mainTopBar: {
+  topBarComponent: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
