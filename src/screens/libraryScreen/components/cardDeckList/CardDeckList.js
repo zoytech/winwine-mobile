@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import {defaultOfDeck} from 'src/constants';
-import MiniCardItem from './MiniCardItem';
+import {MiniCardItem} from 'src/screens/components';
 
 export default function CardDeckList(props) {
   const {style, data = [], navigation, ...otherProps} = props;
