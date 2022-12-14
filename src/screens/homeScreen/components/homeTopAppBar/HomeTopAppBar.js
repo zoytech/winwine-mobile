@@ -5,12 +5,13 @@ import {
   useRef,
   useState,
 } from 'react';
-import {Animated, StyleSheet} from 'react-native';
+import {Animated, StyleSheet, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   BaseAvatarButton,
   CenterTopBar,
   SpinnerType1,
+  StandardIconButton,
   withAnimated,
 } from 'src/components';
 import {loadCardDeckList} from 'src/redux/actions';
@@ -111,8 +112,6 @@ function HomeTopAppBar(props, ref) {
       style={defaultContainerStyle}
       content={currentPart.greetingContent}
       headerTitleStyle={styles.headerTitle}
-      trailingIcon={defaultOfUser?.AVATAR}
-      onTrailingIconPress={() => alert('test leading button')}
       RightComponents={renderRightComponents}
       componentStyle={topBarComponentAnimation}
       onLayoutOfBottomComponent={handleOnlayoutOfChild}>

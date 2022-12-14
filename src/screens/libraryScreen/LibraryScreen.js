@@ -38,7 +38,6 @@ export default function LibraryScreen({navigation}) {
       <ScrollView
         onScroll={topBarRef.current?.onScroll}
         contentContainerStyle={styles.contentContainer}>
-        <SectionHeader content={'Library'} style={styles.sectionHeader} />
         <CardDeckList data={cardDeckList2} navigation={navigation} />
       </ScrollView>
     </SafeAreaView>

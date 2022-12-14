@@ -9,7 +9,7 @@ const chipId = {
   TIPSY: 'Tới bến',
 };
 
-export default function TagChipSection(props) {
+export default function TagChipList(props) {
   const {style, data, navigation, route, ...otherProps} = props;
   const [selectedChip, setSelectedChip] = useState(true);
 

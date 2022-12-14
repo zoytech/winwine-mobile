@@ -1,4 +1,4 @@
 import CardDeckList from './cardDeckList';
-import {LibraryTopAppBar, TagChipSection} from './libraryTopAppBar';
+import LibraryTopAppBar from './libraryTopAppBar';
 
-export {LibraryTopAppBar, CardDeckList, TagChipSection};
+export {LibraryTopAppBar, CardDeckList};

@@ -1,16 +1,14 @@
-import React, {forwardRef} from 'react';
+import React from 'react';
 import {Animated, StyleSheet, Text, View} from 'react-native';
 import {Color, ColorVariant, Typography} from 'src/themes';
-import {StandardIconButton} from 'src/components';
 import {heightOf} from 'src/constants';
 
 const standardHeight = heightOf?.MIN_HEADER;
 
-function CenterTopBar(props, ref) {
+export default function CenterTopBar(props) {
   const {
     content,
-    leadingIcon,
-    onLeadingIconPress = () => {},
+    LeftComponent,
     onLayoutOfBottomComponent = () => {},
     RightComponents,
     children,
@@ -46,26 +44,18 @@ function CenterTopBar(props, ref) {
     return RightComponents;
   }
 
-  function renderLeadingIcon() {
-    return (
-      <>
-        {leadingIcon && (
-          <View style={styles.targetSize}>
-            <StandardIconButton
-              name={leadingIcon}
-              onPress={onLeadingIconPress}
-              style={styles.icon}
-            />
-          </View>
-        )}
-      </>
-    );
+  function renderLeft({iconStyle}) {
+    //Can add more style if needed, not just iconStyle, Example: defaultContentStyle,...
+    if (typeof LeftComponent === 'function') {
+      return LeftComponent({iconStyle});
+    }
+    return LeftComponent;
   }
 
   return (
     <Animated.ScrollView {...otherProps} style={defaultContainerStyle}>
       <Animated.View style={topBarComponentStyle}>
-        {renderLeadingIcon()}
+        {renderLeft({iconStyle: styles.avatarIcon})}
         <View style={defaultHeaderContentStyle}>
           <Text style={defaultContentStyle}>{content}</Text>
         </View>
@@ -108,5 +98,3 @@ const styles = StyleSheet.create({
     height: 30,
   },
 });
-
-export default forwardRef(CenterTopBar);
