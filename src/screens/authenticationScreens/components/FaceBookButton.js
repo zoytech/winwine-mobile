@@ -1,5 +1,4 @@
 import React from 'react';
-import {View} from 'react-native';
 import {
   AccessToken,
   LoginButton,
@@ -8,50 +7,51 @@ import {
 } from 'react-native-fbsdk-next';
 
 export default function FaceBookButton() {
-  LoginManager.logInWithPermissions(['public_profile']).then(
-    function (result) {
-      if (result.isCancelled) {
+  const loginWithPermissions = LoginManager.logInWithPermissions;
+  const getCurrentProfile = Profile.getCurrentProfile;
+  const getCurrentAccessToken = AccessToken.getCurrentAccessToken;
+
+  loginWithPermissions(['public_profile']).then(
+    result => {
+      const {isCancelled, grantedPermissions} = result;
+      if (isCancelled) {
         console.log('Login cancelled');
       } else {
         console.log(
-          'Login success with permissions: ' +
-            result.grantedPermissions.toString(),
+          'Login success with permissions: ',
+          grantedPermissions.toString(),
         );
       }
     },
-    function (error) {
+    error => {
       console.log('Login fail with error: ' + error);
     },
   );
-  const currentProfile = Profile.getCurrentProfile().then(function (
-    currentProfile,
-  ) {
-    if (currentProfile) {
+  const currentProfile = getCurrentProfile().then(profile => {
+    if (profile) {
       console.log(
-        'The current logged user is: ' +
-          currentProfile.name +
-          '. His profile id is: ' +
-          currentProfile.userID,
+        `The current logged user is: ${profile.name}. His profile id is: ${profile.userID}`,
       );
     }
   });
   console.log(currentProfile);
+
+  function handleLoginFinished(error, result) {
+    if (error) {
+      console.log('login has error: ' + result.error);
+    } else if (result.isCancelled) {
+      console.log('login is cancelled.');
+    } else {
+      getCurrentAccessToken().then(data => {
+        console.log(data.accessToken.toString());
+      });
+    }
+  }
+
   return (
-    <View>
-      <LoginButton
-        onLoginFinished={(error, result) => {
-          if (error) {
-            console.log('login has error: ' + result.error);
-          } else if (result.isCancelled) {
-            console.log('login is cancelled.');
-          } else {
-            AccessToken.getCurrentAccessToken().then(data => {
-              console.log(data.accessToken.toString());
-            });
-          }
-        }}
-        onLogoutFinished={() => console.log('logout.')}
-      />
-    </View>
+    <LoginButton
+      onLoginFinished={handleLoginFinished}
+      onLogoutFinished={() => console.log('logout.')}
+    />
   );
 }

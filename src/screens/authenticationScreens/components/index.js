@@ -1,3 +1,4 @@
 import FaceBookButton from './FaceBookButton';
+import GoogleButton from './GoogleButton';
 
-export {FaceBookButton};
+export {FaceBookButton, GoogleButton};
