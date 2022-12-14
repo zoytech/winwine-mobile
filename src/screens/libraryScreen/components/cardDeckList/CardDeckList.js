@@ -8,7 +8,7 @@ export default function CardDeckList(props) {
   const {style, data = [], navigation, ...otherProps} = props;
   const {TITLE, IMAGE} = defaultOfDeck;
 
-  const handleImageAreaPress = ({cardDeckId, cardDeckName, cardDeckImage}) => {
+  const handlePlayPress = ({cardDeckId, cardDeckName, cardDeckImage}) => {
     navigation.navigate({
       name: ScreenKeys.PLAY_GAME,
       params: {
@@ -18,7 +18,7 @@ export default function CardDeckList(props) {
       },
     });
   };
-  const handleButtonPress = ({cardDeckId, cardDeckName, cardDeckImage}) => {
+  const handlePreviewPress = ({cardDeckId, cardDeckName, cardDeckImage}) => {
     navigation.navigate({
       name: ScreenKeys.WAIT_GAME,
       params: {
@@ -36,8 +36,8 @@ export default function CardDeckList(props) {
         {...otherProps}
         key={cardDeckId}
         data={item}
-        onImageAreaPress={() => handleImageAreaPress(item)}
-        onButtonPress={() => handleButtonPress(item)}
+        onPreviewPress={() => handlePreviewPress(item)}
+        onPlayPress={() => handlePlayPress(item)}
       />
     );
   }
