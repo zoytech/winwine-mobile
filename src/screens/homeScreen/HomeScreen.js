@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
   contentContainer: {
     paddingHorizontal: 16,
     justifyContent: 'center',
+    paddingBottom: 70,
   },
   sectionHeader: {
     justifyContent: 'flex-start',

@@ -6,8 +6,8 @@ import hideBottomTabBarMethod from './hideBottomTabBarMethod';
 import {
   GamePlayTopAppBar,
   GameWaitTopAppBar,
+  LibraryTopAppBar,
 } from 'src/screens/headerComponents';
-import {LibraryTopAppBar} from 'src/screens/libraryScreen/components';
 
 const LibraryStack = createNativeStackNavigator();
 export default function LibraryStackScreen({navigation, route}) {

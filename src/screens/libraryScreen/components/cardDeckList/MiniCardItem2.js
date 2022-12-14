@@ -1,13 +1,9 @@
 import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
-import {OutlinedCard, StandardIconButton} from 'src/components';
+import {FilledButton, OutlinedCard} from 'src/components';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {defaultOfDeck, widthOf} from 'src/constants';
 
-const IconByTagName = {
-  '18+': 'tag',
-};
-
-export default function MiniCardItem(props) {
+export default function MiniCardItem2(props) {
   const {
     data,
     style,
@@ -15,47 +11,14 @@ export default function MiniCardItem(props) {
     onButtonPress = () => {},
   } = props;
 
-  const {cardDeck, tag, uri} = data || {};
-  const deckTitle = cardDeck ? cardDeck : defaultOfDeck?.TITLE;
-  const deckTag = tag ? tag : defaultOfDeck?.TAG;
-  const deckImage = uri ? {uri: uri} : defaultOfDeck?.IMAGE;
-  const iconName = IconByTagName[deckTag];
-
+  const {cardDeckName, cardDeckImage, cardDeckTag} = data || {};
+  const deckName = cardDeckName ? cardDeckName : defaultOfDeck?.TITLE;
+  const deckTag = cardDeckTag ? cardDeckTag : defaultOfDeck?.TAG;
+  const deckImage = cardDeckImage ? {uri: cardDeckImage} : defaultOfDeck?.IMAGE;
   const textColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
-  const titleStyle = [styles.title, Typography.label.large, {color: textColor}];
 
   function getContainerStyle({pressed}) {
     return pressed && styles.opacityPressed;
-  }
-
-  function renderMainContent() {
-    return (
-      <>
-        {deckTitle && (
-          <Text style={titleStyle} numberOfLines={1} ellipsizeMode={'tail'}>
-            {deckTitle}
-          </Text>
-        )}
-        <Text>{deckTag}</Text>
-      </>
-    );
-  }
-
-  function renderActionComponents() {
-    return (
-      <>
-        <StandardIconButton
-          style={[styles.pressArea, {borderRightWidth: 0.5}]}
-          name={'eyeo'}
-          onPress={onButtonPress}
-        />
-        <StandardIconButton
-          style={styles.pressArea}
-          name={'play'}
-          onPress={onImageAreaPress}
-        />
-      </>
-    );
   }
 
   return (
@@ -64,16 +27,33 @@ export default function MiniCardItem(props) {
         <View style={styles.media}>
           <Image source={deckImage} style={styles.image} />
         </View>
-        <View style={styles.headline}>{renderMainContent()}</View>
+        <View style={styles.headline}>
+          <Text
+            style={[Typography.label.large, {color: textColor}]}
+            numberOfLines={1}
+            ellipsizeMode={'tail'}>
+            {deckName}
+          </Text>
+          <Text>{deckTag}</Text>
+        </View>
+        <View style={styles.action}>
+          <FilledButton
+            content={'Xem trước'}
+            contentStyle={Typography.label.large}
+            style={styles.button}
+            onPress={onButtonPress}
+            hitSlop={30}
+            // disabled={true}
+          />
+        </View>
       </Pressable>
-      <View style={styles.action}>{renderActionComponents()}</View>
     </OutlinedCard>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    width: widthOf?.SCREEN * 0.37,
+    width: widthOf?.SCREEN * 0.35,
     aspectRatio: 0.67,
     overflow: 'hidden',
     marginBottom: 16,
@@ -99,23 +79,29 @@ const styles = StyleSheet.create({
   action: {
     width: '100%',
     aspectRatio: 3,
-    flexDirection: 'row',
-    borderTopWidth: 0.5,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  pressArea: {
-    width: '50%',
-    height: '100%',
-    borderRadius: 0,
+  button: {
+    width: '70%',
+    aspectRatio: 3,
+    borderRadius: 20,
+    paddingVertical: 0,
+    paddingHorizontal: 0,
+  },
+  iconContainer: {
+    minWidth: '50%',
+    minHeight: 30,
+    paddingHorizontal: 0,
+    paddingVertical: 0,
+    borderRadius: 16,
   },
   icon: {
-    size: 24,
+    size: 16,
   },
   opacityPressed: {
     opacity: 0.75,
     color: Color.light[ColorVariant.primary]?.base,
-  },
-  title: {
-    fontWeight: 'bold',
   },
 });
 

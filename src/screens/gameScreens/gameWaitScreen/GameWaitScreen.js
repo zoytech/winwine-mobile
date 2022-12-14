@@ -175,7 +175,6 @@ function GameWaitScreen({navigation, route}) {
 
   function handleOnLayoutImage(event) {
     setImageHeight(event.nativeEvent.layout.height);
-    console.log('imageHeight: ', imageHeight);
   }
 
   if (requesting) {

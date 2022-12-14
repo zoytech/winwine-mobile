@@ -13,15 +13,15 @@ export default function TagChipList(props) {
   const {style, data, navigation, route, ...otherProps} = props;
   const [selectedChip, setSelectedChip] = useState(true);
 
-  function renderItem({item, index}) {
-    console.log('content: ', item);
+  function renderItem({item}) {
+    const {tagChipId: id, tagChipContent: content} = item || {};
     return (
       <SuggestionChip
         {...otherProps}
-        key={index}
-        content={item}
+        key={id}
+        content={content}
         style={styles.chip}
-        selected={index === selectedChip}
+        selected={id === selectedChip}
         hasTrailingIcon={true}
         // icon={'github'}
         // image={avatarTest}

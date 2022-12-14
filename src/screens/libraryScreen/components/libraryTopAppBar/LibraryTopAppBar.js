@@ -13,7 +13,24 @@ const AnimatedCenterTopBar = withAnimated(CenterTopBar);
 const CONFIG_VALUE = 100;
 const standardHeight = heightOf?.MIN_HEADER;
 const MAIN_TITLE = 'Thư viện của tôi';
-const tagChipData = ['18+', 'Bạn thân', 'Mới quen', 'Tới bến'];
+const tagChipData = [
+  {
+    tagChipId: 'TC1', //id do backend return
+    tagChipContent: '18+',
+  },
+  {
+    tagChipId: 'TC2',
+    tagChipContent: 'Bạn thân',
+  },
+  {
+    tagChipId: 'TC3',
+    tagChipContent: 'Mới quen',
+  },
+  {
+    tagChipId: 'TC4',
+    tagChipContent: 'Tới bến',
+  },
+];
 
 function LibraryTopAppBar(props, ref) {
   const {navigation, style, ...otherProps} = props;

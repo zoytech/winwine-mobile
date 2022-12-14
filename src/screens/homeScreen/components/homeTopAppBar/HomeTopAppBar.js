@@ -33,7 +33,6 @@ function HomeTopAppBar(props, ref) {
   const cardDeckList = useSelector(cardDeckListSelector);
   const requesting = useSelector(requestingDeckListSelector);
   const suggestData = cardDeckList?.suggestData;
-  console.log('suggestData: ', suggestData);
   const {currentPart} = usePartOfDay();
 
   const reverseStandardHeight = -standardHeight;
