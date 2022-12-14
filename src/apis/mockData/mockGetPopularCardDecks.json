@@ -3,7 +3,7 @@
     {
       "cardDeckId": 1,
       "cardDeck": "Package cua Toi",
-      "tag": "18+",
+      "tag": "Tới bến",
       "uri": "https://picsum.photos/id/1011/200",
       "numberOfTasks": 10
     },
@@ -17,7 +17,7 @@
     {
       "cardDeckId": 3,
       "cardDeck": "Mua yeu dau",
-      "tag": "18+",
+      "tag": "Mới quen",
       "uri": "https://picsum.photos/id/1013/200",
       "numberOfTasks": 10
     },
@@ -38,14 +38,14 @@
     {
       "cardDeckId": 6,
       "cardDeck": "Múi sầu riêng tên H",
-      "tag": "Công sở",
+      "tag": "Bạn thân",
       "uri": "https://picsum.photos/id/1016/200",
       "numberOfTasks": 10
     },
     {
       "cardDeckId": 7,
       "cardDeck": "Package cua Toi",
-      "tag": "18+",
+      "tag": "Mới quen",
       "uri": "https://picsum.photos/id/1011/200",
       "numberOfTasks": 10
     },
@@ -59,7 +59,7 @@
     {
       "cardDeckId": 9,
       "cardDeck": "Mua yeu dau",
-      "tag": "18+",
+      "tag": "Bạn thân",
       "uri": "https://picsum.photos/id/1013/200",
       "numberOfTasks": 10
     },
@@ -73,7 +73,7 @@
     {
       "cardDeckId": 11,
       "cardDeck": "Package card deck",
-      "tag": "18+",
+      "tag": "Tới bến",
       "uri": "https://picsum.photos/id/1016/200",
       "numberOfTasks": 10
     },
