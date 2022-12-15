@@ -3,42 +3,42 @@
     {
       "cardDeckId": 3,
       "cardDeck": "Mua yeu dau",
-      "tag": "Mới quen",
+      "tag": "HTC2",
       "uri": "https://picsum.photos/id/1013/200",
       "numberOfTasks": 10
     },
     {
       "cardDeckId": 1,
       "cardDeck": "Package cua Toi",
-      "tag": "Tới bến",
+      "tag": "HTC1",
       "uri": "https://picsum.photos/id/1011/200",
       "numberOfTasks": 10
     },
     {
       "cardDeckId": 2,
       "cardDeck": "Package cua anh Nam",
-      "tag": "18+",
+      "tag": "HTC1",
       "uri": "https://picsum.photos/id/1012/200",
       "numberOfTasks": 10
     },
     {
       "cardDeckId": 4,
       "cardDeck": "Package ABC",
-      "tag": "Thân quen",
+      "tag": "HTC3",
       "uri": "https://picsum.photos/id/1015/200",
       "numberOfTasks": 10
     },
     {
       "cardDeckId": 5,
       "cardDeck": "Package card deck",
-      "tag": "18+",
+      "tag": "HTC4",
       "uri": "https://picsum.photos/id/1016/200",
       "numberOfTasks": 10
     },
     {
       "cardDeckId": 6,
       "cardDeck": "Múi sầu riêng tên H",
-      "tag": "Bạn thân",
+      "tag": "HTC4",
       "uri": "https://picsum.photos/id/1016/200",
       "numberOfTasks": 10
     }
