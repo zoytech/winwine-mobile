@@ -1,8 +1,8 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
-import {MiniCardItem} from 'src/screens/components';
 import {defaultOfDeck} from 'src/constants';
+import MiniCardItem from './MiniCardItem';
 
 export default function VerticalCardList(props) {
   const {style, data, navigation, ...otherProps} = props;

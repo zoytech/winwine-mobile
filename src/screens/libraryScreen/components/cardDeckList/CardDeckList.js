@@ -1,12 +1,30 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import {defaultOfDeck} from 'src/constants';
-import {MiniCardItem} from 'src/screens/components';
+import MiniCardItem from './MiniCardItem';
 
 export default function CardDeckList(props) {
-  const {style, data = [], navigation, ...otherProps} = props;
+  const {
+    style,
+    data = [],
+    prevSelectedChip,
+    chipId,
+    navigation,
+    ...otherProps
+  } = props;
+  const [sortByTagData, setSorByTagData] = useState(data);
+  const [selected, setSelected] = useState(false);
+
   const {TITLE, IMAGE} = defaultOfDeck;
+  useEffect(() => {
+    if (chipId === null) {
+      setSorByTagData(data);
+    } else {
+      const newData = data.filter(item => item?.tag === chipId);
+      setSorByTagData(newData);
+    }
+  }, [chipId]);
 
   const handlePlayPress = ({cardDeckId, cardDeckName, cardDeckImage}) => {
     navigation.navigate({
@@ -44,7 +62,7 @@ export default function CardDeckList(props) {
 
   return (
     <View style={[styles.container, style]}>
-      {data && data.map(item => renderItem(item))}
+      {sortByTagData && sortByTagData.map(item => renderItem(item))}
     </View>
   );
 }

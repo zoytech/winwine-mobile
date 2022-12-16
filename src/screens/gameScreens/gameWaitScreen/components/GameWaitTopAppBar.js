@@ -4,7 +4,7 @@ import {SmallTopBar, withAnimated} from 'src/components';
 import {heightOf} from 'src/constants';
 
 const SmallTopBarAnimated = withAnimated(SmallTopBar);
-const CONFIG_VALUE = 50;
+const CONFIG_VALUE = 100;
 
 function GameWaitTopAppBar(props, ref) {
   const {

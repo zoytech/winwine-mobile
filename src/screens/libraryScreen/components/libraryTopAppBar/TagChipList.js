@@ -1,28 +1,39 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
 import {SuggestionChip} from 'src/components';
 
-const chipId = {
-  ADULT: '18+',
-  BUDDY: 'Bạn thân',
-  NEW_MEETING: 'Mới quen',
-  TIPSY: 'Tới bến',
-};
-
 export default function TagChipList(props) {
-  const {style, data, navigation, route, ...otherProps} = props;
-  const [selectedChip, setSelectedChip] = useState(true);
+  const {
+    navigation,
+    route,
+    data,
+    chipId,
+    style,
+    onSortingListByChipId = () => {},
+    ...otherProps
+  } = props;
+  const [selectedChip, setSelectedChip] = useState(null);
+
+  function handleSortingListByChipId(tagId) {
+    onSortingListByChipId(tagId);
+    if (tagId === selectedChip) {
+      setSelectedChip(null);
+    } else {
+      setSelectedChip(tagId);
+    }
+  }
 
   function renderItem({item}) {
-    const {tagChipId: id, tagChipContent: content} = item || {};
+    const {tagChipId: tagChipId, tagChipContent: content} = item || {};
     return (
       <SuggestionChip
         {...otherProps}
-        key={id}
+        key={tagChipId}
         content={content}
         style={styles.chip}
-        selected={id === selectedChip}
         hasTrailingIcon={true}
+        selected={selectedChip === tagChipId}
+        onPress={() => handleSortingListByChipId(tagChipId)}
         // icon={'github'}
         // image={avatarTest}
       />
