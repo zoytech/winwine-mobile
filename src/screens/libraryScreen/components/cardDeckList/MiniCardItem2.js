@@ -9,6 +9,7 @@ export default function MiniCardItem2(props) {
     style,
     onPreviewPress = () => {},
     onPlayPress = () => {},
+    onLongPress = () => {},
   } = props;
 
   const {cardDeckName, cardDeckImage, cardDeckTag} = data || {};
@@ -54,7 +55,10 @@ export default function MiniCardItem2(props) {
 
   return (
     <OutlinedCard style={[styles.container, style]}>
-      <Pressable style={getContainerStyle} onPress={onPlayPress}>
+      <Pressable
+        style={getContainerStyle}
+        onPress={onPlayPress}
+        onLongPress={onLongPress}>
         <View style={styles.media}>
           <Image source={deckImage} style={styles.image} />
         </View>

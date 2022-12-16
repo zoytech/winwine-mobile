@@ -53,6 +53,7 @@ export default function StandardIconToggle(props) {
     selectedName,
     disabled,
     children,
+    onButtonToggle = () => {},
     ...otherProps
   } = props;
   const [selected, setSelected] = useState(false);
@@ -71,6 +72,7 @@ export default function StandardIconToggle(props) {
 
   function handleButtonToggle() {
     setSelected(!selected);
+    onButtonToggle();
   }
 
   function renderContent({pressed}) {

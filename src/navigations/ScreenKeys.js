@@ -3,6 +3,7 @@ const ScreenKeys = {
   HOME: 'HOME',
   BLANK: 'BLANK',
   LIBRARY: 'LIBRARY',
+  ACTION: 'ACTION',
 
   HOME_STACK: 'HomeStackScreen',
   BLANK_STACK: 'BlankStackScreen',
@@ -14,6 +15,9 @@ const ScreenKeys = {
   BASIC_DIALOG: 'DIALOG/BASIC',
   CARD_DIALOG: 'DIALOG/CARD',
   MAIN_DIALOG: 'DIALOG/MAIN',
+
+  DECK_ACTION: 'ACTION/DECK',
+  CREATE_ACTION: 'CREATE/ACTION',
 };
 
 export {ScreenKeys};

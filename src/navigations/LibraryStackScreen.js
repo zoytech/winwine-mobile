@@ -8,11 +8,17 @@ import {
   GameWaitTopAppBar,
   LibraryTopAppBar,
 } from 'src/screens/headerComponents';
+import {CreateActionScreen, DeckActionScreen} from '../screens/actionScreens';
 
 const LibraryStack = createNativeStackNavigator();
 export default function LibraryStackScreen({navigation, route}) {
   useLayoutEffect(() => {
-    const tabHiddenRoutes = [ScreenKeys.PLAY_GAME, ScreenKeys.WAIT_GAME];
+    const tabHiddenRoutes = [
+      ScreenKeys.PLAY_GAME,
+      ScreenKeys.WAIT_GAME,
+      ScreenKeys.CREATE_ACTION,
+      ScreenKeys.DECK_ACTION,
+    ];
     hideBottomTabBarMethod({navigation, route, tabHiddenRoutes});
   }, [navigation, route]);
 
@@ -44,6 +50,16 @@ export default function LibraryStackScreen({navigation, route}) {
           options={{
             header: () => <GamePlayTopAppBar />,
           }}
+        />
+      </LibraryStack.Group>
+      <LibraryStack.Group screenOptions={modalScreenProps}>
+        <LibraryStack.Screen
+          name={ScreenKeys.DECK_ACTION}
+          component={DeckActionScreen}
+        />
+        <LibraryStack.Screen
+          name={ScreenKeys.CREATE_ACTION}
+          component={CreateActionScreen}
         />
       </LibraryStack.Group>
     </LibraryStack.Navigator>

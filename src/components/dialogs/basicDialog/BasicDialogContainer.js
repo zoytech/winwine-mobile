@@ -1,7 +1,6 @@
-import {Dimensions, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {StateLayers, StateLayersVariant} from 'src/themes';
-
-const screenWidth = Dimensions.get('screen').width;
+import {widthOf} from 'src/constants';
 
 function BasicDialogContainer(props) {
   const {layoutStyle, children, ...otherProps} = props;
@@ -23,7 +22,7 @@ export default BasicDialogContainer;
 
 const styles = StyleSheet.create({
   container: {
-    width: screenWidth,
+    width: widthOf.SCREEN,
     aspectRatio: 9 / 18,
     justifyContent: 'center',
     alignItems: 'center',

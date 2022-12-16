@@ -46,6 +46,11 @@ export default function CardDeckList(props) {
       },
     });
   };
+  const handleNavigateToActionBoard = () => {
+    navigation.navigate({
+      name: ScreenKeys.DECK_ACTION,
+    });
+  };
 
   function renderItem(item) {
     const cardDeckId = item?.cardDeckId;
@@ -56,6 +61,7 @@ export default function CardDeckList(props) {
         data={item}
         onPreviewPress={() => handlePreviewPress(item)}
         onPlayPress={() => handlePlayPress(item)}
+        onLongPress={handleNavigateToActionBoard}
       />
     );
   }

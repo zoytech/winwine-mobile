@@ -25,10 +25,11 @@ export default function LibraryScreen({navigation}) {
   const requesting = useSelector(requestingDeckListSelector);
   const localStorageData = cardDeckList?.recentlyData;
   const [selectedChip, setSelectedChip] = useState(null);
-  console.log('selectedChip: ', selectedChip);
+  const [isChosen, setIsChosen] = useState(false);
+
+  // console.log('selectedChip ben ngoai: ', selectedChip);
 
   const prevSelectedChip = usePrevious(selectedChip);
-  console.log('prevSelectedChip: ', prevSelectedChip);
 
   const rawTagIdData = localStorageData.map(item => item?.tag);
   const tagIdData = rawTagIdData.filter(
@@ -56,12 +57,25 @@ export default function LibraryScreen({navigation}) {
 
   // console.log(selectedChip === prevSelectedChip);
   function handleSortingListByChipId(tagId) {
-    if (tagId === selectedChip) {
-      console.log('alo');
+    // console.log('tagId: ', tagId);
+    // console.log('selectedChip ben trong: ', selectedChip);
+    // console.log('tagId === selectedChip? ', tagId === selectedChip);
+    // if (tagId === selectedChip) {
+    //   setSelectedChip(null);
+    //   console.log('tagId === selectedChip');
+    // } else {
+    //   setSelectedChip(tagId);
+    //   console.log('tagId !== selectedChip');
+    // }
+    console.log('isChosen trong: ', isChosen);
+    if (isChosen) {
       setSelectedChip(null);
+      setIsChosen(!isChosen);
+      console.log('tagId === selectedChip');
     } else {
       setSelectedChip(tagId);
-      console.log('tagId alo');
+      setIsChosen(!isChosen);
+      console.log('tagId !== selectedChip');
     }
   }
 
