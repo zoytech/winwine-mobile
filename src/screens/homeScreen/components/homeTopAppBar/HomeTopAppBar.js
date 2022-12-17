@@ -5,15 +5,9 @@ import {
   useRef,
   useState,
 } from 'react';
-import {Animated, StyleSheet, View} from 'react-native';
+import {Animated, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {
-  BaseAvatarButton,
-  CenterTopBar,
-  SpinnerType1,
-  StandardIconButton,
-  withAnimated,
-} from 'src/components';
+import {BaseAvatarButton, CenterTopBar, SpinnerType1} from 'src/components';
 import {loadCardDeckList} from 'src/redux/actions';
 import {
   cardDeckListSelector,
@@ -22,6 +16,7 @@ import {
 import {defaultOfUser, heightOf} from 'src/constants';
 import {usePartOfDay} from '../usePartOfDay';
 import {SuggestionList} from '../suggestionList';
+import {withAnimated} from 'src/utils';
 
 const CONFIG_VALUE = 100;
 const standardHeight = heightOf?.MIN_HEADER;

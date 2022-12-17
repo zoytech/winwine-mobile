@@ -1,8 +1,8 @@
 import {forwardRef, useImperativeHandle, useRef, useState} from 'react';
 import {Pressable, StyleSheet} from 'react-native';
-import {Carousel} from 'src/components';
 import {defaultOf} from 'src/constants';
 import GameCardItem from './GameCardItem';
+import {Carousel} from 'src/utils';
 
 function SwipeableGameCard2(props, ref) {
   const {

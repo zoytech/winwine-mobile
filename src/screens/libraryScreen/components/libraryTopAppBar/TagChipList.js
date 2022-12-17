@@ -33,7 +33,7 @@ export default function TagChipList(props) {
         style={styles.chip}
         hasTrailingIcon={true}
         selected={selectedChip === tagChipId}
-        onPress={() => handleSortingListByChipId(tagChipId)}
+        onPressOut={() => handleSortingListByChipId(tagChipId)}
         // icon={'github'}
         // image={avatarTest}
       />

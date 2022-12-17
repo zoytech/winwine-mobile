@@ -4,10 +4,10 @@ import {
   BaseAvatarButton,
   CenterTopBar,
   StandardIconButton,
-  withAnimated,
 } from 'src/components';
 import {defaultOfUser, heightOf} from 'src/constants';
 import TagChipList from './TagChipList';
+import {withAnimated} from 'src/utils';
 
 const AnimatedCenterTopBar = withAnimated(CenterTopBar);
 const CONFIG_VALUE = 100;
