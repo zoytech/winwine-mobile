@@ -12,7 +12,6 @@ import {SpinnerType1} from 'src/components';
 import {CardDeckList, LibraryTopAppBar} from './components';
 import loadCardDeckList2 from 'src/redux/actions/loadCardDeckList2';
 import {loadCardDeckList} from 'src/redux/actions';
-import usePrevious from '../components/usePrevious';
 
 export default function LibraryScreen({navigation}) {
   const topBarRef = useRef({
@@ -23,14 +22,8 @@ export default function LibraryScreen({navigation}) {
   const requesting2 = useSelector(requestingDeckListSelector2);
   const cardDeckList = useSelector(cardDeckListSelector);
   const requesting = useSelector(requestingDeckListSelector);
-  const localStorageData = cardDeckList?.recentlyData;
+  const localStorageData = cardDeckList?.popularData;
   const [selectedChip, setSelectedChip] = useState(null);
-  const [isChosen, setIsChosen] = useState(false);
-
-  // console.log('selectedChip ben ngoai: ', selectedChip);
-
-  const prevSelectedChip = usePrevious(selectedChip);
-
   const rawTagIdData = localStorageData.map(item => item?.tag);
   const tagIdData = rawTagIdData.filter(
     (item, pos) => rawTagIdData.indexOf(item) === pos,
@@ -55,27 +48,11 @@ export default function LibraryScreen({navigation}) {
     },
   ];
 
-  // console.log(selectedChip === prevSelectedChip);
   function handleSortingListByChipId(tagId) {
-    // console.log('tagId: ', tagId);
-    // console.log('selectedChip ben trong: ', selectedChip);
-    // console.log('tagId === selectedChip? ', tagId === selectedChip);
-    // if (tagId === selectedChip) {
-    //   setSelectedChip(null);
-    //   console.log('tagId === selectedChip');
-    // } else {
-    //   setSelectedChip(tagId);
-    //   console.log('tagId !== selectedChip');
-    // }
-    console.log('isChosen trong: ', isChosen);
-    if (isChosen) {
+    if (tagId === selectedChip) {
       setSelectedChip(null);
-      setIsChosen(!isChosen);
-      console.log('tagId === selectedChip');
     } else {
       setSelectedChip(tagId);
-      setIsChosen(!isChosen);
-      console.log('tagId !== selectedChip');
     }
   }
 
@@ -93,14 +70,14 @@ export default function LibraryScreen({navigation}) {
           <LibraryTopAppBar
             navigation={navigation}
             ref={topBarRef}
-            onSortingListByChipId={id => handleSortingListByChipId(id)}
+            onSortingListByChipId={handleSortingListByChipId}
             data={tagChipData}
             chipId={selectedChip}
           />
         );
       },
     });
-  }, [navigation]);
+  }, [navigation, selectedChip]);
 
   if (requesting2 || requesting) {
     return <SpinnerType1 />;
@@ -110,17 +87,12 @@ export default function LibraryScreen({navigation}) {
       <ScrollView
         onScroll={topBarRef.current?.onScroll}
         contentContainerStyle={styles.contentContainer}>
+        <CardDeckList
+          data={localStorageData}
+          navigation={navigation}
+          chipId={selectedChip}
+        />
         <CardDeckList data={cardDeckList2} navigation={navigation} />
-        <CardDeckList
-          data={localStorageData}
-          navigation={navigation}
-          chipId={selectedChip}
-        />
-        <CardDeckList
-          data={localStorageData}
-          navigation={navigation}
-          chipId={selectedChip}
-        />
       </ScrollView>
     </SafeAreaView>
   );
