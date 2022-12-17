@@ -16,6 +16,9 @@ import {
 } from './components';
 import {SectionHeader} from '../components';
 
+const RECENTLY = 'Chơi gần đây';
+const POPULAR = 'Phổ biến';
+
 export default function HomeScreen({navigation}) {
   const topBarRef = useRef({
     onScroll: () => {},
@@ -49,10 +52,14 @@ export default function HomeScreen({navigation}) {
       <ScrollView
         onScroll={topBarRef.current?.onScroll}
         contentContainerStyle={styles.contentContainer}>
-        <SectionHeader content={'Recently'} style={styles.sectionHeader} />
+        <SectionHeader content={RECENTLY} style={styles.sectionHeader} />
         <HorizontalCardList data={recentlyData} navigation={navigation} />
-        <SectionHeader content={'Popular'} style={styles.sectionHeader} />
-        <VerticalCardList data={popularData} navigation={navigation} />
+        <SectionHeader content={POPULAR} style={styles.sectionHeader} />
+        <VerticalCardList
+          data={popularData}
+          navigation={navigation}
+          style={styles.secondView}
+        />
       </ScrollView>
     </SafeAreaView>
   );
@@ -65,9 +72,13 @@ const styles = StyleSheet.create({
     backgroundColor: Color.light[ColorVariant.background].base,
   },
   contentContainer: {
-    paddingHorizontal: 16,
     justifyContent: 'center',
     paddingBottom: 70,
+    paddingLeft: 16,
+  },
+  firstView: {},
+  secondView: {
+    paddingRight: 16,
   },
   sectionHeader: {
     justifyContent: 'flex-start',

@@ -96,7 +96,7 @@ function LibraryTopAppBar(props, ref) {
         data={data}
         navigation={navigation}
         style={styles.suggestion}
-        onSortingListByChipId={id => onSortingListByChipId(id)}
+        onSortingListByChipId={onSortingListByChipId}
         chipId={chipId}
       />
     );
