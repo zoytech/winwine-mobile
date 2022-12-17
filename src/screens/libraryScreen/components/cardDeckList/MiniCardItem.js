@@ -1,7 +1,9 @@
 import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import Icon from 'react-native-vector-icons/AntDesign';
 import {OutlinedCard, StandardIconButton} from 'src/components';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {defaultOfDeck, widthOf} from 'src/constants';
+import {useEffect, useState} from 'react';
 
 const IconByTagName = {
   '18+': 'tag',
@@ -36,8 +38,17 @@ export default function MiniCardItem(props) {
             {deckTitle}
           </Text>
         )}
-        <Text>{deckTag}</Text>
+        <View>
+          <Text>{deckTag}</Text>
+        </View>
       </>
+    );
+  }
+
+  function renderIconFlagComponents(isPinned) {
+    console.log('isPinned: ', isPinned);
+    return (
+      <>{isPinned && <Icon name={'pushpin'} size={16} style={styles.icon} />}</>
     );
   }
 
@@ -111,7 +122,7 @@ const styles = StyleSheet.create({
     borderRadius: 0,
   },
   icon: {
-    size: 24,
+    backgroundColor: 'coral',
   },
   opacityPressed: {
     opacity: 0.75,

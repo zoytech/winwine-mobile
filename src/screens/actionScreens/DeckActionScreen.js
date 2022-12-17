@@ -9,8 +9,8 @@ const actions = {
   PIN: 'Ghim lên đầu',
   LIKE: 'Yêu thích',
 };
-
 export default function DeckActionScreen({navigation, route}) {
+  const {onPinningPress = () => {}} = route.params;
   const [isSaved, setIsSaved] = useState(false);
   const [isStared, setIsStared] = useState(false);
   const [isPinned, setIsPinned] = useState(false);
@@ -30,12 +30,15 @@ export default function DeckActionScreen({navigation, route}) {
   }
 
   function handlePinningPress() {
+    onPinningPress();
     if (isPinned) {
       console.log('will unmount pin method');
       setIsPinned(false);
+      handleGoBackPress();
     } else {
       console.log('will update pin method');
       setIsPinned(true);
+      handleGoBackPress();
     }
   }
 

@@ -1,7 +1,7 @@
 import allSettled from './allSettled';
 import usePrevious from './usePrevious';
 import withAnimated from './withAnimated';
-import pinToTopList from './pinToTopList';
+import insertAndShift from './insertAndShift';
 import Carousel from './Carousel';
 
-export {allSettled, usePrevious, withAnimated, pinToTopList, Carousel};
+export {allSettled, usePrevious, withAnimated, insertAndShift, Carousel};
