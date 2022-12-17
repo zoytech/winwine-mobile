@@ -35,7 +35,7 @@ export default function CardDeckList(props) {
         setSortByTagData(data);
       } else {
         getPinnedData(data, pinnedIndex);
-        setSortByTagData(data);
+        setSortByTagData([...data]);
       }
     } else {
       const newData = data.filter(item => item?.tag === chipId);
@@ -43,10 +43,10 @@ export default function CardDeckList(props) {
         setSortByTagData(newData);
       } else {
         getPinnedData(newData, pinnedIndex);
-        setSortByTagData(newData);
+        setSortByTagData([...newData]);
       }
     }
-  }, [chipId, pinnedIndex, data]);
+  }, [chipId, pinnedIndex]);
 
   function getPinnedData(dt, i) {
     insertAndShift(dt, i, 0);
