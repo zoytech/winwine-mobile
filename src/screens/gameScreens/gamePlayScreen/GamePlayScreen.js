@@ -10,13 +10,7 @@ import {
 import {loadCardDeckById} from 'src/redux/actions';
 import {cardDeckSelector, requestingDeckSelector} from 'src/redux/selectors';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
-import {
-  defaultOf,
-  defaultOfCard,
-  defaultOfDeck,
-  defaultOfUser,
-  widthOf,
-} from 'src/constants';
+import {defaultOf, defaultOfDeck, widthOf} from 'src/constants';
 import {
   CardProgressTrace,
   EndingGameDialog,
