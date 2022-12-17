@@ -75,7 +75,7 @@ export default function CardDialogContent(props) {
   return (
     <OutlinedCard {...otherProps} style={[styles.container, style]}>
       {renderHeaderComponent()}
-      <Image style={styles.media} source={{uri: media}} />
+      <Image style={styles.media} source={media} />
       <View style={styles.supportingText}>
         {supportingText && (
           <Text style={[Typography.title.medium, {color: textColor}]}>
