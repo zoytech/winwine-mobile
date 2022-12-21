@@ -1,9 +1,9 @@
 import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {OutlinedCard, StandardIconButton} from 'src/components';
-import {Color, ColorVariant, Typography} from 'src/themes';
+import {Color, ColorVariant, StateLayersVariant, Typography} from 'src/themes';
 import {defaultOfDeck, widthOf} from 'src/constants';
-import {useEffect, useState} from 'react';
+import {StateLayers} from '../../../../themes';
 
 const IconByTagName = {
   '18+': 'tag',
@@ -12,7 +12,9 @@ const IconByTagName = {
 export default function MiniCardItem(props) {
   const {
     data,
+    pinned,
     style,
+    contentStyle,
     onPreviewPress = () => {},
     onPlayPress = () => {},
     onLongPress = () => {},
@@ -21,16 +23,25 @@ export default function MiniCardItem(props) {
   const deckTitle = cardDeck ? cardDeck : defaultOfDeck?.TITLE;
   const deckTag = tag ? tag : defaultOfDeck?.TAG;
   const deckImage = uri ? {uri: uri} : defaultOfDeck?.IMAGE;
-  const iconName = IconByTagName[deckTag];
 
-  const textColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
-  const titleStyle = [styles.title, Typography.label.large, {color: textColor}];
+  const titleColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
+  const subTittleColor =
+    StateLayers.light[StateLayersVariant.onSurfaceVar]?.level_068;
+  const iconColor = Color.light[ColorVariant.primary]?.base;
+  const defaultContentStyle = [Typography.label.large, contentStyle];
 
   function getContainerStyle({pressed}) {
     return pressed && styles.opacityPressed;
   }
 
   function renderMainContent() {
+    const titleStyle = [defaultContentStyle, {color: titleColor}];
+    const subTitleStyle = [defaultContentStyle, {color: subTittleColor}];
+    const iconProps = {
+      name: 'pushpin',
+      size: 14,
+      color: iconColor,
+    };
     return (
       <>
         {deckTitle && (
@@ -38,17 +49,11 @@ export default function MiniCardItem(props) {
             {deckTitle}
           </Text>
         )}
-        <View>
-          <Text>{deckTag}</Text>
+        <View style={styles.subTitle}>
+          <Text style={subTitleStyle}>{deckTag}</Text>
+          {pinned && <Icon {...iconProps} />}
         </View>
       </>
-    );
-  }
-
-  function renderIconFlagComponents(isPinned) {
-    console.log('isPinned: ', isPinned);
-    return (
-      <>{isPinned && <Icon name={'pushpin'} size={16} style={styles.icon} />}</>
     );
   }
 
@@ -110,6 +115,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 6,
   },
+  subTitle: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
   action: {
     width: '100%',
     aspectRatio: 3,
@@ -121,15 +132,9 @@ const styles = StyleSheet.create({
     height: '100%',
     borderRadius: 0,
   },
-  icon: {
-    backgroundColor: 'coral',
-  },
   opacityPressed: {
     opacity: 0.75,
     color: Color.light[ColorVariant.primary]?.base,
-  },
-  title: {
-    fontWeight: 'bold',
   },
 });
 

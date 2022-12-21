@@ -6,14 +6,16 @@ import {useState} from 'react';
 
 const actions = {
   SAVE: 'Lưu',
-  PIN: 'Ghim lên đầu',
+  PIN: {
+    SET: 'Ghim lên đầu',
+    REMOVE: 'Huỷ ghim',
+  },
   LIKE: 'Yêu thích',
 };
 export default function DeckActionScreen({navigation, route}) {
-  const {onPinningPress = () => {}} = route.params;
+  const {onPinningPress = () => {}, hasPinnedId} = route.params;
   const [isSaved, setIsSaved] = useState(false);
   const [isStared, setIsStared] = useState(false);
-  const [isPinned, setIsPinned] = useState(false);
 
   function handleGoBackPress() {
     navigation.goBack();
@@ -31,15 +33,7 @@ export default function DeckActionScreen({navigation, route}) {
 
   function handlePinningPress() {
     onPinningPress();
-    if (isPinned) {
-      console.log('will unmount pin method');
-      setIsPinned(false);
-      handleGoBackPress();
-    } else {
-      console.log('will update pin method');
-      setIsPinned(true);
-      handleGoBackPress();
-    }
+    handleGoBackPress();
   }
 
   function handleStaringPress() {
@@ -57,6 +51,7 @@ export default function DeckActionScreen({navigation, route}) {
       style: styles.actionItem,
       contentStyle: styles.contentStyle,
     };
+    const pinContent = hasPinnedId ? actions?.PIN.REMOVE : actions?.PIN.SET;
 
     return (
       <>
@@ -69,10 +64,11 @@ export default function DeckActionScreen({navigation, route}) {
         />
         <ActionItem
           {...itemProps}
-          content={actions?.PIN}
+          content={pinContent}
           name={'pushpino'}
           selectedName={'pushpin'}
           onButtonToggle={handlePinningPress}
+          isSelected={hasPinnedId}
         />
         <ActionItem
           {...itemProps}

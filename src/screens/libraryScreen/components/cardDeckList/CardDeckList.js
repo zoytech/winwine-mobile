@@ -3,7 +3,7 @@ import {StyleSheet, View} from 'react-native';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import {defaultOfDeck} from 'src/constants';
 import MiniCardItem from './MiniCardItem';
-import {normalizedBy, removeJustOneItem} from 'src/utils';
+import {removeJustOneItem} from 'src/utils';
 
 function getMarginItem(index) {
   return index % 2 === 0
@@ -26,43 +26,26 @@ export default function CardDeckList(props) {
   } = props;
   const [sortByTagData, setSortByTagData] = useState([]);
   const [pinDeckIds, setPinDeckIds] = useState([]);
-  const [pinId, setPinId] = useState(null);
   const [isPinned, setIsPinned] = useState(false);
   const {TITLE, IMAGE} = defaultOfDeck;
-  /////////////////////////////////
-  // pinDeckIds: co dinh ---- allDeckIds: thay doi theo tag
-  const normalizedSortedData = sortByTagData
-    .map(item => ({...item}))
-    .reduce(normalizedBy('cardDeckId'), {});
-  console.log(
-    'sortByTagData: ',
-    sortByTagData.map(item => item?.cardDeck),
-  );
+
   useEffect(() => {
     if (chipId === null) {
-      if (pinDeckIds === []) {
-        setSortByTagData(data);
-      } else {
-        const pinnedData = getPinnedData(data);
-        setSortByTagData(pinnedData);
-      }
+      pinDeckIds === []
+        ? setSortByTagData(data)
+        : setSortByTagData(getPinnedFirst(data));
     } else {
       const newData = getFilteringDataByTag(data, chipId);
-      if (pinDeckIds === []) {
-        setSortByTagData(newData);
-      } else {
-        const pinnedData = getPinnedData(newData);
-        setSortByTagData(pinnedData);
-      }
+      pinDeckIds === []
+        ? setSortByTagData(newData)
+        : setSortByTagData(getPinnedFirst(newData));
     }
   }, [chipId, pinDeckIds]);
 
-  function getPinnedData(arr) {
+  function getPinnedFirst(arr) {
     return arr.reduce((acc, element) => {
-      if (pinDeckIds.includes(element?.cardDeckId)) {
-        return [element, ...acc];
-      }
-      return [...acc, element];
+      const hasPinId = pinDeckIds.includes(element?.cardDeckId);
+      return hasPinId ? [element, ...acc] : [...acc, element];
     }, []);
   }
 
@@ -81,8 +64,6 @@ export default function CardDeckList(props) {
       setIsPinned(true);
     }
   }
-
-  //pin trước -> pinindex = 3, sau đó khi thay đổi tagName -> data thay đổi -> update pinIndex luôn
 
   const handlePlayPress = ({
     cardDeckId,
@@ -112,14 +93,14 @@ export default function CardDeckList(props) {
       },
     });
   };
-  const handleNavigateToActionBoard = (item, index) => {
-    const deckId = item?.cardDeckId;
+  const handleNavigateToActionBoard = (deckId, hasPinnedId) => {
     navigation.navigate({
       name: ScreenKeys.DECK_ACTION,
       params: {
         onPinningPress: () => {
           handlePinningPress(deckId);
         },
+        hasPinnedId: hasPinnedId,
       },
     });
   };
@@ -127,15 +108,16 @@ export default function CardDeckList(props) {
   function renderItem(item, index) {
     const itemStyle = [styles.item, getMarginItem(index)];
     const deckId = item?.cardDeckId;
+    const hasPinnedId = pinDeckIds.includes(deckId);
     return (
       <MiniCardItem
         {...otherProps}
         key={deckId}
         data={item}
-        pinned={isPinned}
+        pinned={hasPinnedId}
         onPreviewPress={() => handlePreviewPress(item)}
         onPlayPress={() => handlePlayPress(item)}
-        onLongPress={() => handleNavigateToActionBoard(item, index)}
+        onLongPress={() => handleNavigateToActionBoard(deckId, hasPinnedId)}
         style={itemStyle}
       />
     );
@@ -168,12 +150,3 @@ const styles = StyleSheet.create({
     height: 50,
   },
 });
-
-/*
-NORMALIZATION DATA
-
- const normalizedCardDeck = sortByTagData
-    .map(item => item)
-    .reduce(normalizedBy('cardDeckId'), {});
-  const cardDeckList = {byId: normalizedCardDeck, allIds: allDeckIds};
- */
