@@ -161,7 +161,6 @@ const styles = StyleSheet.create({
   iconDisplay: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    backgroundColor: 'gold',
   },
 });
 

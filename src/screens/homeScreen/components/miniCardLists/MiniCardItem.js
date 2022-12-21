@@ -1,6 +1,12 @@
 import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import {OutlinedCard, StandardIconButton} from 'src/components';
-import {Color, ColorVariant, Typography} from 'src/themes';
+import {
+  Color,
+  ColorVariant,
+  StateLayers,
+  StateLayersVariant,
+  Typography,
+} from 'src/themes';
 import {defaultOfDeck, widthOf} from 'src/constants';
 import {useEffect} from 'react';
 
@@ -12,6 +18,7 @@ export default function MiniCardItem(props) {
   const {
     data,
     style,
+    contentStyle,
     onPreviewPress = () => {},
     onPlayPress = () => {},
   } = props;
@@ -19,16 +26,19 @@ export default function MiniCardItem(props) {
   const deckTitle = cardDeck ? cardDeck : defaultOfDeck?.TITLE;
   const deckTag = tag ? tag : defaultOfDeck?.TAG;
   const deckImage = uri ? {uri: uri} : defaultOfDeck?.IMAGE;
-  const iconName = IconByTagName[deckTag];
-
-  const textColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
-  const titleStyle = [styles.title, Typography.label.large, {color: textColor}];
+  const borderColor = Color.light[ColorVariant.outline]?.base;
+  const titleColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
+  const subTittleColor =
+    StateLayers.light[StateLayersVariant.onSurfaceVar]?.level_068;
+  const defaultContentStyle = [Typography.label.large, contentStyle];
 
   function getContainerStyle({pressed}) {
     return pressed && styles.opacityPressed;
   }
 
   function renderMainContent() {
+    const titleStyle = [defaultContentStyle, {color: titleColor}];
+    const subTitleStyle = [defaultContentStyle, {color: subTittleColor}];
     return (
       <>
         {deckTitle && (
@@ -36,7 +46,7 @@ export default function MiniCardItem(props) {
             {deckTitle}
           </Text>
         )}
-        <Text>{deckTag}</Text>
+        <Text style={subTitleStyle}>{deckTag}</Text>
       </>
     );
   }
@@ -66,7 +76,9 @@ export default function MiniCardItem(props) {
         </View>
         <View style={styles.headline}>{renderMainContent()}</View>
       </Pressable>
-      <View style={styles.action}>{renderActionComponents()}</View>
+      <View style={[styles.action, {borderTopColor: borderColor}]}>
+        {renderActionComponents()}
+      </View>
     </OutlinedCard>
   );
 }
