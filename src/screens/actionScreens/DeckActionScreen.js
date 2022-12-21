@@ -5,17 +5,26 @@ import {Color, ColorVariant, Typography} from 'src/themes';
 import {useState} from 'react';
 
 const actions = {
-  SAVE: 'Lưu',
+  SAVE: {
+    REMOVE: 'Huỷ lưu',
+  },
   PIN: {
     SET: 'Ghim lên đầu',
     REMOVE: 'Huỷ ghim',
   },
-  LIKE: 'Yêu thích',
+  LIKE: {
+    SET: 'Yêu thích',
+    REMOVE: 'Huỷ thích',
+  },
 };
 export default function DeckActionScreen({navigation, route}) {
-  const {onPinningPress = () => {}, hasPinnedId} = route.params;
+  const {
+    onPinningPress = () => {},
+    onLikePress = () => {},
+    hasPinnedId,
+    hasLikedId,
+  } = route.params;
   const [isSaved, setIsSaved] = useState(false);
-  const [isStared, setIsStared] = useState(false);
 
   function handleGoBackPress() {
     navigation.goBack();
@@ -37,13 +46,8 @@ export default function DeckActionScreen({navigation, route}) {
   }
 
   function handleStaringPress() {
-    if (isStared) {
-      console.log('will unmount star method');
-      setIsStared(false);
-    } else {
-      console.log('will update star method');
-      setIsStared(true);
-    }
+    onLikePress();
+    handleGoBackPress();
   }
 
   function renderListOfButtons() {
@@ -52,15 +56,16 @@ export default function DeckActionScreen({navigation, route}) {
       contentStyle: styles.contentStyle,
     };
     const pinContent = hasPinnedId ? actions?.PIN.REMOVE : actions?.PIN.SET;
-
+    const likeContent = hasLikedId ? actions?.LIKE.REMOVE : actions?.LIKE.SET;
     return (
       <>
         <ActionItem
           {...itemProps}
-          content={actions?.SAVE}
+          content={actions?.SAVE.REMOVE}
           name={'circledowno'}
           selectedName={'circledown'}
           onButtonToggle={handleSavingPress}
+          isSelected={true}
         />
         <ActionItem
           {...itemProps}
@@ -72,10 +77,11 @@ export default function DeckActionScreen({navigation, route}) {
         />
         <ActionItem
           {...itemProps}
-          content={actions?.LIKE}
+          content={likeContent}
           name={'staro'}
           selectedName={'star'}
           onButtonToggle={handleStaringPress}
+          isSelected={hasLikedId}
         />
       </>
     );

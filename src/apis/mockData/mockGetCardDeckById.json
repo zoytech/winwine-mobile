@@ -2,7 +2,7 @@
   "data": [
     {
       "cardDeckId": 1,
-      "cardDeck": "Package cua Toi",
+      "cardDeck": "Package so 1",
       "tag": "HTC1",
       "uri": "https://picsum.photos/id/1011/200",
       "tasks": [
@@ -129,7 +129,7 @@
     },
     {
       "cardDeckId": 2,
-      "cardDeck": "Package cua anh Nam",
+      "cardDeck": "Package so 2",
       "tag": "HTC2",
       "uri": "https://picsum.photos/id/1012/200",
       "tasks": [
@@ -277,7 +277,7 @@
     },
     {
       "cardDeckId": 3,
-      "cardDeck": "Mua yeu dau",
+      "cardDeck": "Package so 3",
       "tag": "HTC2",
       "uri": "https://picsum.photos/id/1013/200",
       "tasks": [
@@ -390,7 +390,7 @@
     },
     {
       "cardDeckId": 4,
-      "cardDeck": "Package ABC",
+      "cardDeck": "Package so 4",
       "tag": "HTC3",
       "uri": "https://picsum.photos/id/1015/200",
       "tasks": [
@@ -496,7 +496,7 @@
     },
     {
       "cardDeckId": 5,
-      "cardDeck": "Package card deck",
+      "cardDeck": "Package so 5",
       "tag": "HTC4",
       "uri": "https://picsum.photos/id/1016/200",
       "tasks": [
@@ -742,7 +742,7 @@
     },
     {
       "cardDeckId": 6,
-      "cardDeck": "Múi sầu riêng tên H",
+      "cardDeck": "Package so 6",
       "tag": "HTC4",
       "uri": "https://picsum.photos/id/1016/200",
       "tasks": [

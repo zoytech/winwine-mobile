@@ -26,7 +26,7 @@ export default function CardDeckList(props) {
   } = props;
   const [sortByTagData, setSortByTagData] = useState([]);
   const [pinDeckIds, setPinDeckIds] = useState([]);
-  const [isPinned, setIsPinned] = useState(false);
+  const [likedDeckIds, setLikeDeckIds] = useState([]);
   const {TITLE, IMAGE} = defaultOfDeck;
 
   useEffect(() => {
@@ -58,10 +58,18 @@ export default function CardDeckList(props) {
     if (hasPinId) {
       const newData = removeJustOneItem(pinDeckIds, id);
       setPinDeckIds(newData);
-      setIsPinned(false);
     } else {
       setPinDeckIds([...pinDeckIds, id]);
-      setIsPinned(true);
+    }
+  }
+
+  function handleLikePress(id) {
+    const hasLikeId = likedDeckIds && likedDeckIds.includes(id);
+    if (hasLikeId) {
+      const newData = removeJustOneItem(likedDeckIds, id);
+      setLikeDeckIds(newData);
+    } else {
+      setLikeDeckIds([...likedDeckIds, id]);
     }
   }
 
@@ -93,14 +101,14 @@ export default function CardDeckList(props) {
       },
     });
   };
-  const handleNavigateToActionBoard = (deckId, hasPinnedId) => {
+  const handleNavigateToActionBoard = (deckId, hasPinnedId, hasLikedId) => {
     navigation.navigate({
       name: ScreenKeys.DECK_ACTION,
       params: {
-        onPinningPress: () => {
-          handlePinningPress(deckId);
-        },
+        onPinningPress: () => handlePinningPress(deckId),
         hasPinnedId: hasPinnedId,
+        onLikePress: () => handleLikePress(deckId),
+        hasLikedId: hasLikedId,
       },
     });
   };
@@ -109,15 +117,19 @@ export default function CardDeckList(props) {
     const itemStyle = [styles.item, getMarginItem(index)];
     const deckId = item?.cardDeckId;
     const hasPinnedId = pinDeckIds.includes(deckId);
+    const hasLikedId = likedDeckIds.includes(deckId);
     return (
       <MiniCardItem
         {...otherProps}
         key={deckId}
         data={item}
         pinned={hasPinnedId}
+        liked={hasLikedId}
         onPreviewPress={() => handlePreviewPress(item)}
         onPlayPress={() => handlePlayPress(item)}
-        onLongPress={() => handleNavigateToActionBoard(deckId, hasPinnedId)}
+        onLongPress={() =>
+          handleNavigateToActionBoard(deckId, hasPinnedId, hasLikedId)
+        }
         style={itemStyle}
       />
     );
