@@ -12,6 +12,7 @@ import {SpinnerType1} from 'src/components';
 import {CardDeckList, LibraryTopAppBar} from './components';
 import loadCardDeckList2 from 'src/redux/actions/loadCardDeckList2';
 import {loadCardDeckList} from 'src/redux/actions';
+import {removeIdenticalItemInArray} from 'src/utils';
 
 export default function LibraryScreen({navigation}) {
   const topBarRef = useRef({
@@ -25,9 +26,7 @@ export default function LibraryScreen({navigation}) {
   const localStorageData = cardDeckList?.popularData;
   const [selectedChip, setSelectedChip] = useState(null);
   const rawTagIdData = localStorageData.map(item => item?.tag);
-  const tagIdData = rawTagIdData.filter(
-    (item, pos) => rawTagIdData.indexOf(item) === pos,
-  );
+  const tagIdData = removeIdenticalItemInArray(rawTagIdData);
 
   const tagChipData = [
     {
@@ -47,15 +46,6 @@ export default function LibraryScreen({navigation}) {
       tagChipContent: 'Tới bến',
     },
   ];
-
-  function handleSortingListByChipId(tagId) {
-    if (tagId === selectedChip) {
-      setSelectedChip(null);
-    } else {
-      setSelectedChip(tagId);
-    }
-  }
-
   useEffect(() => {
     dispatch(loadCardDeckList2());
   }, [dispatch]);
@@ -79,6 +69,14 @@ export default function LibraryScreen({navigation}) {
     });
   }, [navigation, selectedChip]);
 
+  function handleSortingListByChipId(tagId) {
+    if (tagId === selectedChip) {
+      setSelectedChip(null);
+    } else {
+      setSelectedChip(tagId);
+    }
+  }
+
   if (requesting2 || requesting) {
     return <SpinnerType1 />;
   }
@@ -92,7 +90,7 @@ export default function LibraryScreen({navigation}) {
           navigation={navigation}
           chipId={selectedChip}
         />
-        <CardDeckList data={cardDeckList2} navigation={navigation} />
+        {/*<CardDeckList data={cardDeckList2} navigation={navigation} />*/}
       </ScrollView>
     </SafeAreaView>
   );

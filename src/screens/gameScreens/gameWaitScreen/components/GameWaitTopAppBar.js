@@ -46,7 +46,6 @@ function GameWaitTopAppBar(props, ref) {
       extrapolate: 'clamp',
     }),
   };
-
   return (
     <SmallTopBarAnimated
       {...otherProps}

@@ -3,7 +3,7 @@ import {StyleSheet, View} from 'react-native';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import {defaultOfDeck} from 'src/constants';
 import MiniCardItem from './MiniCardItem';
-import {insertAndShift} from 'src/utils';
+import {normalizedBy, removeJustOneItem} from 'src/utils';
 
 function getMarginItem(index) {
   return index % 2 === 0
@@ -25,44 +25,70 @@ export default function CardDeckList(props) {
     ...otherProps
   } = props;
   const [sortByTagData, setSortByTagData] = useState([]);
-  const [pinnedIndex, setPinnedIndex] = useState(0);
+  const [pinDeckIds, setPinDeckIds] = useState([]);
+  const [pinId, setPinId] = useState(null);
   const [isPinned, setIsPinned] = useState(false);
-  console.log('first item outside: ', sortByTagData[0]?.cardDeck);
   const {TITLE, IMAGE} = defaultOfDeck;
+  /////////////////////////////////
+  // pinDeckIds: co dinh ---- allDeckIds: thay doi theo tag
+  const normalizedSortedData = sortByTagData
+    .map(item => ({...item}))
+    .reduce(normalizedBy('cardDeckId'), {});
+  console.log(
+    'sortByTagData: ',
+    sortByTagData.map(item => item?.cardDeck),
+  );
   useEffect(() => {
     if (chipId === null) {
-      if (pinnedIndex === 0) {
+      if (pinDeckIds === []) {
         setSortByTagData(data);
       } else {
-        getPinnedData(data, pinnedIndex);
-        setSortByTagData([...data]);
+        const pinnedData = getPinnedData(data);
+        setSortByTagData(pinnedData);
       }
     } else {
-      const newData = data.filter(item => item?.tag === chipId);
-      if (pinnedIndex === 0) {
+      const newData = getFilteringDataByTag(data, chipId);
+      if (pinDeckIds === []) {
         setSortByTagData(newData);
       } else {
-        getPinnedData(newData, pinnedIndex);
-        setSortByTagData([...newData]);
+        const pinnedData = getPinnedData(newData);
+        setSortByTagData(pinnedData);
       }
     }
-  }, [chipId, pinnedIndex]);
+  }, [chipId, pinDeckIds]);
 
-  function getPinnedData(dt, i) {
-    insertAndShift(dt, i, 0);
+  function getPinnedData(arr) {
+    return arr.reduce((acc, element) => {
+      if (pinDeckIds.includes(element?.cardDeckId)) {
+        return [element, ...acc];
+      }
+      return [...acc, element];
+    }, []);
   }
 
-  function handlePinningPress(i) {
-    if (i === pinnedIndex) {
-      setPinnedIndex(0);
+  function getFilteringDataByTag(dt, tagId) {
+    return dt.filter(item => item?.tag === tagId);
+  }
+
+  function handlePinningPress(id) {
+    const hasPinId = pinDeckIds && pinDeckIds.includes(id);
+    if (hasPinId) {
+      const newData = removeJustOneItem(pinDeckIds, id);
+      setPinDeckIds(newData);
       setIsPinned(false);
     } else {
-      setPinnedIndex(i);
+      setPinDeckIds([...pinDeckIds, id]);
       setIsPinned(true);
     }
   }
 
-  const handlePlayPress = ({cardDeckId, cardDeckName, cardDeckImage}) => {
+  //pin trước -> pinindex = 3, sau đó khi thay đổi tagName -> data thay đổi -> update pinIndex luôn
+
+  const handlePlayPress = ({
+    cardDeckId,
+    cardDeck: cardDeckName,
+    uri: cardDeckImage,
+  }) => {
     navigation.navigate({
       name: ScreenKeys.PLAY_GAME,
       params: {
@@ -72,7 +98,11 @@ export default function CardDeckList(props) {
       },
     });
   };
-  const handlePreviewPress = ({cardDeckId, cardDeckName, cardDeckImage}) => {
+  const handlePreviewPress = ({
+    cardDeckId,
+    cardDeck: cardDeckName,
+    uri: cardDeckImage,
+  }) => {
     navigation.navigate({
       name: ScreenKeys.WAIT_GAME,
       params: {
@@ -83,10 +113,13 @@ export default function CardDeckList(props) {
     });
   };
   const handleNavigateToActionBoard = (item, index) => {
+    const deckId = item?.cardDeckId;
     navigation.navigate({
       name: ScreenKeys.DECK_ACTION,
       params: {
-        onPinningPress: () => handlePinningPress(index),
+        onPinningPress: () => {
+          handlePinningPress(deckId);
+        },
       },
     });
   };
@@ -135,3 +168,12 @@ const styles = StyleSheet.create({
     height: 50,
   },
 });
+
+/*
+NORMALIZATION DATA
+
+ const normalizedCardDeck = sortByTagData
+    .map(item => item)
+    .reduce(normalizedBy('cardDeckId'), {});
+  const cardDeckList = {byId: normalizedCardDeck, allIds: allDeckIds};
+ */
