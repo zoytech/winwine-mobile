@@ -21,9 +21,7 @@ export default function GamePlayTopAppBar(props) {
 
   function handleNavigateExitGameDialog() {
     const handleMainDialogPress = () => {
-      navigation.navigate({
-        name: ScreenKeys.HOME,
-      });
+      navigation.popToTop();
     };
     const handleSubDialogPress = () => {
       navigation.goBack();

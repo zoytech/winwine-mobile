@@ -76,9 +76,7 @@ export default function GamePlayScreen({navigation, route}) {
 
   function handleNavigateEndGameDialog() {
     const handleMainDialogPress = () => {
-      navigation.navigate({
-        name: ScreenKeys.HOME,
-      });
+      navigation.popToTop();
     };
     const handleSubDialogPress = () => {
       navigation.goBack();

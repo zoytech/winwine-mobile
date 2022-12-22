@@ -1,14 +1,21 @@
 import {ScreenKeys} from './ScreenKeys';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {GamePlayScreen, GameWaitScreen, LibraryScreen} from 'src/screens';
+import {
+  BasicDialog,
+  CardDialog,
+  CreateActionScreen,
+  DeckActionScreen,
+  GamePlayScreen,
+  GameWaitScreen,
+  LibraryScreen,
+} from 'src/screens';
 import {useLayoutEffect} from 'react';
-import hideBottomTabBarMethod from './hideBottomTabBarMethod';
+import {hideBottomTabBarMethod} from './utils';
 import {
   GamePlayTopAppBar,
   GameWaitTopAppBar,
   LibraryTopAppBar,
 } from 'src/screens/headerComponents';
-import {CreateActionScreen, DeckActionScreen} from '../screens/actionScreens';
 
 const LibraryStack = createNativeStackNavigator();
 export default function LibraryStackScreen({navigation, route}) {
@@ -60,6 +67,14 @@ export default function LibraryStackScreen({navigation, route}) {
         <LibraryStack.Screen
           name={ScreenKeys.CREATE_ACTION}
           component={CreateActionScreen}
+        />
+        <LibraryStack.Screen
+          name={ScreenKeys.BASIC_DIALOG}
+          component={BasicDialog}
+        />
+        <LibraryStack.Screen
+          name={ScreenKeys.CARD_DIALOG}
+          component={CardDialog}
         />
       </LibraryStack.Group>
     </LibraryStack.Navigator>
