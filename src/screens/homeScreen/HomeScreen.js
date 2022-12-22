@@ -1,5 +1,5 @@
 import React, {useEffect, useRef} from 'react';
-import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
+import {SafeAreaView, ScrollView, StatusBar, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
 import {Color, ColorVariant} from 'src/themes';
@@ -49,6 +49,7 @@ export default function HomeScreen({navigation}) {
   }
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar barStyle={'dark-content'} backgroundColor={'transparent'} />
       <ScrollView
         onScroll={topBarRef.current?.onScroll}
         contentContainerStyle={styles.contentContainer}>

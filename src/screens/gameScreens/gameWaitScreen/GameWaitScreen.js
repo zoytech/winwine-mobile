@@ -1,5 +1,12 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {
@@ -182,6 +189,7 @@ function GameWaitScreen({navigation, route}) {
   }
   return (
     <SafeAreaView style={defaultContainerStyle}>
+      <StatusBar barStyle={'dark-content'} backgroundColor={'transparent'} />
       <ScrollView
         contentContainerStyle={styles.scrollView}
         onScroll={scrollViewRef.current.onScroll}>

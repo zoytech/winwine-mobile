@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
+import {SafeAreaView, ScrollView, StatusBar, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Color, ColorVariant} from 'src/themes';
 import {
@@ -82,6 +82,7 @@ export default function LibraryScreen({navigation}) {
   }
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar barStyle={'dark-content'} backgroundColor={'transparent'} />
       <ScrollView
         onScroll={topBarRef.current?.onScroll}
         contentContainerStyle={styles.contentContainer}>
