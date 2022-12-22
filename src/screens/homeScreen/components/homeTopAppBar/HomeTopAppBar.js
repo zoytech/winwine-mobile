@@ -119,8 +119,6 @@ const styles = StyleSheet.create({
   headerTitle: {
     justifyContent: 'flex-start',
   },
-  suggestion: {
-    height: standardHeight,
-  },
+  suggestion: {},
 });
 export default forwardRef(HomeTopAppBar);

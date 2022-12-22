@@ -1,61 +1,27 @@
-import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
-import Icon from 'react-native-vector-icons/AntDesign';
-import {StyleSheet, Text} from 'react-native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {StyleSheet} from 'react-native';
+import {TabScreenIcon, TabScreenLabel} from './components';
 import HomeStackScreen from './HomeStackScreen';
-import {ScreenKeys} from './ScreenKeys';
-import TestScreen from '../screens/TestScreen';
-import {
-  Color,
-  ColorVariant,
-  StateLayers,
-  StateLayersVariant,
-  Typography,
-} from '../themes';
 import BlankStackScreen from './BlankStackScreen';
+import {ScreenKeys} from './ScreenKeys';
+import LibraryStackScreen from './LibraryStackScreen';
 
-const Tab = createMaterialBottomTabNavigator();
-
-function TabScreenIcon(props) {
-  const {color, name, size} = props;
-  const iconProps = {
-    name: name ? name : 'arrow',
-    size: size ? size : 26,
-    color: color,
-  };
-  return <Icon {...iconProps} />;
-}
-
-function TabBarLabel({content}) {
-  const {base: primaryColor, onBase: onPrimaryColor} =
-    Color.light[ColorVariant.primary];
-  return <Text style={[styles.label, {color: onPrimaryColor}]}>{content}</Text>;
-}
+const Tab = createBottomTabNavigator();
 
 export default function TabStackScreen() {
-  const backgroundLayer =
-    StateLayers.light[StateLayersVariant.background]?.level_068;
-  const primaryLayer = StateLayers.light[StateLayersVariant.primary]?.level_068;
-  const {base: primaryColor, onBase: onPrimaryColor} =
-    Color.light[ColorVariant.primary];
-  const secondColor = Color.light[ColorVariant.secondary]?.container;
-
-  const barStyle = [styles.bar, {backgroundColor: primaryLayer}];
   const screenOptionsProps = {
-    tabBarColor: backgroundLayer,
+    headerShown: false,
+    tabBarItemStyle: styles.item,
   };
   return (
     <Tab.Navigator
       initialRouteName={ScreenKeys.HOME_STACK}
-      activeColor={primaryColor}
-      inactiveColor={secondColor}
-      shifting={true}
-      barStyle={barStyle}
       screenOptions={screenOptionsProps}>
       <Tab.Screen
         name={ScreenKeys.HOME_STACK}
         component={HomeStackScreen}
         options={{
-          tabBarLabel: <TabBarLabel content={'Home'} />,
+          tabBarLabel: props => <TabScreenLabel {...props} content={'Home'} />,
           tabBarIcon: props => <TabScreenIcon {...props} name={'home'} />,
         }}
       />
@@ -63,15 +29,17 @@ export default function TabStackScreen() {
         name={ScreenKeys.BLANK_STACK}
         component={BlankStackScreen}
         options={{
-          tabBarLabel: <TabBarLabel content={'Blank'} />,
+          tabBarLabel: props => <TabScreenLabel {...props} content={'Blank'} />,
           tabBarIcon: props => <TabScreenIcon {...props} name={'pluscircle'} />,
         }}
       />
       <Tab.Screen
-        name={'Test'}
-        component={TestScreen}
+        name={ScreenKeys.LIBRARY_STACK}
+        component={LibraryStackScreen}
         options={{
-          tabBarLabel: <TabBarLabel content={'Test'} />,
+          tabBarLabel: props => (
+            <TabScreenLabel {...props} content={'Library'} />
+          ),
           tabBarIcon: props => <TabScreenIcon {...props} name={'switcher'} />,
         }}
       />
@@ -80,14 +48,12 @@ export default function TabStackScreen() {
 }
 
 const styles = StyleSheet.create({
-  bar: {
-    position: 'absolute',
-    height: 70,
-  },
-  label: {
-    ...Typography.label.large,
-    color: 'red',
-    textAlign: 'center',
-    fontWeight: 'bold',
+  item: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    borderRadius: 50,
+    height: 50,
+    width: 100,
+    paddingHorizontal: 10,
   },
 });

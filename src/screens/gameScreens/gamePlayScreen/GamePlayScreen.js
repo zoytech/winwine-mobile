@@ -1,11 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  View,
-} from 'react-native';
+import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {
@@ -24,6 +18,7 @@ import {
   IndicatorTrace,
 } from './components';
 import {SwipeableGameCard} from '../components';
+import {CustomStatusBar} from '../../components';
 
 const screenWidth = widthOf?.SCREEN;
 const width = {
@@ -166,7 +161,7 @@ export default function GamePlayScreen({navigation, route}) {
   }
   return (
     <SafeAreaView style={defaultContainerStyle}>
-      <StatusBar barStyle={'dark-content'} backgroundColor={'transparent'} />
+      <CustomStatusBar />
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.progressBar}>
           {showIndicatorInfo && (

@@ -13,6 +13,7 @@ import {CardDeckList, LibraryTopAppBar} from './components';
 import loadCardDeckList2 from 'src/redux/actions/loadCardDeckList2';
 import {loadCardDeckList} from 'src/redux/actions';
 import {removeIdenticalItemInArray} from 'src/utils';
+import {CustomStatusBar} from '../components';
 
 export default function LibraryScreen({navigation}) {
   const topBarRef = useRef({
@@ -82,7 +83,7 @@ export default function LibraryScreen({navigation}) {
   }
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle={'dark-content'} backgroundColor={'transparent'} />
+      <CustomStatusBar />
       <ScrollView
         onScroll={topBarRef.current?.onScroll}
         contentContainerStyle={styles.contentContainer}>

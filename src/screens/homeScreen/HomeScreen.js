@@ -14,11 +14,10 @@ import {
   HorizontalCardList,
   VerticalCardList,
 } from './components';
-import {SectionHeader} from '../components';
+import {CustomStatusBar, SectionHeader} from '../components';
 
 const RECENTLY = 'Chơi gần đây';
 const POPULAR = 'Phổ biến';
-
 export default function HomeScreen({navigation}) {
   const topBarRef = useRef({
     onScroll: () => {},
@@ -28,6 +27,7 @@ export default function HomeScreen({navigation}) {
   const requesting = useSelector(requestingDeckListSelector);
 
   const {popularData, recentlyData} = cardDeckList;
+  const surfaceVarColor = Color.light[ColorVariant.surfaceVariant]?.base;
 
   useEffect(() => {
     dispatch(loadCardDeckList());
@@ -49,7 +49,7 @@ export default function HomeScreen({navigation}) {
   }
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle={'dark-content'} backgroundColor={'transparent'} />
+      <CustomStatusBar />
       <ScrollView
         onScroll={topBarRef.current?.onScroll}
         contentContainerStyle={styles.contentContainer}>

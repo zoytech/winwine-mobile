@@ -33,6 +33,7 @@ import {
   heightOf,
   widthOf,
 } from 'src/constants';
+import {CustomStatusBar} from '../../components';
 
 const width = {
   CONTAINER: 320,
@@ -189,7 +190,7 @@ function GameWaitScreen({navigation, route}) {
   }
   return (
     <SafeAreaView style={defaultContainerStyle}>
-      <StatusBar barStyle={'dark-content'} backgroundColor={'transparent'} />
+      <CustomStatusBar />
       <ScrollView
         contentContainerStyle={styles.scrollView}
         onScroll={scrollViewRef.current.onScroll}>

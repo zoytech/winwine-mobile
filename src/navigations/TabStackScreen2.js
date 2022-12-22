@@ -1,27 +1,42 @@
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import {StyleSheet} from 'react-native';
-import {TabScreenIcon, TabScreenLabel} from './components';
 import HomeStackScreen from './HomeStackScreen';
-import BlankStackScreen from './BlankStackScreen';
 import {ScreenKeys} from './ScreenKeys';
+import {
+  Color,
+  ColorVariant,
+  StateLayers,
+  StateLayersVariant,
+  Typography,
+} from '../themes';
+import BlankStackScreen from './BlankStackScreen';
 import LibraryStackScreen from './LibraryStackScreen';
+import {TabScreenIcon, TabScreenLabel} from './components';
 
-const Tab = createBottomTabNavigator();
+const Tab = createMaterialBottomTabNavigator();
 
 export default function TabStackScreen2() {
+  const backgroundLayer =
+    StateLayers.light[StateLayersVariant.background]?.level_068;
+  const primaryLayer = StateLayers.light[StateLayersVariant.primary]?.level_068;
+  const primaryColor = Color.light[ColorVariant.primary]?.base;
+  const secondColor = Color.light[ColorVariant.secondary]?.container;
+
   const screenOptionsProps = {
-    headerShown: false,
-    tabBarItemStyle: styles.item,
+    tabBarColor: primaryLayer,
   };
   return (
     <Tab.Navigator
       initialRouteName={ScreenKeys.HOME_STACK}
+      activeColor={primaryColor}
+      inactiveColor={secondColor}
+      shifting={true}
       screenOptions={screenOptionsProps}>
       <Tab.Screen
         name={ScreenKeys.HOME_STACK}
         component={HomeStackScreen}
         options={{
-          tabBarLabel: props => <TabScreenLabel {...props} content={'Home'} />,
+          tabBarLabel: <TabScreenLabel content={'Home'} />,
           tabBarIcon: props => <TabScreenIcon {...props} name={'home'} />,
         }}
       />
@@ -29,8 +44,10 @@ export default function TabStackScreen2() {
         name={ScreenKeys.BLANK_STACK}
         component={BlankStackScreen}
         options={{
-          tabBarLabel: props => <TabScreenLabel {...props} content={'Blank'} />,
-          tabBarIcon: props => <TabScreenIcon {...props} name={'pluscircle'} />,
+          tabBarLabel: props => (
+            <TabScreenLabel {...props} content={'Search'} />
+          ),
+          tabBarIcon: props => <TabScreenIcon {...props} name={'search'} />,
         }}
       />
       <Tab.Screen
@@ -48,12 +65,14 @@ export default function TabStackScreen2() {
 }
 
 const styles = StyleSheet.create({
-  item: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    borderRadius: 50,
-    height: 50,
-    width: 100,
-    paddingHorizontal: 10,
+  bar: {
+    position: 'absolute',
+    height: 70,
+  },
+  label: {
+    ...Typography.label.large,
+    color: 'red',
+    textAlign: 'center',
+    fontWeight: 'bold',
   },
 });
