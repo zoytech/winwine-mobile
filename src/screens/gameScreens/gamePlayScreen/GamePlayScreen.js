@@ -18,7 +18,7 @@ import {
   IndicatorTrace,
 } from './components';
 import {SwipeableGameCard} from '../components';
-import {CustomStatusBar} from '../../components';
+import {CustomStatusBar} from 'src/screens/components';
 
 const screenWidth = widthOf?.SCREEN;
 const width = {

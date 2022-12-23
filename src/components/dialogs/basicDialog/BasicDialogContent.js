@@ -32,7 +32,7 @@ export default function BasicDialogContent(props) {
   const headlineStyle = [{color: onSurface}, Typography.headline.small];
   const supportingTextStyle = [
     {color: onSurfaceVarColor},
-    Typography.body.medium,
+    Typography.body.large,
   ];
   const actionStyle = [styles.action, {justifyContent: 'flex-end'}];
 

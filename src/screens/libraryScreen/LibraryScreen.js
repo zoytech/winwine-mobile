@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {SafeAreaView, ScrollView, StatusBar, StyleSheet} from 'react-native';
+import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Color, ColorVariant} from 'src/themes';
 import {
@@ -13,7 +13,7 @@ import {CardDeckList, LibraryTopAppBar} from './components';
 import loadCardDeckList2 from 'src/redux/actions/loadCardDeckList2';
 import {loadCardDeckList} from 'src/redux/actions';
 import {removeIdenticalItemInArray} from 'src/utils';
-import {CustomStatusBar} from '../components';
+import {CustomStatusBar} from 'src/screens/components';
 
 export default function LibraryScreen({navigation}) {
   const topBarRef = useRef({

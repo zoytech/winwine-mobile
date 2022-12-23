@@ -11,30 +11,32 @@ export default function FaceBookButton() {
   const getCurrentProfile = Profile.getCurrentProfile;
   const getCurrentAccessToken = AccessToken.getCurrentAccessToken;
 
-  loginWithPermissions(['public_profile']).then(
-    result => {
-      const {isCancelled, grantedPermissions} = result;
-      if (isCancelled) {
-        console.log('Login cancelled');
-      } else {
-        console.log(
-          'Login success with permissions: ',
-          grantedPermissions.toString(),
-        );
-      }
-    },
-    error => {
-      console.log('Login fail with error: ' + error);
-    },
-  );
-  const currentProfile = getCurrentProfile().then(profile => {
-    if (profile) {
-      console.log(
-        `The current logged user is: ${profile.name}. His profile id is: ${profile.userID}`,
+  /*
+      loginWithPermissions(['public_profile']).then(
+        result => {
+          const {isCancelled, grantedPermissions} = result;
+          if (isCancelled) {
+            console.log('Login cancelled');
+          } else {
+            console.log(
+              'Login success with permissions: ',
+              grantedPermissions.toString(),
+            );
+          }
+        },
+        error => {
+          console.log('Login fail with error: ' + error);
+        },
       );
-    }
-  });
-  console.log(currentProfile);
+      const currentProfile = getCurrentProfile().then(profile => {
+        if (profile) {
+          console.log(
+            `The current logged user is: ${profile.name}. His profile id is: ${profile.userID}`,
+          );
+        }
+      });
+      console.log(currentProfile);
+    */
 
   function handleLoginFinished(error, result) {
     if (error) {
@@ -48,10 +50,18 @@ export default function FaceBookButton() {
     }
   }
 
+  function handleLoginFinished_test() {
+    console.log('onLoginFinished');
+  }
+
+  function handleLogoutFinished_test() {
+    console.log('logout.');
+  }
+
   return (
     <LoginButton
-      onLoginFinished={handleLoginFinished}
-      onLogoutFinished={() => console.log('logout.')}
+      onLoginFinished={handleLoginFinished_test}
+      onLogoutFinished={handleLogoutFinished_test}
     />
   );
 }

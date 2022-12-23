@@ -17,6 +17,7 @@ import {defaultOfUser, heightOf} from 'src/constants';
 import {usePartOfDay} from '../usePartOfDay';
 import {SuggestionList} from '../suggestionList';
 import {withAnimated} from 'src/utils';
+import {AvatarSettingButton} from '../../../components';
 
 const CONFIG_VALUE = 100;
 const standardHeight = heightOf?.MIN_HEADER;
@@ -69,22 +70,17 @@ function HomeTopAppBar(props, ref) {
 
   const defaultContainerStyle = [styles.container, topBarAnimation, style];
 
-  function renderRightComponents() {
-    const handleTrailingIconPressed = () => {
-      console.log('handleTrailingIconPressed: ');
-    };
-    return (
-      <BaseAvatarButton
-        avatar={defaultOfUser?.AVATAR}
-        onPress={handleTrailingIconPressed}
-        style={styles.targetSize}
-        avatarStyle={styles.avatarIcon}
-      />
-    );
-  }
-
   function handleOnlayoutOfChild(event) {
     setSubHeight(event.nativeEvent.layout.height);
+  }
+
+  function renderRightComponents() {
+    return (
+      <AvatarSettingButton
+        navigation={navigation}
+        style={[styles.targetSize, styles.avatarDisplay]}
+      />
+    );
   }
 
   function renderBottomComponents() {
@@ -120,5 +116,8 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   suggestion: {},
+  avatarDisplay: {
+    marginRight: 6,
+  },
 });
 export default forwardRef(HomeTopAppBar);

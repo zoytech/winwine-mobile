@@ -2,13 +2,12 @@ import React from 'react';
 import {BasicDialogContent} from 'src/components';
 
 export default function ComingSoonDialog({onMainActionPress}) {
-  const announcement =
-    'Our exciting new feature is coming soon! Check back later.';
+  const CONTENT = 'Tính năng mới sẽ được ra mắt sớm. Quay lại sau nhé!';
   return (
     <BasicDialogContent
       icon={'infocirlceo'}
-      headline={'Coming Soon'}
-      supportingText={announcement}
+      headline={'Sắp ra mắt'}
+      supportingText={CONTENT}
       mainAction={'OK'}
       onMainActionPress={onMainActionPress}
     />

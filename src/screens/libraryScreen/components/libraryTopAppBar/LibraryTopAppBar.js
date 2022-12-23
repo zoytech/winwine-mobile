@@ -1,13 +1,11 @@
 import {forwardRef, useImperativeHandle, useRef, useState} from 'react';
-import {Animated, StyleSheet, View} from 'react-native';
-import {
-  BaseAvatarButton,
-  CenterTopBar,
-  StandardIconButton,
-} from 'src/components';
-import {defaultOfUser, heightOf} from 'src/constants';
-import TagChipList from './TagChipList';
+import {Animated, StyleSheet} from 'react-native';
+import {CenterTopBar} from 'src/components';
+import {heightOf} from 'src/constants';
 import {withAnimated} from 'src/utils';
+import {AvatarSettingButton} from 'src/screens/components';
+import RightButtons from './RightButtons';
+import TagChipList from './TagChipList';
 
 const AnimatedCenterTopBar = withAnimated(CenterTopBar);
 const CONFIG_VALUE = 100;
@@ -29,6 +27,7 @@ function LibraryTopAppBar(props, ref) {
   const [subHeight, setSubHeight] = useState(0);
   const totalHeight = subHeight + standardHeight;
   const scrollDistance = totalHeight - standardHeight + CONFIG_VALUE;
+  const userToken = 'uuid123';
 
   useImperativeHandle(ref, () => ({
     onScroll: e => {
@@ -48,7 +47,6 @@ function LibraryTopAppBar(props, ref) {
       },
     ],
   };
-
   const topBarAnimation = {
     height: scrollYContentOffsetRef.interpolate({
       inputRange: [0, scrollDistance],
@@ -56,38 +54,14 @@ function LibraryTopAppBar(props, ref) {
       extrapolate: 'clamp',
     }),
   };
-
   const defaultContainerStyle = [styles.container, topBarAnimation, style];
-
-  function renderRightComponents() {
-    const handleSearchPressed = () => {
-      console.log('handleSearchPressed: ');
-    };
-    const handleCreatePressed = () => {
-      console.log('handleCreatePressed: ');
-    };
-    const iconProps = {
-      style: styles.targetSize,
-      iconStyle: {size: 30},
-    };
-    return (
-      <View style={styles.buttonContainer}>
-        <StandardIconButton
-          name={'search1'}
-          onPress={handleSearchPressed}
-          {...iconProps}
-        />
-        <StandardIconButton
-          name={'plus'}
-          onPress={handleCreatePressed}
-          {...iconProps}
-        />
-      </View>
-    );
-  }
 
   function handleOnlayoutOfChild(event) {
     setSubHeight(event.nativeEvent.layout.height);
+  }
+
+  function renderRightComponents() {
+    return <RightButtons navigation={navigation} userToken={userToken} />;
   }
 
   function renderBottomComponents() {
@@ -103,14 +77,10 @@ function LibraryTopAppBar(props, ref) {
   }
 
   function renderLeftComponent() {
-    const handleAvatarPressed = () => {
-      console.log('handleAvatarPressed: ');
-    };
     return (
-      <BaseAvatarButton
-        avatar={defaultOfUser?.AVATAR}
+      <AvatarSettingButton
+        navigation={navigation}
         style={[styles.targetSize, styles.avatarDisplay]}
-        onPress={handleAvatarPressed}
       />
     );
   }
@@ -143,18 +113,14 @@ const styles = StyleSheet.create({
   suggestion: {
     height: standardHeight,
   },
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
+  avatarDisplay: {
+    marginLeft: 8,
   },
   targetSize: {
     height: 48,
     width: 48,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  avatarDisplay: {
-    marginLeft: 8,
   },
 });
 export default forwardRef(LibraryTopAppBar);

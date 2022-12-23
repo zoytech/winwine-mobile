@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native';
 import {MediumTopBar, StandardIconButton} from 'src/components';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
-import {ExitGameDialog} from './index';
+import {ExitGameDialog} from './dialogs';
 
 export default function GamePlayTopAppBar(props) {
   const {navigation, routes, content, style, contentStyle, ...otherProps} =

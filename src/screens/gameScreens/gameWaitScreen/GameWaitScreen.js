@@ -1,12 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {
@@ -27,13 +20,12 @@ import {cardDeckSelector, requestingDeckSelector} from 'src/redux/selectors';
 import {SwipeableGameCard} from '../components';
 import {
   defaultOf,
-  defaultOfCard,
   defaultOfDeck,
   defaultOfUser,
   heightOf,
   widthOf,
 } from 'src/constants';
-import {CustomStatusBar} from '../../components';
+import {CustomStatusBar} from 'src/screens/components';
 
 const width = {
   CONTAINER: 320,
@@ -43,7 +35,7 @@ const width = {
 const INITIAL_INDEX = 0;
 const MAX_PREVIEW = 10;
 
-function GameWaitScreen({navigation, route}) {
+export default function GameWaitScreen({navigation, route}) {
   const {deckId, deckTitle, deckSource} = route.params;
   const cardDeckItem = useSelector(cardDeckSelector);
   const requesting = useSelector(requestingDeckSelector);
@@ -282,5 +274,3 @@ const styles = StyleSheet.create({
     minHeight: 48,
   },
 });
-
-export default GameWaitScreen;

@@ -10,6 +10,7 @@ import {authentication} from 'src/constants';
 
 export default function GoogleButton() {
   const [gettingLoginStatus, setGettingLoginStatus] = useState(false);
+  const gettingLoginStatus_test = false;
   const [userInfo, setUserInfo] = useState(null);
   const {Size, Color} = GoogleSigninButton;
   const {
@@ -19,14 +20,14 @@ export default function GoogleButton() {
     SIGN_IN_REQUIRED,
   } = statusCodes;
 
-  useEffect(() => {
-    GoogleSignin.configure({
-      scopes: ['email'],
-      webClientId: authentication?.WEB_CLIENT_ID,
-      offlineAccess: true,
-    });
-    isSignedInCheck();
-  }, []);
+  // useEffect(() => {
+  //   GoogleSignin.configure({
+  //     scopes: ['email'],
+  //     webClientId: authentication?.WEB_CLIENT_ID,
+  //     offlineAccess: true,
+  //   });
+  //   isSignedInCheck();
+  // }, []);
 
   async function isSignedInCheck() {
     const isSignedIn = await GoogleSignin.isSigned();
@@ -111,7 +112,7 @@ export default function GoogleButton() {
   function renderSignoutButton() {
     return (
       <>
-        {gettingLoginStatus && (
+        {gettingLoginStatus_test && (
           <FilledButton
             onPress={handleGoogleSignoutPressed}
             content={'Logout'}
@@ -122,6 +123,10 @@ export default function GoogleButton() {
     );
   }
 
+  function renderSignoutButton_test() {
+    return <View style={{width: 100, height: 100, backgroundColor: 'coral'}} />;
+  }
+
   const iconButtonProps = {
     size: Size.Wide,
     color: Color.Dark,
@@ -129,7 +134,7 @@ export default function GoogleButton() {
     style: styles.container,
   };
 
-  if (gettingLoginStatus) {
+  if (gettingLoginStatus_test) {
     return (
       <View style={styles.container}>
         <ActivityIndicator size="large" color="#0000ff" />
@@ -140,7 +145,9 @@ export default function GoogleButton() {
       <>
         <GoogleSigninButton {...iconButtonProps} />
         <View style={styles.logout}>
-          {!gettingLoginStatus && <Text>You are currently logged out</Text>}
+          {!gettingLoginStatus_test && (
+            <Text>You are currently logged out</Text>
+          )}
           {renderSignoutButton()}
         </View>
       </>

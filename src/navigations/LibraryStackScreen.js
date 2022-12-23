@@ -8,6 +8,7 @@ import {
   GamePlayScreen,
   GameWaitScreen,
   LibraryScreen,
+  SignInScreen,
 } from 'src/screens';
 import {useLayoutEffect} from 'react';
 import {hideBottomTabBarMethod} from './utils';
@@ -16,6 +17,7 @@ import {
   GameWaitTopAppBar,
   LibraryTopAppBar,
 } from 'src/screens/headerComponents';
+import AuthenticStackScreen from './AuthenticStackScreen';
 
 const LibraryStack = createNativeStackNavigator();
 export default function LibraryStackScreen({navigation, route}) {
@@ -57,6 +59,10 @@ export default function LibraryStackScreen({navigation, route}) {
           options={{
             header: () => <GamePlayTopAppBar />,
           }}
+        />
+        <LibraryStack.Screen
+          name={ScreenKeys.SIGNUP_AU}
+          component={SignInScreen}
         />
       </LibraryStack.Group>
       <LibraryStack.Group screenOptions={modalScreenProps}>

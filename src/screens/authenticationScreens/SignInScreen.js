@@ -2,12 +2,11 @@ import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
 import {widthOf} from 'src/constants';
 import {FaceBookButton, GoogleButton} from './components';
 
-export default function SignInScreen() {
+export default function SignInScreen({navigation, route}) {
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       <ScrollView
         contentInsetAdjustmentBehavior={'automatic'}
-        style={styles.container}
         contentContainerStyle={styles.contentContainer}>
         <View style={styles.body}>
           <View style={styles.sectionContainer}>
@@ -25,7 +24,7 @@ export default function SignInScreen() {
 const styles = StyleSheet.create({
   container: {
     width: widthOf?.SCREEN,
-    aspectRatio: 3 / 16,
+    flex: 1,
     flexDirection: 'column',
     backgroundColor: 'green',
   },
