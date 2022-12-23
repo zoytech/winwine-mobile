@@ -1,23 +1,46 @@
 import {StyleSheet, View} from 'react-native';
 import {Typography} from 'src/themes';
+import {StandardIconButton, StandardIconToggle} from 'src/components';
 
 export default function HeaderButtons(props) {
   const {
-    renderLeftComponents,
     renderRightComponents,
     children,
     style,
+    onStaringDeckPress = () => {},
+    onDownloadDeckPress = () => {},
+    onNavigateMoreActionPress = () => {},
     ...otherProps
   } = props;
 
   const containerStyle = [styles.container, style];
 
-  function renderLeft({iconStyle}) {
-    //Can add more style if needed, not just iconStyle, Example: defaultContentStyle,...
-    if (typeof renderLeftComponents === 'function') {
-      return renderLeftComponents({iconStyle});
-    }
-    return renderLeftComponents;
+  function renderHeaderLeftButtons() {
+    const starProps = {
+      name: 'staro',
+      selectedName: 'star',
+      onPress: onStaringDeckPress(),
+      style: styles.icon,
+    };
+    const downloadProps = {
+      name: 'downcircleo',
+      selectedName: 'downcircle',
+      onPress: onDownloadDeckPress(),
+      style: styles.icon,
+    };
+    const moreActionProps = {
+      name: 'ellipsis1',
+      selectedName: 'ellipsis1',
+      onPress: onNavigateMoreActionPress(),
+      style: styles.icon,
+    };
+    return (
+      <>
+        <StandardIconToggle {...starProps} />
+        <StandardIconToggle {...downloadProps} />
+        <StandardIconButton {...moreActionProps} />
+      </>
+    );
   }
 
   function renderRight({buttonStyle, contentButtonStyle}) {
@@ -31,9 +54,7 @@ export default function HeaderButtons(props) {
   return (
     <View {...otherProps} style={containerStyle}>
       {children}
-      <View style={styles.subAction}>
-        {renderLeft({iconStyle: styles.icon})}
-      </View>
+      <View style={styles.subAction}>{renderHeaderLeftButtons()}</View>
       <View style={styles.mainAction}>
         {renderRight({
           buttonStyle: styles.button,

@@ -1,7 +1,7 @@
 import {StyleSheet, Text, View} from 'react-native';
 import {BaseAvatarButton} from 'src/components';
 import {Color, ColorVariant} from 'src/themes';
-import LikeIcon from './LikeIcon';
+import {LikeIcon} from 'src/screens/components';
 
 export default function HeaderInformation(props) {
   const {

@@ -1,13 +1,5 @@
 import NavigatedGameCard from './NavigatedGameCard';
 import GameWaitTopAppBar from './GameWaitTopAppBar';
-import HeaderImage from './HeaderImage';
-import HeaderInformation from './HeaderInformation';
-import HeaderButtons from './HeaderButtons';
+import GameWaitHeader from './headerComponents';
 
-export {
-  NavigatedGameCard,
-  GameWaitTopAppBar,
-  HeaderImage,
-  HeaderInformation,
-  HeaderButtons,
-};
+export {NavigatedGameCard, GameWaitTopAppBar, GameWaitHeader};
