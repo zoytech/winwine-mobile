@@ -2,7 +2,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {StyleSheet} from 'react-native';
 import {TabScreenIcon, TabScreenLabel} from './components';
 import HomeStackScreen from './HomeStackScreen';
-import BlankStackScreen from './BlankStackScreen';
+import AuthenticStackScreen from './AuthenticStackScreen';
 import {ScreenKeys} from './ScreenKeys';
 import LibraryStackScreen from './LibraryStackScreen';
 
@@ -26,11 +26,13 @@ export default function TabStackScreen() {
         }}
       />
       <Tab.Screen
-        name={ScreenKeys.BLANK_STACK}
-        component={BlankStackScreen}
+        name={ScreenKeys.AUTHENTICATION}
+        component={AuthenticStackScreen}
         options={{
-          tabBarLabel: props => <TabScreenLabel {...props} content={'Blank'} />,
-          tabBarIcon: props => <TabScreenIcon {...props} name={'pluscircle'} />,
+          tabBarLabel: props => (
+            <TabScreenLabel {...props} content={'Search'} />
+          ),
+          tabBarIcon: props => <TabScreenIcon {...props} name={'search1'} />,
         }}
       />
       <Tab.Screen

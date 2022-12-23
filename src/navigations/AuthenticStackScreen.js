@@ -3,11 +3,11 @@ import {CenterTopBar} from 'src/components';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import hideBottomTabBarMethod from './utils/hideBottomTabBarMethod';
 import {useLayoutEffect} from 'react';
-import {BlankScreen} from 'src/screens';
+import {SignInScreen} from '../screens/authenticationScreens';
 
 const CreateStack = createNativeStackNavigator();
 
-export default function BlankStackScreen({navigation, route}) {
+export default function AuthenticStackScreen({navigation, route}) {
   useLayoutEffect(() => {
     const tabHiddenRoutes = [ScreenKeys.BLANK];
     hideBottomTabBarMethod({tabHiddenRoutes, navigation, route});
@@ -15,8 +15,8 @@ export default function BlankStackScreen({navigation, route}) {
   return (
     <CreateStack.Navigator initialRouteName={ScreenKeys.BLANK}>
       <CreateStack.Screen
-        name={ScreenKeys.BLANK}
-        component={BlankScreen}
+        name={ScreenKeys.SIGNUP_AU}
+        component={SignInScreen}
         options={{
           header: () => <CenterTopBar />,
         }}
