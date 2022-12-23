@@ -16,7 +16,7 @@ function useConstructor(callBack = () => {}) {
   setHasBeenCalled(true);
 }
 
-function CarouselNamle(props, ref) {
+function Carousel(props, ref) {
   const {
     data = [],
     style = {},
@@ -259,4 +259,4 @@ function CarouselNamle(props, ref) {
   );
 }
 
-export default forwardRef(CarouselNamle);
+export default forwardRef(Carousel);

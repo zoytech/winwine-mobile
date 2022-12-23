@@ -8,7 +8,7 @@ import {
   HomeScreen,
 } from 'src/screens';
 import {useLayoutEffect} from 'react';
-import hideBottomTabBarMethod from './hideBottomTabBarMethod';
+import {hideBottomTabBarMethod} from './utils';
 import {
   GamePlayTopAppBar,
   GameWaitTopAppBar,

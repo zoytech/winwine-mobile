@@ -1,10 +1,10 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {StyleSheet} from 'react-native';
+import TestScreen from '../screens/TestScreen';
 import {TabScreenIcon, TabScreenLabel} from './components';
 import HomeStackScreen from './HomeStackScreen';
 import BlankStackScreen from './BlankStackScreen';
 import {ScreenKeys} from './ScreenKeys';
-import {SignInScreen} from '../screens';
 
 const Tab = createBottomTabNavigator();
 
@@ -34,12 +34,10 @@ export default function TabStackScreen2() {
         }}
       />
       <Tab.Screen
-        name={ScreenKeys.AUTHENTICATION}
-        component={SignInScreen}
+        name={'Test'}
+        component={TestScreen}
         options={{
-          tabBarLabel: props => (
-            <TabScreenLabel {...props} content={'Authentication'} />
-          ),
+          tabBarLabel: props => <TabScreenLabel {...props} content={'Test'} />,
           tabBarIcon: props => <TabScreenIcon {...props} name={'switcher'} />,
         }}
       />

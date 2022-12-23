@@ -1,25 +1,23 @@
 import React, {useEffect, useRef} from 'react';
-import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
+import {SafeAreaView, ScrollView, StatusBar, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
 import {Color, ColorVariant} from 'src/themes';
 import {
   cardDeckListSelector,
-  cardDeckListSelector2,
   requestingDeckListSelector,
-  requestingDeckListSelector2,
 } from 'src/redux/selectors';
 import {loadCardDeckList} from 'src/redux/actions';
 import {SpinnerType1} from 'src/components';
 import {
   HomeTopAppBar,
   HorizontalCardList,
-  SectionHeader,
   VerticalCardList,
-  VerticalCardList2,
 } from './components';
-import loadCardDeckList2 from 'src/redux/actions/loadCardDeckList2';
+import {CustomStatusBar, SectionHeader} from '../components';
 
+const RECENTLY = 'Chơi gần đây';
+const POPULAR = 'Phổ biến';
 export default function HomeScreen({navigation}) {
   const topBarRef = useRef({
     onScroll: () => {},
@@ -27,20 +25,13 @@ export default function HomeScreen({navigation}) {
   const dispatch = useDispatch();
   const cardDeckList = useSelector(cardDeckListSelector);
   const requesting = useSelector(requestingDeckListSelector);
-  const cardDeckList2 = useSelector(cardDeckListSelector2);
-  const requesting2 = useSelector(requestingDeckListSelector2);
 
   const {popularData, recentlyData} = cardDeckList;
+  const surfaceVarColor = Color.light[ColorVariant.surfaceVariant]?.base;
 
   useEffect(() => {
     dispatch(loadCardDeckList());
     if (requesting === false) {
-      SplashScreen.hide();
-    }
-  }, [dispatch]);
-  useEffect(() => {
-    dispatch(loadCardDeckList2());
-    if (requesting2 === false) {
       SplashScreen.hide();
     }
   }, [dispatch]);
@@ -53,20 +44,23 @@ export default function HomeScreen({navigation}) {
     });
   }, [navigation]);
 
-  if (requesting || requesting2) {
+  if (requesting) {
     return <SpinnerType1 />;
   }
   return (
     <SafeAreaView style={styles.container}>
+      <CustomStatusBar />
       <ScrollView
         onScroll={topBarRef.current?.onScroll}
         contentContainerStyle={styles.contentContainer}>
-        <SectionHeader content={'Recently'} style={styles.sectionHeader} />
+        <SectionHeader content={RECENTLY} style={styles.sectionHeader} />
         <HorizontalCardList data={recentlyData} navigation={navigation} />
-        <SectionHeader content={'Popular'} style={styles.sectionHeader} />
-        <VerticalCardList data={popularData} navigation={navigation} />
-        <SectionHeader content={'Test'} style={styles.sectionHeader} />
-        <VerticalCardList2 data={cardDeckList2} navigation={navigation} />
+        <SectionHeader content={POPULAR} style={styles.sectionHeader} />
+        <VerticalCardList
+          data={popularData}
+          navigation={navigation}
+          style={styles.secondView}
+        />
       </ScrollView>
     </SafeAreaView>
   );
@@ -79,8 +73,13 @@ const styles = StyleSheet.create({
     backgroundColor: Color.light[ColorVariant.background].base,
   },
   contentContainer: {
-    paddingHorizontal: 16,
     justifyContent: 'center',
+    paddingBottom: 70,
+    paddingLeft: 16,
+  },
+  firstView: {},
+  secondView: {
+    paddingRight: 16,
   },
   sectionHeader: {
     justifyContent: 'flex-start',

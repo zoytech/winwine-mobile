@@ -1,10 +1,11 @@
 import {forwardRef, useImperativeHandle, useRef, useState} from 'react';
 import {Animated, StyleSheet} from 'react-native';
-import {SmallTopBar, withAnimated} from 'src/components';
+import {SmallTopBar} from 'src/components';
 import {heightOf} from 'src/constants';
+import {withAnimated} from 'src/utils';
 
 const SmallTopBarAnimated = withAnimated(SmallTopBar);
-const CONFIG_VALUE = 50;
+const CONFIG_VALUE = 100;
 
 function GameWaitTopAppBar(props, ref) {
   const {
@@ -45,7 +46,6 @@ function GameWaitTopAppBar(props, ref) {
       extrapolate: 'clamp',
     }),
   };
-
   return (
     <SmallTopBarAnimated
       {...otherProps}

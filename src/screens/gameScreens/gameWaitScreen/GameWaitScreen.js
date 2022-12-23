@@ -1,5 +1,12 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {
@@ -26,6 +33,7 @@ import {
   heightOf,
   widthOf,
 } from 'src/constants';
+import {CustomStatusBar} from '../../components';
 
 const width = {
   CONTAINER: 320,
@@ -175,7 +183,6 @@ function GameWaitScreen({navigation, route}) {
 
   function handleOnLayoutImage(event) {
     setImageHeight(event.nativeEvent.layout.height);
-    console.log('imageHeight: ', imageHeight);
   }
 
   if (requesting) {
@@ -183,6 +190,7 @@ function GameWaitScreen({navigation, route}) {
   }
   return (
     <SafeAreaView style={defaultContainerStyle}>
+      <CustomStatusBar />
       <ScrollView
         contentContainerStyle={styles.scrollView}
         onScroll={scrollViewRef.current.onScroll}>

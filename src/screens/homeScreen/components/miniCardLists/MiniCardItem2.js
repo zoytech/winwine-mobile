@@ -1,15 +1,14 @@
 import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
-import {FilledButton, OutlinedCard} from 'src/components';
+import {OutlinedCard, StandardIconButton} from 'src/components';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {defaultOfDeck, widthOf} from 'src/constants';
-import {TagName} from '../../../components';
 
 export default function MiniCardItem2(props) {
   const {
     data,
     style,
-    onImageAreaPress = () => {},
-    onButtonPress = () => {},
+    onPreviewPress = () => {},
+    onPlayPress = () => {},
   } = props;
 
   const {cardDeckName, cardDeckImage, cardDeckTag} = data || {};
@@ -22,31 +21,45 @@ export default function MiniCardItem2(props) {
     return pressed && styles.opacityPressed;
   }
 
+  function renderMainContent() {
+    return (
+      <>
+        <Text
+          style={[Typography.label.large, {color: textColor}]}
+          numberOfLines={1}
+          ellipsizeMode={'tail'}>
+          {deckName}
+        </Text>
+        <Text>{deckTag}</Text>
+      </>
+    );
+  }
+
+  function renderActionComponents() {
+    return (
+      <>
+        <StandardIconButton
+          style={[styles.pressArea, {borderRightWidth: 0.5}]}
+          name={'eyeo'}
+          onPress={onPreviewPress}
+        />
+        <StandardIconButton
+          style={styles.pressArea}
+          name={'play'}
+          onPress={onPlayPress}
+        />
+      </>
+    );
+  }
+
   return (
     <OutlinedCard style={[styles.container, style]}>
-      <Pressable style={getContainerStyle} onPress={onImageAreaPress}>
+      <Pressable style={getContainerStyle} onPress={onPlayPress}>
         <View style={styles.media}>
           <Image source={deckImage} style={styles.image} />
         </View>
-        <View style={styles.headline}>
-          <Text
-            style={[Typography.label.large, {color: textColor}]}
-            numberOfLines={1}
-            ellipsizeMode={'tail'}>
-            {deckName}
-          </Text>
-          <Text>{deckTag}</Text>
-        </View>
-        <View style={styles.action}>
-          <FilledButton
-            content={'Xem trước'}
-            contentStyle={Typography.label.large}
-            style={styles.button}
-            onPress={onButtonPress}
-            hitSlop={30}
-            // disabled={true}
-          />
-        </View>
+        <View style={styles.headline}>{renderMainContent()}</View>
+        <View style={styles.action}>{renderActionComponents()}</View>
       </Pressable>
     </OutlinedCard>
   );

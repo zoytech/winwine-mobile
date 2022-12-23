@@ -1,7 +1,7 @@
 import {ScreenKeys} from './ScreenKeys';
 import {CenterTopBar} from 'src/components';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import hideBottomTabBarMethod from './hideBottomTabBarMethod';
+import hideBottomTabBarMethod from './utils/hideBottomTabBarMethod';
 import {useLayoutEffect} from 'react';
 import {BlankScreen} from 'src/screens';
 

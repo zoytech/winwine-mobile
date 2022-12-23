@@ -64,9 +64,10 @@ export default function SuggestionList(props) {
   );
 }
 const styles = StyleSheet.create({
-  contentContainer: {
-    paddingVertical: 16,
+  container: {
     paddingLeft: 16,
+  },
+  contentContainer: {
     justifyContent: 'center',
   },
   separator: {

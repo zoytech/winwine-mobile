@@ -1,14 +1,14 @@
 import React from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
-import MiniCardItem from './MiniCardItem';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import {defaultOfDeck} from 'src/constants';
+import MiniCardItem from './MiniCardItem';
 
 export default function HorizontalCardList(props) {
   const {style, data, navigation, ...otherProps} = props;
   const {TITLE, IMAGE} = defaultOfDeck;
 
-  const handleImageAreaPress = ({cardDeckId, cardDeck, uri}) => {
+  const handlePlayPress = ({cardDeckId, cardDeck, uri}) => {
     navigation.navigate({
       name: ScreenKeys.PLAY_GAME,
       params: {
@@ -18,7 +18,7 @@ export default function HorizontalCardList(props) {
       },
     });
   };
-  const handleButtonPress = ({cardDeckId, cardDeck, uri}) => {
+  const handlePreviewPress = ({cardDeckId, cardDeck, uri}) => {
     navigation.navigate({
       name: ScreenKeys.WAIT_GAME,
       params: {
@@ -36,8 +36,8 @@ export default function HorizontalCardList(props) {
         {...otherProps}
         key={cardDeckId}
         data={item}
-        onImageAreaPress={() => handleImageAreaPress(item)}
-        onButtonPress={() => handleButtonPress(item)}
+        onPreviewPress={() => handlePreviewPress(item)}
+        onPlayPress={() => handlePlayPress(item)}
       />
     );
   }

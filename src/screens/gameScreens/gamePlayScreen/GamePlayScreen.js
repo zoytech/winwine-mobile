@@ -10,13 +10,7 @@ import {
 import {loadCardDeckById} from 'src/redux/actions';
 import {cardDeckSelector, requestingDeckSelector} from 'src/redux/selectors';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
-import {
-  defaultOf,
-  defaultOfCard,
-  defaultOfDeck,
-  defaultOfUser,
-  widthOf,
-} from 'src/constants';
+import {defaultOf, defaultOfDeck, widthOf} from 'src/constants';
 import {
   CardProgressTrace,
   EndingGameDialog,
@@ -24,6 +18,7 @@ import {
   IndicatorTrace,
 } from './components';
 import {SwipeableGameCard} from '../components';
+import {CustomStatusBar} from '../../components';
 
 const screenWidth = widthOf?.SCREEN;
 const width = {
@@ -82,9 +77,7 @@ export default function GamePlayScreen({navigation, route}) {
 
   function handleNavigateEndGameDialog() {
     const handleMainDialogPress = () => {
-      navigation.navigate({
-        name: ScreenKeys.HOME,
-      });
+      navigation.popToTop();
     };
     const handleSubDialogPress = () => {
       navigation.goBack();
@@ -168,6 +161,7 @@ export default function GamePlayScreen({navigation, route}) {
   }
   return (
     <SafeAreaView style={defaultContainerStyle}>
+      <CustomStatusBar />
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.progressBar}>
           {showIndicatorInfo && (
