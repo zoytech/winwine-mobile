@@ -1,19 +1,30 @@
 {
   "project_info": {
+<<<<<<< HEAD
     "project_number": "121361459683",
     "project_id": "winwinemobile",
     "storage_bucket": "winwinemobile.appspot.com"
+=======
+    "project_number": "551046341142",
+    "project_id": "winwinemobile-7db79",
+    "storage_bucket": "winwinemobile-7db79.appspot.com"
+>>>>>>> feature/authentication-1
   },
   "client": [
     {
       "client_info": {
+<<<<<<< HEAD
         "mobilesdk_app_id": "1:121361459683:android:27476c5a07b1a78b5f18d6",
+=======
+        "mobilesdk_app_id": "1:551046341142:android:971d3a2c2eb0c48a688b37",
+>>>>>>> feature/authentication-1
         "android_client_info": {
           "package_name": "com.winwinemobile"
         }
       },
       "oauth_client": [
         {
+<<<<<<< HEAD
           "client_id": "121361459683-q783h0apv0p6l44h1kh6t2uhka28909j.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -23,19 +34,30 @@
         },
         {
           "client_id": "121361459683-m0h3biqbqvji8a9fq6f09p9pjeh0fe96.apps.googleusercontent.com",
+=======
+          "client_id": "551046341142-sd84q28111srev2sfll47jd4abhi3v0t.apps.googleusercontent.com",
+>>>>>>> feature/authentication-1
           "client_type": 3
         }
       ],
       "api_key": [
         {
+<<<<<<< HEAD
           "current_key": "AIzaSyActCPdsQfLkiwBNQU1R9eM4k1tqLfjk4c"
+=======
+          "current_key": "AIzaSyCrS-AA9w17vRLlJUMlRu8Kkzl62uABtjM"
+>>>>>>> feature/authentication-1
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
+<<<<<<< HEAD
               "client_id": "121361459683-m0h3biqbqvji8a9fq6f09p9pjeh0fe96.apps.googleusercontent.com",
+=======
+              "client_id": "551046341142-sd84q28111srev2sfll47jd4abhi3v0t.apps.googleusercontent.com",
+>>>>>>> feature/authentication-1
               "client_type": 3
             }
           ]

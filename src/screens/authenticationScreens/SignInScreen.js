@@ -1,4 +1,5 @@
 import {
+  Button,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -11,8 +12,6 @@ import {
   GoogleSigninButton,
   statusCodes,
 } from 'react-native-google-signin';
-import auth from '@react-native-firebase/auth';
-
 import {useEffect, useState} from 'react';
 import {FilledButton} from '../../components';
 
@@ -35,11 +34,6 @@ export default function SignInScreen() {
       await GoogleSignin.hasPlayServices();
       const {accessToken, idToken} = await GoogleSignin.signIn();
       setLoggedIn(true);
-      const credential = auth.GoogleAuthProvider.credential(
-        idToken,
-        accessToken,
-      );
-      await auth().signInWithCredential(credential);
     } catch (error) {
       const {SIGN_IN_CANCELLED, IN_PROGRESS, PLAY_SERVICES_NOT_AVAILABLE} =
         statusCodes;

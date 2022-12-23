@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">WinwineMobile</string>
+    <string name="facebook_app_id">692087272439799</string>
+    <string name="facebook_client_token">f3daa4e1f4fae9995de0ff16d916f850</string>
 </resources>
