@@ -1,6 +1,5 @@
 const ScreenKeys = {
   ROOT: 'ROOT',
-  HOME: 'HOME',
   BLANK: 'BLANK',
   AUTHENTICATION: 'AUTHENTICATION',
 
@@ -8,11 +7,15 @@ const ScreenKeys = {
   BLANK_STACK: 'AuthenticStackScreen',
   LIBRARY_STACK: 'LibraryStackScreen',
 
+  HOME: 'HOME',
   PLAY_GAME: 'GAME/PLAY',
   WAIT_GAME: 'GAME/WAIT',
 
   SIGNUP_AU: 'AU/SIGNUP',
   NAME_AU: 'AU/NAME',
+
+  LIBRARY: 'LIBRARY',
+  SEARCH_LIB: 'LIB/SEARCH',
 
   CREATE_ACTION: 'ACTION/CREATE',
   DECK_ACTION: 'ACTION/DECK',
