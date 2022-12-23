@@ -1,5 +1,4 @@
 import {
-  Button,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -11,7 +10,7 @@ import {
   GoogleSignin,
   GoogleSigninButton,
   statusCodes,
-} from 'react-native-google-signin';
+} from '@react-native-google-signin';
 import {useEffect, useState} from 'react';
 import {FilledButton} from '../../components';
 
