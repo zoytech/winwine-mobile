@@ -42,7 +42,7 @@ function generateStateStyles({selected, pressed, disabled}) {
     const onSurfaceVar = Color.light[ColorVariant.surfaceVariant]?.onBase;
     const surface = Color.light[ColorVariant.surface]?.base;
     const layerColor =
-      StateLayers.light[StateLayersVariant.surfaceVar]?.level_012;
+      StateLayers.light[StateLayersVariant.surfaceVar]?.level_068;
     const outlineColor = Color.light[ColorVariant.outline]?.base;
 
     return {

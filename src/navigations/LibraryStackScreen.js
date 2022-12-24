@@ -71,6 +71,7 @@ export default function LibraryStackScreen({navigation, route}) {
         <LibraryStack.Screen
           name={ScreenKeys.SEARCH_LIB}
           component={SearchLibraryScreen}
+          options={{headerShown: false}}
         />
         <LibraryStack.Screen
           name={ScreenKeys.CREATE_CARD}

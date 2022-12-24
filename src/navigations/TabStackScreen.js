@@ -12,6 +12,7 @@ export default function TabStackScreen() {
   const screenOptionsProps = {
     headerShown: false,
     tabBarItemStyle: styles.item,
+    tabBarHideOnKeyboard: true,
   };
   return (
     <Tab.Navigator

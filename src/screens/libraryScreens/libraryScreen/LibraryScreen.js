@@ -14,6 +14,7 @@ import {loadCardDeckList} from 'src/redux/actions';
 import {removeIdenticalItemInArray} from 'src/utils';
 import {CustomStatusBar} from 'src/screens/components';
 import {CardDeckList, LibraryTopAppBar} from './components';
+import {tagItem} from 'src/constants';
 
 export default function LibraryScreen({navigation}) {
   const topBarRef = useRef({
@@ -32,19 +33,19 @@ export default function LibraryScreen({navigation}) {
   const tagChipData = [
     {
       tagChipId: tagIdData[0],
-      tagChipContent: '18+',
+      tagChipContent: tagItem.ADULT,
     },
     {
       tagChipId: tagIdData[1],
-      tagChipContent: 'Bạn thân',
+      tagChipContent: tagItem.BUDDY,
     },
     {
       tagChipId: tagIdData[2],
-      tagChipContent: 'Mới quen',
+      tagChipContent: tagItem.FIRST_MEETING,
     },
     {
       tagChipId: tagIdData[3],
-      tagChipContent: 'Tới bến',
+      tagChipContent: tagItem.KILLER,
     },
   ];
   useEffect(() => {

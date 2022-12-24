@@ -1,6 +1,6 @@
-import CreateDeckTopAppBar from './CreateDeckTopAppBar';
-import RecommendedTaskList from './RecommendedTaskList';
+import TextInputHolder from './TextInputHolder';
+import TagSelectionField from './TagSelectionField';
+import DescriptionField from './DescriptionField';
+import ImageField from './ImageField';
 
-import CreateActionHeader from './createActionHeader';
-
-export {CreateDeckTopAppBar, CreateActionHeader, RecommendedTaskList};
+export {TextInputHolder, TagSelectionField, DescriptionField, ImageField};

@@ -2,7 +2,7 @@ import {ScreenKeys} from './ScreenKeys';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import hideBottomTabBarMethod from './utils/hideBottomTabBarMethod';
 import {useLayoutEffect} from 'react';
-import {CreateCardScreen} from 'src/screens';
+import {CreateDeckScreen} from 'src/screens';
 import {CreateCardTopAppBar} from 'src/screens/screenTopAppBars';
 
 const CreateStack = createNativeStackNavigator();
@@ -16,10 +16,8 @@ export default function AuthenticStackScreen({navigation, route}) {
     <CreateStack.Navigator>
       <CreateStack.Screen
         name={ScreenKeys.CREATE_DECK}
-        component={CreateCardScreen}
-        options={{
-          header: () => <CreateCardTopAppBar />,
-        }}
+        component={CreateDeckScreen}
+        options={{headerShown: false}}
       />
     </CreateStack.Navigator>
   );
