@@ -1,3 +1,3 @@
 import LibraryScreen from './LibraryScreen';
 
-export {LibraryScreen};
+export default LibraryScreen;

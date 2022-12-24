@@ -1,4 +1,4 @@
-import CreateActionScreen from './CreateActionScreen';
-import DeckActionScreen from './DeckActionScreen';
+import CreateDeckScreen from './createDeckScreen';
+import CreateCardScreen from './createCardScreen';
 
-export {CreateActionScreen, DeckActionScreen};
+export {CreateDeckScreen, CreateCardScreen};

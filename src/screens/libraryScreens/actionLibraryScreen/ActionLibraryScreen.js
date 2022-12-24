@@ -1,8 +1,7 @@
 import {StyleSheet, View} from 'react-native';
-import ActionContainer from './components/ActionContainer';
-import ActionItem from './components/ActionItem';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {useState} from 'react';
+import {ActionContainer, ActionItem} from './components';
 
 const actions = {
   SAVE: {
@@ -17,7 +16,7 @@ const actions = {
     REMOVE: 'Huỷ thích',
   },
 };
-export default function DeckActionScreen({navigation, route}) {
+export default function ActionLibraryScreen({navigation, route}) {
   const {
     onPinningPress = () => {},
     onLikePress = () => {},
@@ -97,10 +96,11 @@ export default function DeckActionScreen({navigation, route}) {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    height: '30%',
+    height: '40%',
     flexDirection: 'column',
     justifyContent: 'center',
     backgroundColor: Color.light[ColorVariant.background]?.base,
+    paddingBottom: 60,
   },
   actionItem: {
     width: '100%',

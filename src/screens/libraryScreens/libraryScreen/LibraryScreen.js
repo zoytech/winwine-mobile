@@ -9,11 +9,11 @@ import {
   requestingDeckListSelector2,
 } from 'src/redux/selectors';
 import {SpinnerType1} from 'src/components';
-import {CardDeckList, LibraryTopAppBar} from './components';
 import loadCardDeckList2 from 'src/redux/actions/loadCardDeckList2';
 import {loadCardDeckList} from 'src/redux/actions';
 import {removeIdenticalItemInArray} from 'src/utils';
 import {CustomStatusBar} from 'src/screens/components';
+import {CardDeckList, LibraryTopAppBar} from './components';
 
 export default function LibraryScreen({navigation}) {
   const topBarRef = useRef({

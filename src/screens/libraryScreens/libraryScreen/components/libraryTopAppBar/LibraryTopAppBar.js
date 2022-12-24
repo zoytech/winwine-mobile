@@ -1,11 +1,11 @@
 import {forwardRef, useImperativeHandle, useRef, useState} from 'react';
-import {Animated, StyleSheet} from 'react-native';
+import {Animated, StyleSheet, View} from 'react-native';
 import {CenterTopBar} from 'src/components';
 import {heightOf} from 'src/constants';
 import {withAnimated} from 'src/utils';
 import {AvatarSettingButton} from 'src/screens/components';
-import RightButtons from './RightButtons';
-import TagChipList from './TagChipList';
+import TagChipList from './components/TagChipList';
+import {CreateButton, SearchButton} from './components';
 
 const AnimatedCenterTopBar = withAnimated(CenterTopBar);
 const CONFIG_VALUE = 100;
@@ -61,7 +61,16 @@ function LibraryTopAppBar(props, ref) {
   }
 
   function renderRightComponents() {
-    return <RightButtons navigation={navigation} userToken={userToken} />;
+    return (
+      <View style={styles.rightButtons}>
+        <SearchButton navigation={navigation} style={styles.targetSize} />
+        <CreateButton
+          navigation={navigation}
+          style={styles.targetSize}
+          userToken={userToken}
+        />
+      </View>
+    );
   }
 
   function renderBottomComponents() {
@@ -122,5 +131,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  rightButtons: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    paddingRight: 8,
+  },
+  iconStyle: {size: 30},
 });
 export default forwardRef(LibraryTopAppBar);

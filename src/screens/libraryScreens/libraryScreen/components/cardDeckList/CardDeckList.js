@@ -6,13 +6,11 @@ import MiniCardItem from './MiniCardItem';
 import {removeJustOneItem} from 'src/utils';
 
 function getMarginItem(index) {
-  return index % 2 === 0
-    ? {
-        marginRight: 16,
-      }
-    : {
-        marginLeft: 16,
-      };
+  if (index % 2 === 0) {
+    return {marginRight: 16};
+  } else {
+    return {marginLeft: 16};
+  }
 }
 
 export default function CardDeckList(props) {
@@ -103,7 +101,7 @@ export default function CardDeckList(props) {
   };
   const handleNavigateToActionBoard = (deckId, hasPinnedId, hasLikedId) => {
     navigation.navigate({
-      name: ScreenKeys.DECK_ACTION,
+      name: ScreenKeys.ACTION_LIB,
       params: {
         onPinningPress: () => handlePinningPress(deckId),
         hasPinnedId: hasPinnedId,

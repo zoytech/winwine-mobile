@@ -11,7 +11,7 @@ export default function MediumTopBar(props) {
     style,
     contentStyle,
     rightContainerStyle,
-    renderRightComponents,
+    renderRightComponents = () => {},
     ...otherProps
   } = props;
 

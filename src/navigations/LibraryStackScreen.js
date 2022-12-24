@@ -1,32 +1,36 @@
 import {ScreenKeys} from './ScreenKeys';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {
+  ActionLibraryScreen,
   BasicDialog,
   CardDialog,
-  CreateActionScreen,
-  DeckActionScreen,
+  CreateCardScreen,
+  CreateDeckScreen,
   GamePlayScreen,
   GameWaitScreen,
   LibraryScreen,
+  SearchLibraryScreen,
   SignInScreen,
 } from 'src/screens';
 import {useLayoutEffect} from 'react';
 import {hideBottomTabBarMethod} from './utils';
 import {
+  CreateCardTopAppBar,
   GamePlayTopAppBar,
   GameWaitTopAppBar,
   LibraryTopAppBar,
-} from 'src/screens/headerComponents';
-import AuthenticStackScreen from './AuthenticStackScreen';
+} from 'src/screens/screenTopAppBars';
 
 const LibraryStack = createNativeStackNavigator();
 export default function LibraryStackScreen({navigation, route}) {
   useLayoutEffect(() => {
     const tabHiddenRoutes = [
       ScreenKeys.PLAY_GAME,
-      ScreenKeys.WAIT_GAME,
-      ScreenKeys.CREATE_ACTION,
-      ScreenKeys.DECK_ACTION,
+      ScreenKeys.SIGNUP_AU,
+      ScreenKeys.NAME_AU,
+      ScreenKeys.CARD_DIALOG,
+      ScreenKeys.BASIC_DIALOG,
+      ScreenKeys.CREATE_DECK,
     ];
     hideBottomTabBarMethod({navigation, route, tabHiddenRoutes});
   }, [navigation, route]);
@@ -64,15 +68,26 @@ export default function LibraryStackScreen({navigation, route}) {
           name={ScreenKeys.SIGNUP_AU}
           component={SignInScreen}
         />
+        <LibraryStack.Screen
+          name={ScreenKeys.SEARCH_LIB}
+          component={SearchLibraryScreen}
+        />
+        <LibraryStack.Screen
+          name={ScreenKeys.CREATE_CARD}
+          component={CreateCardScreen}
+          options={{
+            header: () => <CreateCardTopAppBar />,
+          }}
+        />
+        <LibraryStack.Screen
+          name={ScreenKeys.CREATE_DECK}
+          component={CreateDeckScreen}
+        />
       </LibraryStack.Group>
       <LibraryStack.Group screenOptions={modalScreenProps}>
         <LibraryStack.Screen
-          name={ScreenKeys.DECK_ACTION}
-          component={DeckActionScreen}
-        />
-        <LibraryStack.Screen
-          name={ScreenKeys.CREATE_ACTION}
-          component={CreateActionScreen}
+          name={ScreenKeys.ACTION_LIB}
+          component={ActionLibraryScreen}
         />
         <LibraryStack.Screen
           name={ScreenKeys.BASIC_DIALOG}

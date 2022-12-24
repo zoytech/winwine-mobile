@@ -13,14 +13,13 @@ import {
   GamePlayTopAppBar,
   GameWaitTopAppBar,
   HomeTopAppBar,
-} from 'src/screens/headerComponents';
+} from 'src/screens/screenTopAppBars';
 
 const HomeStack = createNativeStackNavigator();
 export default function HomeStackScreen({navigation, route}) {
   useLayoutEffect(() => {
     const tabHiddenRoutes = [
       ScreenKeys.PLAY_GAME,
-      ScreenKeys.WAIT_GAME,
       ScreenKeys.CARD_DIALOG,
       ScreenKeys.BASIC_DIALOG,
     ];
