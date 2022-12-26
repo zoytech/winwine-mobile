@@ -5,7 +5,9 @@ import SplashScreen from 'react-native-splash-screen';
 import {Color, ColorVariant} from 'src/themes';
 import {
   cardDeckListSelector,
+  cardDeckListSelector2,
   requestingDeckListSelector,
+  requestingDeckListSelector2,
 } from 'src/redux/selectors';
 import {loadCardDeckList} from 'src/redux/actions';
 import {SpinnerType1} from 'src/components';
@@ -14,7 +16,11 @@ import {
   HorizontalCardList,
   VerticalCardList,
 } from './components';
-import {CustomStatusBar, SectionHeader} from '../components';
+import {
+  CustomStatusBar,
+  EmptyCardDeckAnnounce,
+  SectionHeader,
+} from '../components';
 
 const RECENTLY = 'Chơi gần đây';
 const POPULAR = 'Phổ biến';
@@ -25,13 +31,14 @@ export default function HomeScreen({navigation}) {
   const dispatch = useDispatch();
   const cardDeckList = useSelector(cardDeckListSelector);
   const requesting = useSelector(requestingDeckListSelector);
-
+  const cardDeckList2 = useSelector(cardDeckListSelector2);
+  const requesting2 = useSelector(requestingDeckListSelector2);
   const {popularData, recentlyData} = cardDeckList;
   const surfaceVarColor = Color.light[ColorVariant.surfaceVariant]?.base;
 
   useEffect(() => {
     dispatch(loadCardDeckList());
-    if (requesting === false) {
+    if (requesting2 === false) {
       SplashScreen.hide();
     }
   }, [dispatch]);
@@ -44,7 +51,7 @@ export default function HomeScreen({navigation}) {
     });
   }, [navigation]);
 
-  if (requesting) {
+  if (requesting2) {
     return <SpinnerType1 />;
   }
   return (
@@ -54,10 +61,10 @@ export default function HomeScreen({navigation}) {
         onScroll={topBarRef.current?.onScroll}
         contentContainerStyle={styles.contentContainer}>
         <SectionHeader content={RECENTLY} style={styles.sectionHeader} />
-        <HorizontalCardList data={recentlyData} navigation={navigation} />
+        <HorizontalCardList data={cardDeckList2} navigation={navigation} />
         <SectionHeader content={POPULAR} style={styles.sectionHeader} />
         <VerticalCardList
-          data={popularData}
+          data={cardDeckList2}
           navigation={navigation}
           style={styles.secondView}
         />

@@ -8,7 +8,6 @@ import {
   Typography,
 } from 'src/themes';
 import {defaultOfDeck, widthOf} from 'src/constants';
-import {useEffect} from 'react';
 
 const IconByTagName = {
   '18+': 'tag',
@@ -41,11 +40,9 @@ export default function MiniCardItem(props) {
     const subTitleStyle = [defaultContentStyle, {color: subTittleColor}];
     return (
       <>
-        {deckTitle && (
-          <Text style={titleStyle} numberOfLines={1} ellipsizeMode={'tail'}>
-            {deckTitle}
-          </Text>
-        )}
+        <Text style={titleStyle} numberOfLines={1} ellipsizeMode={'tail'}>
+          {deckTitle}
+        </Text>
         <Text style={subTitleStyle}>{deckTag}</Text>
       </>
     );

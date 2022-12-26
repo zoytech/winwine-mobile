@@ -10,9 +10,8 @@ import {
 } from 'src/redux/selectors';
 import {SpinnerType1} from 'src/components';
 import loadCardDeckList2 from 'src/redux/actions/loadCardDeckList2';
-import {loadCardDeckList} from 'src/redux/actions';
 import {removeIdenticalItemInArray} from 'src/utils';
-import {CustomStatusBar} from 'src/screens/components';
+import {CustomStatusBar, EmptyInfoAnnouncement} from 'src/screens/components';
 import {CardDeckList, LibraryTopAppBar} from './components';
 import {tagItem} from 'src/constants';
 
@@ -51,9 +50,6 @@ export default function LibraryScreen({navigation}) {
   useEffect(() => {
     dispatch(loadCardDeckList2());
   }, [dispatch]);
-  useEffect(() => {
-    dispatch(loadCardDeckList());
-  }, [dispatch]);
 
   useEffect(() => {
     navigation.setOptions({
@@ -79,22 +75,29 @@ export default function LibraryScreen({navigation}) {
     }
   }
 
-  if (requesting2 || requesting) {
+  if (requesting2) {
     return <SpinnerType1 />;
   }
   return (
     <SafeAreaView style={styles.container}>
       <CustomStatusBar />
-      <ScrollView
-        onScroll={topBarRef.current?.onScroll}
-        contentContainerStyle={styles.contentContainer}>
-        <CardDeckList
-          data={localStorageData}
-          navigation={navigation}
-          chipId={selectedChip}
+      {!cardDeckList2 || cardDeckList2.length === 0 ? (
+        <EmptyInfoAnnouncement
+          content={'Thư viện của bạn đang trống'}
+          style={styles.emptyView}
         />
-        {/*<CardDeckList data={cardDeckList2} navigation={navigation} />*/}
-      </ScrollView>
+      ) : (
+        <ScrollView
+          onScroll={topBarRef.current?.onScroll}
+          contentContainerStyle={styles.contentContainer}>
+          <CardDeckList
+            data={cardDeckList2}
+            navigation={navigation}
+            chipId={selectedChip}
+          />
+          <CardDeckList data={cardDeckList2} navigation={navigation} />
+        </ScrollView>
+      )}
     </SafeAreaView>
   );
 }

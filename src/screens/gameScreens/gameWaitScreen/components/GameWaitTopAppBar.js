@@ -8,15 +8,8 @@ const SmallTopBarAnimated = withAnimated(SmallTopBar);
 const CONFIG_VALUE = 100;
 
 function GameWaitTopAppBar(props, ref) {
-  const {
-    navigation,
-    routes,
-    content,
-    imageHeight,
-    source,
-    style,
-    ...otherProps
-  } = props;
+  const {navigation, content, imageHeight, source, style, ...otherProps} =
+    props;
   const [showContent, setShowContent] = useState(false);
   const animatedValue = useRef(new Animated.Value(0)).current;
   const minHeight = heightOf?.MIN_HEADER;

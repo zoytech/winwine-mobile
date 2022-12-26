@@ -7,9 +7,11 @@ import {loadCardDeckById} from 'src/redux/actions';
 import {GameWaitHeader, GameWaitTopAppBar} from './components';
 import {cardDeckSelector, requestingDeckSelector} from 'src/redux/selectors';
 import {SwipeableGameCard} from '../components';
-import {defaultOf, heightOf, widthOf} from 'src/constants';
-import {CustomStatusBar} from 'src/screens/components';
+import {defaultOf, defaultOfDeck, heightOf, widthOf} from 'src/constants';
+import {CustomStatusBar, EmptyInfoAnnouncement} from 'src/screens/components';
 import {getPreviewCardNumber, getPreviewDataItem} from './utils';
+import {ScreenKeys} from 'src/navigations/ScreenKeys';
+import HeaderButtons from './components/gameWaitHeader/HeaderButtons';
 
 const width = {
   CONTAINER: 320,
@@ -31,6 +33,8 @@ export default function GameWaitScreen({navigation, route}) {
   const {cardDeck, tag, uri, tasks} = cardDeckItem || {};
   const data = tasks || [];
   const dataLength = data ? data.length : defaultOf?.initDataLength;
+  const {TITLE, IMAGE} = defaultOfDeck;
+
   const baseColor = Color.light[ColorVariant.surface]?.base;
   const textColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
 
@@ -72,6 +76,39 @@ export default function GameWaitScreen({navigation, route}) {
     setShowIndex(index);
   }
 
+  function handleNavigateCreateCardScreen() {
+    navigation.navigate({
+      name: ScreenKeys.CREATE_CARD,
+      params: {
+        deckId: deckId || '',
+      },
+    });
+  }
+
+  function renderButtons() {
+    const handleStaringDeckPress = () => {};
+    const handleDownloadDeckPress = () => {};
+    const handleNavigateMoreActionPress = () => {};
+    const handlePressFilledButton = () => {
+      navigation.navigate({
+        name: ScreenKeys.PLAY_GAME,
+        params: {
+          deckId: deckId,
+          deckTitle: deckTitle ? deckTitle : TITLE,
+          deckSource: deckSource ? deckSource : IMAGE,
+        },
+      });
+    };
+    return (
+      <HeaderButtons
+        onStaringDeckPress={handleStaringDeckPress}
+        onDownloadDeckPress={handleDownloadDeckPress}
+        onNavigateMoreActionPress={handleNavigateMoreActionPress}
+        onFilledButtonPress={handlePressFilledButton}
+      />
+    );
+  }
+
   function renderPreviewNumber(total) {
     return (
       <Text style={defaultContentStyle}>
@@ -97,21 +134,32 @@ export default function GameWaitScreen({navigation, route}) {
           dataLength={dataLength}
           onLayoutImage={event => handleOnLayoutImage(event)}
         />
-        <View style={styles.supportingText}>
-          {renderPreviewNumber(dataLength)}
-        </View>
-        <SwipeableGameCard
-          data={getPreviewDataItem(data, INITIAL_INDEX)}
-          ref={carouselRef}
-          style={styles.card}
-          contentStyle={defaultContentStyle}
-          itemWidth={width?.CARD}
-          containerWidth={width?.CONTAINER}
-          separatorWidth={width?.SEPARATOR}
-          onScrollEnd={(item, index) => handleOnScrollEnd(item, index)}
-          onItemPress={handleCardItemPressed}
-          initialIndex={INITIAL_INDEX}
-        />
+        {!dataLength || dataLength === 0 ? (
+          <EmptyInfoAnnouncement
+            content={'Bộ bài chưa có lá bài nào.'}
+            buttonContent={'Tạo mới'}
+            onPress={handleNavigateCreateCardScreen}
+          />
+        ) : (
+          <>
+            {renderButtons()}
+            <View style={styles.supportingText}>
+              {renderPreviewNumber(dataLength)}
+            </View>
+            <SwipeableGameCard
+              data={getPreviewDataItem(data, INITIAL_INDEX)}
+              ref={carouselRef}
+              style={styles.card}
+              contentStyle={defaultContentStyle}
+              itemWidth={width?.CARD}
+              containerWidth={width?.CONTAINER}
+              separatorWidth={width?.SEPARATOR}
+              onScrollEnd={(item, index) => handleOnScrollEnd(item, index)}
+              onItemPress={handleCardItemPressed}
+              initialIndex={INITIAL_INDEX}
+            />
+          </>
+        )}
       </ScrollView>
     </SafeAreaView>
   );

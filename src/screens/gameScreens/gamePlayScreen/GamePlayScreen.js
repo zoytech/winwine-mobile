@@ -18,7 +18,7 @@ import {
   IndicatorTrace,
 } from './components';
 import {SwipeableGameCard} from '../components';
-import {CustomStatusBar} from 'src/screens/components';
+import {CustomStatusBar, EmptyInfoAnnouncement} from 'src/screens/components';
 
 const screenWidth = widthOf?.SCREEN;
 const width = {
@@ -112,6 +112,15 @@ export default function GamePlayScreen({navigation, route}) {
     setShowIndex(index);
   }
 
+  function handleNavigateCreateCardScreen() {
+    navigation.navigate({
+      name: ScreenKeys.CREATE_CARD,
+      params: {
+        deckId: deckId || '',
+      },
+    });
+  }
+
   function renderBottomButtons() {
     const handleBackwardPress = () => {
       showIndex !== INITIAL_INDEX &&
@@ -162,38 +171,46 @@ export default function GamePlayScreen({navigation, route}) {
   return (
     <SafeAreaView style={defaultContainerStyle}>
       <CustomStatusBar />
-      <ScrollView contentContainerStyle={styles.scrollView}>
-        <View style={styles.progressBar}>
-          {showIndicatorInfo && (
-            <IndicatorTrace
-              content={`${showIndex + 1} per ${dataLength}`}
-              endContent={dataLength}
+      {!dataLength || dataLength === 0 ? (
+        <EmptyInfoAnnouncement
+          content={'Bộ bài chưa có lá bài nào.'}
+          buttonContent={'Tạo mới'}
+          onPress={handleNavigateCreateCardScreen}
+        />
+      ) : (
+        <ScrollView contentContainerStyle={styles.scrollView}>
+          <View style={styles.progressBar}>
+            {showIndicatorInfo && (
+              <IndicatorTrace
+                content={`${showIndex + 1} per ${dataLength}`}
+                endContent={dataLength}
+                progressBarWidth={progressBarWidth}
+                indicatedArrowWidth={indicatedArrowWidth}
+                indicatedPartWidth={indicatedPartWidth}
+              />
+            )}
+            <CardProgressTrace
+              onPressIn={handleShowIndicatorInfo}
+              onPressOut={handleNotShowIndicatorInfo}
+              contentStyle={defaultContentStyle}
               progressBarWidth={progressBarWidth}
-              indicatedArrowWidth={indicatedArrowWidth}
               indicatedPartWidth={indicatedPartWidth}
             />
-          )}
-          <CardProgressTrace
-            onPressIn={handleShowIndicatorInfo}
-            onPressOut={handleNotShowIndicatorInfo}
+          </View>
+          <SwipeableGameCard
+            data={taskList}
+            ref={carouselRef}
+            style={styles.card}
             contentStyle={defaultContentStyle}
-            progressBarWidth={progressBarWidth}
-            indicatedPartWidth={indicatedPartWidth}
+            itemWidth={width?.CARD}
+            containerWidth={width?.CONTAINER}
+            separatorWidth={width?.SEPARATOR}
+            onScrollEnd={(item, index) => handleOnScrollEnd(item, index)}
+            initialIndex={INITIAL_INDEX}
           />
-        </View>
-        <SwipeableGameCard
-          data={taskList}
-          ref={carouselRef}
-          style={styles.card}
-          contentStyle={defaultContentStyle}
-          itemWidth={width?.CARD}
-          containerWidth={width?.CONTAINER}
-          separatorWidth={width?.SEPARATOR}
-          onScrollEnd={(item, index) => handleOnScrollEnd(item, index)}
-          initialIndex={INITIAL_INDEX}
-        />
-        <View style={styles.action}>{renderBottomButtons()}</View>
-      </ScrollView>
+          <View style={styles.action}>{renderBottomButtons()}</View>
+        </ScrollView>
+      )}
     </SafeAreaView>
   );
 }

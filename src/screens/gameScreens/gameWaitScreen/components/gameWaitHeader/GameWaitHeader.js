@@ -18,14 +18,9 @@ export default function GameWaitHeader(props) {
     cardDeckInfo,
     dataLength,
     style,
-    onStaringDeckPress = () => {},
-    onDownloadDeckPress = () => {},
-    onNavigateMoreActionPress = () => {},
     onLayoutImage = () => {},
     ...otherProps
   } = props;
-  const {deckId, deckTitle, deckSource} = routeParams;
-
   const {TITLE, TAG, IMAGE, DESCRIPTION, LIKES} = defaultOfDeck;
   const {NAME, AVATAR} = defaultOfUser;
 
@@ -44,27 +39,6 @@ export default function GameWaitHeader(props) {
 
   const containerStyle = [styles.container, style];
 
-  function renderHeaderRightButtons({buttonStyle, contentButtonStyle}) {
-    const handlePressFilledButton = () => {
-      navigation.navigate({
-        name: ScreenKeys.PLAY_GAME,
-        params: {
-          deckId: deckId,
-          deckTitle: deckTitle ? deckTitle : TITLE,
-          deckSource: deckSource ? deckSource : IMAGE,
-        },
-      });
-    };
-    return (
-      <FilledButton
-        content={'Chơi ngay'}
-        style={buttonStyle}
-        contentStyle={contentButtonStyle}
-        onPress={handlePressFilledButton}
-      />
-    );
-  }
-
   return (
     <View {...otherProps} style={containerStyle}>
       <HeaderImage source={deck?.image} onLayoutImage={e => onLayoutImage(e)} />
@@ -78,12 +52,6 @@ export default function GameWaitHeader(props) {
         totalLike={deck?.likes}
         headStyle={Typography.headline.small}
         contentStyle={Typography.label.large}
-      />
-      <HeaderButtons
-        onStaringDeckPress={onStaringDeckPress}
-        onDownloadDeckPress={onDownloadDeckPress}
-        onNavigateMoreActionPress={onNavigateMoreActionPress}
-        renderRightComponents={renderHeaderRightButtons}
       />
     </View>
   );

@@ -2,7 +2,7 @@ import React from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import {defaultOfDeck} from 'src/constants';
-import MiniCardItem from './MiniCardItem';
+import MiniCardItem2 from './MiniCardItem2';
 
 export default function HorizontalCardList(props) {
   const {style, data, navigation, ...otherProps} = props;
@@ -32,7 +32,7 @@ export default function HorizontalCardList(props) {
   function renderItem({item}) {
     const cardDeckId = item?.cardDeckId;
     return (
-      <MiniCardItem
+      <MiniCardItem2
         {...otherProps}
         key={cardDeckId}
         data={item}

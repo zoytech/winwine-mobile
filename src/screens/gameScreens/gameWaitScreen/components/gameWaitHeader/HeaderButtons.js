@@ -1,6 +1,11 @@
 import {StyleSheet, View} from 'react-native';
 import {Typography} from 'src/themes';
-import {StandardIconButton, StandardIconToggle} from 'src/components';
+import {
+  FilledButton,
+  StandardIconButton,
+  StandardIconToggle,
+} from 'src/components';
+import {ScreenKeys} from '../../../../../navigations/ScreenKeys';
 
 export default function HeaderButtons(props) {
   const {
@@ -10,6 +15,7 @@ export default function HeaderButtons(props) {
     onStaringDeckPress = () => {},
     onDownloadDeckPress = () => {},
     onNavigateMoreActionPress = () => {},
+    onFilledButtonPress = () => {},
     ...otherProps
   } = props;
 
@@ -43,24 +49,21 @@ export default function HeaderButtons(props) {
     );
   }
 
-  function renderRight({buttonStyle, contentButtonStyle}) {
-    //Can add more style if needed, not just iconStyle, Example: defaultContentStyle,...
-    if (typeof renderRightComponents === 'function') {
-      return renderRightComponents({buttonStyle, contentButtonStyle});
-    }
-    return renderRightComponents;
+  function renderHeaderRightButton() {
+    return (
+      <FilledButton
+        content={'Chơi ngay'}
+        contentStyle={styles.buttonContent}
+        onPress={onFilledButtonPress}
+      />
+    );
   }
 
   return (
     <View {...otherProps} style={containerStyle}>
       {children}
       <View style={styles.subAction}>{renderHeaderLeftButtons()}</View>
-      <View style={styles.mainAction}>
-        {renderRight({
-          buttonStyle: styles.button,
-          contentButtonStyle: styles.buttonContent,
-        })}
-      </View>
+      <View style={styles.mainAction}>{renderHeaderRightButton()}</View>
     </View>
   );
 }

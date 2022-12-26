@@ -4,6 +4,7 @@ import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import {defaultOfDeck} from 'src/constants';
 import MiniCardItem from './MiniCardItem';
 import {removeJustOneItem} from 'src/utils';
+import MiniCardItem2 from './MiniCardItem2';
 
 function getMarginItem(index) {
   if (index % 2 === 0) {
@@ -117,7 +118,7 @@ export default function CardDeckList(props) {
     const hasPinnedId = pinDeckIds.includes(deckId);
     const hasLikedId = likedDeckIds.includes(deckId);
     return (
-      <MiniCardItem
+      <MiniCardItem2
         {...otherProps}
         key={deckId}
         data={item}

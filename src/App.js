@@ -7,8 +7,10 @@ const store = configureStore();
 
 export default function App() {
   return (
+    // <ErrorBoundary>
     <Provider store={store}>
       <RootNavigator />
     </Provider>
+    // </ErrorBoundary>
   );
 }
