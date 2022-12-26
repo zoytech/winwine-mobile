@@ -261,22 +261,11 @@ const styles = StyleSheet.create({
     width: 1,
     position: 'absolute',
   },
-
-  // paginationDotActive: {backgroundColor: 'blue'},
-  // paginationDotInactive: {backgroundColor: 'red'},
-  // pagination: {
-  //   position: 'absolute',
-  //   bottom: 8,
-  //   width: '100%',
-  //   justifyContent: 'center',
-  //   flexDirection: 'row',
-  // },
-  // paginationDot: {
-  //   width: 8,
-  //   height: 8,
-  //   borderRadius: 4,
-  //   marginHorizontal: 2,
-  // },
+  emptyView: {
+    width: '100%',
+    aspectRatio: 7 / 16,
+    paddingVertical: 100,
+  },
 });
 
 /*

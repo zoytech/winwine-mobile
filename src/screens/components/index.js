@@ -3,6 +3,7 @@ import SectionHeader from './SectionHeader';
 import CustomStatusBar from './CustomStatusBar';
 import AvatarSettingButton from './AvatarSettingButton';
 import LikeIcon from './LikeIcon';
+import EmptyInfoAnnouncement from './EmptyInfoAnnouncement';
 
 export {
   CardPackageSample,
@@ -10,4 +11,5 @@ export {
   CustomStatusBar,
   AvatarSettingButton,
   LikeIcon,
+  EmptyInfoAnnouncement,
 };

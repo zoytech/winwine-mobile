@@ -75,13 +75,13 @@ export default function LibraryScreen({navigation}) {
     }
   }
 
-  if (requesting2) {
+  if (requesting2 || !cardDeckList2) {
     return <SpinnerType1 />;
   }
   return (
     <SafeAreaView style={styles.container}>
       <CustomStatusBar />
-      {!cardDeckList2 || cardDeckList2.length === 0 ? (
+      {cardDeckList2.length === 0 ? (
         <EmptyInfoAnnouncement
           content={'Thư viện của bạn đang trống'}
           style={styles.emptyView}

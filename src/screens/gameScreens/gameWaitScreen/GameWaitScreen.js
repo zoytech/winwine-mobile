@@ -129,7 +129,6 @@ export default function GameWaitScreen({navigation, route}) {
         <GameWaitHeader
           style={styles.header}
           navigation={navigation}
-          routeParams={{deckId, deckTitle, deckSource}}
           cardDeckInfo={{cardDeck, tag, uri}}
           dataLength={dataLength}
           onLayoutImage={event => handleOnLayoutImage(event)}
@@ -139,6 +138,7 @@ export default function GameWaitScreen({navigation, route}) {
             content={'Bộ bài chưa có lá bài nào.'}
             buttonContent={'Tạo mới'}
             onPress={handleNavigateCreateCardScreen}
+            style={styles.emptyView}
           />
         ) : (
           <>
@@ -210,5 +210,10 @@ const styles = StyleSheet.create({
     borderRadius: 0,
     minWidth: 48,
     minHeight: 48,
+  },
+  emptyView: {
+    width: '100%',
+    aspectRatio: 2,
+    paddingVertical: 30,
   },
 });

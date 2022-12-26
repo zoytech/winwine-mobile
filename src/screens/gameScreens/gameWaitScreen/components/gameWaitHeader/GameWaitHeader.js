@@ -14,7 +14,6 @@ import HeaderImage from './HeaderImage';
 export default function GameWaitHeader(props) {
   const {
     navigation,
-    routeParams,
     cardDeckInfo,
     dataLength,
     style,
