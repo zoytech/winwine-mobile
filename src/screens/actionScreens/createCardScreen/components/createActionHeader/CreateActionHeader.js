@@ -12,26 +12,23 @@ export default function CreateActionHeader(props) {
     cardDeckInfo,
     dataLength,
     style,
-    onStaringDeckPress = () => {},
-    onDownloadDeckPress = () => {},
-    onNavigateMoreActionPress = () => {},
     onLayoutImage = () => {},
     ...otherProps
   } = props;
 
-  const {TITLE, TAG, IMAGE, DESCRIPTION, LIKES} = defaultOfDeck;
+  const {TITLE, TAG, IMAGE} = defaultOfDeck;
   const {NAME, AVATAR} = defaultOfUser;
 
-  const {cardDeck, tag, uri} = cardDeckInfo;
+  const {deckTitle, deckTag, deckSource, deckDescription} = cardDeckInfo;
   const user = {
     name: NAME,
     avatar: AVATAR,
   };
   const deck = {
-    title: cardDeck ? cardDeck : TITLE,
-    tag: tag ? tag : TAG,
-    image: uri ? {uri: uri} : IMAGE,
-    description: DESCRIPTION,
+    title: deckTitle ? deckTitle : TITLE,
+    tag: deckTag ? deckTag : TAG,
+    image: deckSource ? deckSource : IMAGE,
+    description: deckDescription ? deckDescription : '',
   };
 
   const containerStyle = [styles.container, style];
@@ -48,11 +45,6 @@ export default function CreateActionHeader(props) {
         description={deck?.description}
         headStyle={Typography.headline.small}
         contentStyle={Typography.label.large}
-      />
-      <HeaderButtons
-        onStaringDeckPress={onStaringDeckPress}
-        onDownloadDeckPress={onDownloadDeckPress}
-        onNavigateMoreActionPress={onNavigateMoreActionPress}
       />
     </View>
   );

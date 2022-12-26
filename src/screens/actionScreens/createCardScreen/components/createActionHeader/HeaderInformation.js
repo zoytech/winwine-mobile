@@ -1,7 +1,6 @@
 import {StyleSheet, Text, View} from 'react-native';
-import {BaseAvatarButton, FilterChip, SuggestionChip} from 'src/components';
+import {BaseAvatarButton, SuggestionChip} from 'src/components';
 import {Color, ColorVariant} from 'src/themes';
-import {LikeIcon} from 'src/screens/components';
 
 export default function HeaderInformation(props) {
   const {
@@ -23,10 +22,6 @@ export default function HeaderInformation(props) {
   const containerStyle = [styles.container, style];
   const subContentStyle = [{color: textColor}, contentStyle];
 
-  function renderSeparatorLine() {
-    return <Text style={styles.subInfoSeparator}>||</Text>;
-  }
-
   function renderUserInfoComponent() {
     return (
       <View style={styles.userDisplay}>
@@ -47,17 +42,23 @@ export default function HeaderInformation(props) {
     };
 
     return (
-      <View>
-        {head ? (
+      <View style={styles.mainContentLayout}>
+        <View style={styles.headerLayout}>
           <Text {...textProps} style={defaultHeadStyle}>
             {head}
           </Text>
-        ) : null}
-        {description ? (
+          <SuggestionChip
+            style={styles.subInfo}
+            content={tag}
+            contentStyle={subContentStyle}
+            selected={true}
+          />
+        </View>
+        <View style={styles.headerLayout}>
           <Text {...textProps} style={subContentStyle}>
             {description}
           </Text>
-        ) : null}
+        </View>
       </View>
     );
   }
@@ -90,17 +91,20 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'flex-start',
     paddingHorizontal: 8,
+    backgroundColor: 'gold',
+  },
+  mainContentLayout: {
+    width: '100%',
+    flexDirection: 'column',
+  },
+  headerLayout: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'space-between',
+    backgroundColor: 'coral',
   },
   title: {
     fontWeight: 'bold',
-  },
-  subInfo: {
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-  },
-  subInfoSeparator: {
-    paddingHorizontal: 4,
   },
   userDisplay: {
     flexDirection: 'row',
@@ -114,8 +118,5 @@ const styles = StyleSheet.create({
   userName: {
     paddingLeft: 4,
     fontWeight: 'bold',
-  },
-  likeIcon: {
-    paddingRight: 2,
   },
 });

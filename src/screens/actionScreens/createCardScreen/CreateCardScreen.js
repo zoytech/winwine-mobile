@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react';
-import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
+import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Color, ColorVariant, Typography} from 'src/themes';
-import {SpinnerType1} from 'src/components';
+import {FilledButton, SpinnerType1} from 'src/components';
 import {loadCardDeckById} from 'src/redux/actions';
 import {cardDeckSelector, requestingDeckSelector} from 'src/redux/selectors';
 import {defaultOf, heightOf, widthOf} from 'src/constants';
@@ -12,18 +12,30 @@ import {
   CreateCardTopAppBar,
   RecommendedTaskList,
 } from './components';
+import {TextInputHolder} from '../createDeckScreen/components';
 
 const width = {
   CONTAINER: 320,
   CARD: 320 * 0.85,
   SEPARATOR: 10,
 };
+const actions = {
+  TASKS: {
+    ADD: 'Thêm thử thách',
+  },
+};
 
 export default function CreateCardScreen({navigation, route}) {
+  const {deckTitle, deckId, deckDescription, deckSource, deckTag} =
+    route.params;
   const cardDeckItem = useSelector(cardDeckSelector);
   const requesting = useSelector(requestingDeckSelector);
   const dispatch = useDispatch();
   const [imageHeight, setImageHeight] = useState(heightOf?.IMAGE);
+  const [taskItem, setTaskItem] = useState(null);
+  const [openTaskInput, setOpenTaskInput] = useState(true);
+
+  const scrollViewRef = useRef([]);
   const {cardDeck, tag, uri, tasks} = cardDeckItem || {};
   const recommendedTasks = tasks || [];
   const dataLength = recommendedTasks
@@ -31,6 +43,7 @@ export default function CreateCardScreen({navigation, route}) {
     : defaultOf?.initDataLength;
   const baseColor = Color.light[ColorVariant.surface]?.base;
   const textColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
+  const primaryColor = Color.light[ColorVariant.primary]?.base;
 
   const recommendedDeckId = 1;
   useEffect(() => {
@@ -39,7 +52,15 @@ export default function CreateCardScreen({navigation, route}) {
 
   useEffect(() => {
     navigation.setOptions({
-      header: () => <CreateCardTopAppBar navigation={navigation} />,
+      header: () => (
+        <CreateCardTopAppBar
+          navigation={navigation}
+          content={deckTitle}
+          source={deckSource}
+          ref={scrollViewRef}
+          imageHeight={imageHeight}
+        />
+      ),
     });
   }, [navigation, imageHeight]);
 
@@ -57,30 +78,60 @@ export default function CreateCardScreen({navigation, route}) {
     console.log('some action here');
   }
 
+  function handleOpenTaskInput() {
+    setOpenTaskInput(!openTaskInput);
+  }
+
+  function renderTaskInput() {
+    const borderStyle = {borderBottomColor: primaryColor};
+    return (
+      <>
+        {openTaskInput && (
+          <TextInputHolder
+            style={borderStyle}
+            contentStyle={defaultContentStyle}
+            selectTextOnFocus={true}
+          />
+        )}
+      </>
+    );
+  }
+
   if (requesting) {
     return <SpinnerType1 />;
   }
   return (
     <SafeAreaView style={defaultContainerStyle}>
       <CustomStatusBar />
-      <CreateActionHeader
-        style={styles.header}
-        navigation={navigation}
-        cardDeckInfo={{cardDeck, tag, uri}}
-        dataLength={dataLength}
-        onLayoutImage={event => handleOnLayoutImage(event)}
-      />
-      <View style={styles.supportingText}>
-        <Text style={defaultContentStyle}>
-          {'goi y cac thu thach tham khao'}
-        </Text>
-      </View>
-      <RecommendedTaskList
-        data={recommendedTasks}
-        style={styles.card}
-        onItemPress={handleCardItemPressed}
-        contentStyle={defaultContentStyle}
-      />
+      <ScrollView
+        contentContainerStyle={styles.scrollView}
+        onScroll={scrollViewRef.current.onScroll}>
+        <CreateActionHeader
+          style={styles.header}
+          navigation={navigation}
+          cardDeckInfo={{deckTitle, deckTag, deckSource, deckDescription}}
+          dataLength={dataLength}
+          onLayoutImage={event => handleOnLayoutImage(event)}
+        />
+        <View style={styles.buttonContainer}>
+          <FilledButton
+            content={actions.TASKS.ADD}
+            onPress={handleOpenTaskInput}
+          />
+        </View>
+        <View style={styles.taskInput}>{renderTaskInput()}</View>
+        <View style={styles.supportingText}>
+          <Text style={defaultContentStyle}>
+            {'goi y cac thu thach tham khao'}
+          </Text>
+        </View>
+        <RecommendedTaskList
+          data={recommendedTasks}
+          style={styles.card}
+          onItemPress={handleCardItemPressed}
+          contentStyle={defaultContentStyle}
+        />
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -99,6 +150,15 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  buttonContainer: {
+    width: '100%',
+    aspectRatio: 7,
+    flexDirection: 'row',
+    paddingHorizontal: 8,
+  },
+  taskInput: {
+    width: '80%',
   },
   supportingText: {
     width: '100%',

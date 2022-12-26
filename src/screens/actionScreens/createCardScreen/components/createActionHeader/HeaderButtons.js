@@ -13,9 +13,7 @@ export default function HeaderButtons(props) {
     renderRightComponents,
     children,
     style,
-    onStaringDeckPress = () => {},
-    onDownloadDeckPress = () => {},
-    onNavigateMoreActionPress = () => {},
+    onOpenTaskInput = () => {},
     ...otherProps
   } = props;
 

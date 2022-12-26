@@ -1,29 +1,61 @@
-import {StyleSheet} from 'react-native';
-import {SmallTopBar, StandardIconButton} from 'src/components';
+import {forwardRef, useImperativeHandle, useRef, useState} from 'react';
+import {Animated, StyleSheet} from 'react-native';
+import {SmallTopBar} from 'src/components';
+import {heightOf} from 'src/constants';
+import {withAnimated} from 'src/utils';
 
-export default function CreateCardTopAppBar(props) {
-  const {navigation, content, style, contentStyle, ...otherProps} = props;
+const SmallTopBarAnimated = withAnimated(SmallTopBar);
+const CONFIG_VALUE = 100;
 
-  function renderRightComponents({iconStyle}) {
-    return (
-      <>
-        <StandardIconButton
-          name={'ellipsis1'}
-          style={[iconStyle, styles.headerButtonIcon]}
-        />
-      </>
-    );
+function CreateCardTopBar(props, ref) {
+  const {
+    navigation,
+    routes,
+    content,
+    imageHeight,
+    source,
+    style,
+    ...otherProps
+  } = props;
+  const [showContent, setShowContent] = useState(false);
+  const animatedValue = useRef(new Animated.Value(0)).current;
+  const minHeight = heightOf?.MIN_HEADER;
+  const imgHeight = imageHeight ? imageHeight : heightOf?.IMAGE;
+  const bottomHeight = imgHeight + minHeight;
+
+  function handleShowSelectionList() {
+    alert('handleShowSelectionList');
   }
 
+  useImperativeHandle(ref, () => ({
+    onScroll: event => {
+      const offsetY = event.nativeEvent.contentOffset.y;
+      animatedValue.setValue(offsetY);
+      if (offsetY >= imgHeight) {
+        setShowContent(true);
+      } else {
+        setShowContent(false);
+      }
+    },
+  }));
+
+  const contentAnimation = {
+    opacity: animatedValue.interpolate({
+      inputRange: [imgHeight, imgHeight + CONFIG_VALUE],
+      outputRange: [0, 1],
+      extrapolate: 'clamp',
+    }),
+  };
   return (
-    <SmallTopBar
+    <SmallTopBarAnimated
       {...otherProps}
-      content={content}
-      subContent={'BẠN ĐANG CHƠI BỘ'}
-      style={styles.container}
+      content={showContent && content}
+      contentStyle={contentAnimation}
       leadingIcon={'arrowleft'}
       onLeadingIconPress={() => navigation.goBack()}
-      RightComponents={renderRightComponents}
+      style={[style]}
+      topHeight={minHeight}
+      bottomHeight={bottomHeight}
     />
   );
 }
@@ -36,3 +68,5 @@ const styles = StyleSheet.create({
   },
   content: {},
 });
+
+export default forwardRef(CreateCardTopBar);

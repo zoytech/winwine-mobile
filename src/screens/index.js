@@ -5,3 +5,4 @@ export * from './blankScreen';
 export * from './libraryScreens';
 export * from './actionScreens';
 export * from './authenticationScreens';
+export * from './errorScreens';

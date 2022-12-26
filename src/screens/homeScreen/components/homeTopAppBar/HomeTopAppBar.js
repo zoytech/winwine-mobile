@@ -14,9 +14,8 @@ import {
   requestingDeckListSelector,
 } from 'src/redux/selectors';
 import {defaultOfUser, heightOf} from 'src/constants';
-import {usePartOfDay} from '../usePartOfDay';
 import {SuggestionList} from '../suggestionList';
-import {withAnimated} from 'src/utils';
+import {withAnimated, usePartOfDay} from 'src/utils';
 import {AvatarSettingButton} from '../../../components';
 
 const CONFIG_VALUE = 100;

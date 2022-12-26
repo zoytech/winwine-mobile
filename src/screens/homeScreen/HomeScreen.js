@@ -4,13 +4,10 @@ import {useDispatch, useSelector} from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
 import {Color, ColorVariant} from 'src/themes';
 import {
-  cardDeckListSelector,
   cardDeckListSelector2,
-  requestingDeckListSelector,
   requestingDeckListSelector2,
 } from 'src/redux/selectors';
-import {loadCardDeckList} from 'src/redux/actions';
-import {SpinnerType1} from 'src/components';
+import {loadCardDeckList2} from 'src/redux/actions';
 import {
   HomeTopAppBar,
   HorizontalCardList,
@@ -25,18 +22,18 @@ export default function HomeScreen({navigation}) {
     onScroll: () => {},
   });
   const dispatch = useDispatch();
-  const cardDeckList = useSelector(cardDeckListSelector);
-  const requesting = useSelector(requestingDeckListSelector);
+  // const cardDeckList = useSelector(cardDeckListSelector);
+  // const requesting = useSelector(requestingDeckListSelector);
   const cardDeckList2 = useSelector(cardDeckListSelector2);
   const requesting2 = useSelector(requestingDeckListSelector2);
-  const {popularData, recentlyData} = cardDeckList;
+  // const {popularData, recentlyData} = cardDeckList;
   const localStorage = cardDeckList2;
   useEffect(() => {
-    dispatch(loadCardDeckList());
-    if (requesting2 === false) {
+    dispatch(loadCardDeckList2());
+    if (!requesting2 || cardDeckList2 === null) {
       SplashScreen.hide();
     }
-  }, [dispatch, requesting2]);
+  }, [dispatch]);
 
   useEffect(() => {
     navigation.setOptions({
@@ -46,9 +43,9 @@ export default function HomeScreen({navigation}) {
     });
   }, [navigation]);
 
-  if (requesting2 || cardDeckList2 === null) {
-    return <SpinnerType1 />;
-  }
+  // if (requesting2 || cardDeckList2 === null) {
+  //   return <SpinnerType1 />;
+  // }
   return (
     <SafeAreaView style={styles.container}>
       <CustomStatusBar />
@@ -61,7 +58,6 @@ export default function HomeScreen({navigation}) {
             <HorizontalCardList data={localStorage} navigation={navigation} />
           </>
         )}
-
         <SectionHeader content={POPULAR} style={styles.sectionHeader} />
         <VerticalCardList
           data={cardDeckList2}

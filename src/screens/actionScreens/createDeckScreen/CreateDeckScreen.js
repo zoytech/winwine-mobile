@@ -10,17 +10,17 @@ import {
   View,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {Color, ColorVariant} from 'src/themes';
+import {Color, ColorVariant, Typography} from 'src/themes';
 import {SpinnerType1, TonalButton} from 'src/components';
 import {
   cardDeckListSelector,
   requestingDeckListSelector,
 } from 'src/redux/selectors';
-import {tagItem, widthOf} from 'src/constants';
+import {defaultOfDeck, tagItem, widthOf} from 'src/constants';
 import {CustomStatusBar} from 'src/screens/components';
 import {removeIdenticalItemInArray} from 'src/utils';
 import {loadCardDeckList} from 'src/redux/actions';
-import {Typography} from '../../../themes';
+import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import {ImageField, TagSelectionField, TextInputHolder} from './components';
 
 export default function CreateDeckScreen({navigation, route}) {
@@ -28,7 +28,10 @@ export default function CreateDeckScreen({navigation, route}) {
   const cardDeckList = useSelector(cardDeckListSelector);
   const requesting = useSelector(requestingDeckListSelector);
   const [title, setTitle] = useState(null);
+  const [image, setImage] = useState(null);
+  const [tag, setTag] = useState(null);
   const [description, setDescription] = useState(null);
+  const {IMAGE, DESCRIPTION, TITLE} = defaultOfDeck;
   const localStorageData = cardDeckList?.popularData;
   const rawTagIdData = localStorageData.map(item => item?.tag);
   const tagIdData = removeIdenticalItemInArray(rawTagIdData);
@@ -56,18 +59,23 @@ export default function CreateDeckScreen({navigation, route}) {
   const {base: primary, onBase: onPrimary} = Color.light[ColorVariant.primary];
 
   const defaultContainerStyle = [{backgroundColor: primary}, styles.container];
-  const defaultContentStyle = [Typography.title.large, {color: onPrimary}];
+  const defaultContentStyle = [Typography.body.large, {color: onPrimary}];
 
-  function renderImageField() {
-    return (
-      <Pressable>
-        <View style={styles.image} />
-      </Pressable>
-    );
+  function handleSubmitPress() {
+    navigation.navigate({
+      name: ScreenKeys.CREATE_CARD,
+      params: {
+        deckTitle: title ? title : TITLE,
+        deckId: 100,
+        deckDescription: description ? description : DESCRIPTION,
+        deckSource: image ? {uri: image} : IMAGE,
+        deckTag: tag ? tag : '',
+      },
+    });
   }
 
   function renderTitleDeckField() {
-    const headlineStyle = [defaultContentStyle, Typography.headline.medium];
+    const headlineStyle = [defaultContentStyle, Typography.title.large];
     return (
       <>
         <View>
@@ -105,6 +113,7 @@ export default function CreateDeckScreen({navigation, route}) {
               content={'HOÀN TẤT'}
               style={styles.button}
               contentStyle={styles.buttonContent}
+              onPress={handleSubmitPress}
             />
           </View>
         </ScrollView>

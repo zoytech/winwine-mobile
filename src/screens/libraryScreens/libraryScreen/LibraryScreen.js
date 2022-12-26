@@ -9,7 +9,7 @@ import {
   requestingDeckListSelector2,
 } from 'src/redux/selectors';
 import {SpinnerType1} from 'src/components';
-import loadCardDeckList2 from 'src/redux/actions/loadCardDeckList2';
+import {loadCardDeckList2} from 'src/redux/actions';
 import {removeIdenticalItemInArray} from 'src/utils';
 import {CustomStatusBar, EmptyInfoAnnouncement} from 'src/screens/components';
 import {CardDeckList, LibraryTopAppBar} from './components';
@@ -109,8 +109,9 @@ const styles = StyleSheet.create({
     backgroundColor: Color.light[ColorVariant.background].base,
   },
   contentContainer: {
-    paddingHorizontal: 16,
+    paddingHorizontal: 24,
     justifyContent: 'center',
+    alignItems: 'center',
     paddingBottom: 70,
   },
   sectionHeader: {
