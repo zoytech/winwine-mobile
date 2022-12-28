@@ -8,9 +8,9 @@ import {
   requestingDeckListSelector,
   requestingDeckListSelector2,
 } from 'src/redux/selectors';
-import {SpinnerType1} from 'src/components';
+import {FilledButton, SpinnerType1} from 'src/components';
 import {loadCardDeckList2} from 'src/redux/actions';
-import {removeIdenticalItemInArray} from 'src/utils';
+import {removeIdenticalItemInArray, useThrottleFn} from 'src/utils';
 import {CustomStatusBar, EmptyInfoAnnouncement} from 'src/screens/components';
 import {CardDeckList, LibraryTopAppBar} from './components';
 import {tagItem} from 'src/constants';
@@ -28,6 +28,12 @@ export default function LibraryScreen({navigation}) {
   const [selectedChip, setSelectedChip] = useState(null);
   const rawTagIdData = localStorageData.map(item => item?.tag);
   const tagIdData = removeIdenticalItemInArray(rawTagIdData);
+  const [value, setValue] = useState(0);
+
+  const print = () => {
+    setValue(prev => prev + 1);
+    console.log(value);
+  };
 
   const tagChipData = [
     {
@@ -96,6 +102,7 @@ export default function LibraryScreen({navigation}) {
             chipId={selectedChip}
           />
           <CardDeckList data={cardDeckList2} navigation={navigation} />
+          <FilledButton content={`${value}`} onPress={throttled} />
         </ScrollView>
       )}
     </SafeAreaView>
