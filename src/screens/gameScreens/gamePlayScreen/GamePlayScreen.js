@@ -1,16 +1,12 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
+import {SafeAreaView, ScrollView, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Color, ColorVariant, Typography} from 'src/themes';
-import {
-  FilledIconToggle,
-  SpinnerType1,
-  StandardIconButton,
-} from 'src/components';
+import {SpinnerType1, StandardIconButton} from 'src/components';
 import {loadCardDeckById} from 'src/redux/actions';
 import {cardDeckSelector, requestingDeckSelector} from 'src/redux/selectors';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
-import {defaultOf, defaultOfDeck, widthOf} from 'src/constants';
+import {DECK, WIDTH} from 'src/constants';
 import {
   CardProgressTrace,
   EndingGameDialog,
@@ -19,8 +15,9 @@ import {
 } from './components';
 import {SwipeableGameCard} from '../components';
 import {CustomStatusBar, EmptyInfoAnnouncement} from 'src/screens/components';
+import gamePlayStyle from './gamePlayStyle';
 
-const screenWidth = widthOf?.SCREEN;
+const screenWidth = WIDTH?.SCREEN;
 const width = {
   CONTAINER: 320,
   CARD: 275,
@@ -30,7 +27,7 @@ const width = {
 const INITIAL_INDEX = 0;
 
 export default function GamePlayScreen({navigation, route}) {
-  const {deckId, deckTitle} = route.params;
+  const {cardDeckIdParam, cardDeckNameParam, cardDeckImageParam} = route.params;
   const dispatch = useDispatch();
   const cardDeckItem = useSelector(cardDeckSelector);
   const requesting = useSelector(requestingDeckSelector);
@@ -38,39 +35,37 @@ export default function GamePlayScreen({navigation, route}) {
   const [showIndex, setShowIndex] = useState(INITIAL_INDEX);
   const [showIndicatorInfo, setShowIndicatorInfo] = useState(true);
 
-  const {cardDeck, tag, uri, tasks} = cardDeckItem || {};
-  const {TITLE, TAG, IMAGE} = defaultOfDeck;
-  const deck = {
-    title: cardDeck ? cardDeck : TITLE,
-    tag: tag ? tag : TAG,
-    image: uri ? {uri: uri} : IMAGE,
-  };
-  const taskList = tasks ? tasks : [];
-  const defaultLength = defaultOf?.initDataLength;
-  const dataLength = tasks ? tasks.length : defaultLength;
+  const {cardDeckTag, previewCards} = cardDeckItem || {};
+  const deckTag = cardDeckTag ? cardDeckTag : DECK?.TAG;
+
+  const previewCardData = previewCards ? previewCards : [];
+  const dataLength = previewCards ? previewCards.length : DECK?.NUMBER_OF_CARDS;
   const progressBarWidth = screenWidth * 0.8;
-  const percentValue =
-    dataLength !== defaultLength && (showIndex + 1) / dataLength;
+  const percentValue = dataLength !== 0 && (showIndex + 1) / dataLength;
   const indicatedPartWidth = progressBarWidth * percentValue;
-  const minFragmentWidth = dataLength !== defaultLength && 1 / dataLength;
+  const minFragmentWidth = dataLength !== 0 && 1 / dataLength;
   const indicatedArrowWidth = progressBarWidth * minFragmentWidth;
 
+  const cardNumber = `${showIndex + 1} per ${dataLength}`;
   const baseColor = Color.light[ColorVariant.surface]?.base;
   const textColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
   const defaultContainerStyle = [
     {backgroundColor: baseColor},
-    styles.container,
+    gamePlayStyle.container,
   ];
   const defaultContentStyle = [Typography.title.medium, {color: textColor}];
 
   useEffect(() => {
-    dispatch(loadCardDeckById(deckId));
+    dispatch(loadCardDeckById(cardDeckIdParam));
   }, [dispatch]);
 
   useEffect(() => {
     navigation.setOptions({
       header: () => (
-        <GamePlayTopAppBar content={deckTitle} navigation={navigation} />
+        <GamePlayTopAppBar
+          content={cardDeckNameParam}
+          navigation={navigation}
+        />
       ),
     });
   }, [navigation]);
@@ -88,9 +83,9 @@ export default function GamePlayScreen({navigation, route}) {
       params: {
         content: (
           <EndingGameDialog
-            headline={deck?.title}
-            subHeadLeft={deck?.tag}
-            media={deck?.image}
+            headline={cardDeckNameParam}
+            subHeadLeft={deckTag}
+            media={cardDeckImageParam}
             onMainActionPress={handleMainDialogPress}
             onSubActionPress={handleSubDialogPress}
           />
@@ -112,24 +107,11 @@ export default function GamePlayScreen({navigation, route}) {
     setShowIndex(index);
   }
 
-  function handleNavigateCreateCardScreen() {
-    navigation.navigate({
-      name: ScreenKeys.CREATE_CARD,
-      params: {
-        deckId: deckId || '',
-      },
-    });
-  }
-
   function renderBottomButtons() {
     const handleBackwardPress = () => {
       showIndex !== INITIAL_INDEX &&
         carouselRef &&
         carouselRef.current.scrollToPrevious();
-    };
-
-    const handleRatingTaskPress = () => {
-      alert('handleRatingQuestion');
     };
     const handleForwardPress = () => {
       showIndex !== dataLength - 1
@@ -138,14 +120,7 @@ export default function GamePlayScreen({navigation, route}) {
     };
     const smallIconProps = {
       iconStyle: {size: 30},
-      style: styles.smallIcon,
-    };
-    const ratingProps = {
-      name: 'staro',
-      selectedName: 'star',
-      onPress: handleRatingTaskPress,
-      iconStyle: {size: 42},
-      style: styles.largeIcon,
+      style: gamePlayStyle.smallIcon,
     };
     return (
       <>
@@ -155,7 +130,6 @@ export default function GamePlayScreen({navigation, route}) {
           onPress={handleBackwardPress}
           disabled={showIndex === INITIAL_INDEX}
         />
-        <FilledIconToggle {...ratingProps} />
         <StandardIconButton
           {...smallIconProps}
           name={'stepforward'}
@@ -172,17 +146,13 @@ export default function GamePlayScreen({navigation, route}) {
     <SafeAreaView style={defaultContainerStyle}>
       <CustomStatusBar />
       {!dataLength || dataLength === 0 ? (
-        <EmptyInfoAnnouncement
-          content={'Bộ bài chưa có lá bài nào.'}
-          buttonContent={'Tạo mới'}
-          onPress={handleNavigateCreateCardScreen}
-        />
+        <EmptyInfoAnnouncement content={'Bộ bài chưa có lá bài nào.'} />
       ) : (
-        <ScrollView contentContainerStyle={styles.scrollView}>
-          <View style={styles.progressBar}>
+        <ScrollView contentContainerStyle={gamePlayStyle.scrollView}>
+          <View style={gamePlayStyle.progressBar}>
             {showIndicatorInfo && (
               <IndicatorTrace
-                content={`${showIndex + 1} per ${dataLength}`}
+                content={cardNumber}
                 endContent={dataLength}
                 progressBarWidth={progressBarWidth}
                 indicatedArrowWidth={indicatedArrowWidth}
@@ -198,9 +168,9 @@ export default function GamePlayScreen({navigation, route}) {
             />
           </View>
           <SwipeableGameCard
-            data={taskList}
+            data={previewCardData}
             ref={carouselRef}
-            style={styles.card}
+            style={gamePlayStyle.card}
             contentStyle={defaultContentStyle}
             itemWidth={width?.CARD}
             containerWidth={width?.CONTAINER}
@@ -208,104 +178,9 @@ export default function GamePlayScreen({navigation, route}) {
             onScrollEnd={(item, index) => handleOnScrollEnd(item, index)}
             initialIndex={INITIAL_INDEX}
           />
-          <View style={styles.action}>{renderBottomButtons()}</View>
+          <View style={gamePlayStyle.action}>{renderBottomButtons()}</View>
         </ScrollView>
       )}
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    width: screenWidth,
-  },
-  scrollView: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  mainContent: {
-    width: '100%',
-    flexDirection: 'column',
-  },
-  progressBar: {
-    width: '100%',
-    aspectRatio: 6,
-    flexDirection: 'column',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-  },
-  card: {
-    paddingTop: 32,
-  },
-  action: {
-    width: '100%',
-    aspectRatio: 3,
-    paddingVertical: 32,
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-  },
-  largeIcon: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-  },
-  smallIcon: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-  },
-  indicatorLine: {
-    height: 32,
-    backgroundColor: 'blue',
-    width: 1,
-    position: 'absolute',
-  },
-  emptyView: {
-    width: '100%',
-    aspectRatio: 7 / 16,
-    paddingVertical: 100,
-  },
-});
-
-/*
- <SwipeableGameCard
-            data={tasks}
-            index={index}
-            style={styles.gameCardLayout}
-            itemStyle={styles.gameCardItem}
-            cardStyle={styles.gameCard}
-            contentStyle={textStyles}
-          />
- */
-
-/*
-<CardCounter
-            content={`${showIndex + 1} per ${dataLength}`}
-            contentStyle={defaultContentStyle}
-            style={styles.counter}
-            counterSize={counterSize}
-          />
- */
-
-/*
-function Pagination({index}) {
-  return (
-    <View style={styles.pagination} pointerEvents="none">
-      {tasks.map((_, i) => {
-        return (
-          <View
-            key={i}
-            style={[
-              styles.paginationDot,
-              index === i
-                ? styles.paginationDotActive
-                : styles.paginationDotInactive,
-            ]}
-          />
-        );
-      })}
-    </View>
-  );
-}
- */

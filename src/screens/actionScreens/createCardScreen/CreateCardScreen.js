@@ -5,7 +5,7 @@ import {Color, ColorVariant, Typography} from 'src/themes';
 import {FilledButton, SpinnerType1} from 'src/components';
 import {loadCardDeckById} from 'src/redux/actions';
 import {cardDeckSelector, requestingDeckSelector} from 'src/redux/selectors';
-import {defaultOf, heightOf, widthOf} from 'src/constants';
+import {defaultOf, HEIGHT, WIDTH} from 'src/constants';
 import {CustomStatusBar} from 'src/screens/components';
 import {
   CreateActionHeader,
@@ -31,7 +31,7 @@ export default function CreateCardScreen({navigation, route}) {
   const cardDeckItem = useSelector(cardDeckSelector);
   const requesting = useSelector(requestingDeckSelector);
   const dispatch = useDispatch();
-  const [imageHeight, setImageHeight] = useState(heightOf?.IMAGE);
+  const [imageHeight, setImageHeight] = useState(HEIGHT?.IMAGE);
   const [taskItem, setTaskItem] = useState(null);
   const [openTaskInput, setOpenTaskInput] = useState(true);
 
@@ -138,7 +138,7 @@ export default function CreateCardScreen({navigation, route}) {
 
 const styles = StyleSheet.create({
   container: {
-    width: widthOf?.SCREEN,
+    width: WIDTH?.SCREEN,
   },
   scrollView: {
     justifyContent: 'center',

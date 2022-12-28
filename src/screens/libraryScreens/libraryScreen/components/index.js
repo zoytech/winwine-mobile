@@ -1,4 +1,4 @@
-import CardDeckList from './cardDeckList';
+import LibraryCardDecks from './cardDeckList';
 import LibraryTopAppBar from './libraryTopAppBar';
 
-export {LibraryTopAppBar, CardDeckList};
+export {LibraryTopAppBar, LibraryCardDecks};

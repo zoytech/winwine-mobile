@@ -1,17 +1,22 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {SafeAreaView, ScrollView, Text, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {SpinnerType1} from 'src/components';
 import {loadCardDeckById} from 'src/redux/actions';
-import {GameWaitHeader, GameWaitTopAppBar} from './components';
+import {
+  GameWaitTopAppBar,
+  HeaderButtons,
+  HeaderImage,
+  HeaderInformation,
+} from './components';
 import {cardDeckSelector, requestingDeckSelector} from 'src/redux/selectors';
 import {SwipeableGameCard} from '../components';
-import {defaultOf, defaultOfDeck, heightOf, widthOf} from 'src/constants';
+import {HEIGHT} from 'src/constants';
 import {CustomStatusBar, EmptyInfoAnnouncement} from 'src/screens/components';
 import {getPreviewCardNumber, getPreviewDataItem} from './utils';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
-import HeaderButtons from './components/gameWaitHeader/HeaderButtons';
+import gameWaitStyle from './gameWaitStyle';
 
 const width = {
   CONTAINER: 320,
@@ -20,34 +25,39 @@ const width = {
 };
 const INITIAL_INDEX = 0;
 const MAX_PREVIEW = 10;
+const EMPTY_CONTENT = 'Bộ bài chưa có lá bài nào.';
 
 export default function GameWaitScreen({navigation, route}) {
-  const {deckId, deckTitle, deckSource} = route.params;
+  const {cardDeckIdParam, cardDeckNameParam, cardDeckImageParam} = route.params;
   const cardDeckItem = useSelector(cardDeckSelector);
   const requesting = useSelector(requestingDeckSelector);
   const dispatch = useDispatch();
   const [showIndex, setShowIndex] = useState(INITIAL_INDEX);
-  const [imageHeight, setImageHeight] = useState(heightOf?.IMAGE);
+  const [imageHeight, setImageHeight] = useState(HEIGHT?.IMAGE);
   const carouselRef = useRef(null);
   const scrollViewRef = useRef([]);
-  const {cardDeck, tag, uri, tasks} = cardDeckItem || {};
-  const data = tasks || [];
-  const dataLength = data ? data.length : defaultOf?.initDataLength;
-  const {TITLE, IMAGE} = defaultOfDeck;
 
+  const {cardDeckImage, numberOfCards, previewCards} = cardDeckItem || {};
+  const previewCardData = previewCards
+    ? getPreviewDataItem(previewCards, INITIAL_INDEX)
+    : [];
+  const previewContent = `Xem trước ${getPreviewCardNumber(
+    numberOfCards,
+    MAX_PREVIEW,
+  )} lá bài`;
   const baseColor = Color.light[ColorVariant.surface]?.base;
   const textColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
 
   useEffect(() => {
-    dispatch(loadCardDeckById(deckId));
-  }, [dispatch, deckId]);
+    dispatch(loadCardDeckById(cardDeckIdParam));
+  }, [dispatch, cardDeckIdParam]);
 
   useEffect(() => {
     navigation.setOptions({
       header: () => (
         <GameWaitTopAppBar
-          content={deckTitle}
-          source={deckSource}
+          content={cardDeckNameParam}
+          source={cardDeckImageParam}
           navigation={navigation}
           ref={scrollViewRef}
           imageHeight={imageHeight}
@@ -58,7 +68,7 @@ export default function GameWaitScreen({navigation, route}) {
 
   const defaultContainerStyle = [
     {backgroundColor: baseColor},
-    styles.container,
+    gameWaitStyle.container,
   ];
   const defaultContentStyle = [Typography.title.medium, {color: textColor}];
 
@@ -67,22 +77,13 @@ export default function GameWaitScreen({navigation, route}) {
   }
 
   function handleCardItemPressed() {
-    showIndex !== dataLength - 1 &&
+    showIndex !== numberOfCards - 1 &&
       carouselRef &&
       carouselRef.current.scrollToNext();
   }
 
   function handleOnScrollEnd(item, index) {
     setShowIndex(index);
-  }
-
-  function handleNavigateCreateCardScreen() {
-    navigation.navigate({
-      name: ScreenKeys.CREATE_CARD,
-      params: {
-        deckId: deckId || '',
-      },
-    });
   }
 
   function renderButtons() {
@@ -93,9 +94,9 @@ export default function GameWaitScreen({navigation, route}) {
       navigation.navigate({
         name: ScreenKeys.PLAY_GAME,
         params: {
-          deckId: deckId,
-          deckTitle: deckTitle ? deckTitle : TITLE,
-          deckSource: deckSource ? deckSource : IMAGE,
+          cardDeckIdParam: cardDeckIdParam,
+          cardDeckNameParam: cardDeckNameParam,
+          cardDeckImageParam: cardDeckImageParam,
         },
       });
     };
@@ -109,14 +110,6 @@ export default function GameWaitScreen({navigation, route}) {
     );
   }
 
-  function renderPreviewNumber(total) {
-    return (
-      <Text style={defaultContentStyle}>
-        {`Xem trước ${getPreviewCardNumber(total, MAX_PREVIEW)} lá bài`}
-      </Text>
-    );
-  }
-
   if (requesting) {
     return <SpinnerType1 />;
   }
@@ -124,32 +117,34 @@ export default function GameWaitScreen({navigation, route}) {
     <SafeAreaView style={defaultContainerStyle}>
       <CustomStatusBar />
       <ScrollView
-        contentContainerStyle={styles.scrollView}
+        contentContainerStyle={gameWaitStyle.scrollView}
         onScroll={scrollViewRef.current.onScroll}>
-        <GameWaitHeader
-          style={styles.header}
-          navigation={navigation}
-          cardDeckInfo={{cardDeck, tag, uri}}
-          dataLength={dataLength}
-          onLayoutImage={event => handleOnLayoutImage(event)}
-        />
-        {!dataLength || dataLength === 0 ? (
+        <View style={gameWaitStyle.header}>
+          <HeaderImage
+            cardDeckImage={cardDeckImage}
+            onLayoutImage={e => handleOnLayoutImage(e)}
+          />
+          <HeaderInformation
+            data={cardDeckItem}
+            headStyle={Typography.headline.small}
+            contentStyle={Typography.label.large}
+          />
+        </View>
+        {!previewCards || previewCards.length === 0 ? (
           <EmptyInfoAnnouncement
-            content={'Bộ bài chưa có lá bài nào.'}
-            buttonContent={'Tạo mới'}
-            onPress={handleNavigateCreateCardScreen}
-            style={styles.emptyView}
+            content={EMPTY_CONTENT}
+            style={gameWaitStyle.emptyView}
           />
         ) : (
           <>
             {renderButtons()}
-            <View style={styles.supportingText}>
-              {renderPreviewNumber(dataLength)}
+            <View style={gameWaitStyle.supportingText}>
+              <Text style={defaultContentStyle}>{previewContent}</Text>
             </View>
             <SwipeableGameCard
-              data={getPreviewDataItem(data, INITIAL_INDEX)}
+              data={previewCardData}
               ref={carouselRef}
-              style={styles.card}
+              style={gameWaitStyle.card}
               contentStyle={defaultContentStyle}
               itemWidth={width?.CARD}
               containerWidth={width?.CONTAINER}
@@ -164,56 +159,3 @@ export default function GameWaitScreen({navigation, route}) {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    width: widthOf?.SCREEN,
-  },
-  scrollView: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  header: {
-    width: '100%',
-    aspectRatio: 0.9,
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  supportingText: {
-    width: '100%',
-    aspectRatio: 5,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  card: {
-    paddingVertical: 16,
-    paddingBottom: 48,
-  },
-  suggestingDeck: {
-    width: '100%',
-    aspectRatio: 1.5,
-    flexDirection: 'column',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-  },
-  button: {
-    width: 200,
-    height: 50,
-    borderRadius: 20,
-  },
-  buttonContent: {
-    textTransform: 'uppercase',
-    fontWeight: 'bold',
-  },
-  headerButtonIcon: {
-    borderRadius: 0,
-    minWidth: 48,
-    minHeight: 48,
-  },
-  emptyView: {
-    width: '100%',
-    aspectRatio: 2,
-    paddingVertical: 30,
-  },
-});

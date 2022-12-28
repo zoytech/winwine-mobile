@@ -1,5 +1,5 @@
 import {Pressable, SafeAreaView, StyleSheet} from 'react-native';
-import {widthOf} from 'src/constants';
+import {WIDTH} from 'src/constants';
 import {StateLayers, StateLayersVariant} from 'src/themes';
 
 export default function ActionContainer(props) {
@@ -17,7 +17,7 @@ export default function ActionContainer(props) {
 
 const styles = StyleSheet.create({
   container: {
-    width: widthOf.SCREEN,
+    width: WIDTH.SCREEN,
     flex: 1,
     justifyContent: 'flex-end',
   },

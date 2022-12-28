@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
-import {defaultOfDeck} from 'src/constants';
-import MiniCardItem from './MiniCardItem';
+import {DECK} from 'src/constants';
 import {removeJustOneItem} from 'src/utils';
-import MiniCardItem2 from './MiniCardItem2';
+import {MiniCardItem} from 'src/screens/components';
 
 function getMarginItem(index) {
   if (index % 2 === 0) {
@@ -14,7 +13,7 @@ function getMarginItem(index) {
   }
 }
 
-export default function CardDeckList(props) {
+export default function LibraryCardDecks(props) {
   const {
     style,
     data = [],
@@ -26,7 +25,6 @@ export default function CardDeckList(props) {
   const [sortByTagData, setSortByTagData] = useState([]);
   const [pinDeckIds, setPinDeckIds] = useState([]);
   const [likedDeckIds, setLikeDeckIds] = useState([]);
-  const {TITLE, IMAGE} = defaultOfDeck;
 
   useEffect(() => {
     if (chipId === null) {
@@ -72,41 +70,33 @@ export default function CardDeckList(props) {
     }
   }
 
-  const handlePlayPress = ({
-    cardDeckId,
-    cardDeck: cardDeckName,
-    uri: cardDeckImage,
-  }) => {
+  const handlePlayPress = ({cardDeckId, cardDeckName, cardDeckImage}) => {
     navigation.navigate({
       name: ScreenKeys.PLAY_GAME,
       params: {
-        deckId: cardDeckId ? cardDeckId : '',
-        deckTitle: cardDeckName ? cardDeckName : TITLE,
-        deckSource: cardDeckImage ? {uri: cardDeckImage} : IMAGE,
+        cardDeckIdParam: cardDeckId ? cardDeckId : '',
+        cardDeckNameParam: cardDeckName ? cardDeckName : DECK?.NAME,
+        cardDeckImage: cardDeckImage ? {uri: cardDeckImage} : DECK?.IMAGE,
       },
     });
   };
-  const handlePreviewPress = ({
-    cardDeckId,
-    cardDeck: cardDeckName,
-    uri: cardDeckImage,
-  }) => {
+  const handlePreviewPress = ({cardDeckId, cardDeckName, cardDeckImage}) => {
     navigation.navigate({
       name: ScreenKeys.WAIT_GAME,
       params: {
-        deckId: cardDeckId ? cardDeckId : '',
-        deckTitle: cardDeckName ? cardDeckName : TITLE,
-        deckSource: cardDeckImage ? {uri: cardDeckImage} : IMAGE,
+        cardDeckIdParam: cardDeckId ? cardDeckId : '',
+        cardDeckNameParam: cardDeckName ? cardDeckName : DECK?.NAME,
+        cardDeckImage: cardDeckImage ? {uri: cardDeckImage} : DECK?.IMAGE,
       },
     });
   };
-  const handleNavigateToActionBoard = (deckId, hasPinnedId, hasLikedId) => {
+  const handleNavigateToActionBoard = (cardDeckId, hasPinnedId, hasLikedId) => {
     navigation.navigate({
       name: ScreenKeys.ACTION_LIB,
       params: {
-        onPinningPress: () => handlePinningPress(deckId),
+        onPinningPress: () => handlePinningPress(cardDeckId),
         hasPinnedId: hasPinnedId,
-        onLikePress: () => handleLikePress(deckId),
+        onLikePress: () => handleLikePress(cardDeckId),
         hasLikedId: hasLikedId,
       },
     });
@@ -118,7 +108,7 @@ export default function CardDeckList(props) {
     const hasPinnedId = pinDeckIds.includes(deckId);
     const hasLikedId = likedDeckIds.includes(deckId);
     return (
-      <MiniCardItem2
+      <MiniCardItem
         {...otherProps}
         key={deckId}
         data={item}

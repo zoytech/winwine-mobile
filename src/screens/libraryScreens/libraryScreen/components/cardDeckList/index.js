@@ -1,3 +1,3 @@
-import CardDeckList from './CardDeckList';
+import LibraryCardDecks from './LibraryCardDecks';
 
-export default CardDeckList;
+export default LibraryCardDecks;

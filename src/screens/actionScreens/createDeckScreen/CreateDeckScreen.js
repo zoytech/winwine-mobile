@@ -16,7 +16,7 @@ import {
   cardDeckListSelector,
   requestingDeckListSelector,
 } from 'src/redux/selectors';
-import {defaultOfDeck, tagItem, widthOf} from 'src/constants';
+import {defaultOfDeck, tagCardDeck, WIDTH} from 'src/constants';
 import {CustomStatusBar} from 'src/screens/components';
 import {removeIdenticalItemInArray} from 'src/utils';
 import {loadCardDeckList} from 'src/redux/actions';
@@ -38,19 +38,19 @@ export default function CreateDeckScreen({navigation, route}) {
   const tagChipData = [
     {
       tagChipId: tagIdData[0],
-      tagChipContent: tagItem.ADULT,
+      tagChipContent: tagCardDeck.ADULT,
     },
     {
       tagChipId: tagIdData[1],
-      tagChipContent: tagItem.BUDDY,
+      tagChipContent: tagCardDeck.BUDDY,
     },
     {
       tagChipId: tagIdData[2],
-      tagChipContent: tagItem.FIRST_MEETING,
+      tagChipContent: tagCardDeck.FIRST_MEETING,
     },
     {
       tagChipId: tagIdData[3],
-      tagChipContent: tagItem.KILLER,
+      tagChipContent: tagCardDeck.KILLER,
     },
   ];
   useEffect(() => {
@@ -124,7 +124,7 @@ export default function CreateDeckScreen({navigation, route}) {
 
 const styles = StyleSheet.create({
   container: {
-    width: widthOf?.SCREEN,
+    width: WIDTH?.SCREEN,
     flexDirection: 'column',
     paddingHorizontal: 12,
   },

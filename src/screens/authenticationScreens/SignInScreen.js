@@ -1,5 +1,5 @@
 import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
-import {widthOf} from 'src/constants';
+import {WIDTH} from 'src/constants';
 import {FaceBookButton, GoogleButton} from './components';
 
 export default function SignInScreen({navigation, route}) {
@@ -23,7 +23,7 @@ export default function SignInScreen({navigation, route}) {
 
 const styles = StyleSheet.create({
   container: {
-    width: widthOf?.SCREEN,
+    width: WIDTH?.SCREEN,
     flex: 1,
     flexDirection: 'column',
     backgroundColor: 'green',

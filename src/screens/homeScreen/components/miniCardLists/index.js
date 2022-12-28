@@ -1,4 +1,4 @@
-import VerticalCardList from './VerticalCardList';
-import HorizontalCardList from './HorizontalCardList';
+import VerticalCardDecks from './VerticalCardDecks';
+import HorizontalCardDecks from './HorizontalCardDecks';
 
-export {VerticalCardList, HorizontalCardList};
+export {VerticalCardDecks, HorizontalCardDecks};

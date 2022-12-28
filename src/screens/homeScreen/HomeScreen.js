@@ -4,14 +4,14 @@ import {useDispatch, useSelector} from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
 import {Color, ColorVariant} from 'src/themes';
 import {
-  cardDeckListSelector2,
-  requestingDeckListSelector2,
+  cardDecksSelector,
+  requestingCardDecksSelector,
 } from 'src/redux/selectors';
-import {loadCardDeckList2} from 'src/redux/actions';
+import {loadCardDecks} from 'src/redux/actions';
 import {
   HomeTopAppBar,
-  HorizontalCardList,
-  VerticalCardList,
+  HorizontalCardDecks,
+  VerticalCardDecks,
 } from './components';
 import {CustomStatusBar, SectionHeader} from '../components';
 import {SpinnerType1} from 'src/components';
@@ -23,14 +23,14 @@ export default function HomeScreen({navigation}) {
     onScroll: () => {},
   });
   const dispatch = useDispatch();
-  const cardDeckList2 = useSelector(cardDeckListSelector2);
-  const requesting2 = useSelector(requestingDeckListSelector2);
-  const localStorage = cardDeckList2;
+  const cardDecksData = useSelector(cardDecksSelector);
+  const requestingCardDecks = useSelector(requestingCardDecksSelector);
+  const localStorage = cardDecksData;
   useEffect(() => {
-    dispatch(loadCardDeckList2());
-    if (!requesting2 || cardDeckList2 === null) {
+    dispatch(loadCardDecks());
+    if (!requestingCardDecks || cardDecksData === null) {
       SplashScreen.hide();
-    } else if (cardDeckList2.length === 0) {
+    } else if (cardDecksData.length === 0) {
       return <SpinnerType1 />;
     }
   }, [dispatch]);
@@ -42,10 +42,6 @@ export default function HomeScreen({navigation}) {
       },
     });
   }, [navigation]);
-
-  // if (requesting2 || cardDeckList2 === null) {
-  //   return <SpinnerType1 />;
-  // }
   return (
     <SafeAreaView style={styles.container}>
       <CustomStatusBar />
@@ -55,12 +51,12 @@ export default function HomeScreen({navigation}) {
         {localStorage && localStorage.length !== 0 && (
           <>
             <SectionHeader content={RECENTLY} style={styles.sectionHeader} />
-            <HorizontalCardList data={localStorage} navigation={navigation} />
+            <HorizontalCardDecks data={localStorage} navigation={navigation} />
           </>
         )}
         <SectionHeader content={POPULAR} style={styles.sectionHeader} />
-        <VerticalCardList
-          data={cardDeckList2}
+        <VerticalCardDecks
+          data={cardDecksData}
           navigation={navigation}
           style={styles.secondView}
         />

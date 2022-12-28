@@ -1,7 +1,7 @@
 import {StyleSheet, Text, View} from 'react-native';
 import {FilledButton} from 'src/components';
 import {Color, ColorVariant, Typography} from 'src/themes';
-import {widthOf} from 'src/constants';
+import {WIDTH} from 'src/constants';
 
 export default function EmptyInfoAnnouncement(props) {
   const {content, buttonContent, style, onPress = () => {}} = props;
@@ -35,7 +35,7 @@ export default function EmptyInfoAnnouncement(props) {
 
 const styles = StyleSheet.create({
   container: {
-    width: widthOf.SCREEN,
+    width: WIDTH.SCREEN,
     aspectRatio: 7 / 16,
     alignItems: 'center',
     paddingVertical: 200,

@@ -3,52 +3,48 @@ import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Color, ColorVariant} from 'src/themes';
 import {
-  cardDeckListSelector,
-  cardDeckListSelector2,
-  requestingDeckListSelector,
-  requestingDeckListSelector2,
+  cardDecksSelector,
+  requestingCardDecksSelector,
 } from 'src/redux/selectors';
-import {FilledButton, SpinnerType1} from 'src/components';
-import {loadCardDeckList2} from 'src/redux/actions';
-import {removeIdenticalItemInArray, useThrottleFn} from 'src/utils';
+import {SpinnerType1} from 'src/components';
+import {loadCardDecks} from 'src/redux/actions';
 import {CustomStatusBar, EmptyInfoAnnouncement} from 'src/screens/components';
-import {CardDeckList, LibraryTopAppBar} from './components';
-import {tagItem} from 'src/constants';
+import {LibraryCardDecks, LibraryTopAppBar} from './components';
+import {tagCardDeck} from 'src/constants';
 
 export default function LibraryScreen({navigation}) {
   const topBarRef = useRef({
     onScroll: () => {},
   });
   const dispatch = useDispatch();
-  const cardDeckList2 = useSelector(cardDeckListSelector2);
-  const requesting2 = useSelector(requestingDeckListSelector2);
-  const cardDeckList = useSelector(cardDeckListSelector);
-  const requesting = useSelector(requestingDeckListSelector);
-  const localStorageData = cardDeckList?.popularData;
+  const localStorageData = useSelector(cardDecksSelector);
+  const requestingCardDecks = useSelector(requestingCardDecksSelector);
   const [selectedChip, setSelectedChip] = useState(null);
-  const rawTagIdData = localStorageData.map(item => item?.tag);
-  const tagIdData = removeIdenticalItemInArray(rawTagIdData);
 
-  const tagChipData = [
-    {
-      tagChipId: tagIdData[0],
-      tagChipContent: tagItem.ADULT,
-    },
-    {
-      tagChipId: tagIdData[1],
-      tagChipContent: tagItem.BUDDY,
-    },
-    {
-      tagChipId: tagIdData[2],
-      tagChipContent: tagItem.FIRST_MEETING,
-    },
-    {
-      tagChipId: tagIdData[3],
-      tagChipContent: tagItem.KILLER,
-    },
-  ];
+  const tagChipData = {
+    data: [
+      {
+        tagChipId: 'TC1',
+        tagChipContent: tagCardDeck.ADULT,
+      },
+      {
+        tagChipId: 'TC2',
+        tagChipContent: tagCardDeck.BUDDY,
+      },
+      {
+        tagChipId: 'TC3',
+        tagChipContent: tagCardDeck.FIRST_MEETING,
+      },
+      {
+        tagChipId: 'TC4',
+        tagChipContent: tagCardDeck.KILLER,
+      },
+    ],
+  };
+
+  const tagList = tagChipData.data;
   useEffect(() => {
-    dispatch(loadCardDeckList2());
+    dispatch(loadCardDecks());
   }, [dispatch]);
 
   useEffect(() => {
@@ -59,7 +55,7 @@ export default function LibraryScreen({navigation}) {
             navigation={navigation}
             ref={topBarRef}
             onSortingListByChipId={handleSortingListByChipId}
-            data={tagChipData}
+            data={tagList}
             chipId={selectedChip}
           />
         );
@@ -75,13 +71,13 @@ export default function LibraryScreen({navigation}) {
     }
   }
 
-  if (requesting2 || !cardDeckList2) {
+  if (requestingCardDecks || !localStorageData) {
     return <SpinnerType1 />;
   }
   return (
     <SafeAreaView style={styles.container}>
       <CustomStatusBar />
-      {cardDeckList2.length === 0 ? (
+      {localStorageData.length === 0 ? (
         <EmptyInfoAnnouncement
           content={'Thư viện của bạn đang trống'}
           style={styles.emptyView}
@@ -90,12 +86,12 @@ export default function LibraryScreen({navigation}) {
         <ScrollView
           onScroll={topBarRef.current?.onScroll}
           contentContainerStyle={styles.contentContainer}>
-          <CardDeckList
-            data={cardDeckList2}
+          <LibraryCardDecks
+            data={localStorageData}
             navigation={navigation}
             chipId={selectedChip}
           />
-          <CardDeckList data={cardDeckList2} navigation={navigation} />
+          <LibraryCardDecks data={localStorageData} navigation={navigation} />
         </ScrollView>
       )}
     </SafeAreaView>

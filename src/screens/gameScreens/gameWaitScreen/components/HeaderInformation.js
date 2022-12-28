@@ -1,26 +1,36 @@
 import {StyleSheet, Text, View} from 'react-native';
 import {BaseAvatarButton} from 'src/components';
-import {Color, ColorVariant} from 'src/themes';
+import {Color, ColorVariant, Typography} from 'src/themes';
 import {LikeIcon} from 'src/screens/components';
+import {DECK, OWNER} from 'src/constants';
 
 export default function HeaderInformation(props) {
   const {
-    head,
-    tag,
-    total,
-    avatar,
-    userName,
-    description,
-    totalLike,
+    data,
     children,
     style,
-    contentStyle,
-    headStyle,
+    contentStyle = Typography.label.large,
+    headStyle = Typography.headline.small,
     ...otherProps
   } = props;
+  const {
+    cardDeckName,
+    cardDeckTag,
+    numberOfCards,
+    ownerName,
+    ownerAvatar,
+    cardDeckDescription,
+    cardDeckLike,
+  } = data;
+  const deckName = cardDeckName ? cardDeckName : DECK?.NAME;
+  const deckTag = cardDeckTag ? cardDeckTag : DECK?.TAG;
+  const totalCards = numberOfCards ? numberOfCards : DECK?.NUMBER_OF_CARDS;
+  const userName = ownerName ? ownerName : OWNER?.NAME;
+  const userAvatar = ownerAvatar ? ownerAvatar : OWNER?.AVATAR;
+
   const textColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
-  const totalCard = `${total} lá`;
-  const likes = `${totalLike}`;
+  const totalCard = `${totalCards} lá`;
+  const likes = `${cardDeckLike}`;
   const containerStyle = [styles.container, style];
   const subContentStyle = [{color: textColor}, contentStyle];
 
@@ -31,12 +41,11 @@ export default function HeaderInformation(props) {
   function renderUserInfoComponent() {
     return (
       <View style={styles.userDisplay}>
-        {avatar ? (
-          <BaseAvatarButton avatar={avatar} contentStyle={styles.userAvatar} />
-        ) : null}
-        {userName ? (
-          <Text style={[subContentStyle, styles.userName]}>{userName}</Text>
-        ) : null}
+        <BaseAvatarButton
+          avatar={userAvatar}
+          contentStyle={styles.userAvatar}
+        />
+        <Text style={[subContentStyle, styles.userName]}>{userName}</Text>
       </View>
     );
   }
@@ -49,16 +58,14 @@ export default function HeaderInformation(props) {
 
     return (
       <View>
-        {head ? (
-          <Text {...textProps} style={defaultHeadStyle}>
-            {head}
-          </Text>
-        ) : null}
-        {description ? (
+        <Text {...textProps} style={defaultHeadStyle}>
+          {deckName}
+        </Text>
+        {cardDeckDescription && (
           <Text {...textProps} style={subContentStyle}>
-            {description}
+            {cardDeckDescription}
           </Text>
-        ) : null}
+        )}
       </View>
     );
   }
@@ -66,16 +73,18 @@ export default function HeaderInformation(props) {
   function renderOtherInfoComponents() {
     return (
       <View style={styles.subInfo}>
-        {tag ? <Text style={subContentStyle}>{tag}</Text> : null}
+        <Text style={subContentStyle}>{deckTag}</Text>
         {renderSeparatorLine()}
-        {total ? <Text style={subContentStyle}>{totalCard}</Text> : null}
-        {renderSeparatorLine()}
-        {likes ? (
-          <LikeIcon
-            contentStyle={subContentStyle}
-            content={likes}
-            iconStyle={styles.icon}
-          />
+        <Text style={subContentStyle}>{totalCard}</Text>
+        {cardDeckLike ? (
+          <>
+            {renderSeparatorLine()}
+            <LikeIcon
+              contentStyle={subContentStyle}
+              content={likes}
+              iconStyle={styles.icon}
+            />
+          </>
         ) : null}
       </View>
     );

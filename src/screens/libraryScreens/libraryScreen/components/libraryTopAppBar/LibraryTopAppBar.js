@@ -1,7 +1,7 @@
 import {forwardRef, useImperativeHandle, useRef, useState} from 'react';
 import {Animated, StyleSheet, View} from 'react-native';
 import {CenterTopBar} from 'src/components';
-import {heightOf} from 'src/constants';
+import {HEIGHT} from 'src/constants';
 import {withAnimated} from 'src/utils';
 import {AvatarSettingButton} from 'src/screens/components';
 import TagChipList from './components/TagChipList';
@@ -9,7 +9,7 @@ import {CreateButton, SearchButton} from './components';
 
 const AnimatedCenterTopBar = withAnimated(CenterTopBar);
 const CONFIG_VALUE = 100;
-const standardHeight = heightOf?.MIN_HEADER;
+const standardHeight = HEIGHT?.MIN_HEADER;
 const MAIN_TITLE = 'Thư viện của tôi';
 
 function LibraryTopAppBar(props, ref) {

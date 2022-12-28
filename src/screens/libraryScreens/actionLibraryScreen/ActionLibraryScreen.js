@@ -17,12 +17,7 @@ const actions = {
   },
 };
 export default function ActionLibraryScreen({navigation, route}) {
-  const {
-    onPinningPress = () => {},
-    onLikePress = () => {},
-    hasPinnedId,
-    hasLikedId,
-  } = route.params;
+  const {onPinningPress, onLikePress, hasPinnedId, hasLikedId} = route.params;
   const [isSaved, setIsSaved] = useState(false);
 
   function handleGoBackPress() {

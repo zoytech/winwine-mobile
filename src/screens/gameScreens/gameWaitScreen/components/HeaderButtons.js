@@ -5,7 +5,6 @@ import {
   StandardIconButton,
   StandardIconToggle,
 } from 'src/components';
-import {ScreenKeys} from '../../../../../navigations/ScreenKeys';
 
 export default function HeaderButtons(props) {
   const {

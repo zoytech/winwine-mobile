@@ -1,7 +1,7 @@
 import {forwardRef, useImperativeHandle, useRef, useState} from 'react';
 import {Animated, StyleSheet} from 'react-native';
 import {SmallTopBar} from 'src/components';
-import {heightOf} from 'src/constants';
+import {HEIGHT} from 'src/constants';
 import {withAnimated} from 'src/utils';
 
 const SmallTopBarAnimated = withAnimated(SmallTopBar);
@@ -12,13 +12,9 @@ function GameWaitTopAppBar(props, ref) {
     props;
   const [showContent, setShowContent] = useState(false);
   const animatedValue = useRef(new Animated.Value(0)).current;
-  const minHeight = heightOf?.MIN_HEADER;
-  const imgHeight = imageHeight ? imageHeight : heightOf?.IMAGE;
+  const minHeight = HEIGHT?.MIN_HEADER;
+  const imgHeight = imageHeight ? imageHeight : HEIGHT?.IMAGE;
   const bottomHeight = imgHeight + minHeight;
-
-  function handleShowSelectionList() {
-    alert('handleShowSelectionList');
-  }
 
   useImperativeHandle(ref, () => ({
     onScroll: event => {

@@ -1,9 +1,9 @@
 import React from 'react';
 import {Animated, StyleSheet, Text, View} from 'react-native';
 import {Color, ColorVariant, Typography} from 'src/themes';
-import {heightOf} from 'src/constants';
+import {HEIGHT} from 'src/constants';
 
-const standardHeight = heightOf?.MIN_HEADER;
+const standardHeight = HEIGHT?.MIN_HEADER;
 
 export default function CenterTopBar(props) {
   const {

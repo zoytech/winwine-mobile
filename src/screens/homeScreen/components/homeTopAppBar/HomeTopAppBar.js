@@ -1,13 +1,13 @@
 import {forwardRef, useImperativeHandle, useRef, useState} from 'react';
 import {Animated, StyleSheet} from 'react-native';
-import {CenterTopBar, SpinnerType1} from 'src/components';
-import {heightOf} from 'src/constants';
+import {CenterTopBar} from 'src/components';
+import {HEIGHT} from 'src/constants';
 import {SuggestionList} from '../suggestionList';
 import {usePartOfDay, withAnimated} from 'src/utils';
-import {AvatarSettingButton} from '../../../components';
+import {AvatarSettingButton} from 'src/screens/components';
 
 const CONFIG_VALUE = 100;
-const standardHeight = heightOf?.MIN_HEADER;
+const standardHeight = HEIGHT?.MIN_HEADER;
 const AnimatedCenterTopBar = withAnimated(CenterTopBar);
 
 function HomeTopAppBar(props, ref) {

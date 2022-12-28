@@ -5,21 +5,19 @@ const defaultOf = {
   initDataLength: 0,
 };
 
-const defaultOfDeck = {
-  TITLE: 'Bộ bài nặc danh',
+const DECK = {
+  NAME: 'Bộ bài khuyết danh',
+  TAG: '#ChưaPhânLoại',
   IMAGE: cardDeckImg,
-  TAG: 'normal',
-  DESCRIPTION:
-    'alo con oaihf jahf ia fhaj uafujh jhaj afjhjafj alo con oaihf jahf ia fhaj uafujh jhaj afjhjafj',
-  LIKES: 0,
+  NUMBER_OF_CARDS: 0,
 };
-const defaultOfCard = {
+const CARD = {
   EMPTY: ['Bộ bài chưa có câu hỏi'],
   SERVER: ['Mất kết nối'],
 };
-const defaultOfUser = {
+const OWNER = {
   AVATAR: avatarImg,
-  NAME: 'Người dùng ẩn danh',
+  NAME: 'Người bạn ẩn danh',
 };
 
-export {defaultOf, defaultOfDeck, defaultOfUser, defaultOfCard};
+export {defaultOf, DECK, CARD, OWNER};

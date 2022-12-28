@@ -1,33 +1,31 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
-import {defaultOfDeck} from 'src/constants';
-import MiniCardItem from './MiniCardItem';
-import MiniCardItem2 from './MiniCardItem2';
+import {DECK} from 'src/constants';
+import {MiniCardItem} from 'src/screens/components';
 
-export default function VerticalCardList(props) {
+export default function VerticalCardDecks(props) {
   const {style, data, navigation, ...otherProps} = props;
-  const {TITLE, IMAGE} = defaultOfDeck;
 
   const handlePlayPress = item => {
-    const {cardDeckId, cardDeck, uri} = item || {};
+    const {cardDeckId, cardDeckName, cardDeckImage} = item || {};
     navigation.navigate({
       name: ScreenKeys.PLAY_GAME,
       params: {
-        deckId: cardDeckId ? cardDeckId : '',
-        deckTitle: cardDeck ? cardDeck : TITLE,
-        deckSource: uri ? {uri: uri} : IMAGE,
+        cardDeckIdParam: cardDeckId ? cardDeckId : '',
+        cardDeckNameParam: cardDeckName ? cardDeckName : DECK?.NAME,
+        cardDeckImage: cardDeckImage ? {uri: cardDeckImage} : DECK?.IMAGE,
       },
     });
   };
   const handlePreviewPress = item => {
-    const {cardDeckId, cardDeck, uri} = item || {};
+    const {cardDeckId, cardDeckName, cardDeckImage} = item || {};
     navigation.navigate({
       name: ScreenKeys.WAIT_GAME,
       params: {
-        deckId: cardDeckId ? cardDeckId : '',
-        deckTitle: cardDeck ? cardDeck : TITLE,
-        deckSource: uri ? {uri: uri} : IMAGE,
+        cardDeckIdParam: cardDeckId ? cardDeckId : '',
+        cardDeckNameParam: cardDeckName ? cardDeckName : DECK?.NAME,
+        cardDeckImage: cardDeckImage ? {uri: cardDeckImage} : DECK?.IMAGE,
       },
     });
   };
@@ -35,7 +33,7 @@ export default function VerticalCardList(props) {
   function renderItem(item) {
     const cardDeckId = item?.cardDeckId;
     return (
-      <MiniCardItem2
+      <MiniCardItem
         {...otherProps}
         key={cardDeckId}
         data={item}
