@@ -28,12 +28,6 @@ export default function LibraryScreen({navigation}) {
   const [selectedChip, setSelectedChip] = useState(null);
   const rawTagIdData = localStorageData.map(item => item?.tag);
   const tagIdData = removeIdenticalItemInArray(rawTagIdData);
-  const [value, setValue] = useState(0);
-
-  const print = () => {
-    setValue(prev => prev + 1);
-    console.log(value);
-  };
 
   const tagChipData = [
     {
@@ -102,7 +96,6 @@ export default function LibraryScreen({navigation}) {
             chipId={selectedChip}
           />
           <CardDeckList data={cardDeckList2} navigation={navigation} />
-          <FilledButton content={`${value}`} onPress={throttled} />
         </ScrollView>
       )}
     </SafeAreaView>
