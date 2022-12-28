@@ -2,7 +2,9 @@ import React, {useState} from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
 import {SuggestionChip} from 'src/components';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
+import {GAME_TAGS} from 'src/constants';
 import ComingSoonDialog from './ComingSoonDialog';
+import {normalizedBy} from 'src/utils';
 
 const chipId = {
   DRINKING_GAME: 'HTG1',
@@ -10,18 +12,26 @@ const chipId = {
 };
 
 export default function SuggestionList(props) {
-  const {style, data, navigation, route, ...otherProps} = props;
-  const [selectedChip, setSelectedChip] = useState(chipId?.DRINKING_GAME);
-
-  function handleMainDialogPress() {
-    setSelectedChip(chipId?.DRINKING_GAME);
-    navigation.goBack();
-  }
+  const {style, navigation, route, ...otherProps} = props;
+  const gameTags = GAME_TAGS;
+  const normalizedGameTags = gameTags.reduce(
+    normalizedBy('gameTagContent'),
+    {},
+  );
+  const DrinkingGame = normalizedGameTags['Drinking Game']?.gameTagContent;
+  const TruthOrDare = normalizedGameTags['Truth Or Dare']?.gameTagContent;
+  const [selectedChip, setSelectedChip] = useState(DrinkingGame);
 
   function handleChipPressed(hashtagId) {
     setSelectedChip(hashtagId);
+
+    function handleMainDialogPress() {
+      setSelectedChip(DrinkingGame);
+      navigation.goBack();
+    }
+
     const navigate = navigation.navigate;
-    if (hashtagId === chipId?.TRUTH_DARE) {
+    if (hashtagId === TruthOrDare) {
       navigate({
         name: ScreenKeys.BASIC_DIALOG,
         params: {
@@ -34,18 +44,16 @@ export default function SuggestionList(props) {
   }
 
   function renderItem({item}) {
-    const {content, hashtagId} = item || {};
+    const {gameTagContent, gameTagId} = item || {};
     return (
       <SuggestionChip
         {...otherProps}
-        key={hashtagId}
-        content={content}
+        key={gameTagId}
+        content={gameTagContent}
         style={styles.chip}
-        selected={hashtagId === selectedChip}
-        onPress={() => handleChipPressed(hashtagId)}
+        selected={gameTagContent === selectedChip}
+        onPress={() => handleChipPressed(gameTagContent)}
         hasTrailingIcon={true}
-        // icon={'github'}
-        // image={avatarTest}
       />
     );
   }
@@ -58,7 +66,7 @@ export default function SuggestionList(props) {
       ItemSeparatorComponent={<View style={styles.separator} />}
       contentContainerStyle={[styles.contentContainer]}
       style={[styles.container, style]}
-      data={data}
+      data={gameTags}
       renderItem={renderItem}
     />
   );

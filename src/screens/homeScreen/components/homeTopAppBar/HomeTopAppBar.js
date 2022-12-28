@@ -1,21 +1,9 @@
-import {
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from 'react';
+import {forwardRef, useImperativeHandle, useRef, useState} from 'react';
 import {Animated, StyleSheet} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
-import {BaseAvatarButton, CenterTopBar, SpinnerType1} from 'src/components';
-import {loadCardDeckList} from 'src/redux/actions';
-import {
-  cardDeckListSelector,
-  requestingDeckListSelector,
-} from 'src/redux/selectors';
-import {defaultOfUser, heightOf} from 'src/constants';
+import {CenterTopBar, SpinnerType1} from 'src/components';
+import {heightOf} from 'src/constants';
 import {SuggestionList} from '../suggestionList';
-import {withAnimated, usePartOfDay} from 'src/utils';
+import {usePartOfDay, withAnimated} from 'src/utils';
 import {AvatarSettingButton} from '../../../components';
 
 const CONFIG_VALUE = 100;
@@ -24,10 +12,6 @@ const AnimatedCenterTopBar = withAnimated(CenterTopBar);
 
 function HomeTopAppBar(props, ref) {
   const {navigation, style, ...otherProps} = props;
-  const dispatch = useDispatch();
-  const cardDeckList = useSelector(cardDeckListSelector);
-  const requesting = useSelector(requestingDeckListSelector);
-  const suggestData = cardDeckList?.suggestData;
   const {currentPart} = usePartOfDay();
 
   const reverseStandardHeight = -standardHeight;
@@ -35,10 +19,6 @@ function HomeTopAppBar(props, ref) {
   const [subHeight, setSubHeight] = useState(0);
   const totalHeight = subHeight + standardHeight;
   const scrollDistance = totalHeight - standardHeight + CONFIG_VALUE;
-
-  useEffect(() => {
-    dispatch(loadCardDeckList());
-  }, [dispatch]);
 
   useImperativeHandle(ref, () => ({
     onScroll: e => {
@@ -83,18 +63,9 @@ function HomeTopAppBar(props, ref) {
   }
 
   function renderBottomComponents() {
-    return (
-      <SuggestionList
-        data={suggestData}
-        navigation={navigation}
-        style={styles.suggestion}
-      />
-    );
+    return <SuggestionList navigation={navigation} style={styles.suggestion} />;
   }
 
-  if (requesting) {
-    return <SpinnerType1 style={{height: standardHeight}} />;
-  }
   return (
     <AnimatedCenterTopBar
       {...otherProps}

@@ -14,6 +14,7 @@ import {
   VerticalCardList,
 } from './components';
 import {CustomStatusBar, SectionHeader} from '../components';
+import {SpinnerType1} from 'src/components';
 
 const RECENTLY = 'Chơi gần đây';
 const POPULAR = 'Phổ biến';
@@ -22,16 +23,15 @@ export default function HomeScreen({navigation}) {
     onScroll: () => {},
   });
   const dispatch = useDispatch();
-  // const cardDeckList = useSelector(cardDeckListSelector);
-  // const requesting = useSelector(requestingDeckListSelector);
   const cardDeckList2 = useSelector(cardDeckListSelector2);
   const requesting2 = useSelector(requestingDeckListSelector2);
-  // const {popularData, recentlyData} = cardDeckList;
   const localStorage = cardDeckList2;
   useEffect(() => {
     dispatch(loadCardDeckList2());
     if (!requesting2 || cardDeckList2 === null) {
       SplashScreen.hide();
+    } else if (cardDeckList2.length === 0) {
+      return <SpinnerType1 />;
     }
   }, [dispatch]);
 
