@@ -10,22 +10,22 @@ const PartName = {
 const PartConfigs = {
   [PartName.MORNING]: {
     name: PartName.MORNING,
-    greetingContent: 'Good Morning',
+    greetingContent: 'Chào buổi sáng',
     startHour: 5,
   },
   [PartName.AFTERNOON]: {
     name: PartName.AFTERNOON,
-    greetingContent: 'Good Afternoon',
+    greetingContent: 'Chào buổi trưa',
     startHour: 12,
   },
   [PartName.EVENING]: {
     name: PartName.EVENING,
-    greetingContent: 'Good Evening',
+    greetingContent: 'Chào buổi chiều',
     startHour: 18,
   },
   [PartName.NIGHT]: {
     name: PartName.NIGHT,
-    greetingContent: 'Night time',
+    greetingContent: 'Khuya rồi',
     startHour: 23,
   },
 };
