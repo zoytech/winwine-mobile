@@ -20,6 +20,7 @@ const gamePlayStyle = {
     alignItems: 'center',
   },
   card: {
+    aspectRatio: 0.78,
     paddingTop: 32,
   },
   action: {

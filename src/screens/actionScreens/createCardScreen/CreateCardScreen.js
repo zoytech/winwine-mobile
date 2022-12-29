@@ -3,8 +3,11 @@ import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {FilledButton, SpinnerType1} from 'src/components';
-import {loadCardDeckById} from 'src/redux/actions';
-import {cardDeckSelector, requestingDeckSelector} from 'src/redux/selectors';
+import {loadCardDeckByDeckId} from 'src/redux/actions';
+import {
+  cardDeckSelector,
+  requestingCardDeckSelector,
+} from 'src/redux/selectors';
 import {defaultOf, HEIGHT, WIDTH} from 'src/constants';
 import {CustomStatusBar} from 'src/screens/components';
 import {
@@ -29,7 +32,7 @@ export default function CreateCardScreen({navigation, route}) {
   const {deckTitle, deckId, deckDescription, deckSource, deckTag} =
     route.params;
   const cardDeckItem = useSelector(cardDeckSelector);
-  const requesting = useSelector(requestingDeckSelector);
+  const requesting = useSelector(requestingCardDeckSelector);
   const dispatch = useDispatch();
   const [imageHeight, setImageHeight] = useState(HEIGHT?.IMAGE);
   const [taskItem, setTaskItem] = useState(null);
@@ -47,7 +50,7 @@ export default function CreateCardScreen({navigation, route}) {
 
   const recommendedDeckId = 1;
   useEffect(() => {
-    dispatch(loadCardDeckById(recommendedDeckId));
+    dispatch(loadCardDeckByDeckId(recommendedDeckId));
   }, [dispatch, recommendedDeckId]);
 
   useEffect(() => {

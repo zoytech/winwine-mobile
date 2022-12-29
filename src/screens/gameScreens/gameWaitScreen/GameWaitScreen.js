@@ -3,14 +3,17 @@ import {SafeAreaView, ScrollView, Text, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {SpinnerType1} from 'src/components';
-import {loadCardDeckById} from 'src/redux/actions';
+import {loadCardDeckByDeckId} from 'src/redux/actions';
 import {
   GameWaitTopAppBar,
   HeaderButtons,
   HeaderImage,
   HeaderInformation,
 } from './components';
-import {cardDeckSelector, requestingDeckSelector} from 'src/redux/selectors';
+import {
+  cardDeckSelector,
+  requestingCardDeckSelector,
+} from 'src/redux/selectors';
 import {SwipeableGameCard} from '../components';
 import {HEIGHT} from 'src/constants';
 import {CustomStatusBar, EmptyInfoAnnouncement} from 'src/screens/components';
@@ -20,7 +23,7 @@ import gameWaitStyle from './gameWaitStyle';
 
 const width = {
   CONTAINER: 320,
-  CARD: 320 * 0.85,
+  CARD: 275,
   SEPARATOR: 10,
 };
 const INITIAL_INDEX = 0;
@@ -30,7 +33,7 @@ const EMPTY_CONTENT = 'Bộ bài chưa có lá bài nào.';
 export default function GameWaitScreen({navigation, route}) {
   const {cardDeckIdParam, cardDeckNameParam, cardDeckImageParam} = route.params;
   const cardDeckItem = useSelector(cardDeckSelector);
-  const requesting = useSelector(requestingDeckSelector);
+  const requesting = useSelector(requestingCardDeckSelector);
   const dispatch = useDispatch();
   const [showIndex, setShowIndex] = useState(INITIAL_INDEX);
   const [imageHeight, setImageHeight] = useState(HEIGHT?.IMAGE);
@@ -49,7 +52,7 @@ export default function GameWaitScreen({navigation, route}) {
   const textColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
 
   useEffect(() => {
-    dispatch(loadCardDeckById(cardDeckIdParam));
+    dispatch(loadCardDeckByDeckId(cardDeckIdParam));
   }, [dispatch, cardDeckIdParam]);
 
   useEffect(() => {

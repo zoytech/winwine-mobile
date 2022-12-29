@@ -1,30 +1,30 @@
 import {
-  FETCH_DECK_ERROR,
-  FETCH_DECK_REQUEST,
-  FETCH_DECK_SUCCESS,
+  FETCH_CARDS_ERROR,
+  FETCH_CARDS_REQUEST,
+  FETCH_CARDS_SUCCESS,
 } from 'src/redux/constants';
 
 const initialState = {
   requesting: false,
-  data: {},
+  data: [],
   error: {},
 };
 
-function cardDeckReducer(state = initialState, action) {
+function cardsReducer(state = initialState, action) {
   const {type, payload, message} = action;
   switch (type) {
-    case FETCH_DECK_REQUEST:
+    case FETCH_CARDS_REQUEST:
       return {
         ...state,
         requesting: true,
       };
-    case FETCH_DECK_SUCCESS:
+    case FETCH_CARDS_SUCCESS:
       return {
         ...state,
         requesting: false,
-        data: payload?.data || {},
+        data: payload?.data || [],
       };
-    case FETCH_DECK_ERROR:
+    case FETCH_CARDS_ERROR:
       return {
         ...state,
         requesting: false,
@@ -35,4 +35,4 @@ function cardDeckReducer(state = initialState, action) {
   }
 }
 
-export default cardDeckReducer;
+export default cardsReducer;

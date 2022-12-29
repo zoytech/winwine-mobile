@@ -1,4 +1,5 @@
-import {loadCardDeckById} from './loadCardDeckById';
+import loadCardDeckByDeckId from './loadCardDeckByDeckId';
 import loadCardDecks from './loadCardDecks';
+import loadCardsByDeckId from './loadCardsByDeckId';
 
-export {loadCardDeckById, loadCardDecks};
+export {loadCardDeckByDeckId, loadCardDecks, loadCardsByDeckId};

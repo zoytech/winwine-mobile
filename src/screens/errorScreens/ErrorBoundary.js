@@ -6,7 +6,7 @@ import {Color, ColorVariant, Typography} from 'src/themes';
 
 const TITLE = 'Rất tiếc, đã xảy ra lỗi';
 const DESCRIPTION =
-  'Ứng dụng gặp sự cố và không thể tiếp tục. Chúng tôi xin lỗi vì sự bất tiện này! Nhấn nút bên dưới để trở lại màn hình chính. Vui lòng liên hệ với chúng tôi nếu sự cố này vẫn tiếp diễn.';
+  'Ứng dụng gặp sự cố và không thể tiếp tục. Chúng tôi xin lỗi vì sự bất tiện này! Lỗi sẽ được khắc phục trong thời gian sớm nhất.';
 
 class ErrorBoundary extends Component {
   state = {
@@ -16,11 +16,6 @@ class ErrorBoundary extends Component {
   static getDerivedStateFromError(error) {
     return {error: true};
   }
-
-  resetError = () => {
-    this.setState({error: false});
-    console.log('resetError');
-  };
 
   render() {
     const {base: baseColor, onBase: onBaseColor} =
@@ -49,11 +44,6 @@ class ErrorBoundary extends Component {
               numberOfLines={7}>
               {DESCRIPTION}
             </Text>
-            <FilledButton
-              content={'Reset lỗi'}
-              onPress={() => this.resetError}
-              style={[contentStyle, styles.button]}
-            />
           </View>
         </SafeAreaView>
       );
@@ -91,7 +81,3 @@ const styles = StyleSheet.create({
 });
 
 export default ErrorBoundary;
-
-/*
-
- */

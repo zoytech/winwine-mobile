@@ -22,8 +22,9 @@ const gameWaitStyle = {
     justifyContent: 'center',
   },
   card: {
+    aspectRatio: 0.6,
     paddingVertical: 16,
-    paddingBottom: 48,
+    paddingBottom: 100,
   },
   suggestingDeck: {
     width: '100%',

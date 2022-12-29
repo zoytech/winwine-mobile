@@ -2,7 +2,7 @@ import {
   FETCH_DECKS_ERROR,
   FETCH_DECKS_REQUEST,
   FETCH_DECKS_SUCCESS,
-} from '../constants';
+} from 'src/redux/constants';
 import {api} from 'src/constants';
 
 async function getCardDecks(url = '', data = {}) {

@@ -3,8 +3,8 @@ import {SafeAreaView, ScrollView, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {SpinnerType1, StandardIconButton} from 'src/components';
-import {loadCardDeckById} from 'src/redux/actions';
-import {cardDeckSelector, requestingDeckSelector} from 'src/redux/selectors';
+import {loadCardsByDeckId} from 'src/redux/actions';
+import {cardsSelector, requestingCardsSelector} from 'src/redux/selectors';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import {DECK, WIDTH} from 'src/constants';
 import {
@@ -29,17 +29,15 @@ const INITIAL_INDEX = 0;
 export default function GamePlayScreen({navigation, route}) {
   const {cardDeckIdParam, cardDeckNameParam, cardDeckImageParam} = route.params;
   const dispatch = useDispatch();
-  const cardDeckItem = useSelector(cardDeckSelector);
-  const requesting = useSelector(requestingDeckSelector);
+  const cards = useSelector(cardsSelector);
+  const requesting = useSelector(requestingCardsSelector);
+
   const carouselRef = useRef(null);
   const [showIndex, setShowIndex] = useState(INITIAL_INDEX);
   const [showIndicatorInfo, setShowIndicatorInfo] = useState(true);
+  // const deckTag = cardDeckTag ? cardDeckTag : DECK?.TAG;
 
-  const {cardDeckTag, previewCards} = cardDeckItem || {};
-  const deckTag = cardDeckTag ? cardDeckTag : DECK?.TAG;
-
-  const previewCardData = previewCards ? previewCards : [];
-  const dataLength = previewCards ? previewCards.length : DECK?.NUMBER_OF_CARDS;
+  const dataLength = cards ? cards.length : DECK?.NUMBER_OF_CARDS;
   const progressBarWidth = screenWidth * 0.8;
   const percentValue = dataLength !== 0 && (showIndex + 1) / dataLength;
   const indicatedPartWidth = progressBarWidth * percentValue;
@@ -56,8 +54,8 @@ export default function GamePlayScreen({navigation, route}) {
   const defaultContentStyle = [Typography.title.medium, {color: textColor}];
 
   useEffect(() => {
-    dispatch(loadCardDeckById(cardDeckIdParam));
-  }, [dispatch]);
+    dispatch(loadCardsByDeckId(cardDeckIdParam));
+  }, [dispatch, cardDeckIdParam]);
 
   useEffect(() => {
     navigation.setOptions({
@@ -84,7 +82,7 @@ export default function GamePlayScreen({navigation, route}) {
         content: (
           <EndingGameDialog
             headline={cardDeckNameParam}
-            subHeadLeft={deckTag}
+            subHeadLeft={DECK?.TAG}
             media={cardDeckImageParam}
             onMainActionPress={handleMainDialogPress}
             onSubActionPress={handleSubDialogPress}
@@ -145,7 +143,7 @@ export default function GamePlayScreen({navigation, route}) {
   return (
     <SafeAreaView style={defaultContainerStyle}>
       <CustomStatusBar />
-      {!dataLength || dataLength === 0 ? (
+      {!cards || cards === 0 ? (
         <EmptyInfoAnnouncement content={'Bộ bài chưa có lá bài nào.'} />
       ) : (
         <ScrollView contentContainerStyle={gamePlayStyle.scrollView}>
@@ -168,7 +166,7 @@ export default function GamePlayScreen({navigation, route}) {
             />
           </View>
           <SwipeableGameCard
-            data={previewCardData}
+            data={cards}
             ref={carouselRef}
             style={gamePlayStyle.card}
             contentStyle={defaultContentStyle}
