@@ -7,7 +7,6 @@ export default function TagChipList(props) {
     navigation,
     route,
     data,
-    chipId,
     style,
     onSortingListByChipId = () => {},
     ...otherProps
@@ -23,19 +22,16 @@ export default function TagChipList(props) {
     }
   }
 
-  function renderItem({item}) {
-    const {tagChipId: tagChipId, tagChipContent: content} = item || {};
+  function renderItem({item, index}) {
     return (
       <SuggestionChip
         {...otherProps}
-        key={tagChipId}
-        content={content}
+        key={index}
+        content={item}
         style={styles.chip}
         hasTrailingIcon={true}
-        selected={selectedChip === tagChipId}
-        onPressOut={() => handleSortingListByChipId(tagChipId)}
-        // icon={'github'}
-        // image={avatarTest}
+        selected={selectedChip === item}
+        onPressOut={() => handleSortingListByChipId(item)}
       />
     );
   }

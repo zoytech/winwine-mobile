@@ -3,7 +3,7 @@ import {SafeAreaView, ScrollView, Text, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {SpinnerType1} from 'src/components';
-import {loadCardDeckByDeckId} from 'src/redux/actions';
+import {loadCardDeckByDeckId, loadCardsByDeckId} from 'src/redux/actions';
 import {
   GameWaitTopAppBar,
   HeaderButtons,
@@ -12,6 +12,7 @@ import {
 } from './components';
 import {
   cardDeckSelector,
+  cardsSelector,
   requestingCardDeckSelector,
 } from 'src/redux/selectors';
 import {SwipeableGameCard} from '../components';
@@ -34,6 +35,7 @@ export default function GameWaitScreen({navigation, route}) {
   const {cardDeckIdParam, cardDeckNameParam, cardDeckImageParam} = route.params;
   const cardDeckItem = useSelector(cardDeckSelector);
   const requesting = useSelector(requestingCardDeckSelector);
+  const cards = useSelector(cardsSelector);
   const dispatch = useDispatch();
   const [showIndex, setShowIndex] = useState(INITIAL_INDEX);
   const [imageHeight, setImageHeight] = useState(HEIGHT?.IMAGE);
@@ -53,6 +55,9 @@ export default function GameWaitScreen({navigation, route}) {
 
   useEffect(() => {
     dispatch(loadCardDeckByDeckId(cardDeckIdParam));
+  }, [dispatch, cardDeckIdParam]);
+  useEffect(() => {
+    dispatch(loadCardsByDeckId(cardDeckIdParam));
   }, [dispatch, cardDeckIdParam]);
 
   useEffect(() => {
@@ -90,9 +95,7 @@ export default function GameWaitScreen({navigation, route}) {
   }
 
   function renderButtons() {
-    const handleStaringDeckPress = () => {};
     const handleDownloadDeckPress = () => {};
-    const handleNavigateMoreActionPress = () => {};
     const handlePressFilledButton = () => {
       navigation.navigate({
         name: ScreenKeys.PLAY_GAME,
@@ -105,9 +108,7 @@ export default function GameWaitScreen({navigation, route}) {
     };
     return (
       <HeaderButtons
-        onStaringDeckPress={handleStaringDeckPress}
         onDownloadDeckPress={handleDownloadDeckPress}
-        onNavigateMoreActionPress={handleNavigateMoreActionPress}
         onFilledButtonPress={handlePressFilledButton}
       />
     );
@@ -145,7 +146,7 @@ export default function GameWaitScreen({navigation, route}) {
               <Text style={defaultContentStyle}>{previewContent}</Text>
             </View>
             <SwipeableGameCard
-              data={previewCardData}
+              data={cards}
               ref={carouselRef}
               style={gameWaitStyle.card}
               contentStyle={defaultContentStyle}

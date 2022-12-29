@@ -11,9 +11,7 @@ export default function HeaderButtons(props) {
     renderRightComponents,
     children,
     style,
-    onStaringDeckPress = () => {},
     onDownloadDeckPress = () => {},
-    onNavigateMoreActionPress = () => {},
     onFilledButtonPress = () => {},
     ...otherProps
   } = props;
@@ -21,31 +19,13 @@ export default function HeaderButtons(props) {
   const containerStyle = [styles.container, style];
 
   function renderHeaderLeftButtons() {
-    const starProps = {
-      name: 'staro',
-      selectedName: 'star',
-      onPress: onStaringDeckPress(),
-      style: styles.icon,
-    };
     const downloadProps = {
       name: 'downcircleo',
       selectedName: 'downcircle',
       onPress: onDownloadDeckPress(),
       style: styles.icon,
     };
-    const moreActionProps = {
-      name: 'ellipsis1',
-      selectedName: 'ellipsis1',
-      onPress: onNavigateMoreActionPress(),
-      style: styles.icon,
-    };
-    return (
-      <>
-        <StandardIconToggle {...starProps} />
-        <StandardIconToggle {...downloadProps} />
-        <StandardIconButton {...moreActionProps} />
-      </>
-    );
+    return <StandardIconToggle {...downloadProps} />;
   }
 
   function renderHeaderRightButton() {

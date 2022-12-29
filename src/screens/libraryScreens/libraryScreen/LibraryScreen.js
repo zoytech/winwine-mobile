@@ -4,10 +4,12 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Color, ColorVariant} from 'src/themes';
 import {
   cardDecksSelector,
+  hashtagsSelector,
   requestingCardDecksSelector,
+  requestingHashtagsSelector,
 } from 'src/redux/selectors';
 import {SpinnerType1} from 'src/components';
-import {loadCardDecks} from 'src/redux/actions';
+import {loadCardDecks, loadHashtags} from 'src/redux/actions';
 import {CustomStatusBar, EmptyInfoAnnouncement} from 'src/screens/components';
 import {LibraryCardDecks, LibraryTopAppBar} from './components';
 import {tagCardDeck} from 'src/constants';
@@ -19,32 +21,16 @@ export default function LibraryScreen({navigation}) {
   const dispatch = useDispatch();
   const localStorageData = useSelector(cardDecksSelector);
   const requestingCardDecks = useSelector(requestingCardDecksSelector);
+  const hashtags = useSelector(hashtagsSelector);
+  const requestingHashtags = useSelector(requestingHashtagsSelector);
   const [selectedChip, setSelectedChip] = useState(null);
 
-  const tagChipData = {
-    data: [
-      {
-        tagChipId: 'TC1',
-        tagChipContent: tagCardDeck.ADULT,
-      },
-      {
-        tagChipId: 'TC2',
-        tagChipContent: tagCardDeck.BUDDY,
-      },
-      {
-        tagChipId: 'TC3',
-        tagChipContent: tagCardDeck.FIRST_MEETING,
-      },
-      {
-        tagChipId: 'TC4',
-        tagChipContent: tagCardDeck.KILLER,
-      },
-    ],
-  };
-
-  const tagList = tagChipData.data;
   useEffect(() => {
     dispatch(loadCardDecks());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(loadHashtags());
   }, [dispatch]);
 
   useEffect(() => {
@@ -55,7 +41,7 @@ export default function LibraryScreen({navigation}) {
             navigation={navigation}
             ref={topBarRef}
             onSortingListByChipId={handleSortingListByChipId}
-            data={tagList}
+            data={hashtags}
             chipId={selectedChip}
           />
         );
@@ -63,15 +49,15 @@ export default function LibraryScreen({navigation}) {
     });
   }, [navigation, selectedChip]);
 
-  function handleSortingListByChipId(tagId) {
-    if (tagId === selectedChip) {
+  function handleSortingListByChipId(hashtag) {
+    if (hashtag === selectedChip) {
       setSelectedChip(null);
     } else {
-      setSelectedChip(tagId);
+      setSelectedChip(hashtag);
     }
   }
 
-  if (requestingCardDecks || !localStorageData) {
+  if (requestingCardDecks && !localStorageData && requestingHashtags) {
     return <SpinnerType1 />;
   }
   return (
