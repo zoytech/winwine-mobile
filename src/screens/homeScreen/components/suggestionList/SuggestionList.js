@@ -6,11 +6,6 @@ import {GAME_TAGS} from 'src/constants';
 import ComingSoonDialog from './ComingSoonDialog';
 import {normalizedBy} from 'src/utils';
 
-const chipId = {
-  DRINKING_GAME: 'HTG1',
-  TRUTH_DARE: 'HTG2',
-};
-
 export default function SuggestionList(props) {
   const {style, navigation, route, ...otherProps} = props;
   const gameTags = GAME_TAGS;

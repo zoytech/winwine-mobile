@@ -22,9 +22,9 @@ export default function MiniCardItem(props) {
     onLongPress = () => {},
   } = props;
 
-  const {cardDeckName, cardDeckImage, cardDeckTag} = data || {};
+  const {cardDeckName, cardDeckImage, hashtags} = data || {};
   const deckName = cardDeckName ? cardDeckName : DECK?.NAME;
-  const deckTag = cardDeckTag ? cardDeckTag : DECK?.TAG;
+  const deckFirstTag = hashtags ? hashtags[0] : DECK?.TAG;
   const deckImage = cardDeckImage ? {uri: cardDeckImage} : DECK?.IMAGE;
 
   const titleColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
@@ -46,7 +46,7 @@ export default function MiniCardItem(props) {
         <Text style={titleStyle} numberOfLines={1} ellipsizeMode={'tail'}>
           {deckName}
         </Text>
-        <Text style={subTitleStyle}>{deckTag}</Text>
+        <Text style={subTitleStyle}>{deckFirstTag} ...</Text>
         {renderIcons()}
       </>
     );

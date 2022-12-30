@@ -49,8 +49,9 @@ const gameWaitStyle = {
   },
   emptyView: {
     width: '100%',
-    aspectRatio: 2,
+    aspectRatio: 1.5,
     paddingVertical: 30,
+    justifyContent: 'center',
   },
 };
 export default gameWaitStyle;

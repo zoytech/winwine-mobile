@@ -15,7 +15,7 @@ export default function HeaderInformation(props) {
   } = props;
   const {
     cardDeckName,
-    cardDeckTag,
+    hashtags,
     numberOfCards,
     ownerName,
     ownerAvatar,
@@ -23,7 +23,7 @@ export default function HeaderInformation(props) {
     cardDeckLike,
   } = data;
   const deckName = cardDeckName ? cardDeckName : DECK?.NAME;
-  const deckTag = cardDeckTag ? cardDeckTag : DECK?.TAG;
+  const deckTags = hashtags ? hashtags : [DECK?.TAG];
   const totalCards = numberOfCards ? numberOfCards : DECK?.NUMBER_OF_CARDS;
   const userName = ownerName ? ownerName : OWNER?.NAME;
   const userAvatar = ownerAvatar ? ownerAvatar : OWNER?.AVATAR;
@@ -70,10 +70,22 @@ export default function HeaderInformation(props) {
     );
   }
 
+  function renderHashtags() {
+    return (
+      <View>
+        <Text style={subContentStyle}>{deckTags}</Text>
+      </View>
+    );
+  }
+
   function renderOtherInfoComponents() {
     return (
       <View style={styles.subInfo}>
-        <Text style={subContentStyle}>{deckTag}</Text>
+        {deckTags.map((item, index) => (
+          <Text key={index} style={subContentStyle}>
+            {item}
+          </Text>
+        ))}
         {renderSeparatorLine()}
         <Text style={subContentStyle}>{totalCard}</Text>
         {cardDeckLike ? (
