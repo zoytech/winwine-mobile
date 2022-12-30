@@ -1,10 +1,20 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {SafeAreaView, ScrollView, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {SpinnerType1, StandardIconButton} from 'src/components';
-import {loadCardsByDeckId} from 'src/redux/actions';
-import {cardsSelector, requestingCardsSelector} from 'src/redux/selectors';
+import {
+  loadCardDeckAndCardsByDeckId,
+  loadCardsByDeckId,
+} from 'src/redux/actions';
+import {
+  cardDeckAndCardsSelector,
+  cardsSelector,
+  requestingCardDeckAndCardsSelector,
+  requestingCardsSelector,
+} from 'src/redux/selectors';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import {DECK, WIDTH} from 'src/constants';
 import {
@@ -29,13 +39,12 @@ const INITIAL_INDEX = 0;
 export default function GamePlayScreen({navigation, route}) {
   const {cardDeckIdParam, cardDeckNameParam, cardDeckImageParam} = route.params;
   const dispatch = useDispatch();
-  const cards = useSelector(cardsSelector);
-  const requesting = useSelector(requestingCardsSelector);
-
+  const dataBlocks = useSelector(cardDeckAndCardsSelector);
+  const requesting = useSelector(requestingCardDeckAndCardsSelector);
+  const {cardDeck: cardDeck, cards: cards} = dataBlocks;
   const carouselRef = useRef(null);
   const [showIndex, setShowIndex] = useState(INITIAL_INDEX);
   const [showIndicatorInfo, setShowIndicatorInfo] = useState(true);
-  // const deckTag = cardDeckTag ? cardDeckTag : DECK?.TAG;
 
   const dataLength = cards ? cards.length : DECK?.NUMBER_OF_CARDS;
   const progressBarWidth = screenWidth * 0.8;
@@ -47,14 +56,9 @@ export default function GamePlayScreen({navigation, route}) {
   const cardNumber = `${showIndex + 1} per ${dataLength}`;
   const baseColor = Color.light[ColorVariant.surface]?.base;
   const textColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
-  const defaultContainerStyle = [
-    {backgroundColor: baseColor},
-    gamePlayStyle.container,
-  ];
-  const defaultContentStyle = [Typography.title.medium, {color: textColor}];
 
   useEffect(() => {
-    dispatch(loadCardsByDeckId(cardDeckIdParam));
+    dispatch(loadCardDeckAndCardsByDeckId(cardDeckIdParam));
   }, [dispatch, cardDeckIdParam]);
 
   useEffect(() => {
@@ -67,6 +71,12 @@ export default function GamePlayScreen({navigation, route}) {
       ),
     });
   }, [navigation]);
+
+  const defaultContainerStyle = [
+    {backgroundColor: baseColor},
+    gamePlayStyle.container,
+  ];
+  const defaultContentStyle = [Typography.title.medium, {color: textColor}];
 
   function handleNavigateEndGameDialog() {
     const handleMainDialogPress = () => {
