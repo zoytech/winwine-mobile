@@ -2,21 +2,15 @@ import React, {useEffect, useRef, useState} from 'react';
 import {SafeAreaView, ScrollView, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {SpinnerType1, StandardIconButton} from 'src/components';
-import {
-  loadCardDeckAndCardsByDeckId,
-  loadCardsByDeckId,
-} from 'src/redux/actions';
+import {loadCardDeckAndCardsByDeckId} from 'src/redux/actions';
 import {
   cardDeckAndCardsSelector,
-  cardsSelector,
   requestingCardDeckAndCardsSelector,
-  requestingCardsSelector,
 } from 'src/redux/selectors';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
-import {DECK, WIDTH} from 'src/constants';
+import {DECK, KEY, WIDTH} from 'src/constants';
 import {
   CardProgressTrace,
   EndingGameDialog,
@@ -26,6 +20,7 @@ import {
 import {SwipeableGameCard} from '../components';
 import {CustomStatusBar, EmptyInfoAnnouncement} from 'src/screens/components';
 import gamePlayStyle from './gamePlayStyle';
+import {addCardDeckId} from '../../../redux/actions/cardDeckIdAction';
 
 const screenWidth = WIDTH?.SCREEN;
 const width = {
@@ -41,21 +36,12 @@ export default function GamePlayScreen({navigation, route}) {
   const dispatch = useDispatch();
   const dataBlocks = useSelector(cardDeckAndCardsSelector);
   const requesting = useSelector(requestingCardDeckAndCardsSelector);
-  const {cardDeck: cardDeck, cards: cards} = dataBlocks;
   const carouselRef = useRef(null);
   const [showIndex, setShowIndex] = useState(INITIAL_INDEX);
   const [showIndicatorInfo, setShowIndicatorInfo] = useState(true);
+  const {cardDeck: cardDeck, cards: cards} = dataBlocks;
 
-  const dataLength = cards ? cards.length : DECK?.NUMBER_OF_CARDS;
-  const progressBarWidth = screenWidth * 0.8;
-  const percentValue = dataLength !== 0 && (showIndex + 1) / dataLength;
-  const indicatedPartWidth = progressBarWidth * percentValue;
-  const minFragmentWidth = dataLength !== 0 && 1 / dataLength;
-  const indicatedArrowWidth = progressBarWidth * minFragmentWidth;
-
-  const cardNumber = `${showIndex + 1} per ${dataLength}`;
-  const baseColor = Color.light[ColorVariant.surface]?.base;
-  const textColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
+  console.log('cardDeckL ', cardDeck);
 
   useEffect(() => {
     dispatch(loadCardDeckAndCardsByDeckId(cardDeckIdParam));
@@ -71,6 +57,31 @@ export default function GamePlayScreen({navigation, route}) {
       ),
     });
   }, [navigation]);
+  useEffect(() => {
+    const saveObjectStorage = async () => {
+      try {
+        const keyStore = `${KEY?.RECENTLY_PLAY}/${cardDeckIdParam}`;
+        const jsonValue = JSON.stringify(cardDeck);
+        await AsyncStorage.setItem(keyStore, jsonValue);
+        console.log('success store local');
+        dispatch(addCardDeckId(keyStore));
+      } catch (e) {
+        console.log('Failed to save the data to the storage');
+      }
+    };
+    saveObjectStorage();
+  }, [cardDeckIdParam, dispatch]);
+
+  const dataLength = cards ? cards.length : DECK?.NUMBER_OF_CARDS;
+  const progressBarWidth = screenWidth * 0.8;
+  const percentValue = dataLength !== 0 && (showIndex + 1) / dataLength;
+  const indicatedPartWidth = progressBarWidth * percentValue;
+  const minFragmentWidth = dataLength !== 0 && 1 / dataLength;
+  const indicatedArrowWidth = progressBarWidth * minFragmentWidth;
+
+  const cardNumber = `${showIndex + 1} per ${dataLength}`;
+  const baseColor = Color.light[ColorVariant.surface]?.base;
+  const textColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
 
   const defaultContainerStyle = [
     {backgroundColor: baseColor},

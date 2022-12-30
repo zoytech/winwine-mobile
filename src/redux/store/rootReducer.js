@@ -4,6 +4,7 @@ import cardDecksReducer from '../reducers/cardDecksReducer';
 import cardsReducer from '../reducers/cardsReducer';
 import hashtagsReducer from '../reducers/hashtagsReducer';
 import cardDeckAndCardsReducer from '../reducers/cardDeckAndCardsReducer';
+import cardDeckIdReducer from '../reducers/cardDeckIdReducer';
 
 const rootReducer = combineReducers({
   cardDeck: cardDeckReducer,
@@ -11,5 +12,6 @@ const rootReducer = combineReducers({
   cards: cardsReducer,
   hashtags: hashtagsReducer,
   cardDeckAndCards: cardDeckAndCardsReducer,
+  cardDeckId: cardDeckIdReducer,
 });
 export default rootReducer;

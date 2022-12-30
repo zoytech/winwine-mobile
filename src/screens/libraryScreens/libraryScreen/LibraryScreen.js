@@ -12,7 +12,6 @@ import {SpinnerType1} from 'src/components';
 import {loadCardDecks, loadHashtags} from 'src/redux/actions';
 import {CustomStatusBar, EmptyInfoAnnouncement} from 'src/screens/components';
 import {LibraryCardDecks, LibraryTopAppBar} from './components';
-import {tagCardDeck} from 'src/constants';
 
 export default function LibraryScreen({navigation}) {
   const topBarRef = useRef({

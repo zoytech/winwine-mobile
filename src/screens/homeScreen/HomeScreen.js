@@ -1,9 +1,11 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Color, ColorVariant} from 'src/themes';
 import {
+  cardDeckIdSelector,
   cardDecksSelector,
   requestingCardDecksSelector,
 } from 'src/redux/selectors';
@@ -15,6 +17,7 @@ import {
 } from './components';
 import {CustomStatusBar, SectionHeader} from '../components';
 import {SpinnerType1} from 'src/components';
+import {removeIdenticalItemInArray} from '../../utils';
 
 const RECENTLY = 'Chơi gần đây';
 const POPULAR = 'Phổ biến';
@@ -25,6 +28,8 @@ export default function HomeScreen({navigation}) {
   const dispatch = useDispatch();
   const cardDecksData = useSelector(cardDecksSelector);
   const requestingCardDecks = useSelector(requestingCardDecksSelector);
+  const cardDeckIds = useSelector(cardDeckIdSelector);
+  const [recentlyCardDeck, setRecentlyCardDeck] = useState([]);
   const localStorage = cardDecksData;
   useEffect(() => {
     dispatch(loadCardDecks());
@@ -36,22 +41,42 @@ export default function HomeScreen({navigation}) {
   }, [dispatch]);
 
   useEffect(() => {
+    const getMultiple = async () => {
+      try {
+        const data = await AsyncStorage.multiGet(cardDeckIds);
+        const retrievedData = data.map(item => {
+          return item[1] != null ? JSON.parse(item[1]) : null;
+        });
+        const uniqueData = removeIdenticalItemInArray(retrievedData);
+        setRecentlyCardDeck(uniqueData);
+      } catch (e) {
+        console.log('error read getMultiple');
+      }
+    };
+    getMultiple();
+  }, [cardDeckIds]);
+
+  useEffect(() => {
     navigation.setOptions({
       header: () => {
         return <HomeTopAppBar navigation={navigation} ref={topBarRef} />;
       },
     });
   }, [navigation]);
+
   return (
     <SafeAreaView style={styles.container}>
       <CustomStatusBar />
       <ScrollView
         onScroll={topBarRef.current?.onScroll}
         contentContainerStyle={styles.contentContainer}>
-        {localStorage && localStorage.length !== 0 && (
+        {recentlyCardDeck && recentlyCardDeck.length !== 0 && (
           <>
             <SectionHeader content={RECENTLY} style={styles.sectionHeader} />
-            <HorizontalCardDecks data={localStorage} navigation={navigation} />
+            <HorizontalCardDecks
+              data={recentlyCardDeck}
+              navigation={navigation}
+            />
           </>
         )}
         <SectionHeader content={POPULAR} style={styles.sectionHeader} />

@@ -42,17 +42,6 @@ export default function GameWaitScreen({navigation, route}) {
   const carouselRef = useRef(null);
   const scrollViewRef = useRef([]);
 
-  const {cardDeckImage, numberOfCards, previewCards} = cardDeckItem || {};
-  const previewCardData = previewCards
-    ? getPreviewDataItem(previewCards, INITIAL_INDEX)
-    : [];
-  const previewContent = `Xem trước ${getPreviewCardNumber(
-    numberOfCards,
-    MAX_PREVIEW,
-  )} lá bài`;
-  const baseColor = Color.light[ColorVariant.surface]?.base;
-  const textColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
-
   useEffect(() => {
     dispatch(loadCardDeckByDeckId(cardDeckIdParam));
   }, [dispatch, cardDeckIdParam]);
@@ -73,6 +62,16 @@ export default function GameWaitScreen({navigation, route}) {
       ),
     });
   }, [navigation, imageHeight]);
+  const {cardDeckImage, numberOfCards, previewCards} = cardDeckItem || {};
+  const previewCardData = previewCards
+    ? getPreviewDataItem(previewCards, INITIAL_INDEX)
+    : [];
+  const previewContent = `Xem trước ${getPreviewCardNumber(
+    numberOfCards,
+    MAX_PREVIEW,
+  )} lá bài`;
+  const baseColor = Color.light[ColorVariant.surface]?.base;
+  const textColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
 
   const defaultContainerStyle = [
     {backgroundColor: baseColor},
