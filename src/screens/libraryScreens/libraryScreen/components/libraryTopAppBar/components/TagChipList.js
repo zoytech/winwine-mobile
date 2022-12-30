@@ -40,7 +40,7 @@ export default function TagChipList(props) {
     <FlatList
       horizontal={true}
       listKey={true}
-      showsVerticalScrollIndicator={false}
+      showsHorizontalScrollIndicator={false}
       ItemSeparatorComponent={<View style={styles.separator} />}
       contentContainerStyle={[styles.contentContainer]}
       style={[styles.container, style]}

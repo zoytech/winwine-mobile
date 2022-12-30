@@ -22,10 +22,10 @@ export default function LibraryCardDecks(props) {
     navigation,
     ...otherProps
   } = props;
+
   const [sortByTagData, setSortByTagData] = useState([]);
   const [pinDeckIds, setPinDeckIds] = useState([]);
   const [likedDeckIds, setLikeDeckIds] = useState([]);
-
   useEffect(() => {
     if (chipId === null) {
       pinDeckIds === []
@@ -47,8 +47,13 @@ export default function LibraryCardDecks(props) {
   }
 
   function getFilteringDataByTag(dt, tagId) {
-    return dt.filter(item => item?.tag === tagId);
+    return dt.filter(item => item?.hashtags.includes(tagId));
   }
+
+  //
+  // function getUnFilteringDataByTag(dt, tagId) {
+  //   return dt.filter(item => item?.hashtags.some(tagId));
+  // }
 
   function handlePinningPress(id) {
     const hasPinId = pinDeckIds && pinDeckIds.includes(id);
