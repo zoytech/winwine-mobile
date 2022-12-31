@@ -1,6 +1,6 @@
 import {removeIdenticalItemInArray} from 'src/utils';
 
-const RECENTLY_KEYSTORE_LIMIT = 3;
+const RECENTLY_KEYSTORE_LIMIT = 10;
 export const cardDeckSelector = state => state.cardDeck.data;
 export const requestingCardDeckSelector = state => state.cardDeck.requesting;
 export const cardDecksSelector = state => state.cardDecks.data;
