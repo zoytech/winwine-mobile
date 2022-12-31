@@ -1,3 +1,6 @@
+import {removeIdenticalItemInArray} from 'src/utils';
+
+const RECENTLY_KEYSTORE_LIMIT = 3;
 export const cardDeckSelector = state => state.cardDeck.data;
 export const requestingCardDeckSelector = state => state.cardDeck.requesting;
 export const cardDecksSelector = state => state.cardDecks.data;
@@ -11,4 +14,12 @@ export const cardDeckAndCardsSelector = state => state.cardDeckAndCards.data;
 export const requestingCardDeckAndCardsSelector = state =>
   state.cardDeckAndCards.requesting;
 
-export const cardDeckIdSelector = state => state.cardDeckId.cardDeckIds;
+export const keyStoresSelector = state => {
+  const rawKeyStores = state.keyStore.keyStores;
+  const uniqueKeyStores = removeIdenticalItemInArray(rawKeyStores);
+  console.log('rawKeyStores.length: ', uniqueKeyStores.length);
+  uniqueKeyStores.length > RECENTLY_KEYSTORE_LIMIT
+    ? uniqueKeyStores.splice(RECENTLY_KEYSTORE_LIMIT - 1, 1)
+    : uniqueKeyStores;
+  return uniqueKeyStores;
+};

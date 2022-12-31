@@ -20,7 +20,7 @@ import {
 import {SwipeableGameCard} from '../components';
 import {CustomStatusBar, EmptyInfoAnnouncement} from 'src/screens/components';
 import gamePlayStyle from './gamePlayStyle';
-import {addCardDeckId} from '../../../redux/actions/cardDeckIdAction';
+import {addRecentlyKeyStore} from '../../../redux/actions/addRecentlyKeyStore';
 
 const screenWidth = WIDTH?.SCREEN;
 const width = {
@@ -41,8 +41,6 @@ export default function GamePlayScreen({navigation, route}) {
   const [showIndicatorInfo, setShowIndicatorInfo] = useState(true);
   const {cardDeck: cardDeck, cards: cards} = dataBlocks;
 
-  console.log('cardDeckL ', cardDeck);
-
   useEffect(() => {
     dispatch(loadCardDeckAndCardsByDeckId(cardDeckIdParam));
   }, [dispatch, cardDeckIdParam]);
@@ -57,20 +55,6 @@ export default function GamePlayScreen({navigation, route}) {
       ),
     });
   }, [navigation]);
-  useEffect(() => {
-    const saveObjectStorage = async () => {
-      try {
-        const keyStore = `${KEY?.RECENTLY_PLAY}/${cardDeckIdParam}`;
-        const jsonValue = JSON.stringify(cardDeck);
-        await AsyncStorage.setItem(keyStore, jsonValue);
-        console.log('success store local');
-        dispatch(addCardDeckId(keyStore));
-      } catch (e) {
-        console.log('Failed to save the data to the storage');
-      }
-    };
-    saveObjectStorage();
-  }, [cardDeckIdParam, dispatch]);
 
   const dataLength = cards ? cards.length : DECK?.NUMBER_OF_CARDS;
   const progressBarWidth = screenWidth * 0.8;

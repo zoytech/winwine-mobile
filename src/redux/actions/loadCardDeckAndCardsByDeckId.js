@@ -1,9 +1,13 @@
+import {useSelector} from 'react-redux';
 import {
   FETCH_DECK_AND_CARDS_ERROR,
   FETCH_DECK_AND_CARDS_REQUEST,
   FETCH_DECK_AND_CARDS_SUCCESS,
 } from 'src/redux/constants';
-import {api} from 'src/constants';
+import {api, KEY} from 'src/constants';
+import {addRecentlyKeyStore} from './addRecentlyKeyStore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {keyStoresSelector} from '../selectors';
 
 export default function loadCardDeckAndCardsByDeckId(cardDeckId) {
   return dispatch => {
@@ -24,13 +28,19 @@ export default function loadCardDeckAndCardsByDeckId(cardDeckId) {
     const fetchJson = url => fetch(url, options).then(res => res.json());
 
     Promise.all(urls.map(fetchJson))
-      .then(([cardDeckData, cardsData]) => {
+      .then(async ([cardDeckData, cardsData]) => {
         const cardDeck = cardDeckData?.data;
         const cards = cardsData?.data;
         dispatch(fetchDbSuccess({cardDeck, cards}));
+        const keyStore = `${KEY?.RECENTLY_PLAY}/${cardDeckId}`;
+        const jsonValue = JSON.stringify(cardDeck);
+        await AsyncStorage.setItem(keyStore, jsonValue);
+        console.log('success store local');
+        dispatch(addRecentlyKeyStore(keyStore));
       })
       .catch(err => {
         dispatch(fetchDbError(err));
+        console.log('Failed to save the data to the storage');
       });
   };
 }

@@ -5,8 +5,8 @@ import SplashScreen from 'react-native-splash-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Color, ColorVariant} from 'src/themes';
 import {
-  cardDeckIdSelector,
   cardDecksSelector,
+  keyStoresSelector,
   requestingCardDecksSelector,
 } from 'src/redux/selectors';
 import {loadCardDecks} from 'src/redux/actions';
@@ -16,7 +16,7 @@ import {
   VerticalCardDecks,
 } from './components';
 import {CustomStatusBar, SectionHeader} from '../components';
-import {SpinnerType1} from 'src/components';
+import {FilledButton, SpinnerType1} from 'src/components';
 import {removeIdenticalItemInArray} from '../../utils';
 
 const RECENTLY = 'Chơi gần đây';
@@ -28,7 +28,7 @@ export default function HomeScreen({navigation}) {
   const dispatch = useDispatch();
   const cardDecksData = useSelector(cardDecksSelector);
   const requestingCardDecks = useSelector(requestingCardDecksSelector);
-  const cardDeckIds = useSelector(cardDeckIdSelector);
+  const keyStores = useSelector(keyStoresSelector);
   const [recentlyCardDeck, setRecentlyCardDeck] = useState([]);
   const localStorage = cardDecksData;
   useEffect(() => {
@@ -43,18 +43,17 @@ export default function HomeScreen({navigation}) {
   useEffect(() => {
     const getMultiple = async () => {
       try {
-        const data = await AsyncStorage.multiGet(cardDeckIds);
+        const data = await AsyncStorage.multiGet(keyStores);
         const retrievedData = data.map(item => {
           return item[1] != null ? JSON.parse(item[1]) : null;
         });
-        const uniqueData = removeIdenticalItemInArray(retrievedData);
-        setRecentlyCardDeck(uniqueData);
+        setRecentlyCardDeck(retrievedData);
       } catch (e) {
         console.log('error read getMultiple');
       }
     };
     getMultiple();
-  }, [cardDeckIds]);
+  }, [keyStores]);
 
   useEffect(() => {
     navigation.setOptions({
