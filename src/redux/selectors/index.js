@@ -19,7 +19,7 @@ export const keyStoresSelector = state => {
   const uniqueKeyStores = removeIdenticalItemInArray(rawKeyStores);
   console.log('rawKeyStores.length: ', uniqueKeyStores.length);
   uniqueKeyStores.length > RECENTLY_KEYSTORE_LIMIT
-    ? uniqueKeyStores.splice(RECENTLY_KEYSTORE_LIMIT - 1, 1)
+    ? uniqueKeyStores.splice(uniqueKeyStores.length - 1, 1)
     : uniqueKeyStores;
   return uniqueKeyStores;
 };
