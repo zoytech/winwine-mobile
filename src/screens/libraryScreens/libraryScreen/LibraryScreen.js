@@ -1,15 +1,15 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Color, ColorVariant} from 'src/themes';
 import {
-  cardDecksSelector,
   hashtagsSelector,
-  requestingCardDecksSelector,
+  libraryKeyStoreSelector,
   requestingHashtagsSelector,
 } from 'src/redux/selectors';
 import {SpinnerType1} from 'src/components';
-import {loadCardDecks, loadHashtags} from 'src/redux/actions';
+import {loadHashtags} from 'src/redux/actions';
 import {CustomStatusBar, EmptyInfoAnnouncement} from 'src/screens/components';
 import {LibraryCardDecks, LibraryTopAppBar} from './components';
 
@@ -17,20 +17,26 @@ export default function LibraryScreen({navigation}) {
   const topBarRef = useRef({
     onScroll: () => {},
   });
-  const dispatch = useDispatch();
-  const localStorageData = useSelector(cardDecksSelector);
-  const requestingCardDecks = useSelector(requestingCardDecksSelector);
-  const hashtags = useSelector(hashtagsSelector);
-  const requestingHashtags = useSelector(requestingHashtagsSelector);
+
+  const keyStores = useSelector(libraryKeyStoreSelector);
+  const [libraryCardDeck, setLibraryCardDeck] = useState([]);
   const [selectedChip, setSelectedChip] = useState(null);
 
   useEffect(() => {
-    dispatch(loadCardDecks());
-  }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(loadHashtags());
-  }, [dispatch]);
+    const getMultiple = async () => {
+      try {
+        const data = await AsyncStorage.multiGet(keyStores);
+        const retrievedData = data.map(item => {
+          return item[1] != null ? JSON.parse(item[1]) : null;
+        });
+        console.log('retrievedData: ', retrievedData);
+        setLibraryCardDeck(retrievedData);
+      } catch (e) {
+        console.log('error read getMultiple in Lib');
+      }
+    };
+    getMultiple();
+  }, [keyStores]);
 
   useEffect(() => {
     navigation.setOptions({
@@ -40,7 +46,6 @@ export default function LibraryScreen({navigation}) {
             navigation={navigation}
             ref={topBarRef}
             onSortingListByChipId={handleSortingListByChipId}
-            data={hashtags}
             chipId={selectedChip}
           />
         );
@@ -56,13 +61,10 @@ export default function LibraryScreen({navigation}) {
     }
   }
 
-  if (requestingCardDecks && !localStorageData && requestingHashtags) {
-    return <SpinnerType1 />;
-  }
   return (
     <SafeAreaView style={styles.container}>
       <CustomStatusBar />
-      {localStorageData.length === 0 ? (
+      {libraryCardDeck.length === 0 ? (
         <EmptyInfoAnnouncement
           content={'Thư viện của bạn đang trống'}
           style={styles.emptyView}
@@ -72,11 +74,10 @@ export default function LibraryScreen({navigation}) {
           onScroll={topBarRef.current?.onScroll}
           contentContainerStyle={styles.contentContainer}>
           <LibraryCardDecks
-            data={localStorageData}
+            data={libraryCardDeck}
             navigation={navigation}
             chipId={selectedChip}
           />
-          <LibraryCardDecks data={localStorageData} navigation={navigation} />
         </ScrollView>
       )}
     </SafeAreaView>

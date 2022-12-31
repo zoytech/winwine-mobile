@@ -1,11 +1,20 @@
-import {forwardRef, useImperativeHandle, useRef, useState} from 'react';
+import {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react';
 import {Animated, StyleSheet, View} from 'react-native';
-import {CenterTopBar} from 'src/components';
+import {useDispatch, useSelector} from 'react-redux';
+import {CenterTopBar, SpinnerType1} from 'src/components';
 import {HEIGHT} from 'src/constants';
 import {withAnimated} from 'src/utils';
 import {AvatarSettingButton} from 'src/screens/components';
 import TagChipList from './components/TagChipList';
 import {CreateButton, SearchButton} from './components';
+import {hashtagsSelector} from '../../../../../redux/selectors';
+import {loadHashtags} from '../../../../../redux/actions';
 
 const AnimatedCenterTopBar = withAnimated(CenterTopBar);
 const CONFIG_VALUE = 100;
@@ -15,12 +24,13 @@ const MAIN_TITLE = 'Thư viện của tôi';
 function LibraryTopAppBar(props, ref) {
   const {
     navigation,
-    data,
     chipId,
     style,
     onSortingListByChipId = () => {},
     ...otherProps
   } = props;
+  const dispatch = useDispatch();
+  const hashtags = useSelector(hashtagsSelector);
 
   const reverseStandardHeight = -standardHeight;
   const scrollYContentOffsetRef = useRef(new Animated.Value(0)).current;
@@ -28,6 +38,9 @@ function LibraryTopAppBar(props, ref) {
   const totalHeight = subHeight + standardHeight;
   const scrollDistance = totalHeight - standardHeight + CONFIG_VALUE;
   const userToken = 'uuid123';
+  useEffect(() => {
+    dispatch(loadHashtags());
+  }, [dispatch]);
 
   useImperativeHandle(ref, () => ({
     onScroll: e => {
@@ -76,7 +89,7 @@ function LibraryTopAppBar(props, ref) {
   function renderBottomComponents() {
     return (
       <TagChipList
-        data={data}
+        data={hashtags}
         navigation={navigation}
         style={styles.suggestion}
         onSortingListByChipId={onSortingListByChipId}
@@ -93,6 +106,9 @@ function LibraryTopAppBar(props, ref) {
     );
   }
 
+  if (!hashtags) {
+    return <SpinnerType1 />;
+  }
   return (
     <AnimatedCenterTopBar
       {...otherProps}

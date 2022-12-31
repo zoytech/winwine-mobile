@@ -11,6 +11,7 @@ export default function TagChipList(props) {
     onSortingListByChipId = () => {},
     ...otherProps
   } = props;
+
   const [selectedChip, setSelectedChip] = useState(null);
 
   function handleSortingListByChipId(tagId) {
