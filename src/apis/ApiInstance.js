@@ -39,7 +39,7 @@ function promiseWithTimeout(data, timeout = 1000) {
   });
 }
 
-function getRequest(endPoint, params = {}) {
+function getRequest(endPoint, {params}) {
   const searchParams = new URLSearchParams(params).toString();
   return requestToServer({
     url: `${api?.HOST}/${api?.PATH}/${endPoint}?${searchParams}`,
