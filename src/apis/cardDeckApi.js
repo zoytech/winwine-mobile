@@ -1,7 +1,11 @@
 import ApiInstance from './ApiInstance';
 
-async function getCardDeckById(cardDeckId) {
+function getCardDeckById(cardDeckId) {
   return ApiInstance.getRequest(`/card-decks/${cardDeckId}`);
 }
 
-export default {getCardDeckById};
+function getCardDecks() {
+  return ApiInstance.getRequest(`/card-decks`);
+}
+
+export default {getCardDeckById, getCardDecks};

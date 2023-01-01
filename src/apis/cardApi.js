@@ -1,6 +1,6 @@
 import ApiInstance from './ApiInstance';
 
-async function getCardsByCardDeckId(cardDeckId) {
+function getCardsByCardDeckId(cardDeckId) {
   return ApiInstance.getRequest(`/card-decks/${cardDeckId}/cards`);
 }
 
