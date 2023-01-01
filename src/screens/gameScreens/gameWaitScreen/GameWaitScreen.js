@@ -3,7 +3,7 @@ import {SafeAreaView, ScrollView, Text, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {SpinnerType1} from 'src/components';
-import {loadCardDeckByDeckId, loadCardsByDeckId} from 'src/redux/actions';
+import {loadCardDeckByDeckId} from 'src/redux/actions';
 import {
   GameWaitTopAppBar,
   HeaderButtons,
@@ -46,10 +46,6 @@ export default function GameWaitScreen({navigation, route}) {
     dispatch(loadCardDeckByDeckId(cardDeckIdParam));
   }, [dispatch, cardDeckIdParam]);
   useEffect(() => {
-    dispatch(loadCardsByDeckId(cardDeckIdParam));
-  }, [dispatch, cardDeckIdParam]);
-
-  useEffect(() => {
     navigation.setOptions({
       header: () => (
         <GameWaitTopAppBar
@@ -67,7 +63,7 @@ export default function GameWaitScreen({navigation, route}) {
     ? getPreviewDataItem(previewCards, INITIAL_INDEX)
     : [];
   const previewContent = `Xem trước ${getPreviewCardNumber(
-    numberOfCards,
+    previewCardData.length,
     MAX_PREVIEW,
   )} lá bài`;
   const baseColor = Color.light[ColorVariant.surface]?.base;
@@ -93,24 +89,15 @@ export default function GameWaitScreen({navigation, route}) {
     setShowIndex(index);
   }
 
-  function renderButtons() {
-    const handleDownloadDeckPress = () => {};
-    const handlePressFilledButton = () => {
-      navigation.navigate({
-        name: ScreenKeys.PLAY_GAME,
-        params: {
-          cardDeckIdParam: cardDeckIdParam,
-          cardDeckNameParam: cardDeckNameParam,
-          cardDeckImageParam: cardDeckImageParam,
-        },
-      });
-    };
-    return (
-      <HeaderButtons
-        onDownloadDeckPress={handleDownloadDeckPress}
-        onFilledButtonPress={handlePressFilledButton}
-      />
-    );
+  function handlePressFilledButton() {
+    navigation.navigate({
+      name: ScreenKeys.PLAY_GAME,
+      params: {
+        cardDeckIdParam: cardDeckIdParam,
+        cardDeckNameParam: cardDeckNameParam,
+        cardDeckImageParam: cardDeckImageParam,
+      },
+    });
   }
 
   if (requesting) {
@@ -132,6 +119,10 @@ export default function GameWaitScreen({navigation, route}) {
             headStyle={Typography.headline.small}
             contentStyle={Typography.label.large}
           />
+          <HeaderButtons
+            onFilledButtonPress={handlePressFilledButton}
+            data={cardDeckItem}
+          />
         </View>
         {!previewCards || previewCards.length === 0 ? (
           <EmptyInfoAnnouncement
@@ -140,12 +131,15 @@ export default function GameWaitScreen({navigation, route}) {
           />
         ) : (
           <>
-            {renderButtons()}
+            <HeaderButtons
+              onFilledButtonPress={handlePressFilledButton}
+              data={cardDeckItem}
+            />
             <View style={gameWaitStyle.supportingText}>
               <Text style={defaultContentStyle}>{previewContent}</Text>
             </View>
             <SwipeableGameCard
-              data={cards}
+              data={previewCardData}
               ref={carouselRef}
               style={gameWaitStyle.card}
               contentStyle={defaultContentStyle}

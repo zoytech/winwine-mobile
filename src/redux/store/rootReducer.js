@@ -4,7 +4,8 @@ import cardDecksReducer from '../reducers/cardDecksReducer';
 import cardsReducer from '../reducers/cardsReducer';
 import hashtagsReducer from '../reducers/hashtagsReducer';
 import cardDeckAndCardsReducer from '../reducers/cardDeckAndCardsReducer';
-import keyStoreReducer from '../reducers/keyStoreReducer';
+import {recentlyKeyStoreReducer} from '../reducers/keyStoreReducer';
+import {libraryKeyStoreReducer} from '../reducers/libraryKeyStoreReducer';
 
 const rootReducer = combineReducers({
   cardDeck: cardDeckReducer,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   cards: cardsReducer,
   hashtags: hashtagsReducer,
   cardDeckAndCards: cardDeckAndCardsReducer,
-  keyStore: keyStoreReducer,
+  recentlyKeyStore: recentlyKeyStoreReducer,
+  libraryKeyStore: libraryKeyStoreReducer,
 });
 export default rootReducer;

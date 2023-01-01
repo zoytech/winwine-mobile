@@ -1,15 +1,9 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Color, ColorVariant} from 'src/themes';
-import {
-  hashtagsSelector,
-  libraryKeyStoreSelector,
-  requestingHashtagsSelector,
-} from 'src/redux/selectors';
-import {SpinnerType1} from 'src/components';
-import {loadHashtags} from 'src/redux/actions';
+import {libraryKeyStoreSelector} from 'src/redux/selectors';
 import {CustomStatusBar, EmptyInfoAnnouncement} from 'src/screens/components';
 import {LibraryCardDecks, LibraryTopAppBar} from './components';
 
@@ -21,15 +15,20 @@ export default function LibraryScreen({navigation}) {
   const keyStores = useSelector(libraryKeyStoreSelector);
   const [libraryCardDeck, setLibraryCardDeck] = useState([]);
   const [selectedChip, setSelectedChip] = useState(null);
+  console.log('flag');
+  console.log(
+    'libraryCardDeck: ',
+    libraryCardDeck.map(item => item?.cardDeckId),
+  );
 
   useEffect(() => {
     const getMultiple = async () => {
       try {
         const data = await AsyncStorage.multiGet(keyStores);
         const retrievedData = data.map(item => {
-          return item[1] != null ? JSON.parse(item[1]) : null;
+          const [keyStore, cardDeck] = item || {};
+          return cardDeck != null ? JSON.parse(cardDeck) : null;
         });
-        console.log('retrievedData: ', retrievedData);
         setLibraryCardDeck(retrievedData);
       } catch (e) {
         console.log('error read getMultiple in Lib');

@@ -1,22 +1,26 @@
-import {ADD_RECENTLY_KEYSTORE, GET_RECENTLY_KEYSTORE} from '../constants';
+import {
+  ADD_RECENTLY_KEYSTORE,
+  GET_RECENTLY_KEYSTORE,
+} from 'src/redux/constants';
 
 const initialState = {
-  keyStores: [],
+  recentlyKeyStores: [],
 };
 
-function keyStoreReducer(state = initialState, action) {
+function recentlyKeyStoreReducer(state = initialState, action) {
   const {type, payload} = action;
   switch (type) {
     case GET_RECENTLY_KEYSTORE:
-      return {...state, keyStores: payload};
+      return {...state, recentlyKeyStores: payload};
     case ADD_RECENTLY_KEYSTORE:
       return {
         ...state,
-        keyStores: [payload, ...state.keyStores],
+        recentlyKeyStores: [payload, ...state.recentlyKeyStores],
       };
     default:
       return state;
   }
 }
 
-export default keyStoreReducer;
+
+export {recentlyKeyStoreReducer};

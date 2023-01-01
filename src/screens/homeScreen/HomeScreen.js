@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Color, ColorVariant} from 'src/themes';
 import {
   cardDecksSelector,
-  keyStoresSelector,
+  recentlyKeyStoresSelector,
   requestingCardDecksSelector,
 } from 'src/redux/selectors';
 import {loadCardDecks} from 'src/redux/actions';
@@ -16,8 +16,7 @@ import {
   VerticalCardDecks,
 } from './components';
 import {CustomStatusBar, SectionHeader} from '../components';
-import {FilledButton, SpinnerType1} from 'src/components';
-import {removeIdenticalItemInArray} from '../../utils';
+import {SpinnerType1} from 'src/components';
 
 const RECENTLY = 'Chơi gần đây';
 const POPULAR = 'Phổ biến';
@@ -28,9 +27,8 @@ export default function HomeScreen({navigation}) {
   const dispatch = useDispatch();
   const cardDecksData = useSelector(cardDecksSelector);
   const requestingCardDecks = useSelector(requestingCardDecksSelector);
-  const keyStores = useSelector(keyStoresSelector);
+  const keyStores = useSelector(recentlyKeyStoresSelector);
   const [recentlyCardDeck, setRecentlyCardDeck] = useState([]);
-  const localStorage = cardDecksData;
   useEffect(() => {
     dispatch(loadCardDecks());
     if (!requestingCardDecks || cardDecksData === null) {
@@ -45,7 +43,8 @@ export default function HomeScreen({navigation}) {
       try {
         const data = await AsyncStorage.multiGet(keyStores);
         const retrievedData = data.map(item => {
-          return item[1] != null ? JSON.parse(item[1]) : null;
+          const [keyStore, cardDeck] = item || {};
+          return cardDeck != null ? JSON.parse(cardDeck) : null;
         });
         setRecentlyCardDeck(retrievedData);
       } catch (e) {

@@ -1,13 +1,11 @@
-import {useSelector} from 'react-redux';
 import {
   FETCH_DECK_AND_CARDS_ERROR,
   FETCH_DECK_AND_CARDS_REQUEST,
   FETCH_DECK_AND_CARDS_SUCCESS,
 } from 'src/redux/constants';
 import {api, KEY} from 'src/constants';
-import {addRecentlyKeyStore} from './addRecentlyKeyStore';
+import {addRecentlyKeyStore} from './recentlyKeyStoreActions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {keyStoresSelector} from '../selectors';
 
 export default function loadCardDeckAndCardsByDeckId(cardDeckId) {
   return dispatch => {
@@ -35,7 +33,6 @@ export default function loadCardDeckAndCardsByDeckId(cardDeckId) {
         const keyStore = `${KEY?.RECENTLY_PLAY}/${cardDeckId}`;
         const jsonValue = JSON.stringify(cardDeck);
         await AsyncStorage.setItem(keyStore, jsonValue);
-        console.log('success store local');
         dispatch(addRecentlyKeyStore(keyStore));
       })
       .catch(err => {

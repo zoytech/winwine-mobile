@@ -20,7 +20,7 @@ import {
 import {SwipeableGameCard} from '../components';
 import {CustomStatusBar, EmptyInfoAnnouncement} from 'src/screens/components';
 import gamePlayStyle from './gamePlayStyle';
-import {addRecentlyKeyStore} from '../../../redux/actions/addRecentlyKeyStore';
+import {recentlyKeyStoreAction} from '../../../redux/actions/recentlyKeyStoreActions';
 
 const screenWidth = WIDTH?.SCREEN;
 const width = {
