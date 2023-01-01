@@ -2,14 +2,17 @@ import {api} from 'src/constants';
 
 const PREFIX_URL = `${api?.HOST}/${api?.PATH}`;
 
-async function requestToServer({url, body = {}, method = 'GET', headers = {}}) {
+async function requestToServer({url, method = 'GET', body, headers = {}}) {
   const bodyString = JSON.stringify(body);
   let json;
 
   console.log(
-    '%c ' + method.toUpperCase() + ' - ' + url.substring(0, PREFIX_URL.length),
+    '%c ' +
+      method.toUpperCase() +
+      ' - ' +
+      url.substring(PREFIX_URL.length, url.length),
     'color: #0086b3; font-weight: bold',
-    body,
+    body ? body : '',
   );
 
   const response = await fetch(url, {
@@ -20,23 +23,25 @@ async function requestToServer({url, body = {}, method = 'GET', headers = {}}) {
       ...headers,
     },
   });
-  if (!response.ok) {
-    let message = `Failed api request to ${url}`;
+
+  if (response.ok) {
     try {
-      const responseText = await response.text();
-      if (responseText) {
-        message += responseText;
-      }
+      json = await response.json();
     } catch (e) {
-      throw new Error(`Api request to ${url}: ${message} ${response.status}`);
+      return '';
     }
+    return json;
   }
+
+  let message = `Failed api request to ${url}`;
   try {
-    json = await response.json();
+    const responseText = await response.text();
+    if (responseText) {
+      message += responseText;
+    }
   } catch (e) {
-    return '';
+    throw new Error(`Api request to ${url}: ${message} ${response.status}`);
   }
-  return json;
 }
 
 function promiseWithTimeout(data, timeout = 1000) {
@@ -47,16 +52,18 @@ function promiseWithTimeout(data, timeout = 1000) {
   });
 }
 
-function getRequest(endPoint, {params = {}}) {
-  console.log('getRequest', endPoint);
+function getRequest(endPoint, config = {}) {
+  const {params = {}} = config;
   const searchParams = new URLSearchParams(params).toString();
   return requestToServer({
     url: `${PREFIX_URL}${endPoint}?${searchParams}`,
     method: 'GET',
+    body: undefined,
   });
 }
 
-function postRequest(endPoint, {params = {}, body}) {
+function postRequest(endPoint, config = {}) {
+  const {params = {}, body} = config;
   const searchParams = params ? new URLSearchParams(params).toString() : '';
   return requestToServer({
     url: `${PREFIX_URL}${endPoint}?${searchParams}`,

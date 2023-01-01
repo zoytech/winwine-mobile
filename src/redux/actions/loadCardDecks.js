@@ -13,6 +13,7 @@ export default function loadCardDecks() {
       dispatch(fetchDecksRequest());
       dispatch(fetchDecksSuccess(cardDecksData));
     } catch (error) {
+      console.log('loadCardDecks error:', error);
       dispatch(fetchDecksError(error));
     }
   };

@@ -5,6 +5,7 @@ function getCardDeckById(cardDeckId) {
 }
 
 function getCardDecks() {
+  console.log('test');
   return ApiInstance.getRequest('/card-decks');
 }
 
