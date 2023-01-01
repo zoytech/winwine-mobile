@@ -2,6 +2,11 @@ import {StyleSheet, View} from 'react-native';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {useState} from 'react';
 import {ActionContainer, ActionItem} from './components';
+import {
+  addLibraryKeyStore,
+  removeLibraryKeyStore,
+} from '../../../redux/actions';
+import {KEY} from '../../../constants';
 
 const actions = {
   SAVE: {
@@ -17,21 +22,21 @@ const actions = {
   },
 };
 export default function ActionLibraryScreen({navigation, route}) {
-  const {onPinningPress, onLikePress, hasPinnedId, hasLikedId} = route.params;
-  const [isSaved, setIsSaved] = useState(false);
+  const {
+    onPinningPress,
+    onLikePress,
+    onSavePress,
+    hasPinnedId,
+    hasLikedId,
+    hasSaveId,
+  } = route.params;
 
   function handleGoBackPress() {
     navigation.goBack();
   }
 
   function handleSavingPress() {
-    if (isSaved) {
-      console.log('will unmount save method');
-      setIsSaved(false);
-    } else {
-      console.log('will update save method');
-      setIsSaved(true);
-    }
+    onSavePress();
   }
 
   function handlePinningPress() {
@@ -59,7 +64,7 @@ export default function ActionLibraryScreen({navigation, route}) {
           name={'circledowno'}
           selectedName={'circledown'}
           onButtonToggle={handleSavingPress}
-          isSelected={true}
+          isSelected={hasSaveId}
         />
         <ActionItem
           {...itemProps}
