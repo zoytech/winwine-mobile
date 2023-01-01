@@ -13,10 +13,10 @@ export default function loadCardDeckAndCardsByDeckId(cardDeckId) {
     dispatch(fetchDbRequesting());
 
     try {
-      const [getCardDeckResp, getCardsResp] = await Promise.all(
+      const [getCardDeckResp, getCardsResp] = await Promise.all([
         CardDeckApi.getCardDeckById(cardDeckId),
         CardApi.getCardsByCardDeckId(cardDeckId),
-      );
+      ]);
       const cardDeck = getCardDeckResp?.data;
       const cards = getCardsResp?.data;
       dispatch(fetchDbSuccess({cardDeck, cards}));
@@ -26,7 +26,7 @@ export default function loadCardDeckAndCardsByDeckId(cardDeckId) {
       dispatch(addRecentlyKeyStore(storageKey));
     } catch (err) {
       dispatch(fetchDbError(err));
-      console.log('Failed to save the data to the storage');
+      console.log('Failed to save the data to the storage', err);
     }
   };
 }
