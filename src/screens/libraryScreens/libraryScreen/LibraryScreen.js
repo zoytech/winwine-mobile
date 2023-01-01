@@ -11,32 +11,15 @@ export default function LibraryScreen({navigation}) {
   const topBarRef = useRef({
     onScroll: () => {},
   });
-
-  const keyStores = useSelector(libraryKeyStoreSelector);
-  const [libraryCardDeck, setLibraryCardDeck] = useState([]);
   const [selectedChip, setSelectedChip] = useState(null);
-  console.log('flag');
-  console.log(
-    'libraryCardDeck: ',
-    libraryCardDeck.map(item => item?.cardDeckId),
-  );
+
+  const [libraryCardDeck, setLibraryCardDeck] = useState([]);
+  // const [retrieved, setRetrieved] = useState(false);
+  const keyStores = useSelector(libraryKeyStoreSelector);
 
   useEffect(() => {
-    const getMultiple = async () => {
-      try {
-        const data = await AsyncStorage.multiGet(keyStores);
-        const retrievedData = data.map(item => {
-          const [keyStore, cardDeck] = item || {};
-          return cardDeck != null ? JSON.parse(cardDeck) : null;
-        });
-        setLibraryCardDeck(retrievedData);
-      } catch (e) {
-        console.log('error read getMultiple in Lib');
-      }
-    };
-    getMultiple();
+    getMultipleCardDecks();
   }, [keyStores]);
-
   useEffect(() => {
     navigation.setOptions({
       header: () => {
@@ -52,12 +35,23 @@ export default function LibraryScreen({navigation}) {
     });
   }, [navigation, selectedChip]);
 
-  function handleSortingListByChipId(hashtag) {
-    if (hashtag === selectedChip) {
-      setSelectedChip(null);
-    } else {
-      setSelectedChip(hashtag);
+  async function getMultipleCardDecks() {
+    try {
+      const data = await AsyncStorage.multiGet(keyStores);
+      const retrievedData = data.map(item => {
+        const [keyStore, cardDeck] = item || {};
+        return cardDeck != null ? JSON.parse(cardDeck) : null;
+      });
+      setLibraryCardDeck(retrievedData);
+    } catch (e) {
+      console.log('error read getMultiple in Lib');
     }
+  }
+
+  function handleSortingListByChipId(hashtag) {
+    return hashtag === selectedChip
+      ? setSelectedChip(null)
+      : setSelectedChip(hashtag);
   }
 
   return (
@@ -75,7 +69,7 @@ export default function LibraryScreen({navigation}) {
           <LibraryCardDecks
             data={libraryCardDeck}
             navigation={navigation}
-            chipId={selectedChip}
+            selectedChip={selectedChip}
           />
         </ScrollView>
       )}

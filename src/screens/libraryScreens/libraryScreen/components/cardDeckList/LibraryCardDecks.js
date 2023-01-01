@@ -1,59 +1,33 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
+
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import {DECK} from 'src/constants';
 import {removeJustOneItem} from 'src/utils';
 import {MiniCardItem} from 'src/screens/components';
-
-function getMarginItem(index) {
-  if (index % 2 === 0) {
-    return {marginRight: 16};
-  } else {
-    return {marginLeft: 16};
-  }
-}
+import {getFilteringDataByTag, getMarginItem, getPinnedFirst} from './methods';
 
 export default function LibraryCardDecks(props) {
-  const {
-    style,
-    data = [],
-    prevSelectedChip,
-    chipId,
-    navigation,
-    ...otherProps
-  } = props;
-
+  const {style, data, selectedChip, navigation, ...otherProps} = props;
   const [sortByTagData, setSortByTagData] = useState([]);
   const [pinDeckIds, setPinDeckIds] = useState([]);
   const [likedDeckIds, setLikeDeckIds] = useState([]);
   useEffect(() => {
-    if (chipId === null) {
-      pinDeckIds === []
-        ? setSortByTagData(data)
-        : setSortByTagData(getPinnedFirst(data));
+    getDataByTagAndPin(data, selectedChip, pinDeckIds);
+  }, [selectedChip, pinDeckIds, data]);
+
+  function getDataByTagAndPin(dt, tagId, pinIds) {
+    if (tagId === null) {
+      pinIds === []
+        ? setSortByTagData(dt)
+        : setSortByTagData(getPinnedFirst(dt, pinDeckIds));
     } else {
-      const newData = getFilteringDataByTag(data, chipId);
-      pinDeckIds === []
+      const newData = getFilteringDataByTag(dt, tagId);
+      pinIds === []
         ? setSortByTagData(newData)
-        : setSortByTagData(getPinnedFirst(newData));
+        : setSortByTagData(getPinnedFirst(newData, pinDeckIds));
     }
-  }, [chipId, pinDeckIds]);
-
-  function getPinnedFirst(arr) {
-    return arr.reduce((acc, element) => {
-      const hasPinId = pinDeckIds.includes(element?.cardDeckId);
-      return hasPinId ? [element, ...acc] : [...acc, element];
-    }, []);
   }
-
-  function getFilteringDataByTag(dt, tagId) {
-    return dt.filter(item => item?.hashtags.includes(tagId));
-  }
-
-  //
-  // function getUnFilteringDataByTag(dt, tagId) {
-  //   return dt.filter(item => item?.hashtags.some(tagId));
-  // }
 
   function handlePinningPress(id) {
     const hasPinId = pinDeckIds && pinDeckIds.includes(id);
