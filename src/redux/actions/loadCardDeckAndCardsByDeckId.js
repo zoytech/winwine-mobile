@@ -1,44 +1,33 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   FETCH_DECK_AND_CARDS_ERROR,
   FETCH_DECK_AND_CARDS_REQUEST,
   FETCH_DECK_AND_CARDS_SUCCESS,
 } from 'src/redux/constants';
-import {api, KEY} from 'src/constants';
+import {KEY} from 'src/constants';
+import {CardDeckApi, CardApi} from 'src/apis';
 import {addRecentlyKeyStore} from './recentlyKeyStoreActions';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function loadCardDeckAndCardsByDeckId(cardDeckId) {
-  return dispatch => {
+  return async dispatch => {
     dispatch(fetchDbRequesting());
 
-    const urls = [
-      `${api?.HOST}/${api?.PATH}/card-decks/${cardDeckId}`,
-      `${api?.HOST}/${api?.PATH}/card-decks/${cardDeckId}/cards`,
-    ];
+    try {
+      const [getCardDeckResp, getCardsResp] = await Promise.all(
+        CardDeckApi.getCardDeckById(cardDeckId),
+        CardApi.getCardsByCardDeckId(cardDeckId),
+      );
+      const cardDeck = getCardDeckResp?.data;
+      const cards = getCardsResp?.data;
+      dispatch(fetchDbSuccess({cardDeck, cards}));
 
-    const options = {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-
-    const fetchJson = url => fetch(url, options).then(res => res.json());
-
-    Promise.all(urls.map(fetchJson))
-      .then(async ([cardDeckData, cardsData]) => {
-        const cardDeck = cardDeckData?.data;
-        const cards = cardsData?.data;
-        dispatch(fetchDbSuccess({cardDeck, cards}));
-        const keyStore = `${KEY?.RECENTLY_PLAY}/${cardDeckId}`;
-        const jsonValue = JSON.stringify(cardDeck);
-        await AsyncStorage.setItem(keyStore, jsonValue);
-        dispatch(addRecentlyKeyStore(keyStore));
-      })
-      .catch(err => {
-        dispatch(fetchDbError(err));
-        console.log('Failed to save the data to the storage');
-      });
+      const storageKey = `${KEY?.RECENTLY_PLAY}/${cardDeckId}`;
+      await AsyncStorage.setItem(storageKey, JSON.stringify(cardDeck));
+      dispatch(addRecentlyKeyStore(storageKey));
+    } catch (err) {
+      dispatch(fetchDbError(err));
+      console.log('Failed to save the data to the storage');
+    }
   };
 }
 
