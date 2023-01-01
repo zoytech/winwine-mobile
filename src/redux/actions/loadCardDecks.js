@@ -8,7 +8,7 @@ import {CardDeckApi} from 'src/apis';
 export default function loadCardDecks() {
   return async dispatch => {
     try {
-      const response = await CardDeckApi.getCardDeckById();
+      const response = await CardDeckApi.getCardDecks();
       const cardDecksData = response?.data;
       dispatch(fetchDecksRequest());
       dispatch(fetchDecksSuccess(cardDecksData));

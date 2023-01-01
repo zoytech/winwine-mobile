@@ -5,7 +5,7 @@ function getCardDeckById(cardDeckId) {
 }
 
 function getCardDecks() {
-  return ApiInstance.getRequest(`/card-decks`);
+  return ApiInstance.getRequest('/card-decks');
 }
 
 export default {getCardDeckById, getCardDecks};
