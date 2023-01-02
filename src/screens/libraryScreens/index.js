@@ -1,4 +1,4 @@
-import LibraryScreen from './libraryScreen';
+import LibraryScreen from './LibraryScreen';
 import ActionLibraryScreen from './actionLibraryScreen';
 import SearchLibraryScreen from './searchLibraryScreen';
 
