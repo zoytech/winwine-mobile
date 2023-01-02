@@ -62,7 +62,10 @@ export default function SmallTopBar(props) {
           style={styles.icon}
         />
         {content && (
-          <Animated.Text numberOfLines={1} style={defaultContentStyle}>
+          <Animated.Text
+            numberOfLines={1}
+            ellipsizeMode={'tail'}
+            style={defaultContentStyle}>
             {content}
           </Animated.Text>
         )}

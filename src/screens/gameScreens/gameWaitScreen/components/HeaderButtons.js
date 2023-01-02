@@ -4,7 +4,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Typography} from 'src/themes';
 import {FilledButton, StandardIconToggle} from 'src/components';
 import {KEY} from 'src/constants';
-import {useState} from 'react';
 import {addLibraryKeyStore, removeLibraryKeyStore} from 'src/redux/actions';
 import {libraryKeyStoreSelector} from '../../../../redux/selectors';
 
@@ -19,12 +18,11 @@ export default function HeaderButtons(props) {
   } = props;
   const dispatch = useDispatch();
   const libraryKeyStores = useSelector(libraryKeyStoreSelector);
-  const [isSaved, setIsSaved] = useState(false);
   const cardDeckIdParam = data?.cardDeckId;
   const containerStyle = [styles.container, style];
 
-  const keyStore = `${KEY?.SAVE_LIB}/${cardDeckIdParam}`;
-  const hasSaveId = libraryKeyStores.includes(keyStore);
+  const defaultKeyStore = `${KEY?.SAVE_LIB}/${cardDeckIdParam}`;
+  const hasSaveId = libraryKeyStores.includes(defaultKeyStore);
 
   async function removeItemFromStorage(key) {
     const keyStore = `${KEY?.SAVE_LIB}/${key}`;
@@ -60,6 +58,7 @@ export default function HeaderButtons(props) {
       name: 'downcircleo',
       selectedName: 'downcircle',
       style: styles.icon,
+      iconStyle: {size: 30},
     };
     return (
       <StandardIconToggle
@@ -114,10 +113,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   icon: {
-    minWidth: 30,
-    minHeight: 30,
-    width: 40,
-    height: 40,
-    borderRadius: 40 / 2,
+    minWidth: 50,
+    minHeight: 50,
+    width: 50,
+    aspectRatio: 1,
+    borderRadius: 50 / 2,
   },
 });

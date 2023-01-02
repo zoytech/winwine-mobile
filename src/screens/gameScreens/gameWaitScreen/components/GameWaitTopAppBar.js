@@ -39,7 +39,7 @@ function GameWaitTopAppBar(props, ref) {
     <SmallTopBarAnimated
       {...otherProps}
       content={showContent && content}
-      contentStyle={contentAnimation}
+      contentStyle={[contentAnimation, styles.content]}
       leadingIcon={'arrowleft'}
       onLeadingIconPress={() => navigation.goBack()}
       style={[style]}
@@ -55,7 +55,9 @@ const styles = StyleSheet.create({
     minWidth: 48,
     minHeight: 48,
   },
-  content: {},
+  content: {
+    width: '70%',
+  },
 });
 
 export default forwardRef(GameWaitTopAppBar);
