@@ -1,4 +1,11 @@
-import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {
+  Image,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {OutlinedCard, StandardIconButton} from 'src/components';
 import {
@@ -15,6 +22,7 @@ export default function MiniCardItem(props) {
     data,
     pinned,
     liked,
+    saved,
     style,
     contentStyle,
     onPreviewPress = () => {},
@@ -24,7 +32,7 @@ export default function MiniCardItem(props) {
 
   const {cardDeckName, cardDeckImage, hashtags} = data || {};
   const deckName = cardDeckName ? cardDeckName : DECK?.NAME;
-  const deckFirstTag = hashtags ? hashtags[0] : DECK?.TAG;
+  const decktags = hashtags ? hashtags : [DECK?.TAG];
   const deckImage = cardDeckImage ? {uri: cardDeckImage} : DECK?.IMAGE;
 
   const titleColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
@@ -32,37 +40,54 @@ export default function MiniCardItem(props) {
     StateLayers.light[StateLayersVariant.onSurfaceVar]?.level_068;
   const iconColor = Color.light[ColorVariant.primary]?.base;
   const borderColor = Color.light[ColorVariant.outline]?.base;
-  const defaultContentStyle = [Typography.label.large, contentStyle];
 
   function getContainerStyle({pressed}) {
     return pressed && styles.opacityPressed;
   }
 
   function renderMainContent() {
-    const titleStyle = [defaultContentStyle, {color: titleColor}];
-    const subTitleStyle = [defaultContentStyle, {color: subTittleColor}];
+    const titleStyle = [
+      Typography.label.large,
+      {color: titleColor},
+      contentStyle,
+    ];
+    const subTitleStyle = [
+      Typography.label.small,
+      {color: subTittleColor},
+      styles.subTitle,
+      contentStyle,
+    ];
+    const textProps = {
+      numberOfLines: 1,
+      ellipsizeMode: 'tail',
+    };
     return (
       <>
-        <Text style={titleStyle} numberOfLines={1} ellipsizeMode={'tail'}>
+        <Text {...textProps} style={titleStyle}>
           {deckName}
         </Text>
-        <Text style={subTitleStyle}>{deckFirstTag} ...</Text>
-        {renderIcons()}
+        <View style={styles.tagsAndIcons}>
+          {renderIcons()}
+          {decktags.map(item => (
+            <Text style={subTitleStyle}>{item}</Text>
+          ))}
+        </View>
       </>
     );
   }
 
   function renderIcons() {
     const iconProps = {
-      size: 14,
+      size: 11,
       color: iconColor,
       style: {paddingHorizontal: 2},
     };
     return (
-      <View style={styles.iconDisplay}>
+      <>
         {pinned && <Icon {...iconProps} name={'pushpin'} />}
         {liked && <Icon {...iconProps} name={'star'} />}
-      </View>
+        {saved && <Icon {...iconProps} name={'downcircle'} />}
+      </>
     );
   }
 
@@ -103,7 +128,7 @@ export default function MiniCardItem(props) {
 
 const styles = StyleSheet.create({
   container: {
-    width: WIDTH?.SCREEN * 0.35,
+    width: WIDTH?.SCREEN * 0.4,
     aspectRatio: 0.67,
     overflow: 'hidden',
     marginBottom: 16,
@@ -132,8 +157,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderTopWidth: 0.5,
   },
-  iconDisplay: {
+  tagsAndIcons: {
+    width: '100%',
     flexDirection: 'row',
+    alignItems: 'center',
+    overflow: 'hidden',
   },
   pressArea: {
     width: '50%',
@@ -142,6 +170,9 @@ const styles = StyleSheet.create({
   },
   icon: {
     size: 24,
+  },
+  subTitle: {
+    paddingHorizontal: 1,
   },
   opacityPressed: {
     opacity: 0.75,

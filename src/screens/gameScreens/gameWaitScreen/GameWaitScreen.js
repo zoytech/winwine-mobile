@@ -119,14 +119,10 @@ export default function GameWaitScreen({navigation, route}) {
             headStyle={Typography.headline.small}
             contentStyle={Typography.label.large}
           />
-          <HeaderButtons
-            onFilledButtonPress={handlePressFilledButton}
-            data={cardDeckItem}
-          />
         </View>
         {!previewCards || previewCards.length === 0 ? (
           <EmptyInfoAnnouncement
-            content={EMPTY_CONTENT}
+            title={EMPTY_CONTENT}
             style={gameWaitStyle.emptyView}
           />
         ) : (

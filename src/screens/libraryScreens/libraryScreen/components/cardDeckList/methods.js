@@ -11,5 +11,5 @@ export function getFilteringDataByTag(dt, tagId) {
 
 export function getMarginItem(index) {
   const isEven = index % 2 === 0;
-  return isEven ? {marginRight: 16} : {marginLeft: 16};
+  return isEven ? {marginRight: 8} : {marginLeft: 8};
 }

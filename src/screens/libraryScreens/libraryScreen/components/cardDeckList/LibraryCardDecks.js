@@ -140,6 +140,7 @@ export default function LibraryCardDecks(props) {
         data={item}
         pinned={hasPinnedId}
         liked={hasLikedId}
+        saved={hasSaveId}
         onPreviewPress={() => handlePreviewPress(item)}
         onPlayPress={() => handlePlayPress(item)}
         onLongPress={() =>
@@ -164,14 +165,14 @@ export default function LibraryCardDecks(props) {
 }
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 16,
+    paddingVertical: 8,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    paddingHorizontal: 10,
+    paddingHorizontal: 0,
   },
 
   item: {
-    marginBottom: 32,
+    marginBottom: 16,
   },
   layout: {
     flexDirection: 'column',

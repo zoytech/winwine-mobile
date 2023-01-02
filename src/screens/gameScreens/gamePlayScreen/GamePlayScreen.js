@@ -149,7 +149,7 @@ export default function GamePlayScreen({navigation, route}) {
     <SafeAreaView style={defaultContainerStyle}>
       <CustomStatusBar />
       {!cards || cards.length === 0 ? (
-        <EmptyInfoAnnouncement content={'Bộ bài chưa có lá bài nào.'} />
+        <EmptyInfoAnnouncement title={'Bộ bài chưa có lá bài nào.'} />
       ) : (
         <ScrollView contentContainerStyle={gamePlayStyle.scrollView}>
           <View style={gamePlayStyle.progressBar}>

@@ -63,6 +63,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   separator: {
-    width: 32,
+    width: 16,
   },
 });
