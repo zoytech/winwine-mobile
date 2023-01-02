@@ -4,7 +4,7 @@ import {Color, ColorVariant, Typography} from 'src/themes';
 import {WIDTH} from 'src/constants';
 
 export default function EmptyInfoAnnouncement(props) {
-  const {content, buttonContent, style, onPress = () => {}} = props;
+  const {title, subTitle, buttonContent, style, onPress = () => {}} = props;
   const {base: backgroundColor, onBase: onBackgroundColor} =
     Color.light[ColorVariant.background];
   const containerStyle = [
@@ -17,8 +17,13 @@ export default function EmptyInfoAnnouncement(props) {
   return (
     <View style={containerStyle}>
       <View style={styles.announcement}>
-        <Text style={[Typography.title.medium, contentStyle]}>{content}</Text>
+        <Text style={[Typography.title.large, contentStyle]}>{title}</Text>
       </View>
+      {subTitle && (
+        <View style={styles.subTitle}>
+          <Text style={[Typography.body.medium, contentStyle]}>{subTitle}</Text>
+        </View>
+      )}
       <View style={styles.action}>
         {buttonContent && buttonContent !== '' && (
           <FilledButton
@@ -42,8 +47,10 @@ const styles = StyleSheet.create({
   },
   announcement: {
     width: '100%',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
+  },
+  subTitle: {
+    width: '100%',
+    paddingTop: 16,
   },
   action: {
     width: '100%',

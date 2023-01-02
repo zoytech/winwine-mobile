@@ -2,6 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import {useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Icon from 'react-native-vector-icons/AntDesign';
 import {Color, ColorVariant} from 'src/themes';
 import {libraryKeyStoreSelector} from 'src/redux/selectors';
 import {CustomStatusBar, EmptyInfoAnnouncement} from 'src/screens/components';
@@ -44,7 +45,7 @@ export default function LibraryScreen({navigation}) {
       });
       setLibraryCardDeck(retrievedData);
     } catch (e) {
-      console.log('error read getMultiple in Lib');
+      console.log('error read getMultiple in Lib: ', e);
     }
   }
 
@@ -59,7 +60,11 @@ export default function LibraryScreen({navigation}) {
       <CustomStatusBar />
       {libraryCardDeck.length === 0 ? (
         <EmptyInfoAnnouncement
-          content={'Thư viện của bạn đang trống'}
+          title={'Thư viện của bạn đang trống'}
+          subTitle={
+            'Để thêm mới bộ bài vào thư viện, đi đến màn hình Xem trước, nhấn biểu tượng Lưu.\n' +
+            'Để sử dụng tính năng khác, ấn giữ bộ bài.'
+          }
           style={styles.emptyView}
         />
       ) : (
@@ -91,5 +96,9 @@ const styles = StyleSheet.create({
   },
   sectionHeader: {
     justifyContent: 'flex-start',
+  },
+  emptyView: {
+    paddingHorizontal: 36,
+    paddingVertical: 150,
   },
 });
