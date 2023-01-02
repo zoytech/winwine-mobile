@@ -21,6 +21,11 @@ import {SwipeableGameCard} from '../components';
 import {CustomStatusBar, EmptyInfoAnnouncement} from 'src/screens/components';
 import gamePlayStyle from './gamePlayStyle';
 import {recentlyKeyStoreAction} from '../../../redux/actions/recentlyKeyStoreActions';
+import {
+  getCardDeckAndCardsById,
+  selectCards,
+  selectRequestCardDeckAndCards,
+} from './cardDeckAndCardsSlice';
 
 const screenWidth = WIDTH?.SCREEN;
 const width = {
@@ -34,15 +39,17 @@ const INITIAL_INDEX = 0;
 export default function GamePlayScreen({navigation, route}) {
   const {cardDeckIdParam, cardDeckNameParam, cardDeckImageParam} = route.params;
   const dispatch = useDispatch();
+  const cards = useSelector(selectCards);
+  const requesting = useSelector(selectRequestCardDeckAndCards);
   const dataBlocks = useSelector(cardDeckAndCardsSelector);
-  const requesting = useSelector(requestingCardDeckAndCardsSelector);
+  // const requesting = useSelector(requestingCardDeckAndCardsSelector);
   const carouselRef = useRef(null);
   const [showIndex, setShowIndex] = useState(INITIAL_INDEX);
   const [showIndicatorInfo, setShowIndicatorInfo] = useState(true);
-  const {cardDeck: cardDeck, cards: cards} = dataBlocks;
+  // const {cardDeck: cardDeck, cards: cards} = dataBlocks;
 
   useEffect(() => {
-    dispatch(loadCardDeckAndCardsByDeckId(cardDeckIdParam));
+    dispatch(getCardDeckAndCardsById(cardDeckIdParam));
   }, [dispatch, cardDeckIdParam]);
 
   useEffect(() => {
@@ -149,7 +156,10 @@ export default function GamePlayScreen({navigation, route}) {
     <SafeAreaView style={defaultContainerStyle}>
       <CustomStatusBar />
       {!cards || cards.length === 0 ? (
-        <EmptyInfoAnnouncement title={'Bộ bài chưa có lá bài nào.'} />
+        <EmptyInfoAnnouncement
+          title={'Bộ bài chưa có lá bài nào'}
+          style={gamePlayStyle.emptyView}
+        />
       ) : (
         <ScrollView contentContainerStyle={gamePlayStyle.scrollView}>
           <View style={gamePlayStyle.progressBar}>
