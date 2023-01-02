@@ -4,23 +4,12 @@ import {
   FETCH_DECK_REQUEST,
   FETCH_DECK_SUCCESS,
 } from 'src/redux/constants';
-
-async function getCardDeckById(url = '', data = {}) {
-  const response = await fetch(url, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-  return response.json();
-}
+import {CardDeckApi} from 'src/apis';
 
 export default function loadCardDeckByDeckId(cardDeckId) {
   return async dispatch => {
     try {
-      await getCardDeckById(
-        `${api?.HOST}/${api?.PATH}/card-decks/${cardDeckId}`,
-      ).then(data => {
+      await CardDeckApi.getCardDeckById(cardDeckId).then(data => {
         const cardDecksData = data?.data;
         dispatch(fetchDeckRequest());
         dispatch(fetchDeckSuccess(cardDecksData));

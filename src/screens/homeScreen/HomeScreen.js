@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
@@ -28,7 +28,8 @@ export default function HomeScreen({navigation}) {
   const cardDecksData = useSelector(cardDecksSelector);
   const requestingCardDecks = useSelector(requestingCardDecksSelector);
   const keyStores = useSelector(recentlyKeyStoresSelector);
-  const [recentlyCardDeck, setRecentlyCardDeck] = useState([]);
+  const [recentlyCardDeck, setRecentlyCardDeck] = useState();
+  console.log('recentlyCardDeck: ', recentlyCardDeck);
   useEffect(() => {
     dispatch(loadCardDecks());
     if (!requestingCardDecks || cardDecksData === null) {
@@ -38,7 +39,7 @@ export default function HomeScreen({navigation}) {
     }
   }, [dispatch]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const getMultiple = async () => {
       try {
         const data = await AsyncStorage.multiGet(keyStores);
@@ -46,7 +47,8 @@ export default function HomeScreen({navigation}) {
           const [keyStore, cardDeck] = item || {};
           return cardDeck != null ? JSON.parse(cardDeck) : null;
         });
-        setRecentlyCardDeck(retrievedData);
+        console.log('called in storage: ', data);
+        retrievedData.length !== 0 && setRecentlyCardDeck(retrievedData);
       } catch (e) {
         console.log('error read getMultiple');
       }

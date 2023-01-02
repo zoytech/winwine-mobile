@@ -5,7 +5,7 @@ import {
   FETCH_DECK_AND_CARDS_SUCCESS,
 } from 'src/redux/constants';
 import {KEY} from 'src/constants';
-import {CardDeckApi, CardApi} from 'src/apis';
+import {CardApi, CardDeckApi} from 'src/apis';
 import {addRecentlyKeyStore} from './recentlyKeyStoreActions';
 
 export default function loadCardDeckAndCardsByDeckId(cardDeckId) {

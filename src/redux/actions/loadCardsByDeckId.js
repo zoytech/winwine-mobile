@@ -1,26 +1,14 @@
-import {api} from 'src/constants';
 import {
   FETCH_CARDS_ERROR,
   FETCH_CARDS_REQUEST,
   FETCH_CARDS_SUCCESS,
 } from 'src/redux/constants';
-
-async function getCardsByDeckById(url = '', data = {}) {
-  const response = await fetch(url, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-  return response.json();
-}
+import {CardApi} from 'src/apis';
 
 export default function loadCardsByDeckId(cardDeckId) {
   return async dispatch => {
     try {
-      await getCardsByDeckById(
-        `${api?.HOST}/${api?.PATH}/card-decks/${cardDeckId}/cards`,
-      ).then(data => {
+      await CardApi.getCardsByCardDeckId(cardDeckId).then(data => {
         const cardsData = data?.data;
         dispatch(fetchCardsRequest());
         dispatch(fetchCardsSuccess(cardsData));
