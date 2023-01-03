@@ -14,7 +14,7 @@ import {AvatarSettingButton} from 'src/screens/components';
 import TagChipList from './components/TagChipList';
 import {CreateButton, SearchButton} from './components';
 import {hashtagsSelector} from '../../../../../redux/selectors';
-import {loadHashtags} from '../../../../../redux/actions';
+import {loadHashtags} from 'src/redux/actions';
 
 const AnimatedCenterTopBar = withAnimated(CenterTopBar);
 const CONFIG_VALUE = 100;

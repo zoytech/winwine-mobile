@@ -17,6 +17,7 @@ import {
 } from './components';
 import {CustomStatusBar, SectionHeader} from '../components';
 import {SpinnerType1} from 'src/components';
+import {KEY} from '../../constants';
 
 const RECENTLY = 'Chơi gần đây';
 const POPULAR = 'Phổ biến';
@@ -29,6 +30,7 @@ export default function HomeScreen({navigation}) {
   const requestingCardDecks = useSelector(requestingCardDecksSelector);
   const keyStores = useSelector(recentlyKeyStoresSelector);
   const [recentlyCardDeck, setRecentlyCardDeck] = useState([]);
+  const [mainKeys, setMainKeys] = useState([]);
   useEffect(() => {
     dispatch(loadCardDecks());
     if (!requestingCardDecks || cardDecksData === null) {
@@ -38,20 +40,34 @@ export default function HomeScreen({navigation}) {
     }
   }, [dispatch]);
 
+  /*     '@RECENTLY_PLAY/280c939d-60c4-4d4e-913c-828251e2841a',
+                                          '@RECENTLY_PLAY/04f9962f-a900-4ebd-ad60-f1af749d190b',
+                                                                                                   */
+
   useEffect(() => {
-    const getMultiple = async () => {
+    const getMainKeys = async () => {
       try {
-        const data = await AsyncStorage.multiGet(keyStores);
-        const retrievedData = data.map(item => {
+        const mainKeyRqs = await AsyncStorage.getItem(KEY.MAIN);
+        console.log('mainKeyRqs: ', mainKeyRqs);
+        const mainKey =
+          mainKeyRqs && typeof mainKeyRqs === 'object'
+            ? JSON.parse(mainKeyRqs)
+            : [];
+        setMainKeys(mainKey);
+        const mainKeyss = keyStores.length !== 0 ? keyStores : mainKeys;
+        console.log('mainKeyss: ', mainKeyRqs);
+        const cardDeckRqs = await AsyncStorage.multiGet(mainKeyss);
+        const retrievedData = cardDeckRqs.map(item => {
           const [keyStore, cardDeck] = item || {};
           return cardDeck != null ? JSON.parse(cardDeck) : null;
         });
+        console.log('////////////// ');
         setRecentlyCardDeck(retrievedData);
       } catch (e) {
-        console.log('error read getMultiple');
+        console.log('get main keys error: ', e);
       }
     };
-    getMultiple();
+    getMainKeys();
   }, [keyStores]);
 
   useEffect(() => {

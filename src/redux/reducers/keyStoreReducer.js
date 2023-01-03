@@ -22,5 +22,4 @@ function recentlyKeyStoreReducer(state = initialState, action) {
   }
 }
 
-
 export {recentlyKeyStoreReducer};

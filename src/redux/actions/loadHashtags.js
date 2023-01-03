@@ -3,26 +3,16 @@ import {
   FETCH_HASHTAGS_REQUEST,
   FETCH_HASHTAGS_SUCCESS,
 } from 'src/redux/constants';
-import {api} from 'src/constants';
-
-async function getHashtags(url = '', data = {}) {
-  const response = await fetch(url, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-  return response.json();
-}
+import {HashtagApi} from 'src/apis';
 
 export default function loadHashtags() {
   return async dispatch => {
     try {
-      await getHashtags(`${api?.HOST}/${api?.PATH}/hashtags`).then(data => {
-        const hashtagsData = data?.data;
-        dispatch(fetchHashtagsRequest());
-        dispatch(fetchHashtagsSuccess(hashtagsData));
-      });
+      const response = await HashtagApi.getHashtags();
+      const hashtagsData = response?.data;
+      console.log('hashtagsData: ', hashtagsData);
+      dispatch(fetchHashtagsRequest());
+      dispatch(fetchHashtagsSuccess(hashtagsData));
     } catch (error) {
       dispatch(fetchHashtagsError(error));
     }
