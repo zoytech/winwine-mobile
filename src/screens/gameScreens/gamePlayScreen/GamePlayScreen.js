@@ -1,16 +1,15 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {SafeAreaView, ScrollView, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {SpinnerType1, StandardIconButton} from 'src/components';
-import {loadCardDeckAndCardsByDeckId} from 'src/redux/actions';
 import {
-  cardDeckAndCardsSelector,
-  requestingCardDeckAndCardsSelector,
-} from 'src/redux/selectors';
+  loadCardDeckAndCardsByDeckId,
+  cardDeckAndCardsSelect,
+  requestCardDeckAndCardsSelect,
+} from 'src/redux/slices';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
-import {DECK, KEY, WIDTH} from 'src/constants';
+import {DECK, WIDTH} from 'src/constants';
 import {
   CardProgressTrace,
   EndingGameDialog,
@@ -20,7 +19,6 @@ import {
 import {SwipeableGameCard} from '../components';
 import {CustomStatusBar, EmptyInfoAnnouncement} from 'src/screens/components';
 import gamePlayStyle from './gamePlayStyle';
-import {recentlyKeyStoreAction} from '../../../redux/actions/recentlyKeyStoreActions';
 
 const screenWidth = WIDTH?.SCREEN;
 const width = {
@@ -34,8 +32,8 @@ const INITIAL_INDEX = 0;
 export default function GamePlayScreen({navigation, route}) {
   const {cardDeckIdParam, cardDeckNameParam, cardDeckImageParam} = route.params;
   const dispatch = useDispatch();
-  const dataBlocks = useSelector(cardDeckAndCardsSelector);
-  const requesting = useSelector(requestingCardDeckAndCardsSelector);
+  const dataBlocks = useSelector(cardDeckAndCardsSelect);
+  const requesting = useSelector(requestCardDeckAndCardsSelect);
   const carouselRef = useRef(null);
   const [showIndex, setShowIndex] = useState(INITIAL_INDEX);
   const [showIndicatorInfo, setShowIndicatorInfo] = useState(true);

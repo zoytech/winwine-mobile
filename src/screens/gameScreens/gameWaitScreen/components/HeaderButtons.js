@@ -4,8 +4,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Typography} from 'src/themes';
 import {FilledButton, StandardIconToggle} from 'src/components';
 import {KEY} from 'src/constants';
-import {addLibraryKeyStore, removeLibraryKeyStore} from 'src/redux/actions';
-import {libraryKeyStoreSelector} from '../../../../redux/selectors';
+import {
+  addLibraryKeyStore,
+  libraryKeyStoreSelector,
+  removeLibraryKeyStore,
+} from 'src/redux/slices';
 
 export default function HeaderButtons(props) {
   const {

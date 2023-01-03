@@ -7,8 +7,11 @@ import {DECK, KEY} from 'src/constants';
 import {removeJustOneItem} from 'src/utils';
 import {MiniCardItem} from 'src/screens/components';
 import {getFilteringDataByTag, getMarginItem, getPinnedFirst} from './methods';
-import {addLibraryKeyStore, removeLibraryKeyStore} from 'src/redux/actions';
-import {libraryKeyStoreSelector} from 'src/redux/selectors';
+import {
+  addLibraryKeyStore,
+  libraryKeyStoreSelector,
+  removeLibraryKeyStore,
+} from 'src/redux/slices';
 
 export default function LibraryCardDecks(props) {
   const {style, data, selectedChip, navigation, ...otherProps} = props;

@@ -12,28 +12,25 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {SpinnerType1, TonalButton} from 'src/components';
 import {
-  cardDeckSelector,
-  hashtagsSelector,
-  requestingCardDeckSelector,
-  requestingHashtagsSelector,
-} from 'src/redux/selectors';
-import {defaultOfDeck, WIDTH} from 'src/constants';
+  hashtagsSelect,
+  loadHashtags,
+  requestHashtagsSelect,
+} from 'src/redux/slices';
+import {DECK, WIDTH} from 'src/constants';
 import {CustomStatusBar} from 'src/screens/components';
-import {removeIdenticalItemInArray} from 'src/utils';
-import {loadCardDeckList, loadCardDecks, loadHashtags} from 'src/redux/actions';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import {ImageField, TagSelectionField, TextInputHolder} from './components';
 
 export default function CreateDeckScreen({navigation, route}) {
   const dispatch = useDispatch();
-  const requesting = useSelector(requestingHashtagsSelector);
-  const hashtags = useSelector(hashtagsSelector);
+  const requesting = useSelector(requestHashtagsSelect);
+  const hashtags = useSelector(hashtagsSelect);
 
   const [title, setTitle] = useState(null);
   const [image, setImage] = useState(null);
   const [tag, setTag] = useState(null);
   const [description, setDescription] = useState(null);
-  const {IMAGE, DESCRIPTION, TITLE} = defaultOfDeck;
+  const {IMAGE, DESCRIPTION, TITLE} = DECK;
 
   useEffect(() => {
     dispatch(loadHashtags());

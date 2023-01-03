@@ -8,13 +8,12 @@ import {
 import {Animated, StyleSheet, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {CenterTopBar, SpinnerType1} from 'src/components';
+import {hashtagsSelect, loadHashtags} from 'src/redux/slices';
 import {HEIGHT} from 'src/constants';
 import {withAnimated} from 'src/utils';
 import {AvatarSettingButton} from 'src/screens/components';
 import TagChipList from './components/TagChipList';
 import {CreateButton, SearchButton} from './components';
-import {hashtagsSelector} from '../../../../../redux/selectors';
-import {loadHashtags} from 'src/redux/actions';
 
 const AnimatedCenterTopBar = withAnimated(CenterTopBar);
 const CONFIG_VALUE = 100;
@@ -30,7 +29,7 @@ function LibraryTopAppBar(props, ref) {
     ...otherProps
   } = props;
   const dispatch = useDispatch();
-  const hashtags = useSelector(hashtagsSelector);
+  const hashtags = useSelector(hashtagsSelect);
 
   const reverseStandardHeight = -standardHeight;
   const scrollYContentOffsetRef = useRef(new Animated.Value(0)).current;

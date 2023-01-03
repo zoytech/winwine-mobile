@@ -6,7 +6,6 @@ import {MiniCardItem} from 'src/screens/components';
 
 export default function VerticalCardDecks(props) {
   const {style, data, navigation, ...otherProps} = props;
-
   const handlePlayPress = item => {
     const {cardDeckId, cardDeckName, cardDeckImage} = item || {};
     navigation.navigate({

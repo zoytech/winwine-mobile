@@ -3,7 +3,6 @@ import {SafeAreaView, ScrollView, Text, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {SpinnerType1} from 'src/components';
-import {loadCardDeckByDeckId} from 'src/redux/actions';
 import {
   GameWaitTopAppBar,
   HeaderButtons,
@@ -11,10 +10,10 @@ import {
   HeaderInformation,
 } from './components';
 import {
-  cardDeckSelector,
-  cardsSelector,
-  requestingCardDeckSelector,
-} from 'src/redux/selectors';
+  cardDeckSelect,
+  loadCardDeckByDeckId,
+  requestCardDeckSelect,
+} from 'src/redux/slices';
 import {SwipeableGameCard} from '../components';
 import {HEIGHT} from 'src/constants';
 import {CustomStatusBar, EmptyInfoAnnouncement} from 'src/screens/components';
@@ -33,9 +32,8 @@ const EMPTY_CONTENT = 'Bộ bài chưa có lá bài nào.';
 
 export default function GameWaitScreen({navigation, route}) {
   const {cardDeckIdParam, cardDeckNameParam, cardDeckImageParam} = route.params;
-  const cardDeckItem = useSelector(cardDeckSelector);
-  const requesting = useSelector(requestingCardDeckSelector);
-  const cards = useSelector(cardsSelector);
+  const cardDeckItem = useSelector(cardDeckSelect);
+  const requesting = useSelector(requestCardDeckSelect);
   const dispatch = useDispatch();
   const [showIndex, setShowIndex] = useState(INITIAL_INDEX);
   const [imageHeight, setImageHeight] = useState(HEIGHT?.IMAGE);

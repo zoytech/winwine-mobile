@@ -2,9 +2,8 @@ import React, {useEffect, useRef, useState} from 'react';
 import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import {useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Icon from 'react-native-vector-icons/AntDesign';
 import {Color, ColorVariant} from 'src/themes';
-import {libraryKeyStoreSelector} from 'src/redux/selectors';
+import {libraryKeyStoreSelector} from 'src/redux/slices';
 import {CustomStatusBar, EmptyInfoAnnouncement} from 'src/screens/components';
 import {LibraryCardDecks, LibraryTopAppBar} from './components';
 

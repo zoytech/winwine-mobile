@@ -5,11 +5,11 @@ import SplashScreen from 'react-native-splash-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Color, ColorVariant} from 'src/themes';
 import {
-  cardDecksSelector,
-  recentlyKeyStoresSelector,
-  requestingCardDecksSelector,
-} from 'src/redux/selectors';
-import {loadCardDecks} from 'src/redux/actions';
+  cardDecksSelect,
+  loadCardDecks,
+  requestCardDecksSelect,
+  recentlyKeyStoresSelect,
+} from 'src/redux/slices';
 import {
   HomeTopAppBar,
   HorizontalCardDecks,
@@ -17,7 +17,7 @@ import {
 } from './components';
 import {CustomStatusBar, SectionHeader} from '../components';
 import {SpinnerType1} from 'src/components';
-import {KEY} from '../../constants';
+import {KEY} from 'src/constants';
 
 const RECENTLY = 'Chơi gần đây';
 const POPULAR = 'Phổ biến';
@@ -26,23 +26,23 @@ export default function HomeScreen({navigation}) {
     onScroll: () => {},
   });
   const dispatch = useDispatch();
-  const cardDecksData = useSelector(cardDecksSelector);
-  const requestingCardDecks = useSelector(requestingCardDecksSelector);
-  const keyStores = useSelector(recentlyKeyStoresSelector);
+  const popularCardDecks = useSelector(cardDecksSelect);
+  const requestingCardDecks = useSelector(requestCardDecksSelect);
+  const keyStores = useSelector(recentlyKeyStoresSelect);
   const [recentlyCardDeck, setRecentlyCardDeck] = useState([]);
   const [mainKeys, setMainKeys] = useState([]);
   useEffect(() => {
     dispatch(loadCardDecks());
-    if (!requestingCardDecks || cardDecksData === null) {
+    if (!requestingCardDecks || popularCardDecks === null) {
       SplashScreen.hide();
-    } else if (cardDecksData.length === 0) {
+    } else if (popularCardDecks.length === 0) {
       return <SpinnerType1 />;
     }
   }, [dispatch]);
 
   /*     '@RECENTLY_PLAY/280c939d-60c4-4d4e-913c-828251e2841a',
-                                          '@RECENTLY_PLAY/04f9962f-a900-4ebd-ad60-f1af749d190b',
-                                                                                                   */
+                                                    '@RECENTLY_PLAY/04f9962f-a900-4ebd-ad60-f1af749d190b',
+                                                                                                             */
 
   useEffect(() => {
     const getMainKeys = async () => {
@@ -95,7 +95,7 @@ export default function HomeScreen({navigation}) {
         )}
         <SectionHeader content={POPULAR} style={styles.sectionHeader} />
         <VerticalCardDecks
-          data={cardDecksData}
+          data={popularCardDecks}
           navigation={navigation}
           style={styles.secondView}
         />

@@ -3,11 +3,11 @@ import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {FilledButton, SpinnerType1} from 'src/components';
-import {loadCardDeckByDeckId} from 'src/redux/actions';
 import {
-  cardDeckSelector,
-  requestingCardDeckSelector,
-} from 'src/redux/selectors';
+  cardDeckSelect,
+  loadCardDeckByDeckId,
+  requestCardDeckSelect,
+} from 'src/redux/slices';
 import {defaultOf, HEIGHT, WIDTH} from 'src/constants';
 import {CustomStatusBar} from 'src/screens/components';
 import {
@@ -31,8 +31,8 @@ const actions = {
 export default function CreateCardScreen({navigation, route}) {
   const {deckTitle, deckId, deckDescription, deckSource, deckTag} =
     route.params;
-  const cardDeckItem = useSelector(cardDeckSelector);
-  const requesting = useSelector(requestingCardDeckSelector);
+  const cardDeckItem = useSelector(cardDeckSelect);
+  const requesting = useSelector(requestCardDeckSelect);
   const dispatch = useDispatch();
   const [imageHeight, setImageHeight] = useState(HEIGHT?.IMAGE);
   const [taskItem, setTaskItem] = useState(null);

@@ -76,9 +76,9 @@ export default function useCardDeckStorage(keyPrefix, cardDeckId) {
         return value != null ? JSON.parse(value) : null;
       });
       setStoredValue(retrievedData);
-      console.log('getMulti card deck success');
+      console.log('getMulti cardSlices deck success');
     } catch (e) {
-      console.log('getMulti card deck error: ', e);
+      console.log('getMulti cardSlices deck error: ', e);
     }
   }
 
@@ -87,9 +87,9 @@ export default function useCardDeckStorage(keyPrefix, cardDeckId) {
       const jsonValue = JSON.stringify(cardDeck);
       await AsyncStorage.setItem(key, jsonValue);
       dispatch(getKeyStoreMethods(key)?.addKeyStore);
-      console.log('save card deck success');
+      console.log('save cardSlices deck success');
     } catch (e) {
-      console.log('save card deck error: ', e);
+      console.log('save cardSlices deck error: ', e);
     }
   }
 
@@ -97,9 +97,9 @@ export default function useCardDeckStorage(keyPrefix, cardDeckId) {
     try {
       await AsyncStorage.removeItem(key);
       dispatch(getKeyStoreMethods(key)?.removeKeyStore());
-      console.log('remove card deck success');
+      console.log('remove cardSlices deck success');
     } catch (e) {
-      console.log('remove card deck error: ', e);
+      console.log('remove cardSlices deck error: ', e);
     }
   }
 
