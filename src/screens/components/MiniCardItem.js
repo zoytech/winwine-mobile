@@ -97,7 +97,10 @@ export default function MiniCardItem(props) {
     return (
       <>
         <StandardIconButton
-          style={[styles.pressArea, {borderRightWidth: 0.5}]}
+          style={[
+            styles.pressArea,
+            {borderRightWidth: StyleSheet.hairlineWidth},
+          ]}
           name={'eyeo'}
           onPress={onPreviewPress}
         />
@@ -157,7 +160,7 @@ const styles = StyleSheet.create({
     width: '100%',
     aspectRatio: 3,
     flexDirection: 'row',
-    borderTopWidth: 0.5,
+    borderTopWidth: StyleSheet.hairlineWidth,
   },
   tagsAndIcons: {
     width: '100%',
