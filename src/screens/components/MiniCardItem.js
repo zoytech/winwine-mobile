@@ -69,7 +69,9 @@ export default function MiniCardItem(props) {
         <View style={styles.tagsAndIcons}>
           {renderIcons()}
           {decktags.map(item => (
-            <Text style={subTitleStyle}>{item}</Text>
+            <Text key={item} style={subTitleStyle}>
+              {item}
+            </Text>
           ))}
         </View>
       </>

@@ -2,9 +2,6 @@ import {
   FETCH_DECK_AND_CARDS_ERROR,
   FETCH_DECK_AND_CARDS_REQUEST,
   FETCH_DECK_AND_CARDS_SUCCESS,
-  FETCH_DECK_ERROR,
-  FETCH_DECK_REQUEST,
-  FETCH_DECK_SUCCESS,
 } from 'src/redux/constants';
 
 const initialState = {

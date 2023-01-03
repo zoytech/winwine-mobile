@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
-  Pressable,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -13,48 +12,31 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {SpinnerType1, TonalButton} from 'src/components';
 import {
-  cardDeckListSelector,
-  requestingDeckListSelector,
+  cardDeckSelector,
+  hashtagsSelector,
+  requestingCardDeckSelector,
+  requestingHashtagsSelector,
 } from 'src/redux/selectors';
-import {defaultOfDeck, tagCardDeck, WIDTH} from 'src/constants';
+import {defaultOfDeck, WIDTH} from 'src/constants';
 import {CustomStatusBar} from 'src/screens/components';
 import {removeIdenticalItemInArray} from 'src/utils';
-import {loadCardDeckList} from 'src/redux/actions';
+import {loadCardDeckList, loadCardDecks, loadHashtags} from 'src/redux/actions';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import {ImageField, TagSelectionField, TextInputHolder} from './components';
 
 export default function CreateDeckScreen({navigation, route}) {
   const dispatch = useDispatch();
-  const cardDeckList = useSelector(cardDeckListSelector);
-  const requesting = useSelector(requestingDeckListSelector);
+  const requesting = useSelector(requestingHashtagsSelector);
+  const hashtags = useSelector(hashtagsSelector);
+
   const [title, setTitle] = useState(null);
   const [image, setImage] = useState(null);
   const [tag, setTag] = useState(null);
   const [description, setDescription] = useState(null);
   const {IMAGE, DESCRIPTION, TITLE} = defaultOfDeck;
-  const localStorageData = cardDeckList?.popularData;
-  const rawTagIdData = localStorageData.map(item => item?.tag);
-  const tagIdData = removeIdenticalItemInArray(rawTagIdData);
-  const tagChipData = [
-    {
-      tagChipId: tagIdData[0],
-      tagChipContent: tagCardDeck.ADULT,
-    },
-    {
-      tagChipId: tagIdData[1],
-      tagChipContent: tagCardDeck.BUDDY,
-    },
-    {
-      tagChipId: tagIdData[2],
-      tagChipContent: tagCardDeck.FIRST_MEETING,
-    },
-    {
-      tagChipId: tagIdData[3],
-      tagChipContent: tagCardDeck.KILLER,
-    },
-  ];
+
   useEffect(() => {
-    dispatch(loadCardDeckList());
+    dispatch(loadHashtags());
   }, [dispatch]);
   const {base: primary, onBase: onPrimary} = Color.light[ColorVariant.primary];
 
@@ -65,11 +47,11 @@ export default function CreateDeckScreen({navigation, route}) {
     navigation.navigate({
       name: ScreenKeys.CREATE_CARD,
       params: {
-        deckTitle: title ? title : TITLE,
-        deckId: 100,
-        deckDescription: description ? description : DESCRIPTION,
-        deckSource: image ? {uri: image} : IMAGE,
-        deckTag: tag ? tag : '',
+        deckTitleParams: title ? title : TITLE,
+        deckIdParams: 100,
+        deckDescriptionParams: description,
+        deckSourceParams: image ? {uri: image} : IMAGE,
+        deckTagParams: tag ? tag : '',
       },
     });
   }
@@ -106,7 +88,7 @@ export default function CreateDeckScreen({navigation, route}) {
           </View>
           <View style={styles.titleDeck}>{renderTitleDeckField()}</View>
           <View style={styles.chipSelection}>
-            <TagSelectionField data={tagChipData} />
+            <TagSelectionField data={hashtags} />
           </View>
           <View style={styles.action}>
             <TonalButton
