@@ -52,6 +52,9 @@ const gamePlayStyle = {
     aspectRatio: 7 / 16,
     paddingVertical: 100,
   },
+  hashtags: {
+    flexDirection: 'row',
+  },
 };
 
 export default gamePlayStyle;

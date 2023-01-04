@@ -32,7 +32,7 @@ export default function MiniCardItem(props) {
 
   const {cardDeckName, cardDeckImage, hashtags} = data || {};
   const deckName = cardDeckName ? cardDeckName : DECK?.NAME;
-  const decktags = hashtags ? hashtags : [DECK?.TAG];
+  const deckTags = hashtags ? hashtags : [DECK?.TAG];
   const deckImage = cardDeckImage ? {uri: cardDeckImage} : DECK?.IMAGE;
 
   const titleColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
@@ -68,7 +68,7 @@ export default function MiniCardItem(props) {
         </Text>
         <View style={styles.tagsAndIcons}>
           {renderIcons()}
-          {decktags.map(item => (
+          {deckTags.map(item => (
             <Text key={item} style={subTitleStyle}>
               {item}
             </Text>

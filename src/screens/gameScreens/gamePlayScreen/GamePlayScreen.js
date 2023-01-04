@@ -1,11 +1,11 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {SafeAreaView, ScrollView, View} from 'react-native';
+import {SafeAreaView, ScrollView, Text, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {SpinnerType1, StandardIconButton} from 'src/components';
 import {
-  loadCardDeckAndCardsByDeckId,
   cardDeckAndCardsSelect,
+  loadCardDeckAndCardsByDeckId,
   requestCardDeckAndCardsSelect,
 } from 'src/redux/slices';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
@@ -80,13 +80,21 @@ export default function GamePlayScreen({navigation, route}) {
       navigation.goBack();
       carouselRef.current.resetIndex();
     };
+    const renderHashtags = item => {
+      return (
+        <View key={item} style={gamePlayStyle.hashtags}>
+          <Text style={defaultContentStyle}>{item}</Text>
+        </View>
+      );
+    };
+
     navigation.navigate({
       name: ScreenKeys.CARD_DIALOG,
       params: {
         content: (
           <EndingGameDialog
             headline={cardDeckNameParam}
-            subHeadLeft={hashtags}
+            subHeadLeft={hashtags.map(hashtag => renderHashtags(hashtag))}
             media={cardDeckImageParam}
             onMainActionPress={handleMainDialogPress}
             onSubActionPress={handleSubDialogPress}
