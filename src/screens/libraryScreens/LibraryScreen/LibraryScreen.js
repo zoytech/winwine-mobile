@@ -3,7 +3,7 @@ import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import {useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Color, ColorVariant} from 'src/themes';
-import {libraryKeyStoreSelector} from 'src/redux/slices';
+import {libraryKeyStoreSelect} from 'src/redux/slices';
 import {CustomStatusBar, EmptyInfoAnnouncement} from 'src/screens/components';
 import {LibraryCardDecks, LibraryTopAppBar} from './components';
 
@@ -15,7 +15,7 @@ export default function LibraryScreen({navigation}) {
 
   const [libraryCardDeck, setLibraryCardDeck] = useState([]);
   // const [retrieved, setRetrieved] = useState(false);
-  const keyStores = useSelector(libraryKeyStoreSelector);
+  const keyStores = useSelector(libraryKeyStoreSelect);
 
   useEffect(() => {
     getMultipleCardDecks();

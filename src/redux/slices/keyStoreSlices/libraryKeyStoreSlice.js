@@ -42,7 +42,7 @@ export function libraryKeyStoreReducer(state = initialState, action) {
   }
 }
 
-export const libraryKeyStoreSelector = state => {
+export const libraryKeyStoreSelect = state => {
   const rawKeyStores = state.libraryKeyStore.libraryKeyStores;
   const uniqueKeyStores = removeIdenticalItemInArray(rawKeyStores);
   uniqueKeyStores.length > LIBRARY_KEYSTORE_LIMIT

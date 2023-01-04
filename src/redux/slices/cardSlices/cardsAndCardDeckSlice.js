@@ -36,7 +36,7 @@ export function loadCardDeckAndCardsByDeckId(cardDeckId) {
       const storeKeys = [];
       storeKeys.push(storageKey);
       console.log('save storeKeys: ', storeKeys);
-      await AsyncStorage.setItem(KEY.MAIN, JSON.stringify(storeKeys));
+      await AsyncStorage.setItem(KEY.SAVE_LIB, JSON.stringify(storeKeys));
     } catch (err) {
       dispatch(fetchDbError(err));
       console.log('Failed to save the data to the storage', err);

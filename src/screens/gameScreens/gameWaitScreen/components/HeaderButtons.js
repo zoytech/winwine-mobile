@@ -6,7 +6,7 @@ import {FilledButton, StandardIconToggle} from 'src/components';
 import {KEY} from 'src/constants';
 import {
   addLibraryKeyStore,
-  libraryKeyStoreSelector,
+  libraryKeyStoreSelect,
   removeLibraryKeyStore,
 } from 'src/redux/slices';
 
@@ -20,7 +20,7 @@ export default function HeaderButtons(props) {
     ...otherProps
   } = props;
   const dispatch = useDispatch();
-  const libraryKeyStores = useSelector(libraryKeyStoreSelector);
+  const libraryKeyStores = useSelector(libraryKeyStoreSelect);
   const cardDeckIdParam = data?.cardDeckId;
   const containerStyle = [styles.container, style];
 
@@ -39,9 +39,11 @@ export default function HeaderButtons(props) {
 
   async function saveItemToStorage(key, dt) {
     const keyStore = `${KEY?.SAVE_LIB}/${key}`;
+    const mainKey = KEY?.SAVE_LIB;
     try {
       const jsonValue = JSON.stringify(dt);
       await AsyncStorage.setItem(keyStore, jsonValue);
+      await AsyncStorage.setItem(mainKey, keyStore);
       dispatch(addLibraryKeyStore(keyStore));
     } catch (e) {
       console.log('fail store in save lib: ', e);

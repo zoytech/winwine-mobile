@@ -41,13 +41,13 @@ export default function HomeScreen({navigation}) {
   }, [dispatch]);
 
   /*     '@RECENTLY_PLAY/280c939d-60c4-4d4e-913c-828251e2841a',
-                                                    '@RECENTLY_PLAY/04f9962f-a900-4ebd-ad60-f1af749d190b',
-                                                                                                             */
+                                                      '@RECENTLY_PLAY/04f9962f-a900-4ebd-ad60-f1af749d190b',
+                                                                                                               */
 
   useEffect(() => {
     const getMainKeys = async () => {
       try {
-        const mainKeyRqs = await AsyncStorage.getItem(KEY.MAIN);
+        const mainKeyRqs = await AsyncStorage.getItem(KEY.SAVE_LIB);
         console.log('mainKeyRqs: ', mainKeyRqs);
         const mainKey =
           mainKeyRqs && typeof mainKeyRqs === 'object'

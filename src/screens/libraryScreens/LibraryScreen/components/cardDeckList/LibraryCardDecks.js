@@ -9,14 +9,14 @@ import {MiniCardItem} from 'src/screens/components';
 import {getFilteringDataByTag, getMarginItem, getPinnedFirst} from './methods';
 import {
   addLibraryKeyStore,
-  libraryKeyStoreSelector,
+  libraryKeyStoreSelect,
   removeLibraryKeyStore,
 } from 'src/redux/slices';
 
 export default function LibraryCardDecks(props) {
   const {style, data, selectedChip, navigation, ...otherProps} = props;
   const dispatch = useDispatch();
-  const libraryKeyStores = useSelector(libraryKeyStoreSelector);
+  const libraryKeyStores = useSelector(libraryKeyStoreSelect);
   const [sortByTagData, setSortByTagData] = useState([]);
   const [pinDeckIds, setPinDeckIds] = useState([]);
   const [likedDeckIds, setLikeDeckIds] = useState([]);
