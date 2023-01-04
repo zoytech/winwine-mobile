@@ -32,14 +32,32 @@ export function loadCardDeckAndCardsByDeckId(cardDeckId) {
 
       const storageKey = `${KEY?.RECENTLY_PLAY}/${cardDeckId}`;
       await AsyncStorage.setItem(storageKey, JSON.stringify(cardDeck));
+
       dispatch(addRecentlyKeyStore(storageKey));
+
+      /*
+      Code cũ của em là: sai do mỗi lần save là tao mới 1 array storeKeys rồi push vào chỉ có 1 cardDeck,
+      bâm qua cardDeck khác thì nó override lại cái cardDeck có sẵn trc đó
+
       const storeKeys = [];
       storeKeys.push(storageKey);
       console.log('save storeKeys: ', storeKeys);
       await AsyncStorage.setItem(KEY.SAVE_LIB, JSON.stringify(storeKeys));
+
+       */
+
+      const storeKeys = JSON.parse(
+        (await AsyncStorage.getItem(KEY.SAVE_LIB)) || [],
+      );
+      storeKeys.push(storageKey);
+      await AsyncStorage.setItem(KEY.SAVE_LIB, JSON.stringify(storeKeys));
     } catch (err) {
       dispatch(fetchDbError(err));
-      console.log('Failed to save the data to the storage', err);
+      console.log(
+        'loadCardDeckAndCardsByDeckId-cardDeckId error',
+        cardDeckId,
+        err,
+      );
     }
   };
 }

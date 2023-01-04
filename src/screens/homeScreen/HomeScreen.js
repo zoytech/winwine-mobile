@@ -47,21 +47,37 @@ export default function HomeScreen({navigation}) {
   useEffect(() => {
     const getMainKeys = async () => {
       try {
-        const mainKeyRqs = await AsyncStorage.getItem(KEY.SAVE_LIB);
+        const mainKeyRqs = JSON.parse(
+          (await AsyncStorage.getItem(KEY.SAVE_LIB)) || [],
+        );
         console.log('mainKeyRqs: ', mainKeyRqs);
-        const mainKey =
-          mainKeyRqs && typeof mainKeyRqs === 'object'
-            ? JSON.parse(mainKeyRqs)
-            : [];
-        setMainKeys(mainKey);
-        const mainKeyss = keyStores.length !== 0 ? keyStores : mainKeys;
-        console.log('mainKeyss: ', mainKeyRqs);
+        setMainKeys(mainKeyRqs);
+
+        /*
+        Chỗ  này setMainKeys(mainKeyReqs) xong bên dưới sd mainKeys sẽ ko update liền vì setState vì bất đồng bộ
+         mainKeyRqs chưa dc update, phải dùng mainKeyRqs
+         */
+        const mainKeyss = keyStores.length !== 0 ? keyStores : mainKeyRqs;
+        console.log('mainKeyss:', mainKeyss);
+
         const cardDeckRqs = await AsyncStorage.multiGet(mainKeyss);
+
+        /*
+        Code cũ sẽ sai nếu như 1 cardDeck nào đó null -> output sẽ là: [object, null, object] nên render ra lỗi
+        Solution: Nếu null thì gọi API get lại hoặc ko add vào retrievedData || sau khi array.map xong phải array.filter khác null
+        Code cũ:
         const retrievedData = cardDeckRqs.map(item => {
           const [keyStore, cardDeck] = item || {};
           return cardDeck != null ? JSON.parse(cardDeck) : null;
         });
-        console.log('////////////// ');
+         */
+
+        const retrievedData = [];
+        cardDeckRqs.forEach(item => {
+          const [keyStore, cardDeck] = item || {};
+          cardDeck && retrievedData.push(JSON.parse(cardDeck));
+        });
+
         setRecentlyCardDeck(retrievedData);
       } catch (e) {
         console.log('get main keys error: ', e);
