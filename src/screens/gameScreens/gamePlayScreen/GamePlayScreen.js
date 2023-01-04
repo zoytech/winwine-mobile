@@ -23,8 +23,8 @@ import gamePlayStyle from './gamePlayStyle';
 const screenWidth = WIDTH?.SCREEN;
 const width = {
   CONTAINER: 320,
-  CARD: 275,
-  SEPARATOR: 10,
+  CARD: 260,
+  SEPARATOR: 25,
 };
 
 const INITIAL_INDEX = 0;
@@ -38,6 +38,7 @@ export default function GamePlayScreen({navigation, route}) {
   const [showIndex, setShowIndex] = useState(INITIAL_INDEX);
   const [showIndicatorInfo, setShowIndicatorInfo] = useState(true);
   const {cardDeck: cardDeck, cards: cards} = dataBlocks;
+  const hashtags = cardDeck?.hashtags;
 
   useEffect(() => {
     dispatch(loadCardDeckAndCardsByDeckId(cardDeckIdParam));
@@ -85,7 +86,7 @@ export default function GamePlayScreen({navigation, route}) {
         content: (
           <EndingGameDialog
             headline={cardDeckNameParam}
-            subHeadLeft={DECK?.TAG}
+            subHeadLeft={hashtags}
             media={cardDeckImageParam}
             onMainActionPress={handleMainDialogPress}
             onSubActionPress={handleSubDialogPress}

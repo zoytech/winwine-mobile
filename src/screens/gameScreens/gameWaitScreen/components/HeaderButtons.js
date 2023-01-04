@@ -1,14 +1,6 @@
-import {useDispatch, useSelector} from 'react-redux';
 import {StyleSheet, View} from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Typography} from 'src/themes';
-import {FilledButton, StandardIconToggle} from 'src/components';
-import {KEY} from 'src/constants';
-import {
-  addLibraryKeyStore,
-  libraryKeyStoreSelect,
-  removeLibraryKeyStore,
-} from 'src/redux/slices';
+import {FilledButton} from 'src/components';
 
 export default function HeaderButtons(props) {
   const {
@@ -19,60 +11,7 @@ export default function HeaderButtons(props) {
     onFilledButtonPress = () => {},
     ...otherProps
   } = props;
-  const dispatch = useDispatch();
-  const libraryKeyStores = useSelector(libraryKeyStoreSelect);
-  const cardDeckIdParam = data?.cardDeckId;
   const containerStyle = [styles.container, style];
-
-  const defaultKeyStore = `${KEY?.SAVE_LIB}/${cardDeckIdParam}`;
-  const hasSaveId = libraryKeyStores.includes(defaultKeyStore);
-
-  async function removeItemFromStorage(key) {
-    const keyStore = `${KEY?.SAVE_LIB}/${key}`;
-    try {
-      await AsyncStorage.removeItem(keyStore);
-      dispatch(removeLibraryKeyStore(keyStore));
-    } catch (e) {
-      console.log('fail remove in save lib: ', e);
-    }
-  }
-
-  async function saveItemToStorage(key, dt) {
-    const keyStore = `${KEY?.SAVE_LIB}/${key}`;
-    const mainKey = KEY?.SAVE_LIB;
-    try {
-      const jsonValue = JSON.stringify(dt);
-      await AsyncStorage.setItem(keyStore, jsonValue);
-      await AsyncStorage.setItem(mainKey, keyStore);
-      dispatch(addLibraryKeyStore(keyStore));
-    } catch (e) {
-      console.log('fail store in save lib: ', e);
-    }
-  }
-
-  async function handleDownloadDeckPress() {
-    if (hasSaveId) {
-      await removeItemFromStorage(cardDeckIdParam);
-    } else {
-      await saveItemToStorage(cardDeckIdParam, data);
-    }
-  }
-
-  function renderHeaderLeftButtons() {
-    const downloadProps = {
-      name: 'downcircleo',
-      selectedName: 'downcircle',
-      style: styles.icon,
-      iconStyle: {size: 30},
-    };
-    return (
-      <StandardIconToggle
-        {...downloadProps}
-        onPress={handleDownloadDeckPress}
-        isSelected={hasSaveId}
-      />
-    );
-  }
 
   function renderHeaderRightButton() {
     return (
@@ -87,7 +26,6 @@ export default function HeaderButtons(props) {
   return (
     <View {...otherProps} style={containerStyle}>
       {children}
-      <View style={styles.subAction}>{renderHeaderLeftButtons()}</View>
       <View style={styles.mainAction}>{renderHeaderRightButton()}</View>
     </View>
   );
@@ -99,12 +37,13 @@ const styles = StyleSheet.create({
     aspectRatio: 7,
     flexDirection: 'row',
     paddingHorizontal: 8,
+    justifyContent: 'center',
   },
   mainAction: {
     width: '50%',
     alignSelf: 'center',
     flexDirection: 'row',
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
   },
   subAction: {
     width: '50%',

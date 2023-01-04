@@ -23,8 +23,8 @@ import gameWaitStyle from './gameWaitStyle';
 
 const width = {
   CONTAINER: 320,
-  CARD: 275,
-  SEPARATOR: 10,
+  CARD: 250,
+  SEPARATOR: 25,
 };
 const INITIAL_INDEX = 0;
 const MAX_PREVIEW = 10;
@@ -125,10 +125,6 @@ export default function GameWaitScreen({navigation, route}) {
           />
         ) : (
           <>
-            <HeaderButtons
-              onFilledButtonPress={handlePressFilledButton}
-              data={cardDeckItem}
-            />
             <View style={gameWaitStyle.supportingText}>
               <Text style={defaultContentStyle}>{previewContent}</Text>
             </View>
@@ -143,6 +139,11 @@ export default function GameWaitScreen({navigation, route}) {
               onScrollEnd={(item, index) => handleOnScrollEnd(item, index)}
               onItemPress={handleCardItemPressed}
               initialIndex={INITIAL_INDEX}
+            />
+            <HeaderButtons
+              onFilledButtonPress={handlePressFilledButton}
+              data={cardDeckItem}
+              style={gameWaitStyle.action}
             />
           </>
         )}

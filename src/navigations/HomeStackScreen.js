@@ -3,32 +3,18 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {
   BasicDialog,
   CardDialog,
-  CreateCardScreen,
   GamePlayScreen,
   GameWaitScreen,
   HomeScreen,
 } from 'src/screens';
-import {useLayoutEffect} from 'react';
-import {hideBottomTabBarMethod} from './utils';
 import {
-  CreateCardTopAppBar,
   GamePlayTopAppBar,
   GameWaitTopAppBar,
   HomeTopAppBar,
 } from 'src/screens/screenTopAppBars';
 
 const HomeStack = createNativeStackNavigator();
-export default function HomeStackScreen({navigation, route}) {
-  useLayoutEffect(() => {
-    const tabHiddenRoutes = [
-      ScreenKeys.PLAY_GAME,
-      ScreenKeys.CARD_DIALOG,
-      ScreenKeys.BASIC_DIALOG,
-      ScreenKeys.CREATE_CARD,
-    ];
-    hideBottomTabBarMethod({navigation, route, tabHiddenRoutes});
-  }, [navigation, route]);
-
+export default function HomeStackScreen() {
   const modalScreenProps = {
     presentation: 'transparentModal',
     cardOverlayEnable: false,
@@ -56,13 +42,6 @@ export default function HomeStackScreen({navigation, route}) {
           component={GamePlayScreen}
           options={{
             header: () => <GamePlayTopAppBar />,
-          }}
-        />
-        <HomeStack.Screen
-          name={ScreenKeys.CREATE_CARD}
-          component={CreateCardScreen}
-          options={{
-            header: () => <CreateCardTopAppBar />,
           }}
         />
       </HomeStack.Group>

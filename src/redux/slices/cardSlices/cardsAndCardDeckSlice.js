@@ -29,14 +29,6 @@ export function loadCardDeckAndCardsByDeckId(cardDeckId) {
       const cardDeck = getCardDeckResp?.data;
       const cards = getCardsResp?.data;
       dispatch(fetchDbSuccess({cardDeck, cards}));
-
-      const storageKey = `${KEY?.RECENTLY_PLAY}/${cardDeckId}`;
-      await AsyncStorage.setItem(storageKey, JSON.stringify(cardDeck));
-      dispatch(addRecentlyKeyStore(storageKey));
-      const storeKeys = [];
-      storeKeys.push(storageKey);
-      console.log('save storeKeys: ', storeKeys);
-      await AsyncStorage.setItem(KEY.SAVE_LIB, JSON.stringify(storeKeys));
     } catch (err) {
       dispatch(fetchDbError(err));
       console.log('Failed to save the data to the storage', err);
