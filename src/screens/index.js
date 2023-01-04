@@ -1,5 +1,4 @@
-import HomeScreen from './HomeScreen/HomeScreen';
-
-import GameScreen from './GameScreen/GameScreen';
-
-export {HomeScreen, GameScreen};
+export * from './homeScreen';
+export * from './gameScreens';
+export * from './modalScreens';
+export * from './errorScreens';

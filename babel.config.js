@@ -12,6 +12,11 @@ module.exports = {
           'src/navigations': './src/navigations',
           'src/services': './src/services',
           'src/themes': './src/themes',
+          'src/assets': './src/assets',
+          'src/apis': './src/apis',
+          'src/screens': './src/screens',
+          'src/redux': './src/redux',
+          'src/utils': './src/utils',
         },
         extensions: [
           '.ios.ts',

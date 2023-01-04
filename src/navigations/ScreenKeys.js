@@ -1,10 +1,13 @@
-import React from 'react';
-
 const ScreenKeys = {
-  HOME: 'HOME',
+  ROOT: 'ROOT',
 
-  GAME: 'GAME',
-  GAME_PLAY: 'GAME/PLAY',
+  HOME: 'HOME',
+  PLAY_GAME: 'GAME/PLAY',
+  WAIT_GAME: 'GAME/WAIT',
+
+  BASIC_DIALOG: 'DIALOG/BASIC',
+  CARD_DIALOG: 'DIALOG/CARD',
+  MAIN_DIALOG: 'DIALOG/MAIN',
 };
 
 export {ScreenKeys};

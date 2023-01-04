@@ -1,0 +1,1808 @@
+{
+  "data": [
+    {
+      "cardDeckId": 1,
+      "cardDeck": "Package so 1",
+      "tag": "HTC1",
+      "uri": "https://picsum.photos/id/1011/200",
+      "tasks": [
+        {
+          "task": "Wenn du schon einmal der Chauffeur für alle warst, verteile {int} Schlücke. Ansonsten trink sie selbst.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 0
+        },
+        {
+          "task": "Wer als Letzter beide Hände auf seine Knie legt trinkt {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 1
+        },
+        {
+          "task": "Sagt nacheinander „Danke“ in einer anderen Sprache als auf Deutsch. Derjenige, der etwas wiederholt oder nichts mehr weiß, trinkt {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 2
+        },
+        {
+          "task": "Alle, die liebend gerne mit ihrem/r rechten Nachbarn/in ficken würden, trinken {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 3
+        },
+        {
+          "task": "Berühre jemanden an seinem Arsch. Danach trinkt jeder von euch beiden {int} Schlücke.",
+          "count": 9,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 4
+        },
+        {
+          "task": "Alle, die die Zunge rollen können, sind safe. Alle anderen müssen einen Schluck trinken.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 19
+        },
+        {
+          "task": "Dafür oder dagegen: Eine Hinfahrt ohne Rückfahrt zu einem neuen bewohnbaren Planeten mit 1000 Personen machen und am Aufbau einer neuen Welt teilnehmen, aber deine Nahestehenden dafür verlassen? Stimmt alle gleichzeitig ab, die Verlierer trinken {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 129
+        },
+        {
+          "task": "Neues Thema und {int} Schlücke für den Verlierer: „Whiskymarken“. Du beginnst.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 130
+        },
+        {
+          "task": "Alle die größer als 1.80 sind, trinken {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 131
+        },
+        {
+          "task": "Alle Kampfsportler trinken {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 132
+        },
+        {
+          "task": "Verteile {int} Schlücke und trinke {int} Schlücke.",
+          "count": 22,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 133
+        },
+        {
+          "task": "Verteile {int} Schlücke. Diese müssen auf mindestens 2 Personen aufgeteilt werden.",
+          "count": 43,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 134
+        },
+        {
+          "task": "Trinke {int} Schlücke oder mache {int} Liegestütze.",
+          "count": 10,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 135
+        },
+        {
+          "task": "Suche dir einen Mitspieler aus. Nach 3 Sekunden schreit jeder von euch gleichzeitig eine Zahl zwischen 1 und 5. Schreit ihr die selbe Zahl, trinkt ihr beide {int} Schlücke. Schreit ihr eine unterschiedliche Zahl, trinkst nur du {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 136
+        },
+        {
+          "task": "Lieber ohne Beine oder ohne Arme leben? Stimmt alle gleichzeitig ab, die Verlierer trinken {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 137
+        },
+        {
+          "task": "Jeder, der schon einmal in seinem Leben seinen Führerschein abgenommen bekommen hat, trinkt {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 138
+        },
+        {
+          "task": "Wer sich nicht traut, seinen rechten Nachbarn auf den Mund zu küssen, muss {int} Schlücke trinken.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 139
+        }
+      ]
+    },
+    {
+      "cardDeckId": 2,
+      "cardDeck": "Package so 2",
+      "tag": "HTC2",
+      "uri": "https://picsum.photos/id/1012/200",
+      "tasks": [
+        {
+          "task": "Wenn du schon einmal der Chauffeur für alle warst, verteile {int} Schlücke. Ansonsten trink sie selbst.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 0
+        },
+        {
+          "task": "Wer als Letzter beide Hände auf seine Knie legt trinkt {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 1
+        },
+        {
+          "task": "Sagt nacheinander „Danke“ in einer anderen Sprache als auf Deutsch. Derjenige, der etwas wiederholt oder nichts mehr weiß, trinkt {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 2
+        },
+        {
+          "task": "Wenn du schon einmal der Chauffeur für alle warst, verteile {int} Schlücke. Ansonsten trink sie selbst.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 0
+        },
+        {
+          "task": "Wer als Letzter beide Hände auf seine Knie legt trinkt {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 1
+        },
+        {
+          "task": "Sagt nacheinander „Danke“ in einer anderen Sprache als auf Deutsch. Derjenige, der etwas wiederholt oder nichts mehr weiß, trinkt {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 2
+        },
+        {
+          "task": "Alle, die liebend gerne mit ihrem/r rechten Nachbarn/in ficken würden, trinken {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 3
+        },
+        {
+          "task": "Berühre jemanden an seinem Arsch. Danach trinkt jeder von euch beiden {int} Schlücke.",
+          "count": 9,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 4
+        },
+        {
+          "task": "Alle, die die Zunge rollen können, sind safe. Alle anderen müssen einen Schluck trinken.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 19
+        },
+        {
+          "task": "Dafür oder dagegen: Eine Hinfahrt ohne Rückfahrt zu einem neuen bewohnbaren Planeten mit 1000 Personen machen und am Aufbau einer neuen Welt teilnehmen, aber deine Nahestehenden dafür verlassen? Stimmt alle gleichzeitig ab, die Verlierer trinken {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 129
+        },
+        {
+          "task": "Neues Thema und {int} Schlücke für den Verlierer: „Whiskymarken“. Du beginnst.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 130
+        },
+        {
+          "task": "Alle die größer als 1.80 sind, trinken {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 131
+        },
+        {
+          "task": "Alle Kampfsportler trinken {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 132
+        },
+        {
+          "task": "Verteile {int} Schlücke und trinke {int} Schlücke.",
+          "count": 22,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 133
+        },
+        {
+          "task": "Verteile {int} Schlücke. Diese müssen auf mindestens 2 Personen aufgeteilt werden.",
+          "count": 43,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 134
+        },
+        {
+          "task": "Trinke {int} Schlücke oder mache {int} Liegestütze.",
+          "count": 10,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 135
+        },
+        {
+          "task": "Suche dir einen Mitspieler aus. Nach 3 Sekunden schreit jeder von euch gleichzeitig eine Zahl zwischen 1 und 5. Schreit ihr die selbe Zahl, trinkt ihr beide {int} Schlücke. Schreit ihr eine unterschiedliche Zahl, trinkst nur du {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 136
+        },
+        {
+          "task": "Lieber ohne Beine oder ohne Arme leben? Stimmt alle gleichzeitig ab, die Verlierer trinken {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 137
+        },
+        {
+          "task": "Jeder, der schon einmal in seinem Leben seinen Führerschein abgenommen bekommen hat, trinkt {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 138
+        },
+        {
+          "task": "Wer sich nicht traut, seinen rechten Nachbarn auf den Mund zu küssen, muss {int} Schlücke trinken.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 139
+        }
+      ]
+    },
+    {
+      "cardDeckId": 3,
+      "cardDeck": "Package so 3",
+      "tag": "HTC2",
+      "uri": "https://picsum.photos/id/1013/200",
+      "tasks": [
+        {
+          "task": "Sagt nacheinander „Danke“ in einer anderen Sprache als auf Deutsch. Derjenige, der etwas wiederholt oder nichts mehr weiß, trinkt {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 2
+        },
+        {
+          "task": "Alle, die liebend gerne mit ihrem/r rechten Nachbarn/in ficken würden, trinken {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 3
+        },
+        {
+          "task": "Berühre jemanden an seinem Arsch. Danach trinkt jeder von euch beiden {int} Schlücke.",
+          "count": 9,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 4
+        },
+        {
+          "task": "Alle, die die Zunge rollen können, sind safe. Alle anderen müssen einen Schluck trinken.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 19
+        },
+        {
+          "task": "Dafür oder dagegen: Eine Hinfahrt ohne Rückfahrt zu einem neuen bewohnbaren Planeten mit 1000 Personen machen und am Aufbau einer neuen Welt teilnehmen, aber deine Nahestehenden dafür verlassen? Stimmt alle gleichzeitig ab, die Verlierer trinken {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 129
+        },
+        {
+          "task": "Neues Thema und {int} Schlücke für den Verlierer: „Whiskymarken“. Du beginnst.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 130
+        },
+        {
+          "task": "Alle die größer als 1.80 sind, trinken {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 131
+        },
+        {
+          "task": "Alle Kampfsportler trinken {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 132
+        },
+        {
+          "task": "Verteile {int} Schlücke und trinke {int} Schlücke.",
+          "count": 22,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 133
+        },
+        {
+          "task": "Verteile {int} Schlücke. Diese müssen auf mindestens 2 Personen aufgeteilt werden.",
+          "count": 43,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 134
+        },
+        {
+          "task": "Trinke {int} Schlücke oder mache {int} Liegestütze.",
+          "count": 10,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 135
+        },
+        {
+          "task": "Suche dir einen Mitspieler aus. Nach 3 Sekunden schreit jeder von euch gleichzeitig eine Zahl zwischen 1 und 5. Schreit ihr die selbe Zahl, trinkt ihr beide {int} Schlücke. Schreit ihr eine unterschiedliche Zahl, trinkst nur du {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 136
+        },
+        {
+          "task": "Lieber ohne Beine oder ohne Arme leben? Stimmt alle gleichzeitig ab, die Verlierer trinken {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 137
+        },
+        {
+          "task": "Jeder, der schon einmal in seinem Leben seinen Führerschein abgenommen bekommen hat, trinkt {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 138
+        },
+        {
+          "task": "Wer sich nicht traut, seinen rechten Nachbarn auf den Mund zu küssen, muss {int} Schlücke trinken.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 139
+        }
+      ]
+    },
+    {
+      "cardDeckId": 4,
+      "cardDeck": "Package so 4",
+      "tag": "HTC3",
+      "uri": "https://picsum.photos/id/1015/200",
+      "tasks": [
+        {
+          "task": "Alle, die liebend gerne mit ihrem/r rechten Nachbarn/in ficken würden, trinken {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 3
+        },
+        {
+          "task": "Berühre jemanden an seinem Arsch. Danach trinkt jeder von euch beiden {int} Schlücke.",
+          "count": 9,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 4
+        },
+        {
+          "task": "Alle, die die Zunge rollen können, sind safe. Alle anderen müssen einen Schluck trinken.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 19
+        },
+        {
+          "task": "Dafür oder dagegen: Eine Hinfahrt ohne Rückfahrt zu einem neuen bewohnbaren Planeten mit 1000 Personen machen und am Aufbau einer neuen Welt teilnehmen, aber deine Nahestehenden dafür verlassen? Stimmt alle gleichzeitig ab, die Verlierer trinken {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 129
+        },
+        {
+          "task": "Neues Thema und {int} Schlücke für den Verlierer: „Whiskymarken“. Du beginnst.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 130
+        },
+        {
+          "task": "Alle die größer als 1.80 sind, trinken {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 131
+        },
+        {
+          "task": "Alle Kampfsportler trinken {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 132
+        },
+        {
+          "task": "Verteile {int} Schlücke und trinke {int} Schlücke.",
+          "count": 22,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 133
+        },
+        {
+          "task": "Verteile {int} Schlücke. Diese müssen auf mindestens 2 Personen aufgeteilt werden.",
+          "count": 43,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 134
+        },
+        {
+          "task": "Trinke {int} Schlücke oder mache {int} Liegestütze.",
+          "count": 10,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 135
+        },
+        {
+          "task": "Suche dir einen Mitspieler aus. Nach 3 Sekunden schreit jeder von euch gleichzeitig eine Zahl zwischen 1 und 5. Schreit ihr die selbe Zahl, trinkt ihr beide {int} Schlücke. Schreit ihr eine unterschiedliche Zahl, trinkst nur du {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 136
+        },
+        {
+          "task": "Lieber ohne Beine oder ohne Arme leben? Stimmt alle gleichzeitig ab, die Verlierer trinken {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 137
+        },
+        {
+          "task": "Jeder, der schon einmal in seinem Leben seinen Führerschein abgenommen bekommen hat, trinkt {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 138
+        },
+        {
+          "task": "Wer sich nicht traut, seinen rechten Nachbarn auf den Mund zu küssen, muss {int} Schlücke trinken.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 139
+        }
+      ]
+    },
+    {
+      "cardDeckId": 5,
+      "cardDeck": "Package so 5",
+      "tag": "HTC4",
+      "uri": "https://picsum.photos/id/1016/200",
+      "tasks": [
+        {
+          "task": "Wenn du schon einmal der Chauffeur für alle warst, verteile {int} Schlücke. Ansonsten trink sie selbst.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 0
+        },
+        {
+          "task": "Wer als Letzter beide Hände auf seine Knie legt trinkt {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 1
+        },
+        {
+          "task": "Sagt nacheinander „Danke“ in einer anderen Sprache als auf Deutsch. Derjenige, der etwas wiederholt oder nichts mehr weiß, trinkt {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 2
+        },
+        {
+          "task": "Alle, die liebend gerne mit ihrem/r rechten Nachbarn/in ficken würden, trinken {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 3
+        },
+        {
+          "task": "Berühre jemanden an seinem Arsch. Danach trinkt jeder von euch beiden {int} Schlücke.",
+          "count": 9,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 4
+        },
+        {
+          "task": "Alle, die die Zunge rollen können, sind safe. Alle anderen müssen einen Schluck trinken.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 19
+        },
+        {
+          "task": "Dafür oder dagegen: Eine Hinfahrt ohne Rückfahrt zu einem neuen bewohnbaren Planeten mit 1000 Personen machen und am Aufbau einer neuen Welt teilnehmen, aber deine Nahestehenden dafür verlassen? Stimmt alle gleichzeitig ab, die Verlierer trinken {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 129
+        },
+        {
+          "task": "Neues Thema und {int} Schlücke für den Verlierer: „Whiskymarken“. Du beginnst.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 130
+        },
+        {
+          "task": "Alle die größer als 1.80 sind, trinken {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 131
+        },
+        {
+          "task": "Alle Kampfsportler trinken {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 132
+        },
+        {
+          "task": "Verteile {int} Schlücke und trinke {int} Schlücke.",
+          "count": 22,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 133
+        },
+        {
+          "task": "Verteile {int} Schlücke. Diese müssen auf mindestens 2 Personen aufgeteilt werden.",
+          "count": 43,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 134
+        },
+        {
+          "task": "Trinke {int} Schlücke oder mache {int} Liegestütze.",
+          "count": 10,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 135
+        },
+        {
+          "task": "Suche dir einen Mitspieler aus. Nach 3 Sekunden schreit jeder von euch gleichzeitig eine Zahl zwischen 1 und 5. Schreit ihr die selbe Zahl, trinkt ihr beide {int} Schlücke. Schreit ihr eine unterschiedliche Zahl, trinkst nur du {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 136
+        },
+        {
+          "task": "Lieber ohne Beine oder ohne Arme leben? Stimmt alle gleichzeitig ab, die Verlierer trinken {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 137
+        },
+        {
+          "task": "Jeder, der schon einmal in seinem Leben seinen Führerschein abgenommen bekommen hat, trinkt {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 138
+        },
+        {
+          "task": "Wer sich nicht traut, seinen rechten Nachbarn auf den Mund zu küssen, muss {int} Schlücke trinken.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 139
+        },
+        {
+          "task": "Wenn du schon einmal der Chauffeur für alle warst, verteile {int} Schlücke. Ansonsten trink sie selbst.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 0
+        },
+        {
+          "task": "Wer als Letzter beide Hände auf seine Knie legt trinkt {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 1
+        },
+        {
+          "task": "Sagt nacheinander „Danke“ in einer anderen Sprache als auf Deutsch. Derjenige, der etwas wiederholt oder nichts mehr weiß, trinkt {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 2
+        },
+        {
+          "task": "Alle, die liebend gerne mit ihrem/r rechten Nachbarn/in ficken würden, trinken {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 3
+        },
+        {
+          "task": "Berühre jemanden an seinem Arsch. Danach trinkt jeder von euch beiden {int} Schlücke.",
+          "count": 9,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 4
+        },
+        {
+          "task": "Alle, die die Zunge rollen können, sind safe. Alle anderen müssen einen Schluck trinken.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 19
+        },
+        {
+          "task": "Dafür oder dagegen: Eine Hinfahrt ohne Rückfahrt zu einem neuen bewohnbaren Planeten mit 1000 Personen machen und am Aufbau einer neuen Welt teilnehmen, aber deine Nahestehenden dafür verlassen? Stimmt alle gleichzeitig ab, die Verlierer trinken {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 129
+        },
+        {
+          "task": "Neues Thema und {int} Schlücke für den Verlierer: „Whiskymarken“. Du beginnst.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 130
+        },
+        {
+          "task": "Alle die größer als 1.80 sind, trinken {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 131
+        },
+        {
+          "task": "Alle Kampfsportler trinken {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 132
+        },
+        {
+          "task": "Verteile {int} Schlücke und trinke {int} Schlücke.",
+          "count": 22,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 133
+        },
+        {
+          "task": "Verteile {int} Schlücke. Diese müssen auf mindestens 2 Personen aufgeteilt werden.",
+          "count": 43,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 134
+        },
+        {
+          "task": "Trinke {int} Schlücke oder mache {int} Liegestütze.",
+          "count": 10,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 135
+        },
+        {
+          "task": "Suche dir einen Mitspieler aus. Nach 3 Sekunden schreit jeder von euch gleichzeitig eine Zahl zwischen 1 und 5. Schreit ihr die selbe Zahl, trinkt ihr beide {int} Schlücke. Schreit ihr eine unterschiedliche Zahl, trinkst nur du {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 136
+        },
+        {
+          "task": "Lieber ohne Beine oder ohne Arme leben? Stimmt alle gleichzeitig ab, die Verlierer trinken {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 137
+        },
+        {
+          "task": "Jeder, der schon einmal in seinem Leben seinen Führerschein abgenommen bekommen hat, trinkt {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 138
+        },
+        {
+          "task": "Wer sich nicht traut, seinen rechten Nachbarn auf den Mund zu küssen, muss {int} Schlücke trinken.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 139
+        }
+      ]
+    },
+    {
+      "cardDeckId": 6,
+      "cardDeck": "Package so 6",
+      "tag": "HTC4",
+      "uri": "https://picsum.photos/id/1016/200",
+      "tasks": [
+        {
+          "task": "Wenn du schon einmal der Chauffeur für alle warst, verteile {int} Schlücke. Ansonsten trink sie selbst.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 0
+        },
+        {
+          "task": "Wer als Letzter beide Hände auf seine Knie legt trinkt {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 1
+        },
+        {
+          "task": "Sagt nacheinander „Danke“ in einer anderen Sprache als auf Deutsch. Derjenige, der etwas wiederholt oder nichts mehr weiß, trinkt {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 2
+        },
+        {
+          "task": "Alle, die liebend gerne mit ihrem/r rechten Nachbarn/in ficken würden, trinken {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 3
+        },
+        {
+          "task": "Berühre jemanden an seinem Arsch. Danach trinkt jeder von euch beiden {int} Schlücke.",
+          "count": 9,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 4
+        },
+        {
+          "task": "Alle, die die Zunge rollen können, sind safe. Alle anderen müssen einen Schluck trinken.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 19
+        },
+        {
+          "task": "Dafür oder dagegen: Eine Hinfahrt ohne Rückfahrt zu einem neuen bewohnbaren Planeten mit 1000 Personen machen und am Aufbau einer neuen Welt teilnehmen, aber deine Nahestehenden dafür verlassen? Stimmt alle gleichzeitig ab, die Verlierer trinken {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 129
+        },
+        {
+          "task": "Neues Thema und {int} Schlücke für den Verlierer: „Whiskymarken“. Du beginnst.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 130
+        },
+        {
+          "task": "Alle die größer als 1.80 sind, trinken {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 131
+        },
+        {
+          "task": "Alle Kampfsportler trinken {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 132
+        },
+        {
+          "task": "Verteile {int} Schlücke und trinke {int} Schlücke.",
+          "count": 22,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 133
+        },
+        {
+          "task": "Sagt nacheinander „Danke“ in einer anderen Sprache als auf Deutsch. Derjenige, der etwas wiederholt oder nichts mehr weiß, trinkt {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 2
+        },
+        {
+          "task": "Alle, die liebend gerne mit ihrem/r rechten Nachbarn/in ficken würden, trinken {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 3
+        },
+        {
+          "task": "Berühre jemanden an seinem Arsch. Danach trinkt jeder von euch beiden {int} Schlücke.",
+          "count": 9,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 4
+        },
+        {
+          "task": "Alle, die die Zunge rollen können, sind safe. Alle anderen müssen einen Schluck trinken.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 19
+        },
+        {
+          "task": "Dafür oder dagegen: Eine Hinfahrt ohne Rückfahrt zu einem neuen bewohnbaren Planeten mit 1000 Personen machen und am Aufbau einer neuen Welt teilnehmen, aber deine Nahestehenden dafür verlassen? Stimmt alle gleichzeitig ab, die Verlierer trinken {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 129
+        },
+        {
+          "task": "Verteile {int} Schlücke. Diese müssen auf mindestens 2 Personen aufgeteilt werden.",
+          "count": 43,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 134
+        },
+        {
+          "task": "Trinke {int} Schlücke oder mache {int} Liegestütze.",
+          "count": 10,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 135
+        },
+        {
+          "task": "Suche dir einen Mitspieler aus. Nach 3 Sekunden schreit jeder von euch gleichzeitig eine Zahl zwischen 1 und 5. Schreit ihr die selbe Zahl, trinkt ihr beide {int} Schlücke. Schreit ihr eine unterschiedliche Zahl, trinkst nur du {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 136
+        },
+        {
+          "task": "Lieber ohne Beine oder ohne Arme leben? Stimmt alle gleichzeitig ab, die Verlierer trinken {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 137
+        },
+        {
+          "task": "Jeder, der schon einmal in seinem Leben seinen Führerschein abgenommen bekommen hat, trinkt {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 138
+        },
+        {
+          "task": "Wer sich nicht traut, seinen rechten Nachbarn auf den Mund zu küssen, muss {int} Schlücke trinken.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 139
+        }
+      ]
+    },
+    {
+      "cardDeckId": 7,
+      "cardDeck": "Package so 7",
+      "tag": "HTC2",
+      "uri": "https://picsum.photos/id/1011/200",
+      "tasks": [
+        {
+          "task": "Wenn du schon einmal der Chauffeur für alle warst, verteile {int} Schlücke. Ansonsten trink sie selbst.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 0
+        },
+        {
+          "task": "Wer als Letzter beide Hände auf seine Knie legt trinkt {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 1
+        },
+        {
+          "task": "Sagt nacheinander „Danke“ in einer anderen Sprache als auf Deutsch. Derjenige, der etwas wiederholt oder nichts mehr weiß, trinkt {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 2
+        },
+        {
+          "task": "Alle, die liebend gerne mit ihrem/r rechten Nachbarn/in ficken würden, trinken {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 3
+        },
+        {
+          "task": "Berühre jemanden an seinem Arsch. Danach trinkt jeder von euch beiden {int} Schlücke.",
+          "count": 9,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 4
+        },
+        {
+          "task": "Alle, die die Zunge rollen können, sind safe. Alle anderen müssen einen Schluck trinken.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 19
+        },
+        {
+          "task": "Dafür oder dagegen: Eine Hinfahrt ohne Rückfahrt zu einem neuen bewohnbaren Planeten mit 1000 Personen machen und am Aufbau einer neuen Welt teilnehmen, aber deine Nahestehenden dafür verlassen? Stimmt alle gleichzeitig ab, die Verlierer trinken {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 129
+        },
+        {
+          "task": "Neues Thema und {int} Schlücke für den Verlierer: „Whiskymarken“. Du beginnst.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 130
+        },
+        {
+          "task": "Alle die größer als 1.80 sind, trinken {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 131
+        },
+        {
+          "task": "Alle Kampfsportler trinken {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 132
+        },
+        {
+          "task": "Verteile {int} Schlücke und trinke {int} Schlücke.",
+          "count": 22,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 133
+        },
+        {
+          "task": "Verteile {int} Schlücke. Diese müssen auf mindestens 2 Personen aufgeteilt werden.",
+          "count": 43,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 134
+        },
+        {
+          "task": "Trinke {int} Schlücke oder mache {int} Liegestütze.",
+          "count": 10,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 135
+        },
+        {
+          "task": "Suche dir einen Mitspieler aus. Nach 3 Sekunden schreit jeder von euch gleichzeitig eine Zahl zwischen 1 und 5. Schreit ihr die selbe Zahl, trinkt ihr beide {int} Schlücke. Schreit ihr eine unterschiedliche Zahl, trinkst nur du {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 136
+        },
+        {
+          "task": "Lieber ohne Beine oder ohne Arme leben? Stimmt alle gleichzeitig ab, die Verlierer trinken {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 137
+        },
+        {
+          "task": "Jeder, der schon einmal in seinem Leben seinen Führerschein abgenommen bekommen hat, trinkt {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 138
+        },
+        {
+          "task": "Wer sich nicht traut, seinen rechten Nachbarn auf den Mund zu küssen, muss {int} Schlücke trinken.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 139
+        }
+      ]
+    },
+    {
+      "cardDeckId": 8,
+      "cardDeck": "Package so 8",
+      "tag": "HTC3",
+      "uri": "https://picsum.photos/id/1012/200",
+      "tasks": [
+        {
+          "task": "Wenn du schon einmal der Chauffeur für alle warst, verteile {int} Schlücke. Ansonsten trink sie selbst.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 0
+        },
+        {
+          "task": "Wer als Letzter beide Hände auf seine Knie legt trinkt {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 1
+        },
+        {
+          "task": "Sagt nacheinander „Danke“ in einer anderen Sprache als auf Deutsch. Derjenige, der etwas wiederholt oder nichts mehr weiß, trinkt {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 2
+        },
+        {
+          "task": "Wenn du schon einmal der Chauffeur für alle warst, verteile {int} Schlücke. Ansonsten trink sie selbst.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 0
+        },
+        {
+          "task": "Wer als Letzter beide Hände auf seine Knie legt trinkt {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 1
+        },
+        {
+          "task": "Sagt nacheinander „Danke“ in einer anderen Sprache als auf Deutsch. Derjenige, der etwas wiederholt oder nichts mehr weiß, trinkt {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 2
+        },
+        {
+          "task": "Alle, die liebend gerne mit ihrem/r rechten Nachbarn/in ficken würden, trinken {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 3
+        },
+        {
+          "task": "Berühre jemanden an seinem Arsch. Danach trinkt jeder von euch beiden {int} Schlücke.",
+          "count": 9,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 4
+        },
+        {
+          "task": "Alle, die die Zunge rollen können, sind safe. Alle anderen müssen einen Schluck trinken.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 19
+        },
+        {
+          "task": "Dafür oder dagegen: Eine Hinfahrt ohne Rückfahrt zu einem neuen bewohnbaren Planeten mit 1000 Personen machen und am Aufbau einer neuen Welt teilnehmen, aber deine Nahestehenden dafür verlassen? Stimmt alle gleichzeitig ab, die Verlierer trinken {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 129
+        },
+        {
+          "task": "Neues Thema und {int} Schlücke für den Verlierer: „Whiskymarken“. Du beginnst.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 130
+        },
+        {
+          "task": "Alle die größer als 1.80 sind, trinken {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 131
+        },
+        {
+          "task": "Alle Kampfsportler trinken {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 132
+        },
+        {
+          "task": "Verteile {int} Schlücke und trinke {int} Schlücke.",
+          "count": 22,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 133
+        },
+        {
+          "task": "Verteile {int} Schlücke. Diese müssen auf mindestens 2 Personen aufgeteilt werden.",
+          "count": 43,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 134
+        },
+        {
+          "task": "Trinke {int} Schlücke oder mache {int} Liegestütze.",
+          "count": 10,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 135
+        },
+        {
+          "task": "Suche dir einen Mitspieler aus. Nach 3 Sekunden schreit jeder von euch gleichzeitig eine Zahl zwischen 1 und 5. Schreit ihr die selbe Zahl, trinkt ihr beide {int} Schlücke. Schreit ihr eine unterschiedliche Zahl, trinkst nur du {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 136
+        },
+        {
+          "task": "Lieber ohne Beine oder ohne Arme leben? Stimmt alle gleichzeitig ab, die Verlierer trinken {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 137
+        },
+        {
+          "task": "Jeder, der schon einmal in seinem Leben seinen Führerschein abgenommen bekommen hat, trinkt {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 138
+        },
+        {
+          "task": "Wer sich nicht traut, seinen rechten Nachbarn auf den Mund zu küssen, muss {int} Schlücke trinken.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 139
+        }
+      ]
+    },
+    {
+      "cardDeckId": 9,
+      "cardDeck": "Package so 9",
+      "tag": "HTC4",
+      "uri": "https://picsum.photos/id/1013/200",
+      "tasks": [
+        {
+          "task": "Sagt nacheinander „Danke“ in einer anderen Sprache als auf Deutsch. Derjenige, der etwas wiederholt oder nichts mehr weiß, trinkt {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 2
+        },
+        {
+          "task": "Alle, die liebend gerne mit ihrem/r rechten Nachbarn/in ficken würden, trinken {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 3
+        },
+        {
+          "task": "Berühre jemanden an seinem Arsch. Danach trinkt jeder von euch beiden {int} Schlücke.",
+          "count": 9,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 4
+        },
+        {
+          "task": "Alle, die die Zunge rollen können, sind safe. Alle anderen müssen einen Schluck trinken.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 19
+        },
+        {
+          "task": "Dafür oder dagegen: Eine Hinfahrt ohne Rückfahrt zu einem neuen bewohnbaren Planeten mit 1000 Personen machen und am Aufbau einer neuen Welt teilnehmen, aber deine Nahestehenden dafür verlassen? Stimmt alle gleichzeitig ab, die Verlierer trinken {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 129
+        },
+        {
+          "task": "Neues Thema und {int} Schlücke für den Verlierer: „Whiskymarken“. Du beginnst.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 130
+        },
+        {
+          "task": "Alle die größer als 1.80 sind, trinken {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 131
+        },
+        {
+          "task": "Alle Kampfsportler trinken {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 132
+        },
+        {
+          "task": "Verteile {int} Schlücke und trinke {int} Schlücke.",
+          "count": 22,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 133
+        },
+        {
+          "task": "Verteile {int} Schlücke. Diese müssen auf mindestens 2 Personen aufgeteilt werden.",
+          "count": 43,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 134
+        },
+        {
+          "task": "Trinke {int} Schlücke oder mache {int} Liegestütze.",
+          "count": 10,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 135
+        },
+        {
+          "task": "Suche dir einen Mitspieler aus. Nach 3 Sekunden schreit jeder von euch gleichzeitig eine Zahl zwischen 1 und 5. Schreit ihr die selbe Zahl, trinkt ihr beide {int} Schlücke. Schreit ihr eine unterschiedliche Zahl, trinkst nur du {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 136
+        },
+        {
+          "task": "Lieber ohne Beine oder ohne Arme leben? Stimmt alle gleichzeitig ab, die Verlierer trinken {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 137
+        },
+        {
+          "task": "Jeder, der schon einmal in seinem Leben seinen Führerschein abgenommen bekommen hat, trinkt {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 138
+        },
+        {
+          "task": "Wer sich nicht traut, seinen rechten Nachbarn auf den Mund zu küssen, muss {int} Schlücke trinken.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 139
+        }
+      ]
+    },
+    {
+      "cardDeckId": 10,
+      "cardDeck": "Package so 10",
+      "tag": "HTC2",
+      "uri": "https://picsum.photos/id/1015/200",
+      "tasks": [
+        {
+          "task": "Alle, die liebend gerne mit ihrem/r rechten Nachbarn/in ficken würden, trinken {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 3
+        },
+        {
+          "task": "Berühre jemanden an seinem Arsch. Danach trinkt jeder von euch beiden {int} Schlücke.",
+          "count": 9,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 4
+        },
+        {
+          "task": "Alle, die die Zunge rollen können, sind safe. Alle anderen müssen einen Schluck trinken.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 19
+        },
+        {
+          "task": "Dafür oder dagegen: Eine Hinfahrt ohne Rückfahrt zu einem neuen bewohnbaren Planeten mit 1000 Personen machen und am Aufbau einer neuen Welt teilnehmen, aber deine Nahestehenden dafür verlassen? Stimmt alle gleichzeitig ab, die Verlierer trinken {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 129
+        },
+        {
+          "task": "Neues Thema und {int} Schlücke für den Verlierer: „Whiskymarken“. Du beginnst.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 130
+        },
+        {
+          "task": "Alle die größer als 1.80 sind, trinken {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 131
+        },
+        {
+          "task": "Alle Kampfsportler trinken {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 132
+        },
+        {
+          "task": "Verteile {int} Schlücke und trinke {int} Schlücke.",
+          "count": 22,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 133
+        },
+        {
+          "task": "Verteile {int} Schlücke. Diese müssen auf mindestens 2 Personen aufgeteilt werden.",
+          "count": 43,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 134
+        },
+        {
+          "task": "Trinke {int} Schlücke oder mache {int} Liegestütze.",
+          "count": 10,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 135
+        },
+        {
+          "task": "Suche dir einen Mitspieler aus. Nach 3 Sekunden schreit jeder von euch gleichzeitig eine Zahl zwischen 1 und 5. Schreit ihr die selbe Zahl, trinkt ihr beide {int} Schlücke. Schreit ihr eine unterschiedliche Zahl, trinkst nur du {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 136
+        },
+        {
+          "task": "Lieber ohne Beine oder ohne Arme leben? Stimmt alle gleichzeitig ab, die Verlierer trinken {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 137
+        },
+        {
+          "task": "Jeder, der schon einmal in seinem Leben seinen Führerschein abgenommen bekommen hat, trinkt {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 138
+        },
+        {
+          "task": "Wer sich nicht traut, seinen rechten Nachbarn auf den Mund zu küssen, muss {int} Schlücke trinken.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 139
+        }
+      ]
+    },
+    {
+      "cardDeckId": 11,
+      "cardDeck": "Package so 11",
+      "tag": "HTC4",
+      "uri": "https://picsum.photos/id/1016/200",
+      "tasks": [
+        {
+          "task": "Wenn du schon einmal der Chauffeur für alle warst, verteile {int} Schlücke. Ansonsten trink sie selbst.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 0
+        },
+        {
+          "task": "Wer als Letzter beide Hände auf seine Knie legt trinkt {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 1
+        },
+        {
+          "task": "Sagt nacheinander „Danke“ in einer anderen Sprache als auf Deutsch. Derjenige, der etwas wiederholt oder nichts mehr weiß, trinkt {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 2
+        },
+        {
+          "task": "Alle, die liebend gerne mit ihrem/r rechten Nachbarn/in ficken würden, trinken {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 3
+        },
+        {
+          "task": "Berühre jemanden an seinem Arsch. Danach trinkt jeder von euch beiden {int} Schlücke.",
+          "count": 9,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 4
+        },
+        {
+          "task": "Alle, die die Zunge rollen können, sind safe. Alle anderen müssen einen Schluck trinken.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 19
+        },
+        {
+          "task": "Dafür oder dagegen: Eine Hinfahrt ohne Rückfahrt zu einem neuen bewohnbaren Planeten mit 1000 Personen machen und am Aufbau einer neuen Welt teilnehmen, aber deine Nahestehenden dafür verlassen? Stimmt alle gleichzeitig ab, die Verlierer trinken {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 129
+        },
+        {
+          "task": "Neues Thema und {int} Schlücke für den Verlierer: „Whiskymarken“. Du beginnst.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 130
+        },
+        {
+          "task": "Alle die größer als 1.80 sind, trinken {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 131
+        },
+        {
+          "task": "Alle Kampfsportler trinken {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 132
+        },
+        {
+          "task": "Verteile {int} Schlücke und trinke {int} Schlücke.",
+          "count": 22,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 133
+        },
+        {
+          "task": "Verteile {int} Schlücke. Diese müssen auf mindestens 2 Personen aufgeteilt werden.",
+          "count": 43,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 134
+        },
+        {
+          "task": "Trinke {int} Schlücke oder mache {int} Liegestütze.",
+          "count": 10,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 135
+        },
+        {
+          "task": "Suche dir einen Mitspieler aus. Nach 3 Sekunden schreit jeder von euch gleichzeitig eine Zahl zwischen 1 und 5. Schreit ihr die selbe Zahl, trinkt ihr beide {int} Schlücke. Schreit ihr eine unterschiedliche Zahl, trinkst nur du {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 136
+        },
+        {
+          "task": "Lieber ohne Beine oder ohne Arme leben? Stimmt alle gleichzeitig ab, die Verlierer trinken {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 137
+        },
+        {
+          "task": "Jeder, der schon einmal in seinem Leben seinen Führerschein abgenommen bekommen hat, trinkt {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 138
+        },
+        {
+          "task": "Wer sich nicht traut, seinen rechten Nachbarn auf den Mund zu küssen, muss {int} Schlücke trinken.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 139
+        },
+        {
+          "task": "Wenn du schon einmal der Chauffeur für alle warst, verteile {int} Schlücke. Ansonsten trink sie selbst.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 0
+        },
+        {
+          "task": "Wer als Letzter beide Hände auf seine Knie legt trinkt {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 1
+        },
+        {
+          "task": "Sagt nacheinander „Danke“ in einer anderen Sprache als auf Deutsch. Derjenige, der etwas wiederholt oder nichts mehr weiß, trinkt {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 2
+        },
+        {
+          "task": "Alle, die liebend gerne mit ihrem/r rechten Nachbarn/in ficken würden, trinken {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 3
+        },
+        {
+          "task": "Berühre jemanden an seinem Arsch. Danach trinkt jeder von euch beiden {int} Schlücke.",
+          "count": 9,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 4
+        },
+        {
+          "task": "Alle, die die Zunge rollen können, sind safe. Alle anderen müssen einen Schluck trinken.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 19
+        },
+        {
+          "task": "Dafür oder dagegen: Eine Hinfahrt ohne Rückfahrt zu einem neuen bewohnbaren Planeten mit 1000 Personen machen und am Aufbau einer neuen Welt teilnehmen, aber deine Nahestehenden dafür verlassen? Stimmt alle gleichzeitig ab, die Verlierer trinken {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 129
+        },
+        {
+          "task": "Neues Thema und {int} Schlücke für den Verlierer: „Whiskymarken“. Du beginnst.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 130
+        },
+        {
+          "task": "Alle die größer als 1.80 sind, trinken {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 131
+        },
+        {
+          "task": "Alle Kampfsportler trinken {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 132
+        },
+        {
+          "task": "Verteile {int} Schlücke und trinke {int} Schlücke.",
+          "count": 22,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 133
+        },
+        {
+          "task": "Verteile {int} Schlücke. Diese müssen auf mindestens 2 Personen aufgeteilt werden.",
+          "count": 43,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 134
+        },
+        {
+          "task": "Trinke {int} Schlücke oder mache {int} Liegestütze.",
+          "count": 10,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 135
+        },
+        {
+          "task": "Suche dir einen Mitspieler aus. Nach 3 Sekunden schreit jeder von euch gleichzeitig eine Zahl zwischen 1 und 5. Schreit ihr die selbe Zahl, trinkt ihr beide {int} Schlücke. Schreit ihr eine unterschiedliche Zahl, trinkst nur du {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 136
+        },
+        {
+          "task": "Lieber ohne Beine oder ohne Arme leben? Stimmt alle gleichzeitig ab, die Verlierer trinken {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 137
+        },
+        {
+          "task": "Jeder, der schon einmal in seinem Leben seinen Führerschein abgenommen bekommen hat, trinkt {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 138
+        },
+        {
+          "task": "Wer sich nicht traut, seinen rechten Nachbarn auf den Mund zu küssen, muss {int} Schlücke trinken.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 139
+        }
+      ]
+    },
+    {
+      "cardDeckId": 12,
+      "cardDeck": "Package so 12",
+      "tag": "HTC3",
+      "uri": "https://picsum.photos/id/1016/200",
+      "tasks": [
+        {
+          "task": "Wenn du schon einmal der Chauffeur für alle warst, verteile {int} Schlücke. Ansonsten trink sie selbst.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 0
+        },
+        {
+          "task": "Wer als Letzter beide Hände auf seine Knie legt trinkt {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 1
+        },
+        {
+          "task": "Sagt nacheinander „Danke“ in einer anderen Sprache als auf Deutsch. Derjenige, der etwas wiederholt oder nichts mehr weiß, trinkt {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 2
+        },
+        {
+          "task": "Alle, die liebend gerne mit ihrem/r rechten Nachbarn/in ficken würden, trinken {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 3
+        },
+        {
+          "task": "Berühre jemanden an seinem Arsch. Danach trinkt jeder von euch beiden {int} Schlücke.",
+          "count": 9,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 4
+        },
+        {
+          "task": "Alle, die die Zunge rollen können, sind safe. Alle anderen müssen einen Schluck trinken.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 19
+        },
+        {
+          "task": "Dafür oder dagegen: Eine Hinfahrt ohne Rückfahrt zu einem neuen bewohnbaren Planeten mit 1000 Personen machen und am Aufbau einer neuen Welt teilnehmen, aber deine Nahestehenden dafür verlassen? Stimmt alle gleichzeitig ab, die Verlierer trinken {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 129
+        },
+        {
+          "task": "Neues Thema und {int} Schlücke für den Verlierer: „Whiskymarken“. Du beginnst.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 130
+        },
+        {
+          "task": "Alle die größer als 1.80 sind, trinken {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 131
+        },
+        {
+          "task": "Alle Kampfsportler trinken {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 132
+        },
+        {
+          "task": "Verteile {int} Schlücke und trinke {int} Schlücke.",
+          "count": 22,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 133
+        },
+        {
+          "task": "Sagt nacheinander „Danke“ in einer anderen Sprache als auf Deutsch. Derjenige, der etwas wiederholt oder nichts mehr weiß, trinkt {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 2
+        },
+        {
+          "task": "Alle, die liebend gerne mit ihrem/r rechten Nachbarn/in ficken würden, trinken {int} Schlücke.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 3
+        },
+        {
+          "task": "Berühre jemanden an seinem Arsch. Danach trinkt jeder von euch beiden {int} Schlücke.",
+          "count": 9,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 4
+        },
+        {
+          "task": "Alle, die die Zunge rollen können, sind safe. Alle anderen müssen einen Schluck trinken.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 19
+        },
+        {
+          "task": "Dafür oder dagegen: Eine Hinfahrt ohne Rückfahrt zu einem neuen bewohnbaren Planeten mit 1000 Personen machen und am Aufbau einer neuen Welt teilnehmen, aber deine Nahestehenden dafür verlassen? Stimmt alle gleichzeitig ab, die Verlierer trinken {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 129
+        },
+        {
+          "task": "Verteile {int} Schlücke. Diese müssen auf mindestens 2 Personen aufgeteilt werden.",
+          "count": 43,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 134
+        },
+        {
+          "task": "Trinke {int} Schlücke oder mache {int} Liegestütze.",
+          "count": 10,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 135
+        },
+        {
+          "task": "Suche dir einen Mitspieler aus. Nach 3 Sekunden schreit jeder von euch gleichzeitig eine Zahl zwischen 1 und 5. Schreit ihr die selbe Zahl, trinkt ihr beide {int} Schlücke. Schreit ihr eine unterschiedliche Zahl, trinkst nur du {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 136
+        },
+        {
+          "task": "Lieber ohne Beine oder ohne Arme leben? Stimmt alle gleichzeitig ab, die Verlierer trinken {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 137
+        },
+        {
+          "task": "Jeder, der schon einmal in seinem Leben seinen Führerschein abgenommen bekommen hat, trinkt {int} Schlücke.",
+          "count": 1,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 138
+        },
+        {
+          "task": "Wer sich nicht traut, seinen rechten Nachbarn auf den Mund zu küssen, muss {int} Schlücke trinken.",
+          "count": 2,
+          "uses": 0,
+          "rounds": 0,
+          "cardId": 139
+        }
+      ]
+    }
+  ]
+}
