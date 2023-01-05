@@ -1,0 +1,2 @@
+export const RECENTLY_KEYSTORE_LIMIT = 3;
+export const LIBRARY_KEYSTORE_LIMIT = 50;

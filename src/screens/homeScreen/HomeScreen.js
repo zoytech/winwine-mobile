@@ -56,6 +56,7 @@ export default function HomeScreen({navigation}) {
         /*
         Chỗ  này setMainKeys(mainKeyReqs) xong bên dưới sd mainKeys sẽ ko update liền vì setState vì bất đồng bộ
          mainKeyRqs chưa dc update, phải dùng mainKeyRqs
+         Và cần giải thích thêm sao lại dùng thêm cả state, trong khi đã dùng cả redux và local storage
          */
         const mainKeyss = keyStores.length !== 0 ? keyStores : mainKeyRqs;
         console.log('mainKeyss:', mainKeyss);
