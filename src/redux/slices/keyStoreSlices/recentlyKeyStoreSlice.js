@@ -1,6 +1,3 @@
-import {getDataWithLimitedLength, getDataBySelectUniqueValue} from 'src/utils';
-import {renderLimit} from '../../../constants';
-
 const RECENTLY_KEYSTORE = {
   ADD: 'ADD_RECENTLY_KEYSTORE',
   GET: 'GET_RECENTLY_KEYSTORE',

@@ -5,7 +5,6 @@ import SplashScreen from 'react-native-splash-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Color, ColorVariant} from 'src/themes';
 import {
-  addRecentlyKeyStore,
   cardDecksSelect,
   loadCardDecks,
   recentlyKeyStoresSelect,
@@ -19,11 +18,7 @@ import {
 import {CustomStatusBar, SectionHeader} from '../components';
 import {SpinnerType1} from 'src/components';
 import {KEY, renderLimit} from 'src/constants';
-import {
-  getDataWithLimitedLength,
-  getDataBySelectUniqueValue,
-} from '../../utils';
-import {RECENTLY_KEYSTORE_LIMIT} from '../../redux/slices/configs';
+import {replace, select} from 'src/utils';
 
 const RECENTLY = 'Chơi gần đây';
 const POPULAR = 'Phổ biến';
@@ -54,8 +49,8 @@ export default function HomeScreen({navigation}) {
         setMainKeys(mainKeyRqs);
         const rawKeyStores =
           keyStores.length !== 0 ? keyStores.concat(mainKeyRqs) : mainKeyRqs;
-        const uniqueStoreKeys = getDataBySelectUniqueValue(rawKeyStores);
-        const processedStoreKeys = getDataWithLimitedLength(
+        const uniqueStoreKeys = select.uniqueElement(rawKeyStores);
+        const processedStoreKeys = replace.lastElementWhenExceedLength(
           uniqueStoreKeys,
           renderLimit?.RECENTLY_CARD_DECKS,
         );

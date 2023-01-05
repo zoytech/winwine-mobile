@@ -2,10 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {KEY, renderLimit} from 'src/constants';
 import {CardApi, CardDeckApi} from 'src/apis';
 import {addRecentlyKeyStore} from 'src/redux/slices';
-import {
-  getDataWithLimitedLength,
-  getDataBySelectUniqueValue,
-} from '../../../utils';
+import {replace, select} from 'src/utils';
 
 const FETCH_DECK_AND_CARDS = {
   REQUEST: 'FETCH_DECK_AND_CARDS_ERROR',
@@ -41,8 +38,8 @@ export function loadCardDeckAndCardsByDeckId(cardDeckId) {
       const storeKeys = !getMainKeyRqs ? [] : JSON.parse(getMainKeyRqs);
       storeKeys.unshift(storageKey);
       console.log('storeKeys: ', storeKeys);
-      const uniqueStoreKeys = getDataBySelectUniqueValue(storeKeys);
-      const sortedUniqueStoreKeys = getDataWithLimitedLength(
+      const uniqueStoreKeys = select.uniqueElement(storeKeys);
+      const sortedUniqueStoreKeys = replace.lastElementWhenExceedLength(
         uniqueStoreKeys,
         renderLimit?.RECENTLY_CARD_DECKS,
       );
