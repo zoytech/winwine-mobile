@@ -54,8 +54,6 @@ export default function HomeScreen({navigation}) {
           uniqueStoreKeys,
           renderLimit?.RECENTLY_CARD_DECKS,
         );
-        console.log('processedKeyStores:', processedStoreKeys);
-        console.log('____________________________');
         const cardDeckRqs =
           processedStoreKeys &&
           (await AsyncStorage.multiGet(processedStoreKeys));

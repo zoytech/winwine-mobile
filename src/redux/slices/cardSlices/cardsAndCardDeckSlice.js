@@ -37,19 +37,12 @@ export function loadCardDeckAndCardsByDeckId(cardDeckId) {
       const getMainKeyRqs = await AsyncStorage.getItem(KEY.SAVE_LIB);
       const storeKeys = !getMainKeyRqs ? [] : JSON.parse(getMainKeyRqs);
       storeKeys.unshift(storageKey);
-      console.log('storeKeys: ', storeKeys);
       const uniqueStoreKeys = select.uniqueElement(storeKeys);
-      const sortedUniqueStoreKeys = replace.lastElementWhenExceedLength(
+      replace.lastElementWhenExceedLength(
         uniqueStoreKeys,
         renderLimit?.RECENTLY_CARD_DECKS,
       );
-      console.log('sortedUniqueStoreKeys: ', sortedUniqueStoreKeys);
-
-      await AsyncStorage.setItem(
-        KEY.SAVE_LIB,
-        JSON.stringify(sortedUniqueStoreKeys),
-      );
-      console.log('____________________________');
+      await AsyncStorage.setItem(KEY.SAVE_LIB, JSON.stringify(uniqueStoreKeys));
     } catch (err) {
       dispatch(fetchDbError(err));
       console.log(
