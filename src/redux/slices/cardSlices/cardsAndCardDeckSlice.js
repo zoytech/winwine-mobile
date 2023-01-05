@@ -1,7 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {KEY} from 'src/constants';
+import {KEY, renderLimit} from 'src/constants';
 import {CardApi, CardDeckApi} from 'src/apis';
 import {addRecentlyKeyStore} from 'src/redux/slices';
+import {
+  getDataWithLimitedLength,
+  getDataBySelectUniqueValue,
+} from '../../../utils';
 
 const FETCH_DECK_AND_CARDS = {
   REQUEST: 'FETCH_DECK_AND_CARDS_ERROR',
@@ -29,28 +33,26 @@ export function loadCardDeckAndCardsByDeckId(cardDeckId) {
       const cardDeck = getCardDeckResp?.data;
       const cards = getCardsResp?.data;
       dispatch(fetchDbSuccess({cardDeck, cards}));
-
+      console.log('cardDeck: ', cardDeck?.cardDeckName);
       const storageKey = `${KEY?.RECENTLY_PLAY}/${cardDeckId}`;
       await AsyncStorage.setItem(storageKey, JSON.stringify(cardDeck));
-
       dispatch(addRecentlyKeyStore(storageKey));
-
-      /*
-      Code cũ của em là: sai do mỗi lần save là tao mới 1 array storeKeys rồi push vào chỉ có 1 cardDeck,
-      bâm qua cardDeck khác thì nó override lại cái cardDeck có sẵn trc đó
-
-      const storeKeys = [];
-      storeKeys.push(storageKey);
-      console.log('save storeKeys: ', storeKeys);
-      await AsyncStorage.setItem(KEY.SAVE_LIB, JSON.stringify(storeKeys));
-
-       */
-
-      const storeKeys = JSON.parse(
-        (await AsyncStorage.getItem(KEY.SAVE_LIB)) || [],
+      const getMainKeyRqs = await AsyncStorage.getItem(KEY.SAVE_LIB);
+      const storeKeys = !getMainKeyRqs ? [] : JSON.parse(getMainKeyRqs);
+      storeKeys.unshift(storageKey);
+      console.log('storeKeys: ', storeKeys);
+      const uniqueStoreKeys = getDataBySelectUniqueValue(storeKeys);
+      const sortedUniqueStoreKeys = getDataWithLimitedLength(
+        uniqueStoreKeys,
+        renderLimit?.RECENTLY_CARD_DECKS,
       );
-      storeKeys.push(storageKey);
-      await AsyncStorage.setItem(KEY.SAVE_LIB, JSON.stringify(storeKeys));
+      console.log('sortedUniqueStoreKeys: ', sortedUniqueStoreKeys);
+
+      await AsyncStorage.setItem(
+        KEY.SAVE_LIB,
+        JSON.stringify(sortedUniqueStoreKeys),
+      );
+      console.log('____________________________');
     } catch (err) {
       dispatch(fetchDbError(err));
       console.log(

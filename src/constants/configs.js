@@ -3,4 +3,9 @@ const api = {
   PATH: 'winwine/web-app/apis/v1',
 };
 
-export {api};
+const renderLimit = {
+  LIB_CARD_DECKS: 3,
+  RECENTLY_CARD_DECKS: 5,
+};
+
+export {api, renderLimit};

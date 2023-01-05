@@ -1,6 +1,6 @@
-import {removeIdenticalItemInArray} from 'src/utils';
+import {getDataBySelectUniqueValue} from 'src/utils';
+import {LIBRARY_KEYSTORE_LIMIT} from '../configs';
 
-const LIBRARY_KEYSTORE_LIMIT = 50;
 const LIBRARY_KEYSTORE = {
   ADD: 'ADD_LIBRARY_KEYSTORE',
   GET: 'GET_LIBRARY_KEYSTORE',
@@ -44,7 +44,7 @@ export function libraryKeyStoreReducer(state = initialState, action) {
 
 export const libraryKeyStoreSelect = state => {
   const rawKeyStores = state.libraryKeyStore.libraryKeyStores;
-  const uniqueKeyStores = removeIdenticalItemInArray(rawKeyStores);
+  const uniqueKeyStores = getDataBySelectUniqueValue(rawKeyStores);
   uniqueKeyStores.length > LIBRARY_KEYSTORE_LIMIT
     ? uniqueKeyStores.splice(uniqueKeyStores.length - 1, 1)
     : uniqueKeyStores;

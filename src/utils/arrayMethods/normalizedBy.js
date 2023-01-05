@@ -40,7 +40,7 @@ const posts = [
   },
 ];
 
-export default function normalizedBy(key) {
+export function normalizedBy(key) {
   return (data, item) => {
     data[item[key]] = item;
     return data;

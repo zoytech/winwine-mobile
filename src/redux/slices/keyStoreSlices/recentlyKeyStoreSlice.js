@@ -1,10 +1,10 @@
-import {removeIdenticalItemInArray} from 'src/utils';
+import {getDataWithLimitedLength, getDataBySelectUniqueValue} from 'src/utils';
+import {renderLimit} from '../../../constants';
 
 const RECENTLY_KEYSTORE = {
   ADD: 'ADD_RECENTLY_KEYSTORE',
   GET: 'GET_RECENTLY_KEYSTORE',
 };
-const RECENTLY_KEYSTORE_LIMIT = 10;
 
 const initialState = {
   recentlyKeyStores: [],
@@ -32,11 +32,5 @@ export function recentlyKeyStoreReducer(state = initialState, action) {
   }
 }
 
-export const recentlyKeyStoresSelect = state => {
-  const rawKeyStores = state.recentlyKeyStore.recentlyKeyStores;
-  const uniqueKeyStores = removeIdenticalItemInArray(rawKeyStores);
-  uniqueKeyStores.length > RECENTLY_KEYSTORE_LIMIT
-    ? uniqueKeyStores.splice(uniqueKeyStores.length - 1, 1)
-    : uniqueKeyStores;
-  return uniqueKeyStores;
-};
+export const recentlyKeyStoresSelect = state =>
+  state.recentlyKeyStore.recentlyKeyStores;

@@ -5,10 +5,11 @@ import SplashScreen from 'react-native-splash-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Color, ColorVariant} from 'src/themes';
 import {
+  addRecentlyKeyStore,
   cardDecksSelect,
   loadCardDecks,
-  requestCardDecksSelect,
   recentlyKeyStoresSelect,
+  requestCardDecksSelect,
 } from 'src/redux/slices';
 import {
   HomeTopAppBar,
@@ -17,7 +18,12 @@ import {
 } from './components';
 import {CustomStatusBar, SectionHeader} from '../components';
 import {SpinnerType1} from 'src/components';
-import {KEY} from 'src/constants';
+import {KEY, renderLimit} from 'src/constants';
+import {
+  getDataWithLimitedLength,
+  getDataBySelectUniqueValue,
+} from '../../utils';
+import {RECENTLY_KEYSTORE_LIMIT} from '../../redux/slices/configs';
 
 const RECENTLY = 'Chơi gần đây';
 const POPULAR = 'Phổ biến';
@@ -40,42 +46,27 @@ export default function HomeScreen({navigation}) {
     }
   }, [dispatch]);
 
-  /*     '@RECENTLY_PLAY/280c939d-60c4-4d4e-913c-828251e2841a',
-                                                      '@RECENTLY_PLAY/04f9962f-a900-4ebd-ad60-f1af749d190b',
-                                                                                                               */
-
   useEffect(() => {
     const getMainKeys = async () => {
       try {
-        const mainKeyRqs = JSON.parse(
-          (await AsyncStorage.getItem(KEY.SAVE_LIB)) || [],
-        );
-        console.log('mainKeyRqs: ', mainKeyRqs);
+        const getMainKeyRqs = await AsyncStorage.getItem(KEY.SAVE_LIB);
+        const mainKeyRqs = !getMainKeyRqs ? [] : JSON.parse(getMainKeyRqs);
         setMainKeys(mainKeyRqs);
-
-        /*
-        Chỗ  này setMainKeys(mainKeyReqs) xong bên dưới sd mainKeys sẽ ko update liền vì setState vì bất đồng bộ
-         mainKeyRqs chưa dc update, phải dùng mainKeyRqs
-         Và cần giải thích thêm sao lại dùng thêm cả state, trong khi đã dùng cả redux và local storage
-         */
-        const mainKeyss = keyStores.length !== 0 ? keyStores : mainKeyRqs;
-        console.log('mainKeyss:', mainKeyss);
-
-        const cardDeckRqs = await AsyncStorage.multiGet(mainKeyss);
-
-        /*
-        Code cũ sẽ sai nếu như 1 cardDeck nào đó null -> output sẽ là: [object, null, object] nên render ra lỗi
-        Solution: Nếu null thì gọi API get lại hoặc ko add vào retrievedData || sau khi array.map xong phải array.filter khác null
-        Code cũ:
-        const retrievedData = cardDeckRqs.map(item => {
-          const [keyStore, cardDeck] = item || {};
-          return cardDeck != null ? JSON.parse(cardDeck) : null;
-        });
-         */
-
+        const rawKeyStores =
+          keyStores.length !== 0 ? keyStores.concat(mainKeyRqs) : mainKeyRqs;
+        const uniqueStoreKeys = getDataBySelectUniqueValue(rawKeyStores);
+        const processedStoreKeys = getDataWithLimitedLength(
+          uniqueStoreKeys,
+          renderLimit?.RECENTLY_CARD_DECKS,
+        );
+        console.log('processedKeyStores:', processedStoreKeys);
+        console.log('____________________________');
+        const cardDeckRqs =
+          processedStoreKeys &&
+          (await AsyncStorage.multiGet(processedStoreKeys));
         const retrievedData = [];
         cardDeckRqs.forEach(item => {
-          const [keyStore, cardDeck] = item || {};
+          const [, cardDeck] = item || {};
           cardDeck && retrievedData.push(JSON.parse(cardDeck));
         });
 

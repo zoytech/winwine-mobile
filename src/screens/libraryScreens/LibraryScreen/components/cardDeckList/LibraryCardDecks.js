@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import {DECK, KEY} from 'src/constants';
-import {removeJustOneItem} from 'src/utils';
+import {getDataByRemoveKnownValue} from 'src/utils';
 import {MiniCardItem} from 'src/screens/components';
 import {getFilteringDataByTag, getMarginItem, getPinnedFirst} from './methods';
 import {
@@ -73,7 +73,7 @@ export default function LibraryCardDecks(props) {
   function handlePinningPress(id) {
     const hasPinId = pinDeckIds && pinDeckIds.includes(id);
     if (hasPinId) {
-      const newData = removeJustOneItem(pinDeckIds, id);
+      const newData = getDataByRemoveKnownValue(pinDeckIds, id);
       setPinDeckIds(newData);
     } else {
       setPinDeckIds([...pinDeckIds, id]);
@@ -83,7 +83,7 @@ export default function LibraryCardDecks(props) {
   function handleLikePress(id) {
     const hasLikeId = likedDeckIds && likedDeckIds.includes(id);
     if (hasLikeId) {
-      const newData = removeJustOneItem(likedDeckIds, id);
+      const newData = getDataByRemoveKnownValue(likedDeckIds, id);
       setLikeDeckIds(newData);
     } else {
       setLikeDeckIds([...likedDeckIds, id]);
