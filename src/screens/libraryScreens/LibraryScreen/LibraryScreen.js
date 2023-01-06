@@ -17,6 +17,8 @@ export default function LibraryScreen({navigation}) {
   const [selectedChip, setSelectedChip] = useState(null);
   const [libraryCardDeck, setLibraryCardDeck] = useState(null); //empty data that get from starage
   const [mainKeys, setMainKeys] = useState([]); //empty storage
+  const [hasStoreKey, setHasStoreKey] = useState(null);
+
   const keyStores = useSelector(libraryKeyStoreSelect);
   useEffect(() => {
     async function getMultipleCardDecks() {
@@ -32,7 +34,7 @@ export default function LibraryScreen({navigation}) {
           uniqueStoreKeys,
           renderLimit?.LIB_CARD_DECKS,
         );
-
+        // setHasStoreKey(uniqueStoreKeys.includes(defaultKeyStore));
         const cardDeckRqs =
           uniqueStoreKeys && (await AsyncStorage.multiGet(uniqueStoreKeys));
         const retrievedData = [];
@@ -62,19 +64,6 @@ export default function LibraryScreen({navigation}) {
       },
     });
   }, [navigation, selectedChip]);
-
-  // async function getMultipleCardDecks() {
-  //   try {
-  //     const data = await AsyncStorage.multiGet(keyStores);
-  //     const retrievedData = data.map(item => {
-  //       const [keyStore, cardDeck] = item || {};
-  //       return cardDeck != null ? JSON.parse(cardDeck) : null;
-  //     });
-  //     setLibraryCardDeck(retrievedData);
-  //   } catch (e) {
-  //     console.log('error read getMultiple in Lib: ', e);
-  //   }
-  // }
 
   function handleSortingListByChipId(hashtag) {
     return hashtag === selectedChip

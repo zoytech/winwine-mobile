@@ -22,14 +22,8 @@ const actions = {
   },
 };
 export default function ActionLibraryScreen({navigation, route}) {
-  const {
-    onPinningPress,
-    onLikePress,
-    onSavePress,
-    hasPinnedId,
-    hasLikedId,
-    hasSaveId,
-  } = route.params;
+  const {onPinningPress, onLikePress, onSavePress, hasPinnedId, hasLikedId} =
+    route.params;
 
   function handleGoBackPress() {
     navigation.goBack();
@@ -64,7 +58,7 @@ export default function ActionLibraryScreen({navigation, route}) {
           name={'circledowno'}
           selectedName={'circledown'}
           onButtonToggle={handleSavingPress}
-          isSelected={hasSaveId}
+          isSelected={true}
         />
         <ActionItem
           {...itemProps}

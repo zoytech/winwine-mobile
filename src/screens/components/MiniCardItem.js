@@ -22,7 +22,6 @@ export default function MiniCardItem(props) {
     data,
     pinned,
     liked,
-    saved,
     style,
     contentStyle,
     onPreviewPress = () => {},
@@ -88,7 +87,6 @@ export default function MiniCardItem(props) {
       <>
         {pinned && <Icon {...iconProps} name={'pushpin'} />}
         {liked && <Icon {...iconProps} name={'star'} />}
-        {saved && <Icon {...iconProps} name={'downcircle'} />}
       </>
     );
   }

@@ -146,7 +146,6 @@ export default function LibraryCardDecks(props) {
         onLikePress: () => handleLikePress(cardDeckId),
         hasLikedId: hasLikedId,
         onSavePress: () => handleSavePress(cardDeckId),
-        hasSaveId: hasSaveId,
       },
     });
   };
@@ -156,7 +155,6 @@ export default function LibraryCardDecks(props) {
     const deckId = item?.cardDeckId;
     const hasPinnedId = pinDeckIds.includes(deckId);
     const hasLikedId = likedDeckIds.includes(deckId);
-    const hasSaveId = libraryKeyStores.includes(`${KEY?.SAVE_LIB}/${deckId}`);
 
     return (
       <MiniCardItem
@@ -165,16 +163,10 @@ export default function LibraryCardDecks(props) {
         data={item}
         pinned={hasPinnedId}
         liked={hasLikedId}
-        saved={hasSaveId}
         onPreviewPress={() => handlePreviewPress(item)}
         onPlayPress={() => handlePlayPress(item)}
         onLongPress={() =>
-          handleNavigateToActionBoard(
-            deckId,
-            hasPinnedId,
-            hasLikedId,
-            hasSaveId,
-          )
+          handleNavigateToActionBoard(deckId, hasPinnedId, hasLikedId)
         }
         style={itemStyle}
       />
