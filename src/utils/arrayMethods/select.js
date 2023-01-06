@@ -1,13 +1,11 @@
 function uniqueElement(arr) {
-  return (
-    arr &&
-    arr.length !== 0 &&
-    arr.filter((item, index) => arr.indexOf(item) === index)
-  );
+  const uniqueArr = arr.filter((item, index) => arr.indexOf(item) === index);
+  return arr && arr.length !== 0 ? uniqueArr : [];
 }
 
 function intersectionElement(shortArr, longArr) {
-  return longArr.filter(element => shortArr.includes(element));
+  const intersectionArr = longArr.filter(element => shortArr.includes(element));
+  return longArr && shortArr ? intersectionArr : [];
 }
 
 export default {uniqueElement, intersectionElement};
