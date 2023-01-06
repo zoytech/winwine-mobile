@@ -6,25 +6,41 @@ import {FilledButton, StandardIconToggle} from 'src/components';
 import {KEY, renderLimit} from 'src/constants';
 import {addLibraryKeyStore, removeLibraryKeyStore} from 'src/redux/slices';
 import {remove, replace, select} from 'src/utils';
+import {useState} from 'react';
 
 export default function HeaderButtons(props) {
   const {
     data,
-    hasStoreKey = false,
+    hasStoreKey,
     renderRightComponents,
     children,
     style,
     onFilledButtonPress = () => {},
     ...otherProps
   } = props;
+
   const dispatch = useDispatch();
+  const [isSaved, setIsSaved] = useState(hasStoreKey);
   const cardDeckIdParam = data?.cardDeckId;
   const containerStyle = [styles.container, style];
 
+  async function handleDownloadDeckPress() {
+    if (isSaved) {
+      await removeItemFromStorage(cardDeckIdParam);
+      setIsSaved(false);
+    } else {
+      await saveItemToStorage(cardDeckIdParam, data);
+      setIsSaved(true);
+    }
+  }
+
   async function removeItemFromStorage(key) {
+    console.log(key);
+
     const keyStore = `${KEY?.SAVE_LIB}/${key}`;
     try {
       await AsyncStorage.removeItem(keyStore);
+      console.log(keyStore);
       await dispatchAndRemoveStoreKey(keyStore, KEY?.SAVE_LIB);
     } catch (e) {
       console.log('fail remove in save lib: ', e);
@@ -58,14 +74,6 @@ export default function HeaderButtons(props) {
     const uniqueStoreKeys = select.uniqueElement(storeKeys);
     replace.lastElementWhenExceedLength(uniqueStoreKeys, limitItem);
     await AsyncStorage.setItem(mainKey, JSON.stringify(uniqueStoreKeys));
-  }
-
-  async function handleDownloadDeckPress() {
-    if (hasStoreKey) {
-      await removeItemFromStorage(cardDeckIdParam);
-    } else {
-      await saveItemToStorage(cardDeckIdParam, data);
-    }
   }
 
   function renderHeaderLeftButtons() {

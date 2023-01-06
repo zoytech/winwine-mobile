@@ -31,6 +31,7 @@ export default function ActionLibraryScreen({navigation, route}) {
 
   function handleSavingPress() {
     onSavePress();
+    handleGoBackPress();
   }
 
   function handlePinningPress() {

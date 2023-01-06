@@ -1,7 +1,8 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {SafeAreaView, ScrollView, Text, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useFocusEffect} from '@react-navigation/native';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {SpinnerType1} from 'src/components';
 import {
@@ -40,7 +41,7 @@ export default function GameWaitScreen({navigation, route}) {
   const dispatch = useDispatch();
   const [showIndex, setShowIndex] = useState(INITIAL_INDEX);
   const [imageHeight, setImageHeight] = useState(HEIGHT?.IMAGE);
-  const [hasStoreKey, setHasStoreKey] = useState(null);
+  const [hasStoreKey, setHasStoreKey] = useState(false);
   const carouselRef = useRef(null);
   const scrollViewRef = useRef([]);
 
@@ -60,6 +61,7 @@ export default function GameWaitScreen({navigation, route}) {
 
     hasItemFromStorage();
   }, [cardDeckIdParam]);
+
   useEffect(() => {
     navigation.setOptions({
       header: () => (

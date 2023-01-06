@@ -34,7 +34,6 @@ export default function LibraryScreen({navigation}) {
           uniqueStoreKeys,
           renderLimit?.LIB_CARD_DECKS,
         );
-        // setHasStoreKey(uniqueStoreKeys.includes(defaultKeyStore));
         const cardDeckRqs =
           uniqueStoreKeys && (await AsyncStorage.multiGet(uniqueStoreKeys));
         const retrievedData = [];

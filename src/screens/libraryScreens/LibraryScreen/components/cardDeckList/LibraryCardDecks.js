@@ -16,7 +16,7 @@ import {
 export default function LibraryCardDecks(props) {
   const {style, data, selectedChip, navigation, ...otherProps} = props;
   const dispatch = useDispatch();
-  const libraryKeyStores = useSelector(libraryKeyStoreSelect);
+  const keyStores = useSelector(libraryKeyStoreSelect);
   const [sortByTagData, setSortByTagData] = useState([]);
   const [pinDeckIds, setPinDeckIds] = useState([]);
   const [likedDeckIds, setLikeDeckIds] = useState([]);
@@ -79,12 +79,18 @@ export default function LibraryCardDecks(props) {
     const getMainKeyRqs = await AsyncStorage.getItem(mainKey);
     const storeKeys = !getMainKeyRqs ? [] : JSON.parse(getMainKeyRqs);
     remove.elementAtMiddle(storeKeys, storageKey);
+    console.log('storeKeys: ', storeKeys);
     await AsyncStorage.setItem(mainKey, JSON.stringify(storeKeys));
   }
 
   async function handleSavePress(id) {
-    const keyStore = `${KEY?.SAVE_LIB}/${id}`;
-    const hasSaveId = libraryKeyStores.includes(keyStore);
+    const defaultKeyStore = `${KEY?.SAVE_LIB}/${id}`;
+    const getMainKeyRqs = await AsyncStorage.getItem(KEY.SAVE_LIB);
+    const mainKeyRqs = !getMainKeyRqs ? [] : JSON.parse(getMainKeyRqs);
+    const currentStoreKeys =
+      keyStores.length !== 0 ? keyStores.concat(mainKeyRqs) : mainKeyRqs;
+    const hasSaveId = currentStoreKeys.includes(defaultKeyStore);
+
     if (hasSaveId) {
       await removeItemFromStorage(id);
     } else {
@@ -132,12 +138,7 @@ export default function LibraryCardDecks(props) {
       },
     });
   };
-  const handleNavigateToActionBoard = (
-    cardDeckId,
-    hasPinnedId,
-    hasLikedId,
-    hasSaveId,
-  ) => {
+  const handleNavigateToActionBoard = (cardDeckId, hasPinnedId, hasLikedId) => {
     navigation.navigate({
       name: ScreenKeys.ACTION_LIB,
       params: {
