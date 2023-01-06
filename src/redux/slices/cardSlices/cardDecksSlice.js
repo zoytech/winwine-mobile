@@ -13,10 +13,10 @@ const initialState = {
 
 export function loadCardDecks() {
   return async dispatch => {
+    dispatch(fetchDecksRequest());
     try {
       const response = await CardDeckApi.getCardDecks();
       const cardDecksData = response?.data;
-      dispatch(fetchDecksRequest());
       dispatch(fetchDecksSuccess(cardDecksData));
     } catch (error) {
       console.log('loadCardDecks error:', error);

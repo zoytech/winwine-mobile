@@ -13,10 +13,10 @@ const initialState = {
 
 export function loadCardsByDeckId(cardDeckId) {
   return async dispatch => {
+    dispatch(fetchCardsRequest());
     try {
       const response = await CardApi.getCardsByCardDeckId(cardDeckId);
       const cardsData = response?.data;
-      dispatch(fetchCardsRequest());
       dispatch(fetchCardsSuccess(cardsData));
     } catch (error) {
       dispatch(fetchCardsError(error));

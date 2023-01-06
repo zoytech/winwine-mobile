@@ -13,10 +13,10 @@ const initialState = {
 
 export function loadHashtags() {
   return async dispatch => {
+    dispatch(fetchHashtagsRequest());
     try {
       const response = await HashtagApi.getHashtags();
       const hashtagsData = response?.data;
-      dispatch(fetchHashtagsRequest());
       dispatch(fetchHashtagsSuccess(hashtagsData));
     } catch (error) {
       dispatch(fetchHashtagsError(error));
