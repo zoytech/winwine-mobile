@@ -1,8 +1,6 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {SafeAreaView, ScrollView, Text, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useFocusEffect} from '@react-navigation/native';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {SpinnerType1} from 'src/components';
 import {
@@ -23,6 +21,7 @@ import {CustomStatusBar, EmptyInfoAnnouncement} from 'src/screens/components';
 import {getPreviewCardNumber, getPreviewDataItem} from './utils';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import gameWaitStyle from './gameWaitStyle';
+import {isItemInStorage} from '../../../utils/storageMethods';
 
 const width = {
   CONTAINER: 320,
@@ -51,12 +50,12 @@ export default function GameWaitScreen({navigation, route}) {
 
   useEffect(() => {
     async function hasItemFromStorage() {
-      const defaultKeyStore = `${KEY?.SAVE_LIB}/${cardDeckIdParam}`;
-      const getMainKeyRqs = await AsyncStorage.getItem(KEY.SAVE_LIB);
-      const mainKeyRqs = !getMainKeyRqs ? [] : JSON.parse(getMainKeyRqs);
-      const currentStoreKeys =
-        keyStores.length !== 0 ? keyStores.concat(mainKeyRqs) : mainKeyRqs;
-      setHasStoreKey(currentStoreKeys.includes(defaultKeyStore));
+      const hasSaveIdRqs = await isItemInStorage(
+        cardDeckIdParam,
+        KEY?.SAVE_LIB,
+        keyStores,
+      );
+      setHasStoreKey(hasSaveIdRqs);
     }
 
     hasItemFromStorage();

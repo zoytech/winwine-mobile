@@ -6,9 +6,12 @@ import {Color, ColorVariant} from 'src/themes';
 import {libraryKeyStoreSelect} from 'src/redux/slices';
 import {CustomStatusBar, EmptyInfoAnnouncement} from 'src/screens/components';
 import {LibraryCardDecks, LibraryTopAppBar} from './components';
-import {KEY, LIMIT_NUMBER} from '../../../constants';
-import {replace, select} from '../../../utils';
+import {KEY, LIMIT} from '../../../constants';
 import {FilledButton, SpinnerType1} from '../../../components';
+import {
+  getDataFromStorage,
+  getStoreKeysFromStorage,
+} from '../../../utils/storageMethods';
 
 export default function LibraryScreen({navigation}) {
   const topBarRef = useRef({
@@ -16,31 +19,17 @@ export default function LibraryScreen({navigation}) {
   });
   const [selectedChip, setSelectedChip] = useState(null);
   const [libraryCardDeck, setLibraryCardDeck] = useState(null); //empty data that get from starage
-  const [mainKeys, setMainKeys] = useState([]); //empty storage
-  const [hasStoreKey, setHasStoreKey] = useState(null);
 
   const keyStores = useSelector(libraryKeyStoreSelect);
   useEffect(() => {
     async function getMultipleCardDecks() {
       try {
-        const getMainKeyRqs = await AsyncStorage.getItem(KEY.SAVE_LIB);
-        const mainKeyRqs = !getMainKeyRqs ? [] : JSON.parse(getMainKeyRqs);
-        setMainKeys(mainKeyRqs);
-        const rawKeyStores =
-          keyStores.length !== 0 ? keyStores.concat(mainKeyRqs) : mainKeyRqs;
-
-        const uniqueStoreKeys = select.uniqueElement(rawKeyStores);
-        replace.lastElementWhenExceedLength(
-          uniqueStoreKeys,
-          LIMIT_NUMBER?.LIB_CARD_DECKS,
+        const processedKeys = await getStoreKeysFromStorage(
+          KEY?.SAVE_LIB,
+          keyStores,
+          LIMIT?.LIB_CARD_DECKS,
         );
-        const cardDeckRqs =
-          uniqueStoreKeys && (await AsyncStorage.multiGet(uniqueStoreKeys));
-        const retrievedData = [];
-        cardDeckRqs.forEach(item => {
-          const [, cardDeck] = item || {};
-          cardDeck && retrievedData.push(JSON.parse(cardDeck));
-        });
+        const retrievedData = await getDataFromStorage(processedKeys);
         setLibraryCardDeck(retrievedData);
       } catch (e) {
         console.log('get main keys error: ', e);

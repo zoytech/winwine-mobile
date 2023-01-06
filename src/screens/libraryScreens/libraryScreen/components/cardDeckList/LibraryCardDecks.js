@@ -3,7 +3,7 @@ import {StyleSheet, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
-import {DECK, KEY, LIMIT_NUMBER} from 'src/constants';
+import {DECK, KEY, LIMIT} from 'src/constants';
 import {remove, replace, select} from 'src/utils';
 import {MiniCardItem} from 'src/screens/components';
 import {getFilteringDataByTag, getMarginItem, getPinnedFirst} from './methods';
@@ -12,6 +12,11 @@ import {
   libraryKeyStoreSelect,
   removeLibraryKeyStore,
 } from 'src/redux/slices';
+import {
+  isItemInStorage,
+  saveItemToStorage,
+  saveKeyStoresToStorage,
+} from '../../../../../utils/storageMethods/isItemInStorage';
 
 export default function LibraryCardDecks(props) {
   const {style, data, selectedChip, navigation, ...otherProps} = props;
@@ -48,31 +53,6 @@ export default function LibraryCardDecks(props) {
     }
   }
 
-  async function saveItemToStorage(key, dt) {
-    const keyStore = `${KEY?.SAVE_LIB}/${key}`;
-    try {
-      const jsonValue = JSON.stringify(dt);
-      await AsyncStorage.setItem(keyStore, jsonValue);
-      await dispatchAndSaveStoreKey(
-        keyStore,
-        KEY.SAVE_LIB,
-        LIMIT_NUMBER.LIB_CARD_DECKS,
-      );
-    } catch (e) {
-      console.log('fail store in save lib: ', e);
-    }
-  }
-
-  async function dispatchAndSaveStoreKey(storageKey, mainKey, limitItem) {
-    dispatch(addLibraryKeyStore(storageKey));
-    const getMainKeyRqs = await AsyncStorage.getItem(mainKey);
-    const storeKeys = !getMainKeyRqs ? [] : JSON.parse(getMainKeyRqs);
-    storeKeys.unshift(storageKey);
-    const uniqueStoreKeys = select.uniqueElement(storeKeys);
-    replace.lastElementWhenExceedLength(uniqueStoreKeys, limitItem);
-    await AsyncStorage.setItem(mainKey, JSON.stringify(uniqueStoreKeys));
-  }
-
   async function dispatchAndRemoveStoreKey(storageKey, mainKey) {
     dispatch(removeLibraryKeyStore(storageKey));
     const getMainKeyRqs = await AsyncStorage.getItem(mainKey);
@@ -83,17 +63,14 @@ export default function LibraryCardDecks(props) {
   }
 
   async function handleSavePress(id) {
-    const defaultKeyStore = `${KEY?.SAVE_LIB}/${id}`;
-    const getMainKeyRqs = await AsyncStorage.getItem(KEY.SAVE_LIB);
-    const mainKeyRqs = !getMainKeyRqs ? [] : JSON.parse(getMainKeyRqs);
-    const currentStoreKeys =
-      keyStores.length !== 0 ? keyStores.concat(mainKeyRqs) : mainKeyRqs;
-    const hasSaveId = currentStoreKeys.includes(defaultKeyStore);
-
-    if (hasSaveId) {
+    const keyStore = `${KEY?.SAVE_LIB}/${id}`;
+    const hasSaveIdRqs = await isItemInStorage(id, KEY?.SAVE_LIB, keyStores);
+    if (hasSaveIdRqs) {
       await removeItemFromStorage(id);
     } else {
-      await saveItemToStorage(id, sortByTagData);
+      await saveItemToStorage(id, KEY.SAVE_LIB, sortByTagData);
+      dispatch(addLibraryKeyStore(keyStore));
+      await saveKeyStoresToStorage(id, KEY.SAVE_LIB, LIMIT.LIB_CARD_DECKS);
     }
   }
 

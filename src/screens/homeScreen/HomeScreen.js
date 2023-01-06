@@ -17,8 +17,11 @@ import {
 } from './components';
 import {CustomStatusBar, SectionHeader} from '../components';
 import {FilledButton, SpinnerType1} from 'src/components';
-import {KEY, LIMIT_NUMBER} from 'src/constants';
-import {replace, select} from 'src/utils';
+import {KEY, LIMIT} from 'src/constants';
+import {
+  getDataFromStorage,
+  getStoreKeysFromStorage,
+} from '../../utils/storageMethods';
 
 const RECENTLY = 'Chơi gần đây';
 const POPULAR = 'Phổ biến';
@@ -44,24 +47,12 @@ export default function HomeScreen({navigation}) {
   useEffect(() => {
     async function getMultipleCardDecks() {
       try {
-        const getMainKeyRqs = await AsyncStorage.getItem(KEY.RECENTLY_PLAY);
-        const mainKeyRqs = !getMainKeyRqs ? [] : JSON.parse(getMainKeyRqs);
-        setMainKeys(mainKeyRqs);
-        const rawKeyStores =
-          keyStores.length !== 0 ? keyStores.concat(mainKeyRqs) : mainKeyRqs;
-        const uniqueStoreKeys = select.uniqueElement(rawKeyStores);
-        const processedStoreKeys = replace.lastElementWhenExceedLength(
-          uniqueStoreKeys,
-          LIMIT_NUMBER?.RECENTLY_CARD_DECKS,
+        const processedKeys = await getStoreKeysFromStorage(
+          KEY?.RECENTLY_PLAY,
+          keyStores,
+          LIMIT?.RECENTLY_CARD_DECKS,
         );
-        const cardDeckRqs =
-          processedStoreKeys &&
-          (await AsyncStorage.multiGet(processedStoreKeys));
-        const retrievedData = [];
-        cardDeckRqs.forEach(item => {
-          const [, cardDeck] = item || {};
-          cardDeck && retrievedData.push(JSON.parse(cardDeck));
-        });
+        const retrievedData = await getDataFromStorage(processedKeys);
         setRecentlyCardDeck(retrievedData);
       } catch (e) {
         console.log('get main keys error: ', e);
