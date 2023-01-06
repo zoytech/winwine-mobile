@@ -22,6 +22,7 @@ export default function HomeStackScreen({navigation, route}) {
   useLayoutEffect(() => {
     const tabHiddenRoutes = [
       ScreenKeys.PLAY_GAME,
+      ScreenKeys.WAIT_GAME,
       ScreenKeys.CARD_DIALOG,
       ScreenKeys.BASIC_DIALOG,
       ScreenKeys.CREATE_CARD,

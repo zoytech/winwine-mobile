@@ -2,4 +2,8 @@ const KEY = {
   RECENTLY_PLAY: '@RECENTLY_PLAY',
   SAVE_LIB: '@SAVE_LIB',
 };
-export {KEY};
+const LIMIT_NUMBER = {
+  LIB_CARD_DECKS: 50,
+  RECENTLY_CARD_DECKS: 10,
+};
+export {KEY, LIMIT_NUMBER};

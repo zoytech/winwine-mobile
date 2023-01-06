@@ -3,7 +3,7 @@ import {StyleSheet, View} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Typography} from 'src/themes';
 import {FilledButton, StandardIconToggle} from 'src/components';
-import {KEY, renderLimit} from 'src/constants';
+import {KEY, LIMIT_NUMBER} from 'src/constants';
 import {addLibraryKeyStore, removeLibraryKeyStore} from 'src/redux/slices';
 import {remove, replace, select} from 'src/utils';
 import {useState} from 'react';
@@ -54,7 +54,7 @@ export default function HeaderButtons(props) {
     await dispatchAndSaveStoreKey(
       keyStore,
       KEY.SAVE_LIB,
-      renderLimit.LIB_CARD_DECKS,
+      LIMIT_NUMBER.LIB_CARD_DECKS,
     );
   }
 

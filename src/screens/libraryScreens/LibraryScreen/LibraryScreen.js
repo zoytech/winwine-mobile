@@ -6,7 +6,7 @@ import {Color, ColorVariant} from 'src/themes';
 import {libraryKeyStoreSelect} from 'src/redux/slices';
 import {CustomStatusBar, EmptyInfoAnnouncement} from 'src/screens/components';
 import {LibraryCardDecks, LibraryTopAppBar} from './components';
-import {KEY, renderLimit} from '../../../constants';
+import {KEY, LIMIT_NUMBER} from '../../../constants';
 import {replace, select} from '../../../utils';
 import {FilledButton, SpinnerType1} from '../../../components';
 
@@ -32,7 +32,7 @@ export default function LibraryScreen({navigation}) {
         const uniqueStoreKeys = select.uniqueElement(rawKeyStores);
         replace.lastElementWhenExceedLength(
           uniqueStoreKeys,
-          renderLimit?.LIB_CARD_DECKS,
+          LIMIT_NUMBER?.LIB_CARD_DECKS,
         );
         const cardDeckRqs =
           uniqueStoreKeys && (await AsyncStorage.multiGet(uniqueStoreKeys));

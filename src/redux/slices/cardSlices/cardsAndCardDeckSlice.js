@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {KEY, renderLimit} from 'src/constants';
+import {KEY, LIMIT_NUMBER} from 'src/constants';
 import {CardApi, CardDeckApi} from 'src/apis';
 import {addRecentlyKeyStore} from 'src/redux/slices';
 import {replace, select} from 'src/utils';
@@ -39,7 +39,7 @@ export function loadCardDeckAndCardsByDeckId(cardDeckId) {
       const uniqueStoreKeys = select.uniqueElement(storeKeys);
       replace.lastElementWhenExceedLength(
         uniqueStoreKeys,
-        renderLimit?.RECENTLY_CARD_DECKS,
+        LIMIT_NUMBER?.RECENTLY_CARD_DECKS,
       );
       await AsyncStorage.setItem(
         KEY.RECENTLY_PLAY,

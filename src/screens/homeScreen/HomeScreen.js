@@ -17,7 +17,7 @@ import {
 } from './components';
 import {CustomStatusBar, SectionHeader} from '../components';
 import {FilledButton, SpinnerType1} from 'src/components';
-import {KEY, renderLimit} from 'src/constants';
+import {KEY, LIMIT_NUMBER} from 'src/constants';
 import {replace, select} from 'src/utils';
 
 const RECENTLY = 'Chơi gần đây';
@@ -52,7 +52,7 @@ export default function HomeScreen({navigation}) {
         const uniqueStoreKeys = select.uniqueElement(rawKeyStores);
         const processedStoreKeys = replace.lastElementWhenExceedLength(
           uniqueStoreKeys,
-          renderLimit?.RECENTLY_CARD_DECKS,
+          LIMIT_NUMBER?.RECENTLY_CARD_DECKS,
         );
         const cardDeckRqs =
           processedStoreKeys &&

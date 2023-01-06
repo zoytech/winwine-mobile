@@ -3,7 +3,7 @@ import {StyleSheet, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
-import {DECK, KEY, renderLimit} from 'src/constants';
+import {DECK, KEY, LIMIT_NUMBER} from 'src/constants';
 import {remove, replace, select} from 'src/utils';
 import {MiniCardItem} from 'src/screens/components';
 import {getFilteringDataByTag, getMarginItem, getPinnedFirst} from './methods';
@@ -57,7 +57,7 @@ export default function LibraryCardDecks(props) {
       await dispatchAndSaveStoreKey(
         keyStore,
         KEY.SAVE_LIB,
-        renderLimit.LIB_CARD_DECKS,
+        LIMIT_NUMBER.LIB_CARD_DECKS,
       );
     } catch (e) {
       console.log('fail store in save lib: ', e);

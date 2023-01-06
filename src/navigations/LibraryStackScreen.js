@@ -26,6 +26,7 @@ export default function LibraryStackScreen({navigation, route}) {
   useLayoutEffect(() => {
     const tabHiddenRoutes = [
       ScreenKeys.PLAY_GAME,
+      ScreenKeys.WAIT_GAME,
       ScreenKeys.SIGNUP_AU,
       ScreenKeys.NAME_AU,
       ScreenKeys.CARD_DIALOG,
