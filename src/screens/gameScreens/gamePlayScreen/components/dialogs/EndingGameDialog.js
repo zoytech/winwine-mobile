@@ -1,25 +1,31 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {CardDialogContent} from 'src/components';
 import TagName from '../TagName';
 
 export default function EndingGameDialog(props) {
   const {
     headline,
-    subHeadLeft,
+    hashtags = [],
     media,
     onMainActionPress = () => {},
     onSubActionPress = () => {},
   } = props;
 
-  function renderSubHeadLeft() {
-    return <TagName content={subHeadLeft} iconStyle={styles.icon} />;
+  function renderHashtags() {
+    return (
+      <View style={styles.hashtagLayout}>
+        {hashtags.map(hashtag => (
+          <TagName key={hashtag} content={hashtag} iconStyle={styles.icon} />
+        ))}
+      </View>
+    );
   }
 
   return (
     <CardDialogContent
       headline={headline}
-      subHeadLeft={renderSubHeadLeft()}
+      subHeadLeft={renderHashtags()}
       media={media}
       supportingText={'Bạn đã chơi hết rồi'}
       mainAction={'Chơi bộ mới'}
@@ -33,6 +39,11 @@ export default function EndingGameDialog(props) {
 const styles = StyleSheet.create({
   icon: {
     paddingRight: 10,
+  },
+  hashtagLayout: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
   },
 });
 /*

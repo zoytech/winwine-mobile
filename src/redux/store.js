@@ -14,7 +14,7 @@ const rootReducer = combineReducers({
   cardDeck: cardDeckReducer,
   cardDecks: cardDecksReducer,
   cards: cardsReducer,
-  hashtags: hashtagsReducer,
+  hashtagsReducer: hashtagsReducer,
   cardDeckAndCards: cardDeckAndCardsReducer,
   recentlyKeyStore: recentlyKeyStoreReducer,
   libraryKeyStore: libraryKeyStoreReducer,

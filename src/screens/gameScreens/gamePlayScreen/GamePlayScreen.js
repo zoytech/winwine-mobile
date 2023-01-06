@@ -4,8 +4,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {SpinnerType1, StandardIconButton} from 'src/components';
 import {
-  loadCardDeckAndCardsByDeckId,
   cardDeckAndCardsSelect,
+  loadCardDeckAndCardsByDeckId,
   requestCardDeckAndCardsSelect,
 } from 'src/redux/slices';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
@@ -32,12 +32,14 @@ const INITIAL_INDEX = 0;
 export default function GamePlayScreen({navigation, route}) {
   const {cardDeckIdParam, cardDeckNameParam, cardDeckImageParam} = route.params;
   const dispatch = useDispatch();
-  const dataBlocks = useSelector(cardDeckAndCardsSelect);
+  const {cardDeck: cardDeck, cards: cards} = useSelector(
+    cardDeckAndCardsSelect,
+  );
   const requesting = useSelector(requestCardDeckAndCardsSelect);
   const carouselRef = useRef(null);
   const [showIndex, setShowIndex] = useState(INITIAL_INDEX);
   const [showIndicatorInfo, setShowIndicatorInfo] = useState(true);
-  const {cardDeck: cardDeck, cards: cards} = dataBlocks;
+  const hashtagsDeck = cardDeck?.hashtags || DECK.TAG;
 
   useEffect(() => {
     dispatch(loadCardDeckAndCardsByDeckId(cardDeckIdParam));
@@ -85,7 +87,7 @@ export default function GamePlayScreen({navigation, route}) {
         content: (
           <EndingGameDialog
             headline={cardDeckNameParam}
-            subHeadLeft={DECK?.TAG}
+            hashtags={hashtagsDeck}
             media={cardDeckImageParam}
             onMainActionPress={handleMainDialogPress}
             onSubActionPress={handleSubDialogPress}

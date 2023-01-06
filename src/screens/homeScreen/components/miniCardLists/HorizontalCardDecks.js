@@ -13,7 +13,7 @@ export default function HorizontalCardDecks(props) {
       params: {
         cardDeckIdParam: cardDeckId ? cardDeckId : '',
         cardDeckNameParam: cardDeckName ? cardDeckName : DECK?.NAME,
-        cardDeckImage: cardDeckImage ? {uri: cardDeckImage} : DECK?.IMAGE,
+        cardDeckImageParam: cardDeckImage ? {uri: cardDeckImage} : DECK?.IMAGE,
       },
     });
   };
@@ -23,7 +23,7 @@ export default function HorizontalCardDecks(props) {
       params: {
         cardDeckIdParam: cardDeckId ? cardDeckId : '',
         cardDeckNameParam: cardDeckName ? cardDeckName : DECK?.NAME,
-        cardDeckImage: cardDeckImage ? {uri: cardDeckImage} : DECK?.IMAGE,
+        cardDeckImageParam: cardDeckImage ? {uri: cardDeckImage} : DECK?.IMAGE,
       },
     });
   };

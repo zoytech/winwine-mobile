@@ -20,7 +20,6 @@ export default function LibraryCardDecks(props) {
   const [sortByTagData, setSortByTagData] = useState([]);
   const [pinDeckIds, setPinDeckIds] = useState([]);
   const [likedDeckIds, setLikeDeckIds] = useState([]);
-  const [saveStatus, setSaveStatus] = useState(false);
 
   useEffect(() => {
     getDataByTagAndPin(data, selectedChip, pinDeckIds);
@@ -124,7 +123,7 @@ export default function LibraryCardDecks(props) {
       params: {
         cardDeckIdParam: cardDeckId ? cardDeckId : '',
         cardDeckNameParam: cardDeckName ? cardDeckName : DECK?.NAME,
-        cardDeckImage: cardDeckImage ? {uri: cardDeckImage} : DECK?.IMAGE,
+        cardDeckImageParam: cardDeckImage ? {uri: cardDeckImage} : DECK?.IMAGE,
       },
     });
   };
@@ -134,7 +133,7 @@ export default function LibraryCardDecks(props) {
       params: {
         cardDeckIdParam: cardDeckId ? cardDeckId : '',
         cardDeckNameParam: cardDeckName ? cardDeckName : DECK?.NAME,
-        cardDeckImage: cardDeckImage ? {uri: cardDeckImage} : DECK?.IMAGE,
+        cardDeckImageParam: cardDeckImage ? {uri: cardDeckImage} : DECK?.IMAGE,
       },
     });
   };
