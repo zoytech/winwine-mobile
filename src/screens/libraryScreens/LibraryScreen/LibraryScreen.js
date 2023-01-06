@@ -6,18 +6,52 @@ import {Color, ColorVariant} from 'src/themes';
 import {libraryKeyStoreSelect} from 'src/redux/slices';
 import {CustomStatusBar, EmptyInfoAnnouncement} from 'src/screens/components';
 import {LibraryCardDecks, LibraryTopAppBar} from './components';
+import {KEY, renderLimit} from '../../../constants';
+import {replace, select} from '../../../utils';
+import {FilledButton, SpinnerType1} from '../../../components';
 
 export default function LibraryScreen({navigation}) {
   const topBarRef = useRef({
     onScroll: () => {},
   });
   const [selectedChip, setSelectedChip] = useState(null);
-
-  const [libraryCardDeck, setLibraryCardDeck] = useState([]);
-  // const [retrieved, setRetrieved] = useState(false);
+  const [libraryCardDeck, setLibraryCardDeck] = useState(null); //empty data that get from starage
+  const [mainKeys, setMainKeys] = useState([]); //empty storage
   const keyStores = useSelector(libraryKeyStoreSelect);
+  console.log('mainKeys: ', mainKeys.length);
+  console.log('libraryCardDeck: ', libraryCardDeck && libraryCardDeck.length);
 
   useEffect(() => {
+    async function getMultipleCardDecks() {
+      try {
+        const getMainKeyRqs = await AsyncStorage.getItem(KEY.SAVE_LIB);
+        const mainKeyRqs = !getMainKeyRqs ? [] : JSON.parse(getMainKeyRqs);
+        setMainKeys(mainKeyRqs);
+        console.log('keyStores: ', keyStores);
+        const rawKeyStores =
+          keyStores.length !== 0 ? keyStores.concat(mainKeyRqs) : mainKeyRqs;
+        console.log('rawKeyStores: ', rawKeyStores);
+
+        const uniqueStoreKeys = select.uniqueElement(rawKeyStores);
+        replace.lastElementWhenExceedLength(
+          uniqueStoreKeys,
+          renderLimit?.LIB_CARD_DECKS,
+        );
+        console.log('uniqueStoreKeys: ', uniqueStoreKeys);
+
+        const cardDeckRqs =
+          uniqueStoreKeys && (await AsyncStorage.multiGet(uniqueStoreKeys));
+        const retrievedData = [];
+        cardDeckRqs.forEach(item => {
+          const [, cardDeck] = item || {};
+          cardDeck && retrievedData.push(JSON.parse(cardDeck));
+        });
+        setLibraryCardDeck(retrievedData);
+      } catch (e) {
+        console.log('get main keys error: ', e);
+      }
+    }
+
     getMultipleCardDecks();
   }, [keyStores]);
   useEffect(() => {
@@ -35,18 +69,18 @@ export default function LibraryScreen({navigation}) {
     });
   }, [navigation, selectedChip]);
 
-  async function getMultipleCardDecks() {
-    try {
-      const data = await AsyncStorage.multiGet(keyStores);
-      const retrievedData = data.map(item => {
-        const [keyStore, cardDeck] = item || {};
-        return cardDeck != null ? JSON.parse(cardDeck) : null;
-      });
-      setLibraryCardDeck(retrievedData);
-    } catch (e) {
-      console.log('error read getMultiple in Lib: ', e);
-    }
-  }
+  // async function getMultipleCardDecks() {
+  //   try {
+  //     const data = await AsyncStorage.multiGet(keyStores);
+  //     const retrievedData = data.map(item => {
+  //       const [keyStore, cardDeck] = item || {};
+  //       return cardDeck != null ? JSON.parse(cardDeck) : null;
+  //     });
+  //     setLibraryCardDeck(retrievedData);
+  //   } catch (e) {
+  //     console.log('error read getMultiple in Lib: ', e);
+  //   }
+  // }
 
   function handleSortingListByChipId(hashtag) {
     return hashtag === selectedChip
@@ -54,10 +88,26 @@ export default function LibraryScreen({navigation}) {
       : setSelectedChip(hashtag);
   }
 
+  async function handleClearStoragePress() {
+    try {
+      await AsyncStorage.removeItem(KEY.SAVE_LIB);
+    } catch (e) {
+      console.log('Clear lib storage get error: ', e);
+    }
+  }
+
+  if (!libraryCardDeck) {
+    return <SpinnerType1 />;
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <CustomStatusBar />
-      {libraryCardDeck.length === 0 ? (
+      <FilledButton
+        content={'clear lib storage'}
+        onPress={handleClearStoragePress}
+      />
+      {libraryCardDeck && libraryCardDeck.length === 0 ? (
         <EmptyInfoAnnouncement
           title={'Thư viện của bạn đang trống'}
           subTitle={

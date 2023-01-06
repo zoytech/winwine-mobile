@@ -42,11 +42,5 @@ export function libraryKeyStoreReducer(state = initialState, action) {
   }
 }
 
-export const libraryKeyStoreSelect = state => {
-  const rawKeyStores = state.libraryKeyStore.libraryKeyStores;
-  const uniqueKeyStores = select.uniqueElement(rawKeyStores);
-  uniqueKeyStores.length > LIBRARY_KEYSTORE_LIMIT
-    ? uniqueKeyStores.splice(uniqueKeyStores.length - 1, 1)
-    : uniqueKeyStores;
-  return uniqueKeyStores;
-};
+export const libraryKeyStoreSelect = state =>
+  state.libraryKeyStore.libraryKeyStores;

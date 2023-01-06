@@ -30,11 +30,10 @@ export function loadCardDeckAndCardsByDeckId(cardDeckId) {
       const cardDeck = getCardDeckResp?.data;
       const cards = getCardsResp?.data;
       dispatch(fetchDbSuccess({cardDeck, cards}));
-      console.log('cardDeck: ', cardDeck?.cardDeckName);
       const storageKey = `${KEY?.RECENTLY_PLAY}/${cardDeckId}`;
       await AsyncStorage.setItem(storageKey, JSON.stringify(cardDeck));
       dispatch(addRecentlyKeyStore(storageKey));
-      const getMainKeyRqs = await AsyncStorage.getItem(KEY.SAVE_LIB);
+      const getMainKeyRqs = await AsyncStorage.getItem(KEY.RECENTLY_PLAY);
       const storeKeys = !getMainKeyRqs ? [] : JSON.parse(getMainKeyRqs);
       storeKeys.unshift(storageKey);
       const uniqueStoreKeys = select.uniqueElement(storeKeys);
@@ -42,7 +41,10 @@ export function loadCardDeckAndCardsByDeckId(cardDeckId) {
         uniqueStoreKeys,
         renderLimit?.RECENTLY_CARD_DECKS,
       );
-      await AsyncStorage.setItem(KEY.SAVE_LIB, JSON.stringify(uniqueStoreKeys));
+      await AsyncStorage.setItem(
+        KEY.RECENTLY_PLAY,
+        JSON.stringify(uniqueStoreKeys),
+      );
     } catch (err) {
       dispatch(fetchDbError(err));
       console.log(

@@ -3,12 +3,13 @@ import {StyleSheet, View} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Typography} from 'src/themes';
 import {FilledButton, StandardIconToggle} from 'src/components';
-import {KEY} from 'src/constants';
+import {KEY, renderLimit} from 'src/constants';
 import {
   addLibraryKeyStore,
   libraryKeyStoreSelect,
   removeLibraryKeyStore,
 } from 'src/redux/slices';
+import {remove, replace, select} from 'src/utils';
 
 export default function HeaderButtons(props) {
   const {
@@ -25,13 +26,14 @@ export default function HeaderButtons(props) {
   const containerStyle = [styles.container, style];
 
   const defaultKeyStore = `${KEY?.SAVE_LIB}/${cardDeckIdParam}`;
-  const hasSaveId = libraryKeyStores.includes(defaultKeyStore);
+  const hasSaveId =
+    libraryKeyStores && libraryKeyStores.includes(defaultKeyStore);
 
   async function removeItemFromStorage(key) {
     const keyStore = `${KEY?.SAVE_LIB}/${key}`;
     try {
       await AsyncStorage.removeItem(keyStore);
-      dispatch(removeLibraryKeyStore(keyStore));
+      await dispatchAndRemoveStoreKey(keyStore, KEY?.SAVE_LIB);
     } catch (e) {
       console.log('fail remove in save lib: ', e);
     }
@@ -39,15 +41,31 @@ export default function HeaderButtons(props) {
 
   async function saveItemToStorage(key, dt) {
     const keyStore = `${KEY?.SAVE_LIB}/${key}`;
-    const mainKey = KEY?.SAVE_LIB;
-    try {
-      const jsonValue = JSON.stringify(dt);
-      await AsyncStorage.setItem(keyStore, jsonValue);
-      await AsyncStorage.setItem(mainKey, keyStore);
-      dispatch(addLibraryKeyStore(keyStore));
-    } catch (e) {
-      console.log('fail store in save lib: ', e);
-    }
+    const jsonValue = JSON.stringify(dt);
+    await AsyncStorage.setItem(keyStore, jsonValue);
+    await dispatchAndSaveStoreKey(
+      keyStore,
+      KEY.SAVE_LIB,
+      renderLimit.LIB_CARD_DECKS,
+    );
+  }
+
+  async function dispatchAndRemoveStoreKey(storageKey, mainKey) {
+    dispatch(removeLibraryKeyStore(storageKey));
+    const getMainKeyRqs = await AsyncStorage.getItem(mainKey);
+    const storeKeys = !getMainKeyRqs ? [] : JSON.parse(getMainKeyRqs);
+    remove.elementAtMiddle(storeKeys, storageKey);
+    await AsyncStorage.setItem(mainKey, JSON.stringify(storeKeys));
+  }
+
+  async function dispatchAndSaveStoreKey(storageKey, mainKey, limitItem) {
+    dispatch(addLibraryKeyStore(storageKey));
+    const getMainKeyRqs = await AsyncStorage.getItem(mainKey);
+    const storeKeys = !getMainKeyRqs ? [] : JSON.parse(getMainKeyRqs);
+    storeKeys.unshift(storageKey);
+    const uniqueStoreKeys = select.uniqueElement(storeKeys);
+    replace.lastElementWhenExceedLength(uniqueStoreKeys, limitItem);
+    await AsyncStorage.setItem(mainKey, JSON.stringify(uniqueStoreKeys));
   }
 
   async function handleDownloadDeckPress() {

@@ -16,7 +16,7 @@ import {
   VerticalCardDecks,
 } from './components';
 import {CustomStatusBar, SectionHeader} from '../components';
-import {SpinnerType1} from 'src/components';
+import {FilledButton, SpinnerType1} from 'src/components';
 import {KEY, renderLimit} from 'src/constants';
 import {replace, select} from 'src/utils';
 
@@ -42,14 +42,16 @@ export default function HomeScreen({navigation}) {
   }, [dispatch]);
 
   useEffect(() => {
-    const getMainKeys = async () => {
+    async function getMultipleCardDecks() {
       try {
-        const getMainKeyRqs = await AsyncStorage.getItem(KEY.SAVE_LIB);
+        const getMainKeyRqs = await AsyncStorage.getItem(KEY.RECENTLY_PLAY);
         const mainKeyRqs = !getMainKeyRqs ? [] : JSON.parse(getMainKeyRqs);
         setMainKeys(mainKeyRqs);
         const rawKeyStores =
           keyStores.length !== 0 ? keyStores.concat(mainKeyRqs) : mainKeyRqs;
         const uniqueStoreKeys = select.uniqueElement(rawKeyStores);
+        console.log('uniqueStoreKeys home: ', uniqueStoreKeys);
+
         const processedStoreKeys = replace.lastElementWhenExceedLength(
           uniqueStoreKeys,
           renderLimit?.RECENTLY_CARD_DECKS,
@@ -62,13 +64,13 @@ export default function HomeScreen({navigation}) {
           const [, cardDeck] = item || {};
           cardDeck && retrievedData.push(JSON.parse(cardDeck));
         });
-
         setRecentlyCardDeck(retrievedData);
       } catch (e) {
         console.log('get main keys error: ', e);
       }
-    };
-    getMainKeys();
+    }
+
+    getMultipleCardDecks();
   }, [keyStores]);
 
   useEffect(() => {
@@ -79,9 +81,21 @@ export default function HomeScreen({navigation}) {
     });
   }, [navigation]);
 
+  async function handleClearStoragePress() {
+    try {
+      await AsyncStorage.removeItem(KEY.RECENTLY_PLAY);
+    } catch (e) {
+      console.log('Clear home storage get error: ', e);
+    }
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <CustomStatusBar />
+      <FilledButton
+        content={'clear home storage'}
+        onPress={handleClearStoragePress}
+      />
       <ScrollView
         onScroll={topBarRef.current?.onScroll}
         contentContainerStyle={styles.contentContainer}>

@@ -4,7 +4,7 @@ const api = {
 };
 
 const renderLimit = {
-  LIB_CARD_DECKS: 3,
+  LIB_CARD_DECKS: 5,
   RECENTLY_CARD_DECKS: 5,
 };
 

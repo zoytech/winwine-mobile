@@ -3,8 +3,8 @@ import {StyleSheet, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
-import {DECK, KEY} from 'src/constants';
-import {remove} from 'src/utils';
+import {DECK, KEY, renderLimit} from 'src/constants';
+import {remove, replace, select} from 'src/utils';
 import {MiniCardItem} from 'src/screens/components';
 import {getFilteringDataByTag, getMarginItem, getPinnedFirst} from './methods';
 import {
@@ -15,6 +15,7 @@ import {
 
 export default function LibraryCardDecks(props) {
   const {style, data, selectedChip, navigation, ...otherProps} = props;
+  console.log('data: ', data);
   const dispatch = useDispatch();
   const libraryKeyStores = useSelector(libraryKeyStoreSelect);
   const [sortByTagData, setSortByTagData] = useState([]);
@@ -43,7 +44,7 @@ export default function LibraryCardDecks(props) {
     const keyStore = `${KEY?.SAVE_LIB}/${key}`;
     try {
       await AsyncStorage.removeItem(keyStore);
-      dispatch(removeLibraryKeyStore(keyStore));
+      await dispatchAndRemoveStoreKey(keyStore, KEY?.SAVE_LIB);
     } catch (e) {
       console.log('fail remove in save lib: ', e);
     }
@@ -54,10 +55,32 @@ export default function LibraryCardDecks(props) {
     try {
       const jsonValue = JSON.stringify(dt);
       await AsyncStorage.setItem(keyStore, jsonValue);
-      dispatch(addLibraryKeyStore(keyStore));
+      await dispatchAndSaveStoreKey(
+        keyStore,
+        KEY.SAVE_LIB,
+        renderLimit.LIB_CARD_DECKS,
+      );
     } catch (e) {
       console.log('fail store in save lib: ', e);
     }
+  }
+
+  async function dispatchAndSaveStoreKey(storageKey, mainKey, limitItem) {
+    dispatch(addLibraryKeyStore(storageKey));
+    const getMainKeyRqs = await AsyncStorage.getItem(mainKey);
+    const storeKeys = !getMainKeyRqs ? [] : JSON.parse(getMainKeyRqs);
+    storeKeys.unshift(storageKey);
+    const uniqueStoreKeys = select.uniqueElement(storeKeys);
+    replace.lastElementWhenExceedLength(uniqueStoreKeys, limitItem);
+    await AsyncStorage.setItem(mainKey, JSON.stringify(uniqueStoreKeys));
+  }
+
+  async function dispatchAndRemoveStoreKey(storageKey, mainKey) {
+    dispatch(removeLibraryKeyStore(storageKey));
+    const getMainKeyRqs = await AsyncStorage.getItem(mainKey);
+    const storeKeys = !getMainKeyRqs ? [] : JSON.parse(getMainKeyRqs);
+    remove.elementAtMiddle(storeKeys, storageKey);
+    await AsyncStorage.setItem(mainKey, JSON.stringify(storeKeys));
   }
 
   async function handleSavePress(id) {
