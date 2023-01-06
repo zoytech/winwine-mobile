@@ -1,21 +1,16 @@
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {StyleSheet, View} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Typography} from 'src/themes';
 import {FilledButton, StandardIconToggle} from 'src/components';
 import {KEY, renderLimit} from 'src/constants';
-import {
-  addLibraryKeyStore,
-  libraryKeyStoreSelect,
-  removeLibraryKeyStore,
-} from 'src/redux/slices';
+import {addLibraryKeyStore, removeLibraryKeyStore} from 'src/redux/slices';
 import {remove, replace, select} from 'src/utils';
-import {useEffect, useState} from 'react';
 
 export default function HeaderButtons(props) {
   const {
     data,
-    hasStoreKey,
+    hasStoreKey = false,
     renderRightComponents,
     children,
     style,
@@ -24,12 +19,7 @@ export default function HeaderButtons(props) {
   } = props;
   const dispatch = useDispatch();
   const cardDeckIdParam = data?.cardDeckId;
-  const [hasKey, setHasKey] = useState(hasStoreKey);
   const containerStyle = [styles.container, style];
-  console.log('hasKey: ', hasKey);
-  useEffect(() => {
-    setHasKey(hasKey);
-  }, [hasStoreKey]);
 
   async function removeItemFromStorage(key) {
     const keyStore = `${KEY?.SAVE_LIB}/${key}`;
@@ -71,7 +61,7 @@ export default function HeaderButtons(props) {
   }
 
   async function handleDownloadDeckPress() {
-    if (hasKey) {
+    if (hasStoreKey) {
       await removeItemFromStorage(cardDeckIdParam);
     } else {
       await saveItemToStorage(cardDeckIdParam, data);
@@ -89,7 +79,7 @@ export default function HeaderButtons(props) {
       <StandardIconToggle
         {...downloadProps}
         onPress={handleDownloadDeckPress}
-        isSelected={!hasKey && hasKey}
+        isSelected={hasStoreKey}
       />
     );
   }

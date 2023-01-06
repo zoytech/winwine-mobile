@@ -50,8 +50,6 @@ export default function HomeScreen({navigation}) {
         const rawKeyStores =
           keyStores.length !== 0 ? keyStores.concat(mainKeyRqs) : mainKeyRqs;
         const uniqueStoreKeys = select.uniqueElement(rawKeyStores);
-        console.log('uniqueStoreKeys home: ', uniqueStoreKeys);
-
         const processedStoreKeys = replace.lastElementWhenExceedLength(
           uniqueStoreKeys,
           renderLimit?.RECENTLY_CARD_DECKS,
