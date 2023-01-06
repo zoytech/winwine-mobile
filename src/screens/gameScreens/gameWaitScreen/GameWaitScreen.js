@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {SafeAreaView, ScrollView, Text, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {SpinnerType1} from 'src/components';
 import {
@@ -11,11 +12,12 @@ import {
 } from './components';
 import {
   cardDeckSelect,
+  libraryKeyStoreSelect,
   loadCardDeckByDeckId,
   requestCardDeckSelect,
 } from 'src/redux/slices';
 import {SwipeableGameCard} from '../components';
-import {HEIGHT} from 'src/constants';
+import {HEIGHT, KEY} from 'src/constants';
 import {CustomStatusBar, EmptyInfoAnnouncement} from 'src/screens/components';
 import {getPreviewCardNumber, getPreviewDataItem} from './utils';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
@@ -34,15 +36,30 @@ export default function GameWaitScreen({navigation, route}) {
   const {cardDeckIdParam, cardDeckNameParam, cardDeckImageParam} = route.params;
   const cardDeckItem = useSelector(cardDeckSelect);
   const requesting = useSelector(requestCardDeckSelect);
+  const keyStores = useSelector(libraryKeyStoreSelect);
   const dispatch = useDispatch();
   const [showIndex, setShowIndex] = useState(INITIAL_INDEX);
   const [imageHeight, setImageHeight] = useState(HEIGHT?.IMAGE);
+  const [hasStoreKey, setHasStoreKey] = useState(null);
   const carouselRef = useRef(null);
   const scrollViewRef = useRef([]);
 
   useEffect(() => {
     dispatch(loadCardDeckByDeckId(cardDeckIdParam));
   }, [dispatch, cardDeckIdParam]);
+
+  useEffect(() => {
+    async function hasItemFromStorage() {
+      const defaultKeyStore = `${KEY?.SAVE_LIB}/${cardDeckIdParam}`;
+      const getMainKeyRqs = await AsyncStorage.getItem(KEY.SAVE_LIB);
+      const mainKeyRqs = !getMainKeyRqs ? [] : JSON.parse(getMainKeyRqs);
+      const currentStoreKeys =
+        keyStores.length !== 0 ? keyStores.concat(mainKeyRqs) : mainKeyRqs;
+      setHasStoreKey(currentStoreKeys.includes(defaultKeyStore));
+    }
+
+    hasItemFromStorage();
+  }, [cardDeckIdParam]);
   useEffect(() => {
     navigation.setOptions({
       header: () => (
@@ -128,6 +145,7 @@ export default function GameWaitScreen({navigation, route}) {
             <HeaderButtons
               onFilledButtonPress={handlePressFilledButton}
               data={cardDeckItem}
+              hasStoreKey={hasStoreKey}
             />
             <View style={gameWaitStyle.supportingText}>
               <Text style={defaultContentStyle}>{previewContent}</Text>

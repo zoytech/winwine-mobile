@@ -15,7 +15,6 @@ import {
 
 export default function LibraryCardDecks(props) {
   const {style, data, selectedChip, navigation, ...otherProps} = props;
-  console.log('data: ', data);
   const dispatch = useDispatch();
   const libraryKeyStores = useSelector(libraryKeyStoreSelect);
   const [sortByTagData, setSortByTagData] = useState([]);

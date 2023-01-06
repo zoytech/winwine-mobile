@@ -10,10 +10,12 @@ import {
   removeLibraryKeyStore,
 } from 'src/redux/slices';
 import {remove, replace, select} from 'src/utils';
+import {useEffect, useState} from 'react';
 
 export default function HeaderButtons(props) {
   const {
     data,
+    hasStoreKey,
     renderRightComponents,
     children,
     style,
@@ -21,13 +23,13 @@ export default function HeaderButtons(props) {
     ...otherProps
   } = props;
   const dispatch = useDispatch();
-  const libraryKeyStores = useSelector(libraryKeyStoreSelect);
   const cardDeckIdParam = data?.cardDeckId;
+  const [hasKey, setHasKey] = useState(hasStoreKey);
   const containerStyle = [styles.container, style];
-
-  const defaultKeyStore = `${KEY?.SAVE_LIB}/${cardDeckIdParam}`;
-  const hasSaveId =
-    libraryKeyStores && libraryKeyStores.includes(defaultKeyStore);
+  console.log('hasKey: ', hasKey);
+  useEffect(() => {
+    setHasKey(hasKey);
+  }, [hasStoreKey]);
 
   async function removeItemFromStorage(key) {
     const keyStore = `${KEY?.SAVE_LIB}/${key}`;
@@ -69,7 +71,7 @@ export default function HeaderButtons(props) {
   }
 
   async function handleDownloadDeckPress() {
-    if (hasSaveId) {
+    if (hasKey) {
       await removeItemFromStorage(cardDeckIdParam);
     } else {
       await saveItemToStorage(cardDeckIdParam, data);
@@ -87,7 +89,7 @@ export default function HeaderButtons(props) {
       <StandardIconToggle
         {...downloadProps}
         onPress={handleDownloadDeckPress}
-        isSelected={hasSaveId}
+        isSelected={!hasKey && hasKey}
       />
     );
   }

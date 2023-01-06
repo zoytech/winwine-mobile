@@ -18,26 +18,20 @@ export default function LibraryScreen({navigation}) {
   const [libraryCardDeck, setLibraryCardDeck] = useState(null); //empty data that get from starage
   const [mainKeys, setMainKeys] = useState([]); //empty storage
   const keyStores = useSelector(libraryKeyStoreSelect);
-  console.log('mainKeys: ', mainKeys.length);
-  console.log('libraryCardDeck: ', libraryCardDeck && libraryCardDeck.length);
-
   useEffect(() => {
     async function getMultipleCardDecks() {
       try {
         const getMainKeyRqs = await AsyncStorage.getItem(KEY.SAVE_LIB);
         const mainKeyRqs = !getMainKeyRqs ? [] : JSON.parse(getMainKeyRqs);
         setMainKeys(mainKeyRqs);
-        console.log('keyStores: ', keyStores);
         const rawKeyStores =
           keyStores.length !== 0 ? keyStores.concat(mainKeyRqs) : mainKeyRqs;
-        console.log('rawKeyStores: ', rawKeyStores);
 
         const uniqueStoreKeys = select.uniqueElement(rawKeyStores);
         replace.lastElementWhenExceedLength(
           uniqueStoreKeys,
           renderLimit?.LIB_CARD_DECKS,
         );
-        console.log('uniqueStoreKeys: ', uniqueStoreKeys);
 
         const cardDeckRqs =
           uniqueStoreKeys && (await AsyncStorage.multiGet(uniqueStoreKeys));
