@@ -1,10 +1,11 @@
 import {applyMiddleware, combineReducers, createStore} from 'redux';
 import thunk from 'redux-thunk';
 import {
+  cardDeckAndCardsReducer,
   cardDeckReducer,
   cardDecksReducer,
   cardsReducer,
-  cardDeckAndCardsReducer,
+  recentlyKeyStoreReducer,
 } from 'src/redux/slices';
 
 const rootReducer = combineReducers({
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   cardDecks: cardDecksReducer,
   cards: cardsReducer,
   cardDeckAndCards: cardDeckAndCardsReducer,
+  recentlyKeyStore: recentlyKeyStoreReducer,
 });
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION;
 const thunkMiddleWare = applyMiddleware(thunk);

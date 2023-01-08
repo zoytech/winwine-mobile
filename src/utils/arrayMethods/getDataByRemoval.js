@@ -8,5 +8,5 @@ export function getDataByRemoveKnownValue(array, value) {
 
 // it will be looping -> cause render longer
 export function getDataBySelectUniqueValue(array) {
-  return array.filter((item, index) => array.indexOf(item) === index);
+  return array && array.filter((item, index) => array.indexOf(item) === index);
 }

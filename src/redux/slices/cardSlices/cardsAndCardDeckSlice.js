@@ -1,7 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {KEY} from 'src/constants';
+import {KEY, renderLimit} from 'src/constants';
 import {CardApi, CardDeckApi} from 'src/apis';
 import {addRecentlyKeyStore} from 'src/redux/slices';
+import {
+  getDataBySelectUniqueValue,
+  getDataWithLimitedLength,
+} from '../../../utils';
 
 const FETCH_DECK_AND_CARDS = {
   REQUEST: 'FETCH_DECK_AND_CARDS_ERROR',
@@ -30,27 +34,21 @@ export function loadCardDeckAndCardsByDeckId(cardDeckId) {
       const cards = getCardsResp?.data;
       dispatch(fetchDbSuccess({cardDeck, cards}));
 
-      const storageKey = `${KEY?.RECENTLY_PLAY}/${cardDeckId}`;
+      const storageKey = `${KEY.RECENTLY_DECKS}/${cardDeckId}`;
       await AsyncStorage.setItem(storageKey, JSON.stringify(cardDeck));
-
-      dispatch(addRecentlyKeyStore(storageKey));
-
-      /*
-      Code cũ của em là: sai do mỗi lần save là tao mới 1 array storeKeys rồi push vào chỉ có 1 cardDeck,
-      bâm qua cardDeck khác thì nó override lại cái cardDeck có sẵn trc đó
-
-      const storeKeys = [];
-      storeKeys.push(storageKey);
-      console.log('save storeKeys: ', storeKeys);
-      await AsyncStorage.setItem(KEY.SAVE_LIB, JSON.stringify(storeKeys));
-
-       */
-
-      const storeKeys = JSON.parse(
-        (await AsyncStorage.getItem(KEY.SAVE_LIB)) || [],
+      const storeKeyRqs = await AsyncStorage.getItem(KEY.RECENTLY_DECKS);
+      const storeKeys = storeKeyRqs ? JSON.parse(storeKeyRqs) : [];
+      storeKeys.unshift(storageKey);
+      const uniqueStoreKeys = getDataBySelectUniqueValue(storeKeys);
+      const sortedUniqueStoreKeys = getDataWithLimitedLength(
+        uniqueStoreKeys,
+        renderLimit?.RECENTLY_CARD_DECKS,
       );
-      storeKeys.push(storageKey);
-      await AsyncStorage.setItem(KEY.SAVE_LIB, JSON.stringify(storeKeys));
+      await AsyncStorage.setItem(
+        KEY.RECENTLY_DECKS,
+        JSON.stringify(sortedUniqueStoreKeys),
+      );
+      dispatch(addRecentlyKeyStore(sortedUniqueStoreKeys));
     } catch (err) {
       dispatch(fetchDbError(err));
       console.log(
