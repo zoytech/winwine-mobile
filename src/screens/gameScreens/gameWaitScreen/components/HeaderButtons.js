@@ -1,16 +1,16 @@
 import {useDispatch} from 'react-redux';
 import {StyleSheet, View} from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Typography} from 'src/themes';
 import {FilledButton, StandardIconToggle} from 'src/components';
 import {KEY, LIMIT} from 'src/constants';
 import {addLibraryKeyStore, removeLibraryKeyStore} from 'src/redux/slices';
-import {remove} from 'src/utils';
-import {useState} from 'react';
 import {
+  removeItemFromStorage,
+  removeKeyStoresFromStorage,
   saveItemToStorage,
   saveKeyStoresToStorage,
-} from 'src/utils/storageMethods';
+} from 'src/utils';
+import {useState} from 'react';
 
 export default function HeaderButtons(props) {
   const {
@@ -31,7 +31,10 @@ export default function HeaderButtons(props) {
   async function handleDownloadDeckPress() {
     const keyStore = `${KEY.SAVE_LIB}/${cardDeckIdParam}`;
     if (isSaved) {
-      await removeItemFromStorage(cardDeckIdParam);
+      console.log('hasStoreKey: ', hasStoreKey);
+      await removeItemFromStorage(cardDeckIdParam, KEY.SAVE_LIB);
+      dispatch(removeLibraryKeyStore(keyStore));
+      await removeKeyStoresFromStorage(cardDeckIdParam, KEY.SAVE_LIB);
       setIsSaved(false);
     } else {
       await saveItemToStorage(cardDeckIdParam, KEY.SAVE_LIB, data);
@@ -41,30 +44,8 @@ export default function HeaderButtons(props) {
         KEY.SAVE_LIB,
         LIMIT.LIB_CARD_DECKS,
       );
-
       setIsSaved(true);
     }
-  }
-
-  async function removeItemFromStorage(key) {
-    console.log(key);
-
-    const keyStore = `${KEY?.SAVE_LIB}/${key}`;
-    try {
-      await AsyncStorage.removeItem(keyStore);
-      console.log(keyStore);
-      await dispatchAndRemoveStoreKey(keyStore, KEY?.SAVE_LIB);
-    } catch (e) {
-      console.log('fail remove in save lib: ', e);
-    }
-  }
-
-  async function dispatchAndRemoveStoreKey(storageKey, mainKey) {
-    dispatch(removeLibraryKeyStore(storageKey));
-    const getMainKeyRqs = await AsyncStorage.getItem(mainKey);
-    const storeKeys = !getMainKeyRqs ? [] : JSON.parse(getMainKeyRqs);
-    remove.elementAtMiddle(storeKeys, storageKey);
-    await AsyncStorage.setItem(mainKey, JSON.stringify(storeKeys));
   }
 
   function renderHeaderLeftButtons() {

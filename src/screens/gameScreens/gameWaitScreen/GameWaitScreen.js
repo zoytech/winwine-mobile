@@ -21,7 +21,7 @@ import {CustomStatusBar, EmptyInfoAnnouncement} from 'src/screens/components';
 import {getPreviewCardNumber, getPreviewDataItem} from './utils';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import gameWaitStyle from './gameWaitStyle';
-import {isItemInStorage} from '../../../utils/storageMethods';
+import {hasStoreKeyInStorage} from 'src/utils';
 
 const width = {
   CONTAINER: 320,
@@ -40,17 +40,18 @@ export default function GameWaitScreen({navigation, route}) {
   const dispatch = useDispatch();
   const [showIndex, setShowIndex] = useState(INITIAL_INDEX);
   const [imageHeight, setImageHeight] = useState(HEIGHT?.IMAGE);
-  const [hasStoreKey, setHasStoreKey] = useState(false);
+  const [hasStoreKey, setHasStoreKey] = useState();
   const carouselRef = useRef(null);
   const scrollViewRef = useRef([]);
 
   useEffect(() => {
+    //use selector avoiding fetch api after back in one session
     dispatch(loadCardDeckByDeckId(cardDeckIdParam));
   }, [dispatch, cardDeckIdParam]);
 
   useEffect(() => {
     async function hasItemFromStorage() {
-      const hasSaveIdRqs = await isItemInStorage(
+      const hasSaveIdRqs = await hasStoreKeyInStorage(
         cardDeckIdParam,
         KEY?.SAVE_LIB,
         keyStores,

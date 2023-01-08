@@ -19,6 +19,7 @@ export function recentlyKeyStoreReducer(state = initialState, action) {
   switch (type) {
     case RECENTLY_KEYSTORE.GET:
       return {...state, recentlyKeyStores: payload};
+    //TODO
     case RECENTLY_KEYSTORE.ADD:
       return {
         ...state,

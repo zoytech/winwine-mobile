@@ -4,6 +4,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Color, ColorVariant} from 'src/themes';
+import {KEY, LIMIT} from 'src/constants';
+import {getDataFromStorage, getStoreKeysFromStorage} from 'src/utils';
 import {
   cardDecksSelect,
   loadCardDecks,
@@ -17,11 +19,6 @@ import {
 } from './components';
 import {CustomStatusBar, SectionHeader} from '../components';
 import {FilledButton, SpinnerType1} from 'src/components';
-import {KEY, LIMIT} from 'src/constants';
-import {
-  getDataFromStorage,
-  getStoreKeysFromStorage,
-} from '../../utils/storageMethods';
 
 const RECENTLY = 'Chơi gần đây';
 const POPULAR = 'Phổ biến';
@@ -33,8 +30,7 @@ export default function HomeScreen({navigation}) {
   const popularCardDecks = useSelector(cardDecksSelect);
   const requestingCardDecks = useSelector(requestCardDecksSelect);
   const keyStores = useSelector(recentlyKeyStoresSelect);
-  const [recentlyCardDeck, setRecentlyCardDeck] = useState([]);
-  const [mainKeys, setMainKeys] = useState([]);
+  const [recentlyCardDecks, setRecentlyCardDecks] = useState([]);
   useEffect(() => {
     dispatch(loadCardDecks());
     if (!requestingCardDecks || popularCardDecks === null) {
@@ -53,7 +49,7 @@ export default function HomeScreen({navigation}) {
           LIMIT?.RECENTLY_CARD_DECKS,
         );
         const retrievedData = await getDataFromStorage(processedKeys);
-        setRecentlyCardDeck(retrievedData);
+        setRecentlyCardDecks(retrievedData);
       } catch (e) {
         console.log('get main keys error: ', e);
       }
@@ -88,11 +84,11 @@ export default function HomeScreen({navigation}) {
       <ScrollView
         onScroll={topBarRef.current?.onScroll}
         contentContainerStyle={styles.contentContainer}>
-        {recentlyCardDeck && recentlyCardDeck.length !== 0 && (
+        {recentlyCardDecks && recentlyCardDecks.length !== 0 && (
           <>
             <SectionHeader content={RECENTLY} style={styles.sectionHeader} />
             <HorizontalCardDecks
-              data={recentlyCardDeck}
+              data={recentlyCardDecks}
               navigation={navigation}
             />
           </>

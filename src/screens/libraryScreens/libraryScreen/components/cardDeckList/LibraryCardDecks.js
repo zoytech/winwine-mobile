@@ -1,10 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import {DECK, KEY, LIMIT} from 'src/constants';
-import {remove, replace, select} from 'src/utils';
+import {
+  hasStoreKeyInStorage,
+  remove,
+  removeItemFromStorage,
+  removeKeyStoresFromStorage,
+  saveItemToStorage,
+  saveKeyStoresToStorage,
+} from 'src/utils';
 import {MiniCardItem} from 'src/screens/components';
 import {getFilteringDataByTag, getMarginItem, getPinnedFirst} from './methods';
 import {
@@ -12,11 +18,6 @@ import {
   libraryKeyStoreSelect,
   removeLibraryKeyStore,
 } from 'src/redux/slices';
-import {
-  isItemInStorage,
-  saveItemToStorage,
-  saveKeyStoresToStorage,
-} from '../../../../../utils/storageMethods/isItemInStorage';
 
 export default function LibraryCardDecks(props) {
   const {style, data, selectedChip, navigation, ...otherProps} = props;
@@ -25,6 +26,10 @@ export default function LibraryCardDecks(props) {
   const [sortByTagData, setSortByTagData] = useState([]);
   const [pinDeckIds, setPinDeckIds] = useState([]);
   const [likedDeckIds, setLikeDeckIds] = useState([]);
+  //
+  // useEffect(() => {
+  //   setPinDeckIds(Async.getpinIds());
+  // }, []);
 
   useEffect(() => {
     getDataByTagAndPin(data, selectedChip, pinDeckIds);
@@ -32,6 +37,7 @@ export default function LibraryCardDecks(props) {
 
   function getDataByTagAndPin(dt, tagId, pinIds) {
     if (tagId === null) {
+      //pinIds === undefined?
       pinIds === []
         ? setSortByTagData(dt)
         : setSortByTagData(getPinnedFirst(dt, pinDeckIds));
@@ -43,44 +49,49 @@ export default function LibraryCardDecks(props) {
     }
   }
 
-  async function removeItemFromStorage(key) {
-    const keyStore = `${KEY?.SAVE_LIB}/${key}`;
-    try {
-      await AsyncStorage.removeItem(keyStore);
-      await dispatchAndRemoveStoreKey(keyStore, KEY?.SAVE_LIB);
-    } catch (e) {
-      console.log('fail remove in save lib: ', e);
-    }
-  }
-
-  async function dispatchAndRemoveStoreKey(storageKey, mainKey) {
-    dispatch(removeLibraryKeyStore(storageKey));
-    const getMainKeyRqs = await AsyncStorage.getItem(mainKey);
-    const storeKeys = !getMainKeyRqs ? [] : JSON.parse(getMainKeyRqs);
-    remove.elementAtMiddle(storeKeys, storageKey);
-    console.log('storeKeys: ', storeKeys);
-    await AsyncStorage.setItem(mainKey, JSON.stringify(storeKeys));
-  }
-
-  async function handleSavePress(id) {
+  async function handleToggleSavePress(id) {
     const keyStore = `${KEY?.SAVE_LIB}/${id}`;
-    const hasSaveIdRqs = await isItemInStorage(id, KEY?.SAVE_LIB, keyStores);
-    if (hasSaveIdRqs) {
-      await removeItemFromStorage(id);
-    } else {
-      await saveItemToStorage(id, KEY.SAVE_LIB, sortByTagData);
-      dispatch(addLibraryKeyStore(keyStore));
-      await saveKeyStoresToStorage(id, KEY.SAVE_LIB, LIMIT.LIB_CARD_DECKS);
+    try {
+      const hasSaveIdRqs = await hasStoreKeyInStorage(
+        id,
+        KEY?.SAVE_LIB,
+        keyStores,
+      );
+      /// key in lib storage
+      // 2 storage : in lib key and mutual keys
+      // just only save @ in mutual keys
+      if (hasSaveIdRqs) {
+        await removeItemFromStorage(id, KEY.SAVE_LIB);
+        dispatch(removeLibraryKeyStore(keyStore));
+        /////// not here
+        await removeKeyStoresFromStorage(id, KEY.SAVE_LIB);
+      } else {
+        await saveItemToStorage(id, KEY.SAVE_LIB, sortByTagData);
+        dispatch(addLibraryKeyStore(keyStore));
+        await saveKeyStoresToStorage(id, KEY.SAVE_LIB, LIMIT.LIB_CARD_DECKS);
+      }
+    } catch (e) {
+      console.log('handleSavePress error: ', e);
     }
   }
 
-  function handlePinningPress(id) {
-    const hasPinId = pinDeckIds && pinDeckIds.includes(id);
-    if (hasPinId) {
-      const newData = remove.elementAtMiddle(pinDeckIds, id);
-      setPinDeckIds(newData);
-    } else {
-      setPinDeckIds([...pinDeckIds, id]);
+  async function handlePinningPress(id) {
+    try {
+      const hasPinIdRqs = await hasStoreKeyInStorage(
+        id,
+        KEY?.SAVE_PIN_DECK,
+        pinDeckIds,
+      );
+      if (hasPinIdRqs) {
+        const newData = remove.elementAtMiddle(pinDeckIds, id);
+        setPinDeckIds(newData);
+        await removeKeyStoresFromStorage(id, KEY.SAVE_PIN_DECK);
+      } else {
+        setPinDeckIds([...pinDeckIds, id]);
+        await saveKeyStoresToStorage(id, KEY.SAVE_PIN_DECK);
+      }
+    } catch (e) {
+      console.log('handlePinningPress error: ', e);
     }
   }
 
@@ -115,6 +126,9 @@ export default function LibraryCardDecks(props) {
     });
   };
   const handleNavigateToActionBoard = (cardDeckId, hasPinnedId, hasLikedId) => {
+    // console.log('hasLikedId: ', hasLikedId);
+    console.log('_______________________-');
+
     navigation.navigate({
       name: ScreenKeys.ACTION_LIB,
       params: {
@@ -122,7 +136,7 @@ export default function LibraryCardDecks(props) {
         hasPinnedId: hasPinnedId,
         onLikePress: () => handleLikePress(cardDeckId),
         hasLikedId: hasLikedId,
-        onSavePress: () => handleSavePress(cardDeckId),
+        onSavePress: () => handleToggleSavePress(cardDeckId),
       },
     });
   };
@@ -132,13 +146,16 @@ export default function LibraryCardDecks(props) {
     const deckId = item?.cardDeckId;
     const hasPinnedId = pinDeckIds.includes(deckId);
     const hasLikedId = likedDeckIds.includes(deckId);
-
+    console.log('hasLikedId: ', hasLikedId);
+    console.log('likedDeckIds: ', likedDeckIds);
+    console.log('___________');
     return (
       <MiniCardItem
         {...otherProps}
         key={deckId}
         data={item}
         pinned={hasPinnedId}
+        pinnedIds={pinDeckIds}
         liked={hasLikedId}
         onPreviewPress={() => handlePreviewPress(item)}
         onPlayPress={() => handlePlayPress(item)}

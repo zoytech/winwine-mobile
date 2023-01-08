@@ -1,11 +1,20 @@
 import {StyleSheet} from 'react-native';
 import {StandardIconToggle} from 'src/components';
+import {useState} from 'react';
 
 export default function ActionItem(props) {
-  const {content, name, size, style, iconStyle, contentStyle, ...otherProps} =
-    props;
-  const containerStyle = [styles.container, style];
+  const {
+    content,
+    name,
+    selectedName,
+    size,
+    style,
+    iconStyle,
+    contentStyle,
+    ...otherProps
+  } = props;
 
+  const containerStyle = [styles.container, style];
   const iconProps = {
     style: [styles.iconStyle, iconStyle],
     size: 30,
@@ -17,6 +26,7 @@ export default function ActionItem(props) {
       style={containerStyle}
       content={content}
       name={name}
+      selectedName={selectedName}
       iconStyle={iconProps}
       contentStyle={contentStyle}
     />

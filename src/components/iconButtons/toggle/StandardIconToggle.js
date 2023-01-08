@@ -51,13 +51,18 @@ export default function StandardIconToggle(props) {
     iconStyle,
     name,
     selectedName,
-    isSelected = false,
+    isSelected,
     disabled,
     children,
     onButtonToggle = () => {},
     ...otherProps
   } = props;
   const [selected, setSelected] = useState(isSelected);
+
+  function handleButtonToggle() {
+    setSelected(!selected);
+    onButtonToggle();
+  }
 
   function getContainerStyle({pressed}) {
     return [
@@ -69,11 +74,6 @@ export default function StandardIconToggle(props) {
       })?.containerStyle,
       style,
     ];
-  }
-
-  function handleButtonToggle() {
-    setSelected(!selected);
-    onButtonToggle();
   }
 
   function renderContent({pressed}) {

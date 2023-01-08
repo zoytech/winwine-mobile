@@ -1,11 +1,4 @@
-import {
-  Image,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {OutlinedCard, StandardIconButton} from 'src/components';
 import {
@@ -15,12 +8,15 @@ import {
   StateLayersVariant,
   Typography,
 } from 'src/themes';
-import {DECK, WIDTH} from 'src/constants';
+import {DECK, KEY, WIDTH} from 'src/constants';
+import {hasStoreKeyInStorage} from '../../utils';
+import {useEffect, useState} from 'react';
 
 export default function MiniCardItem(props) {
   const {
     data,
     pinned,
+    pinnedIds,
     liked,
     style,
     contentStyle,
@@ -28,12 +24,25 @@ export default function MiniCardItem(props) {
     onPlayPress = () => {},
     onLongPress = () => {},
   } = props;
+  const [hasPinId, setHasPinId] = useState(false);
 
-  const {cardDeckName, cardDeckImage, hashtags} = data || {};
+  const {cardDeckId, cardDeckName, cardDeckImage, hashtags} = data || {};
   const deckName = cardDeckName ? cardDeckName : DECK?.NAME;
   const decktags = hashtags ? hashtags : DECK?.TAG;
   const deckImage = cardDeckImage ? {uri: cardDeckImage} : DECK?.IMAGE;
 
+  useEffect(() => {
+    async function hasPinDeckId() {
+      const hasPinIdRqs = await hasStoreKeyInStorage(
+        cardDeckId,
+        KEY?.SAVE_PIN_DECK,
+        pinnedIds,
+      );
+      setHasPinId(hasPinIdRqs);
+    }
+
+    hasPinDeckId();
+  }, [pinnedIds]);
   const titleColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
   const subTittleColor =
     StateLayers.light[StateLayersVariant.onSurfaceVar]?.level_068;
@@ -85,7 +94,7 @@ export default function MiniCardItem(props) {
     };
     return (
       <>
-        {pinned && <Icon {...iconProps} name={'pushpin'} />}
+        {hasPinId === true && <Icon {...iconProps} name={'pushpin'} />}
         {liked && <Icon {...iconProps} name={'star'} />}
       </>
     );

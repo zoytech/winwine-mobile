@@ -4,14 +4,11 @@ import {useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Color, ColorVariant} from 'src/themes';
 import {libraryKeyStoreSelect} from 'src/redux/slices';
+import {KEY, LIMIT} from 'src/constants';
+import {FilledButton, SpinnerType1} from 'src/components';
 import {CustomStatusBar, EmptyInfoAnnouncement} from 'src/screens/components';
 import {LibraryCardDecks, LibraryTopAppBar} from './components';
-import {KEY, LIMIT} from '../../../constants';
-import {FilledButton, SpinnerType1} from '../../../components';
-import {
-  getDataFromStorage,
-  getStoreKeysFromStorage,
-} from '../../../utils/storageMethods';
+import {getDataFromStorage, getStoreKeysFromStorage} from 'src/utils';
 
 export default function LibraryScreen({navigation}) {
   const topBarRef = useRef({
@@ -38,6 +35,7 @@ export default function LibraryScreen({navigation}) {
 
     getMultipleCardDecks();
   }, [keyStores]);
+
   useEffect(() => {
     navigation.setOptions({
       header: () => {
@@ -61,7 +59,7 @@ export default function LibraryScreen({navigation}) {
 
   async function handleClearStoragePress() {
     try {
-      await AsyncStorage.removeItem(KEY.SAVE_LIB);
+      await AsyncStorage.removeItem(KEY.SAVE_PIN_DECK);
     } catch (e) {
       console.log('Clear lib storage get error: ', e);
     }

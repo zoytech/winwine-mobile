@@ -1,8 +1,7 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {KEY, LIMIT} from 'src/constants';
 import {CardApi, CardDeckApi} from 'src/apis';
 import {addRecentlyKeyStore} from 'src/redux/slices';
-import {replace, select} from 'src/utils';
+import {saveItemToStorage, saveKeyStoresToStorage} from 'src/utils';
 
 const FETCH_DECK_AND_CARDS = {
   REQUEST: 'FETCH_DECK_AND_CARDS_ERROR',
@@ -31,19 +30,12 @@ export function loadCardDeckAndCardsByDeckId(cardDeckId) {
       const cards = getCardsResp?.data;
       dispatch(fetchDbSuccess({cardDeck, cards}));
       const storageKey = `${KEY?.RECENTLY_PLAY}/${cardDeckId}`;
-      await AsyncStorage.setItem(storageKey, JSON.stringify(cardDeck));
+      await saveItemToStorage(cardDeckId, KEY?.RECENTLY_PLAY, cardDeck);
       dispatch(addRecentlyKeyStore(storageKey));
-      const getMainKeyRqs = await AsyncStorage.getItem(KEY.RECENTLY_PLAY);
-      const storeKeys = !getMainKeyRqs ? [] : JSON.parse(getMainKeyRqs);
-      storeKeys.unshift(storageKey);
-      const uniqueStoreKeys = select.uniqueElement(storeKeys);
-      replace.lastElementWhenExceedLength(
-        uniqueStoreKeys,
-        LIMIT?.RECENTLY_CARD_DECKS,
-      );
-      await AsyncStorage.setItem(
-        KEY.RECENTLY_PLAY,
-        JSON.stringify(uniqueStoreKeys),
+      await saveKeyStoresToStorage(
+        cardDeckId,
+        KEY?.RECENTLY_PLAY,
+        LIMIT.RECENTLY_CARD_DECKS,
       );
     } catch (err) {
       dispatch(fetchDbError(err));
