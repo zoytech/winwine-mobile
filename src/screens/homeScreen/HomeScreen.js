@@ -4,8 +4,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Color, ColorVariant} from 'src/themes';
-import {KEY, LIMIT} from 'src/constants';
-import {getDataFromStorage, getStoreKeysFromStorage} from 'src/utils';
+import {KEY} from 'src/constants';
+import {getDataFromStorage} from 'src/utils';
 import {
   cardDecksSelect,
   loadCardDecks,
@@ -29,7 +29,7 @@ export default function HomeScreen({navigation}) {
   const dispatch = useDispatch();
   const popularCardDecks = useSelector(cardDecksSelect);
   const requestingCardDecks = useSelector(requestCardDecksSelect);
-  const keyStores = useSelector(recentlyKeyStoresSelect);
+  const storeKeys = useSelector(recentlyKeyStoresSelect);
   const [recentlyCardDecks, setRecentlyCardDecks] = useState([]);
   useEffect(() => {
     dispatch(loadCardDecks());
@@ -43,20 +43,22 @@ export default function HomeScreen({navigation}) {
   useEffect(() => {
     async function getMultipleCardDecks() {
       try {
-        const processedKeys = await getStoreKeysFromStorage(
-          KEY?.RECENTLY_PLAY,
-          keyStores,
-          LIMIT?.RECENTLY_CARD_DECKS,
-        );
-        const retrievedData = await getDataFromStorage(processedKeys);
-        setRecentlyCardDecks(retrievedData);
+        if (!storeKeys || storeKeys.length === 0) {
+          const getMainKeyRqs = await AsyncStorage.getItem(KEY?.RECENTLY_PLAY);
+          const processedKeys = !getMainKeyRqs ? [] : JSON.parse(getMainKeyRqs);
+          const retrievedData = await getDataFromStorage(processedKeys);
+          setRecentlyCardDecks(retrievedData);
+        } else {
+          const retrievedData = await getDataFromStorage(storeKeys);
+          setRecentlyCardDecks(retrievedData);
+        }
       } catch (e) {
         console.log('get main keys error: ', e);
       }
     }
 
     getMultipleCardDecks();
-  }, [keyStores]);
+  }, [storeKeys]);
 
   useEffect(() => {
     navigation.setOptions({

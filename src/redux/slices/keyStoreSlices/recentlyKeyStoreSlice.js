@@ -23,7 +23,7 @@ export function recentlyKeyStoreReducer(state = initialState, action) {
     case RECENTLY_KEYSTORE.ADD:
       return {
         ...state,
-        recentlyKeyStores: [payload, ...state.recentlyKeyStores],
+        recentlyKeyStores: [...payload],
       };
     default:
       return state;

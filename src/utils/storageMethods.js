@@ -17,22 +17,9 @@ async function hasStoreKeyInStorage(id, mainKey, reduxKeys) {
   }
 }
 
-async function getStoreKeysFromStorage(mainKey, reduxKeys, limit) {
-  try {
-    const getMainKeyRqs = await AsyncStorage.getItem(mainKey);
-    const mainKeyRqs = !getMainKeyRqs ? [] : JSON.parse(getMainKeyRqs);
-    const currentStoreKeys =
-      reduxKeys.length !== 0 ? reduxKeys.concat(mainKeyRqs) : mainKeyRqs;
-    const uniqueStoreKeys = select.uniqueElement(currentStoreKeys);
-    if (limit) {
-      return replace.lastElementWhenExceedLength(uniqueStoreKeys, limit);
-    } else {
-      return uniqueStoreKeys;
-    }
-  } catch (e) {
-    console.log('getStoreKeysFromStorage: ', e);
-    return e;
-  }
+async function getStoreKeysFromStorage(storageKey) {
+  const getMainKeyRqs = await AsyncStorage.getItem(storageKey);
+  return !getMainKeyRqs ? [] : JSON.parse(getMainKeyRqs);
 }
 
 async function getDataFromStorage(mainKey) {
