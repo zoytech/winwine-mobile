@@ -5,8 +5,9 @@ import SplashScreen from 'react-native-splash-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Color, ColorVariant} from 'src/themes';
 import {KEY} from 'src/constants';
-import {getDataFromStorage} from 'src/utils';
+import {getItemStorage, getMultiStorage} from 'src/utils';
 import {
+  cardDeckAndCardsSelect,
   cardDecksSelect,
   loadCardDecks,
   recentlyKeyStoresSelect,
@@ -29,7 +30,7 @@ export default function HomeScreen({navigation}) {
   const dispatch = useDispatch();
   const popularCardDecks = useSelector(cardDecksSelect);
   const requestingCardDecks = useSelector(requestCardDecksSelect);
-  const storeKeys = useSelector(recentlyKeyStoresSelect);
+  const storeRecentlyKeys = useSelector(recentlyKeyStoresSelect);
   const [recentlyCardDecks, setRecentlyCardDecks] = useState([]);
   useEffect(() => {
     dispatch(loadCardDecks());
@@ -43,14 +44,13 @@ export default function HomeScreen({navigation}) {
   useEffect(() => {
     async function getMultipleCardDecks() {
       try {
-        if (!storeKeys || storeKeys.length === 0) {
-          const getMainKeyRqs = await AsyncStorage.getItem(KEY?.RECENTLY_PLAY);
-          const processedKeys = !getMainKeyRqs ? [] : JSON.parse(getMainKeyRqs);
-          const retrievedData = await getDataFromStorage(processedKeys);
-          setRecentlyCardDecks(retrievedData);
+        if (storeRecentlyKeys && storeRecentlyKeys.length !== 0) {
+          const processedCardDecks = await getMultiStorage(storeRecentlyKeys);
+          setRecentlyCardDecks(processedCardDecks);
         } else {
-          const retrievedData = await getDataFromStorage(storeKeys);
-          setRecentlyCardDecks(retrievedData);
+          const recentlyKeys = await getItemStorage(KEY?.RECENTLY_PLAY, []);
+          const processedCardDecks = await getMultiStorage(recentlyKeys);
+          setRecentlyCardDecks(processedCardDecks);
         }
       } catch (e) {
         console.log('get main keys error: ', e);
@@ -58,7 +58,7 @@ export default function HomeScreen({navigation}) {
     }
 
     getMultipleCardDecks();
-  }, [storeKeys]);
+  }, [storeRecentlyKeys]);
 
   useEffect(() => {
     navigation.setOptions({
@@ -70,9 +70,17 @@ export default function HomeScreen({navigation}) {
 
   async function handleClearStoragePress() {
     try {
-      await AsyncStorage.removeItem(KEY.RECENTLY_PLAY);
+      await AsyncStorage.removeItem(KEY.DECK_COUNT);
     } catch (e) {
       console.log('Clear home storage get error: ', e);
+    }
+  }
+
+  async function handleClearRecentlyStoragePress() {
+    try {
+      await AsyncStorage.removeItem(KEY.RECENTLY_PLAY);
+    } catch (e) {
+      console.log('Clear recently storage get error: ', e);
     }
   }
 
@@ -80,8 +88,12 @@ export default function HomeScreen({navigation}) {
     <SafeAreaView style={styles.container}>
       <CustomStatusBar />
       <FilledButton
-        content={'clear home storage'}
+        content={'clear counter'}
         onPress={handleClearStoragePress}
+      />
+      <FilledButton
+        content={'clear recently'}
+        onPress={handleClearRecentlyStoragePress}
       />
       <ScrollView
         onScroll={topBarRef.current?.onScroll}

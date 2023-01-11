@@ -17,11 +17,6 @@ async function hasStoreKeyInStorage(id, mainKey, reduxKeys) {
   }
 }
 
-async function getStoreKeysFromStorage(storageKey) {
-  const getMainKeyRqs = await AsyncStorage.getItem(storageKey);
-  return !getMainKeyRqs ? [] : JSON.parse(getMainKeyRqs);
-}
-
 async function getDataFromStorage(mainKey) {
   try {
     const dataRqs = mainKey && (await AsyncStorage.multiGet(mainKey));
@@ -86,12 +81,69 @@ async function removeItemFromStorage(id, mainKey) {
   }
 }
 
+async function getItemStorage(key, initData) {
+  const getMainKeyRqs = await AsyncStorage.getItem(key);
+  return getMainKeyRqs ? JSON.parse(getMainKeyRqs) : initData;
+}
+
+async function setItemStorage(key, data) {
+  await AsyncStorage.setItem(key, JSON.stringify(data));
+}
+
+async function getMultiStorage(key, initData) {
+  const rawDataRqs = key && (await AsyncStorage.multiGet(key));
+  const retrievedData = [];
+  rawDataRqs.forEach(item => {
+    const [, value] = item || {};
+    value && retrievedData.push(JSON.parse(value));
+  });
+  return retrievedData;
+}
+
+function generateStorageKey(prefix, id, suffix) {
+  const concatSuffix = suffix ? `/${suffix}` : '';
+  return `${prefix}/${id}${concatSuffix}`;
+}
+
+function processAddCounterKeyToStorage(queryKey, counterKeys = {}) {
+  const hasCounterKey = counterKeys.hasOwnProperty(queryKey);
+  if (!hasCounterKey) {
+    counterKeys[queryKey] = 1;
+    return {counterKeys: counterKeys, hasCounterKey: hasCounterKey};
+  } else {
+    return {counterKeys: null, hasCounterKey: hasCounterKey};
+  }
+}
+
+function processRemoveCounterKeyToStorage(queryKey, counterKeys) {
+  console.log('counterKeys: ', counterKeys);
+  const hasCounterKey = counterKeys.hasOwnProperty(queryKey);
+  console.log('hasCounterKey: ', hasCounterKey);
+  if (hasCounterKey) {
+    let currentKeyCount = counterKeys[queryKey];
+    console.log('currentKeyCount: ', currentKeyCount);
+    currentKeyCount += 1;
+    console.log('currentKeyCount: ', currentKeyCount);
+    counterKeys[queryKey] = currentKeyCount;
+    console.log('counterKeys: ', counterKeys);
+    return {counterKeys: counterKeys, hasCounterKey: hasCounterKey};
+  } else {
+    counterKeys[queryKey] = 1;
+    console.log('counterKeys: ', counterKeys);
+    return {counterKeys: counterKeys, hasCounterKey: hasCounterKey};
+  }
+}
+
 export {
   hasStoreKeyInStorage,
-  getStoreKeysFromStorage,
   getDataFromStorage,
   saveItemToStorage,
   saveKeyStoresToStorage,
   removeItemFromStorage,
   removeKeyStoresFromStorage,
+  generateStorageKey,
+  getItemStorage,
+  setItemStorage,
+  getMultiStorage,
+  processAddCounterKeyToStorage,
 };

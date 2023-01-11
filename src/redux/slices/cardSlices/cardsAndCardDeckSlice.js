@@ -2,12 +2,13 @@ import {KEY, LIMIT} from 'src/constants';
 import {CardApi, CardDeckApi} from 'src/apis';
 import {addRecentlyKeyStore} from 'src/redux/slices';
 import {
-  getStoreKeysFromStorage,
+  generateStorageKey,
+  getItemStorage,
+  processAddCounterKeyToStorage,
   replace,
-  saveItemToStorage,
   select,
+  setItemStorage,
 } from 'src/utils';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const FETCH_DECK_AND_CARDS = {
   REQUEST: 'FETCH_DECK_AND_CARDS_ERROR',
@@ -35,35 +36,19 @@ export function loadCardDeckAndCardsByDeckId(cardDeckId) {
       const cardDeck = getCardDeckResp?.data;
       const cards = getCardsResp?.data;
       dispatch(fetchDbSuccess({cardDeck, cards}));
-      //get storageKeys
-      const storageKey = `${KEY.DECKS_STORAGE}/${cardDeckId}`;
-      const cardDeckKeys = await getStoreKeysFromStorage(KEY.RECENTLY_PLAY);
-      //processed Key store
-      cardDeckKeys.unshift(storageKey);
-      const uniqueCardDecksKeys = select.uniqueElement(cardDeckKeys);
-      replace.lastElementWhenExceedLength(
-        uniqueCardDecksKeys,
-        LIMIT.RECENTLY_CARD_DECKS,
-      );
-      //add new storageKey to storageKeys
-      await AsyncStorage.setItem(
-        KEY.RECENTLY_PLAY,
-        JSON.stringify(uniqueCardDecksKeys),
-      );
-      dispatch(addRecentlyKeyStore(uniqueCardDecksKeys));
-
+      const cardDeckKeys = await getItemStorage(KEY.RECENTLY_PLAY, []);
+      const deckStoreKeys = generateStorageKey(KEY.CARD_DECKS, cardDeckId);
+      const processedKeys = processingStorageKey(deckStoreKeys, cardDeckKeys);
+      await setItemStorage(KEY.RECENTLY_PLAY, processedKeys);
+      dispatch(addRecentlyKeyStore(processedKeys));
       //check is card deck in this pool or not
-      const numberOfDeckKeys = await getStoreKeysFromStorage(KEY.DECK_COUNT);
-      let currentKeyCount = numberOfDeckKeys[storageKey];
-      if (currentKeyCount === 0 || currentKeyCount === undefined) {
-        currentKeyCount += 1;
-        await AsyncStorage.setItem(KEY.DECK_COUNT, currentKeyCount);
-        //add card deck to card deck storage
-        const jsonValue = JSON.stringify(cardDeck);
-        await AsyncStorage.setItem(KEY.DECKS_STORAGE, jsonValue);
+      const counterKeys = await getItemStorage(KEY.DECK_COUNT, {});
+      const {hasCounterKey: hasKey, counterKeys: processedCounterKeys} =
+        processAddCounterKeyToStorage(deckStoreKeys, counterKeys);
+      if (!hasKey) {
+        await setItemStorage(KEY.DECK_COUNT, processedCounterKeys);
+        await setItemStorage(deckStoreKeys, cardDeck);
       }
-
-      await saveItemToStorage(cardDeckId, KEY?.RECENTLY_PLAY, cardDeck);
     } catch (err) {
       dispatch(fetchDbError(err));
       console.log(
@@ -86,6 +71,16 @@ const fetchDbError = err => ({
   type: FETCH_DECK_AND_CARDS.ERROR,
   payload: {err},
 });
+
+const processingStorageKey = (key, array) => {
+  array.unshift(key);
+  const uniqueCardDecksKeys = select.uniqueElement(array);
+  replace.lastElementWhenExceedLength(
+    uniqueCardDecksKeys,
+    LIMIT.RECENTLY_CARD_DECKS,
+  );
+  return uniqueCardDecksKeys;
+};
 
 export function cardDeckAndCardsReducer(state = initialState, action) {
   const {type, payload, message} = action;
