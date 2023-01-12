@@ -1,4 +1,5 @@
 import {CardDeckApi} from 'src/apis';
+import {addStoreCardDecks} from './storeCardDecksSlice';
 
 const FETCH_DECK = {
   SUCCESS: 'FETCH_DECK_SUCCESS',
@@ -18,6 +19,7 @@ export function loadCardDeckByDeckId(cardDeckId) {
       const response = await CardDeckApi.getCardDeckById(cardDeckId);
       const cardDeckData = response?.data;
       dispatch(fetchDeckSuccess(cardDeckData));
+      dispatch(addStoreCardDecks(cardDeckData));
     } catch (error) {
       dispatch(fetchDeckError(error));
     }

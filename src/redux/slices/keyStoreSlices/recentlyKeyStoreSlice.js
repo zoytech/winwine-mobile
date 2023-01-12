@@ -1,3 +1,5 @@
+import {storeCardDecksSelect} from '../cardSlices';
+
 const RECENTLY_KEYSTORE = {
   ADD: 'ADD_RECENTLY_KEYSTORE',
   GET: 'GET_RECENTLY_KEYSTORE',
@@ -17,9 +19,6 @@ export const addRecentlyKeyStore = keyStore => dispatch => {
 export function recentlyKeyStoreReducer(state = initialState, action) {
   const {type, payload} = action;
   switch (type) {
-    case RECENTLY_KEYSTORE.GET:
-      return {...state, recentlyKeyStores: payload};
-    //TODO
     case RECENTLY_KEYSTORE.ADD:
       return {
         ...state,
