@@ -13,7 +13,10 @@ import {
   cardDeckSelect,
   libraryKeyStoreSelect,
   loadCardDeckByDeckId,
+  normalizedCardDecksSelect,
   requestCardDeckSelect,
+  storeCardDeckIdsSelect,
+  storeCardDecksSelect,
 } from 'src/redux/slices';
 import {SwipeableGameCard} from '../components';
 import {HEIGHT, KEY} from 'src/constants';
@@ -34,18 +37,21 @@ const EMPTY_CONTENT = 'Bộ bài chưa có lá bài nào.';
 
 export default function GameWaitScreen({navigation, route}) {
   const {cardDeckIdParam, cardDeckNameParam, cardDeckImageParam} = route.params;
-  const cardDeckItem = useSelector(cardDeckSelect);
+  const cardDeckRqs = useSelector(cardDeckSelect);
   const requesting = useSelector(requestCardDeckSelect);
   const keyStores = useSelector(libraryKeyStoreSelect);
+  const normalizedCardDecks = useSelector(normalizedCardDecksSelect);
   const dispatch = useDispatch();
   const [showIndex, setShowIndex] = useState(INITIAL_INDEX);
   const [imageHeight, setImageHeight] = useState(HEIGHT?.IMAGE);
   const [hasStoreKey, setHasStoreKey] = useState();
   const carouselRef = useRef(null);
   const scrollViewRef = useRef([]);
+  const cardDeckItem = normalizedCardDecks.hasOwnProperty(cardDeckIdParam)
+    ? normalizedCardDecks[cardDeckIdParam]
+    : cardDeckRqs;
 
   useEffect(() => {
-    //use selector avoiding fetch api after back in one session
     dispatch(loadCardDeckByDeckId(cardDeckIdParam));
   }, [dispatch, cardDeckIdParam]);
 
