@@ -11,22 +11,18 @@ const initialState = {
   cardDecks: [],
 };
 
-export const addStoreCardDecks =
-  ({cardDeck, cardDeckId}) =>
-  dispatch => {
-    return dispatch({
-      type: CARD_DECKS.ADD,
-      payload: {cardDeck, cardDeckId},
-    });
-  };
-export const removeStoreCardDecks =
-  ({cardDeck, cardDeckId}) =>
-  dispatch => {
-    return dispatch({
-      type: CARD_DECKS.REMOVE,
-      payload: {cardDeck, cardDeckId},
-    });
-  };
+export const addStoreCardDecks = cardDeck => dispatch => {
+  return dispatch({
+    type: CARD_DECKS.ADD,
+    payload: cardDeck,
+  });
+};
+export const removeStoreCardDecks = cardDeck => dispatch => {
+  return dispatch({
+    type: CARD_DECKS.REMOVE,
+    payload: cardDeck,
+  });
+};
 
 export function storeCardDecksReducer(state = initialState, action) {
   const {type, payload} = action;
@@ -36,10 +32,10 @@ export function storeCardDecksReducer(state = initialState, action) {
       return {
         ...state,
         cardDeckIds: [payload?.cardDeckId, ...initCardDeckIds],
-        cardDecks: [payload?.cardDeck, ...initCardDecks],
+        cardDecks: [payload, ...initCardDecks],
       };
     case CARD_DECKS.REMOVE:
-      const cardDeckIndex = initCardDecks.indexOf(payload?.cardDeck);
+      const cardDeckIndex = initCardDecks.indexOf(payload);
       const deckIdIndex = initCardDecks.indexOf(payload?.cardDeckId);
       return {
         ...state,

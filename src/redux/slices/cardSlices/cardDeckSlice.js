@@ -17,9 +17,9 @@ export function loadCardDeckByDeckId(cardDeckId) {
     dispatch(fetchDeckRequest());
     try {
       const response = await CardDeckApi.getCardDeckById(cardDeckId);
-      const cardDeckData = response?.data;
-      dispatch(fetchDeckSuccess(cardDeckData));
-      dispatch(addStoreCardDecks(cardDeckData));
+      const cardDeck = response?.data;
+      dispatch(fetchDeckSuccess(cardDeck));
+      dispatch(addStoreCardDecks(cardDeck));
     } catch (error) {
       dispatch(fetchDeckError(error));
     }

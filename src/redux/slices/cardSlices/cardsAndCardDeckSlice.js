@@ -1,6 +1,6 @@
 import {KEY, LIMIT} from 'src/constants';
 import {CardApi, CardDeckApi} from 'src/apis';
-import {addRecentlyKeyStore} from 'src/redux/slices';
+import {addRecentlyKeyStore, addStoreCardDecks} from 'src/redux/slices';
 import {
   generateStorageKey,
   getItemStorage,
@@ -36,19 +36,7 @@ export function loadCardDeckAndCardsByDeckId(cardDeckId) {
       const cardDeck = getCardDeckResp?.data;
       const cards = getCardsResp?.data;
       dispatch(fetchDbSuccess({cardDeck, cards}));
-      const cardDeckKeys = await getItemStorage(KEY.RECENTLY_PLAY, []);
-      const deckStoreKeys = generateStorageKey(KEY.CARD_DECKS, cardDeckId);
-      const processedKeys = processingStorageKey(deckStoreKeys, cardDeckKeys);
-      await setItemStorage(KEY.RECENTLY_PLAY, processedKeys);
-      dispatch(addRecentlyKeyStore(processedKeys));
-      //check is card deck in this pool or not
-      const counterKeys = await getItemStorage(KEY.DECK_COUNT, {});
-      const {hasCounterKey: hasKey, counterKeys: processedCounterKeys} =
-        processAddCounterKeyToStorage(deckStoreKeys, counterKeys);
-      if (!hasKey) {
-        await setItemStorage(KEY.DECK_COUNT, processedCounterKeys);
-        await setItemStorage(deckStoreKeys, cardDeck);
-      }
+      dispatch(addStoreCardDecks(cardDeck));
     } catch (err) {
       dispatch(fetchDbError(err));
       console.log(
@@ -71,16 +59,6 @@ const fetchDbError = err => ({
   type: FETCH_DECK_AND_CARDS.ERROR,
   payload: {err},
 });
-
-const processingStorageKey = (key, array) => {
-  array.unshift(key);
-  const uniqueCardDecksKeys = select.uniqueElement(array);
-  replace.lastElementWhenExceedLength(
-    uniqueCardDecksKeys,
-    LIMIT.RECENTLY_CARD_DECKS,
-  );
-  return uniqueCardDecksKeys;
-};
 
 export function cardDeckAndCardsReducer(state = initialState, action) {
   const {type, payload, message} = action;
