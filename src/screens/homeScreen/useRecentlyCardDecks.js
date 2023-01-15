@@ -61,7 +61,6 @@ function useRecentlyCardDecks() {
     //const missingFromStorageCardDecks = storedCardDecks.filter
   }
 
-  console.log('recentlyCardDecks:', recentlyCardDecks);
   return {recentlyCardDecks};
 }
 

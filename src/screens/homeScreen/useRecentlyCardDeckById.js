@@ -15,7 +15,6 @@ function useRecentlyCardDeckById(cardDeckId) {
   const cardDeckFromStore = useSelector(state =>
     selectCardDeckById(state, cardDeckId),
   );
-  console.log('detailed', cardDeckFromStore?.detailed);
 
   useEffect(() => {
     if (!cardDeckFromStore || !cardDeckFromStore?.detailed) {
@@ -24,7 +23,6 @@ function useRecentlyCardDeckById(cardDeckId) {
   }, [dispatch, cardDeckId]);
 
   useEffect(() => {
-    console.log('change', cardDeckFromStore?.detailed);
     if (cardDeckFromStore?.detailed) {
       saveRecentlyCardDeckIntoStorage(cardDeckFromStore);
     }

@@ -33,6 +33,7 @@ function upsertCardDeckDetail(cardDeck) {
   return async (dispatch, getState) => {
     try {
       const prevCardDeck = selectCardDeckById(getState(), cardDeck?.cardDeckId);
+      console.log('prevCardDeck:', prevCardDeck);
       if (!prevCardDeck) {
         dispatch({type: CARD_DECKS.ADD_DETAIL, payload: {cardDeck: cardDeck}});
         return;
@@ -129,7 +130,6 @@ function cardDecksReducer(
       const updatingCardDeck = action.payload?.cardDeck || {};
       return {
         ...state,
-        cardDeckIds: [updatingCardDeck?.cardDeckId, ...cardDeckIds],
         cardDecks: {
           ...cardDecks,
           [updatingCardDeck?.cardDeckId]: {

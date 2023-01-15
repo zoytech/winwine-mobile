@@ -1,17 +1,12 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Color, ColorVariant} from 'src/themes';
 import {KEY} from 'src/constants';
-import {getItemStorage, getMultiStorage} from 'src/utils';
 import {
-  cardDecksSelect,
   loadCardDecksFromApi,
-  recentlyIdsSelect,
-  recentlyKeysSelect,
-  requestCardDecksSelect,
   selectCardDeckArray,
   selectGetAllCardDeckRequest,
 } from 'src/redux/slices';
