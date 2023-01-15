@@ -19,7 +19,7 @@ function useRecentlyCardDecks() {
   const {recentlyCardDeckIds = []} = useSelector(selectRecentlyCardDeckStore);
   const {cardDecks = {}} = useSelector(selectCardDecksStore);
 
-  const recentlyCardDecks = recentlyCardDeckIds.map(id => {
+  const recentlyCardDecks = recentlyCardDeckIds.map(id =
     return cardDecks[id];
   });
 
@@ -34,7 +34,7 @@ function useRecentlyCardDecks() {
     if (missingCardDeckIds && missingCardDeckIds.length > 0) {
       warmUpMissingRecentlyCardDecks(missingCardDeckIds);
     }
-  }, [recentlyCardDeckIds]);
+  }, [JSON.stringify(recentlyCardDeckIds)]);
 
   async function warmUpRecentlyCardDeckIds() {
     const recentlyCardDeckKeys = await getItemStorage(

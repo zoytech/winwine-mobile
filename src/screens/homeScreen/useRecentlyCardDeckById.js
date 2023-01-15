@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {convertIdToStorageKey, getItemStorage, setItemStorage} from 'src/utils';
 import {KEY} from 'src/constants';
 import {
-  addRecentlyKeys,
+  addAllRecentlyCardDeckIds,
   loadCardDeckByDeckId,
   selectCardDeckById,
 } from 'src/redux/slices';
@@ -37,12 +37,8 @@ function useRecentlyCardDeckById(cardDeckId) {
       cardDeckKeys.unshift(cardDeckKey);
       const recentlyKeys = processingRecentlyData(cardDeckKeys);
 
-      const resp = await setItemStorage(
-        KEY.RECENTLY_CARD_DECK_ID_KEYS,
-        recentlyKeys,
-      );
-      console.log('resp:', resp);
-      dispatch(addRecentlyKeys(recentlyKeys));
+      await setItemStorage(KEY.RECENTLY_CARD_DECK_ID_KEYS, recentlyKeys);
+      dispatch(addAllRecentlyCardDeckIds([newCardDeck?.cardDeckId]));
 
       const counterKeys = await getItemStorage(KEY.DECK_COUNT, {});
       if (!counterKeys[cardDeckKey]) {
@@ -56,11 +52,7 @@ function useRecentlyCardDeckById(cardDeckId) {
       await setItemStorage(KEY.DECK_COUNT, counterKeys);
       await setItemStorage(cardDeckKey, newCardDeck);
 
-      const recentlyCardDeckKeys = await getItemStorage(
-        KEY.RECENTLY_CARD_DECK_ID_KEYS,
-        [],
-      );
-      console.log('recentlyCardDeckKeys', recentlyCardDeckKeys);
+      await getItemStorage(KEY.RECENTLY_CARD_DECK_ID_KEYS, []);
     } catch (e) {
       console.error('Add card deck to storage cause error: ', e);
     }

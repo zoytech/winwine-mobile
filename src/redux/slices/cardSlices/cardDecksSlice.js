@@ -58,7 +58,6 @@ const removeStoreCardDecks = cardDeck => dispatch => {
 
 function cardDecksReducer(
   state = {
-    recentlyCardDeckIds: [],
     cardDeckIds: [],
     cardDecks: {},
     isRequestingAll: false,
@@ -80,8 +79,8 @@ function cardDecksReducer(
       };
     }
     case CARD_DECKS.ADD_ALL_SUCCESS: {
-      let newCardDeckIds = [];
-      let newCardDecks = {};
+      let newCardDeckIds = [...cardDeckIds];
+      let newCardDecks = {...cardDecks};
 
       action.payload?.cardDecks &&
         action.payload?.cardDecks.forEach(cardDeck => {

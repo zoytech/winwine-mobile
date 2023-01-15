@@ -24,9 +24,13 @@ function recentCardDecksReducer(
   const {cardDeckId} = action?.payload || {};
   switch (action?.type) {
     case RECENTLY_CARD_DECKS_ACTION_TYPE.ADD_ALL: {
+      const newCardDeckIds = [
+        ...action?.payload?.cardDeckIds,
+        ...recentlyCardDeckIds,
+      ];
       return {
         ...state,
-        recentlyCardDeckIds: action?.payload?.cardDeckIds || [],
+        recentlyCardDeckIds: select.uniqueElement(newCardDeckIds),
       };
     }
 
