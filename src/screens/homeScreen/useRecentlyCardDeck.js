@@ -24,11 +24,11 @@ function useRecentlyCardDeck(cardDeckId) {
 
   useEffect(() => {
     if (cardDeckFromStore) {
-      setNewCardDeck(cardDeckFromStore);
+      saveRecentlyCardDeckIntoStorage(cardDeckFromStore);
     }
   }, [cardDeckFromStore]);
 
-  async function setNewCardDeck(newCardDeck) {
+  async function saveRecentlyCardDeckIntoStorage(newCardDeck) {
     try {
       const cardDeckKeys = await getItemStorage(
         KEY.RECENTLY_CARD_DECK_ID_KEYS,
