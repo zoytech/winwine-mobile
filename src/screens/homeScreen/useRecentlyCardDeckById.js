@@ -9,12 +9,13 @@ import {
 } from 'src/redux/slices';
 import processingRecentlyData from './processingRecentlyData';
 
-function useRecentlyCardDeck(cardDeckId) {
+function useRecentlyCardDeckById(cardDeckId) {
   const dispatch = useDispatch();
   const cardDeckKey = convertIdToStorageKey(cardDeckId, KEY.CARD_DECK);
   const cardDeckFromStore = useSelector(state =>
-    selectCardDeckById(cardDeckId, state),
+    selectCardDeckById(state, cardDeckId),
   );
+  console.log('detailed', cardDeckFromStore?.detailed);
 
   useEffect(() => {
     if (!cardDeckFromStore || !cardDeckFromStore?.detailed) {
@@ -23,10 +24,11 @@ function useRecentlyCardDeck(cardDeckId) {
   }, [dispatch, cardDeckId]);
 
   useEffect(() => {
-    if (cardDeckFromStore) {
+    console.log('change', cardDeckFromStore?.detailed);
+    if (cardDeckFromStore?.detailed) {
       saveRecentlyCardDeckIntoStorage(cardDeckFromStore);
     }
-  }, [cardDeckFromStore]);
+  }, [cardDeckFromStore?.detailed]);
 
   async function saveRecentlyCardDeckIntoStorage(newCardDeck) {
     try {
@@ -36,13 +38,16 @@ function useRecentlyCardDeck(cardDeckId) {
       );
       cardDeckKeys.unshift(cardDeckKey);
       const recentlyKeys = processingRecentlyData(cardDeckKeys);
-      await setItemStorage(KEY.RECENTLY_CARD_DECK_ID_KEYS, recentlyKeys);
+
+      const resp = await setItemStorage(
+        KEY.RECENTLY_CARD_DECK_ID_KEYS,
+        recentlyKeys,
+      );
+      console.log('resp:', resp);
       dispatch(addRecentlyKeys(recentlyKeys));
-      // check is card deck in this pool or not
+
       const counterKeys = await getItemStorage(KEY.DECK_COUNT, {});
-      const hasCounterKey = counterKeys.hasOwnProperty(cardDeckKey);
-      console.log();
-      if (!hasCounterKey) {
+      if (!counterKeys[cardDeckKey]) {
         counterKeys[cardDeckKey] = [KEY.RECENTLY_CARD_DECK_ID_KEYS];
       } else if (
         counterKeys[cardDeckKey].includes(KEY.RECENTLY_CARD_DECK_ID_KEYS)
@@ -52,6 +57,12 @@ function useRecentlyCardDeck(cardDeckId) {
       }
       await setItemStorage(KEY.DECK_COUNT, counterKeys);
       await setItemStorage(cardDeckKey, newCardDeck);
+
+      const recentlyCardDeckKeys = await getItemStorage(
+        KEY.RECENTLY_CARD_DECK_ID_KEYS,
+        [],
+      );
+      console.log('recentlyCardDeckKeys', recentlyCardDeckKeys);
     } catch (e) {
       console.error('Add card deck to storage cause error: ', e);
     }
@@ -60,4 +71,4 @@ function useRecentlyCardDeck(cardDeckId) {
   return {cardDeck: cardDeckFromStore};
 }
 
-export default useRecentlyCardDeck;
+export default useRecentlyCardDeckById;

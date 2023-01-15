@@ -20,7 +20,7 @@ import {
 import {SwipeableGameCard} from '../components';
 import {CustomStatusBar, EmptyInfoAnnouncement} from 'src/screens/components';
 import gamePlayStyle from './gamePlayStyle';
-import useRecentlyCardDeck from '../../homeScreen/useRecentlyCardDeck';
+import useRecentlyCardDeckById from '../../homeScreen/useRecentlyCardDeckById';
 
 const screenWidth = WIDTH?.SCREEN;
 const width = {
@@ -46,7 +46,7 @@ export default function GamePlayScreen({navigation, route}) {
   const [showIndex, setShowIndex] = useState(INITIAL_INDEX);
   const [showIndicatorInfo, setShowIndicatorInfo] = useState(true);
 
-  const {cardDeck} = useRecentlyCardDeck(cardDeckIdParam);
+  const {cardDeck} = useRecentlyCardDeckById(cardDeckIdParam);
   const cards =
     fetchedCards && fetchedCards.length > 0
       ? fetchedCards

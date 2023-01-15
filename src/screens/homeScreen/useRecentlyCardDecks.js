@@ -5,21 +5,14 @@ import {
   convertStorageKeyToId,
   getDataFromStorage,
   getItemStorage,
-  setItemStorage,
 } from 'src/utils';
 import {KEY} from 'src/constants';
 import {
   addAllRecentlyCardDeckIds,
-  addRecentlyKeys,
   loadAllCardDeckSuccess,
-  loadCardDeckByDeckId,
-  selectCardDeckById,
   selectCardDecksStore,
-  selectRecentlyCardDeckArray,
   selectRecentlyCardDeckStore,
 } from 'src/redux/slices';
-import processingRecentlyData from './processingRecentlyData';
-import card from 'react-native-paper/src/components/Card/Card';
 
 function useRecentlyCardDecks() {
   const dispatch = useDispatch();
@@ -38,8 +31,6 @@ function useRecentlyCardDecks() {
     const missingCardDeckIds = recentlyCardDeckIds.filter(cardDeckId => {
       return !cardDecks[cardDeckId];
     });
-
-    console.log('recentlyCardDeckIds:', recentlyCardDeckIds);
     if (missingCardDeckIds && missingCardDeckIds.length > 0) {
       warmUpMissingRecentlyCardDecks(missingCardDeckIds);
     }
@@ -50,7 +41,6 @@ function useRecentlyCardDecks() {
       KEY.RECENTLY_CARD_DECK_ID_KEYS,
       [],
     );
-
     const storageRecentlyCardDeckIds = recentlyCardDeckKeys.map(
       cardDeckStorageKey => {
         return convertStorageKeyToId(cardDeckStorageKey, KEY.CARD_DECK);

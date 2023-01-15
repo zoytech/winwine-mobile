@@ -30,15 +30,16 @@ export default function VerticalCardDecks(props) {
     });
   };
 
-  function renderItem(item) {
+  function renderItem(item, index) {
     const cardDeckId = item?.cardDeckId;
+
     return (
       <MiniCardItem
         {...otherProps}
-        key={cardDeckId}
         data={item}
         onPreviewPress={() => handlePreviewPress(item)}
         onPlayPress={() => handlePlayPress(item)}
+        key={index}
       />
     );
   }

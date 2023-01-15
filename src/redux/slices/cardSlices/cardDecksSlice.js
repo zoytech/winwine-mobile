@@ -32,7 +32,7 @@ function upsertCardDeckDetail(cardDeck) {
   }
   return async (dispatch, getState) => {
     try {
-      const prevCardDeck = selectCardDeckById(cardDeck?.cardDeckId, getState());
+      const prevCardDeck = selectCardDeckById(getState(), cardDeck?.cardDeckId);
       if (!prevCardDeck) {
         dispatch({type: CARD_DECKS.ADD_DETAIL, payload: {cardDeck: cardDeck}});
         return;
@@ -104,16 +104,16 @@ function cardDecksReducer(
     }
 
     case CARD_DECKS.ADD_DETAIL: {
-      const newCardDeck = action.payload;
+      const newCardDeck = action?.payload?.cardDeck;
       const id = newCardDeck?.cardDeckId;
 
-      let newCardDeckId = [...cardDeckIds];
+      let newCardDeckIds = [...cardDeckIds];
       if (!cardDeckIds.includes(id)) {
-        newCardDeckId.push(id);
+        newCardDeckIds.push(id);
       }
       return {
         ...state,
-        cardDeckIds: newCardDeckId,
+        cardDeckIds: newCardDeckIds,
         cardDecks: {
           ...cardDecks,
           [id]: {
@@ -126,7 +126,7 @@ function cardDecksReducer(
     }
 
     case CARD_DECKS.UPDATE_DETAIL: {
-      const updatingCardDeck = action.payload;
+      const updatingCardDeck = action.payload?.cardDeck || {};
       return {
         ...state,
         cardDeckIds: [updatingCardDeck?.cardDeckId, ...cardDeckIds],
@@ -176,9 +176,9 @@ function selectCardDeckArray(state) {
   });
 }
 
-function selectCardDeckById(cardDeckId, state) {
-  const {cardDeckIds = {}} = state?.cardDecks;
-  return cardDeckIds && cardDeckIds[cardDeckId];
+function selectCardDeckById(state, cardDeckId) {
+  const {cardDecks = {}} = state?.cardDecks;
+  return cardDecks && cardDecks[cardDeckId];
 }
 
 function selectCardDecksStore(state) {
