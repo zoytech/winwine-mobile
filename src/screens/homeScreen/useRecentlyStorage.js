@@ -16,11 +16,11 @@ function useRecentlyStorage(cardDeckId, initValue) {
   const fetchedCardDeck = useSelector(cardDeckSelect);
 
   const normalCardDecks = useSelector(normalizedCardDecksSelect);
-  const [cardDeck, setCardDeck] = useState(initValue);
   const isInStoreCardDecks = normalCardDecks.hasOwnProperty(cardDeckId);
 
   const cardDeckItem =
     isInStoreCardDecks === true ? normalCardDecks[cardDeckId] : fetchedCardDeck;
+
   useEffect(() => {
     if (isInStoreCardDecks === false) {
       dispatch(loadCardDeckByDeckId(cardDeckId));

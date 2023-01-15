@@ -12,6 +12,8 @@ import {
   recentlyIdsSelect,
   recentlyKeysSelect,
   requestCardDecksSelect,
+  selectCardDeckArray,
+  selectGetAllCardDeckRequest,
 } from 'src/redux/slices';
 import {
   HomeTopAppBar,
@@ -29,8 +31,8 @@ export default function HomeScreen({navigation}) {
     onScroll: () => {},
   });
   const dispatch = useDispatch();
-  const popularCardDecks = useSelector(cardDecksSelect);
-  const rqsCardDecks = useSelector(requestCardDecksSelect);
+  const popularCardDecks = useSelector(selectCardDeckArray);
+  const rqsCardDecks = useSelector(selectGetAllCardDeckRequest);
   const storeRecentlyKeys = useSelector(recentlyKeysSelect);
   const storedRecentCardDecks = useSelectCardDeckByRecentlyKey() || {};
   const recentlyIds = useSelector(recentlyIdsSelect);
@@ -91,8 +93,6 @@ export default function HomeScreen({navigation}) {
       console.log('Clear recently storage get error: ', e);
     }
   }
-
-  console.log('/////////////////////////////////////');
 
   return (
     <SafeAreaView style={styles.container}>

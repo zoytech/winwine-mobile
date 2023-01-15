@@ -1,68 +1,137 @@
 import {CardDeckApi} from 'src/apis';
 
-const FETCH_DECKS = {
-  REQUEST: 'FETCH_DECKS_ERROR',
-  SUCCESS: ' FETCH_DECKS_REQUEST',
-  ERROR: 'FETCH_DECKS_SUCCESS',
-};
-const initialState = {
-  requesting: false,
-  data: [],
-  error: {},
+const CARD_DECKS = {
+  ADD: 'ADD_CARD_DECKS',
+  GET: 'GET_CARD_DECKS',
+  ADD_ALL_SUCCESS: 'ADD_ALL_SUCCESS',
+  ADD_ALL_ERROR: 'ADD_ALL_ERROR',
+  ADD_ALL_REQUEST: 'ADD_ALL_REQUEST',
 };
 
-export function loadCardDecks() {
+function loadCardDecks() {
   return async dispatch => {
-    dispatch(fetchDecksRequest());
+    dispatch({type: CARD_DECKS.ADD_ALL_REQUEST});
     try {
       const response = await CardDeckApi.getCardDecks();
-      const cardDecksData = response?.data;
-      dispatch(fetchDecksSuccess(cardDecksData));
+      dispatch({
+        type: CARD_DECKS.ADD_ALL_SUCCESS,
+        payload: {cardDecks: response?.data},
+      });
     } catch (error) {
       console.log('loadCardDecks error:', error);
-      dispatch(fetchDecksError(error));
+      dispatch({
+        type: CARD_DECKS.ADD_ALL_ERROR,
+        payload: {error},
+      });
     }
   };
 }
 
-const fetchDecksRequest = () => ({
-  type: FETCH_DECKS.REQUEST,
-});
-const fetchDecksSuccess = data => {
-  return {
-    type: FETCH_DECKS.SUCCESS,
-    payload: {data},
-  };
+export const addStoreCardDecks = cardDeck => dispatch => {
+  return dispatch({
+    type: CARD_DECKS.ADD,
+    payload: cardDeck,
+  });
 };
-const fetchDecksError = err => ({
-  type: FETCH_DECKS.ERROR,
-  payload: {err},
-});
+export const removeStoreCardDecks = cardDeck => dispatch => {
+  return dispatch({
+    type: CARD_DECKS.REMOVE,
+    payload: cardDeck,
+  });
+};
 
-export function cardDecksReducer(state = initialState, action) {
-  const {type, payload, message} = action;
-  switch (type) {
-    case FETCH_DECKS.REQUEST:
+export function cardDecksReducer(
+  state = {
+    cardDeckIds: [],
+    cardDecks: {},
+    isRequestingAll: false,
+  },
+  action,
+) {
+  const {cardDecks, cardDeckIds} = state;
+  switch (action?.type) {
+    case CARD_DECKS.ADD_ALL_REQUEST: {
       return {
         ...state,
-        requesting: true,
+        isRequestingAll: true,
       };
-    case FETCH_DECKS.SUCCESS:
+    }
+    case CARD_DECKS.ADD_ALL_ERROR: {
       return {
         ...state,
-        requesting: false,
-        data: payload?.data || [],
+        isRequestingAll: false,
       };
-    case FETCH_DECKS.ERROR:
+    }
+    case CARD_DECKS.ADD_ALL_SUCCESS: {
+      let newCardDeckIds = [];
+      let newCardDecks = {};
+
+      action.payload?.cardDecks &&
+        action.payload?.cardDecks.forEach(cardDeck => {
+          newCardDeckIds.push(cardDeck?.cardDeckId);
+          newCardDecks[cardDeck?.cardDeckId] = cardDeck;
+        });
+
       return {
         ...state,
-        requesting: false,
-        error: message,
+        cardDeckIds: newCardDeckIds,
+        cardDecks: newCardDecks,
+        isRequestingAll: false,
       };
+    }
+
+    case CARD_DECKS.ADD: {
+      const newCardDeck = action.payload;
+      if (cardDeckIds && cardDeckIds.includes(newCardDeck?.cardDeckId)) {
+        return state;
+      }
+      return {
+        ...state,
+        cardDeckIds: [newCardDeck?.cardDeckId, ...cardDeckIds],
+        cardDecks: {
+          ...cardDecks,
+          [newCardDeck?.cardDeckId]: newCardDeck,
+        },
+      };
+    }
+    case CARD_DECKS.REMOVE: {
+      const removingCardeck = action.payload;
+      const removingCardDeckIndex = cardDecks.indexOf(
+        removingCardeck?.cardDeckId,
+      );
+      return {
+        ...state,
+        cardDeckIds: [
+          ...cardDeckIds.slice(0, removingCardDeckIndex),
+          ...cardDeckIds.slice(removingCardDeckIndex + 1),
+        ],
+        cardDecks: {
+          ...cardDecks,
+          [removingCardeck?.cardDeckId]: undefined,
+        },
+      };
+    }
     default:
       return state;
   }
 }
 
-export const cardDecksSelect = state => state.cardDecks.data;
-export const requestCardDecksSelect = state => state.cardDecks.requesting;
+const normalizedCardDecksSelect = state => {};
+
+function selectGetAllCardDeckRequest(state) {
+  return state?.cardDecks?.isRequestingAll;
+}
+
+function selectCardDeckArray(state) {
+  const {cardDecks = [], cardDeckIds = {}} = state?.cardDecks;
+  return cardDeckIds.map(id => {
+    return cardDecks[id];
+  });
+}
+
+export {
+  loadCardDecks,
+  normalizedCardDecksSelect,
+  selectGetAllCardDeckRequest,
+  selectCardDeckArray,
+};

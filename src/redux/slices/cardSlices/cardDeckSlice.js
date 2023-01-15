@@ -1,5 +1,5 @@
 import {CardDeckApi} from 'src/apis';
-import {addStoreCardDecks} from './storeCardDecksSlice';
+import {addStoreCardDecks} from './cardDecksSlice';
 import {addRecentlyCardDeck} from '../keyStoreSlices';
 
 const FETCH_DECK = {
