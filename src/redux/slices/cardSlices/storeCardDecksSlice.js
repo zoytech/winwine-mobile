@@ -1,5 +1,4 @@
-import {normalizedBy, replace, select} from '../../../utils';
-import {LIMIT} from '../../../constants';
+import {normalizedBy} from 'src/utils';
 
 const CARD_DECKS = {
   ADD: 'ADD_CARD_DECKS',
@@ -56,16 +55,5 @@ export function storeCardDecksReducer(state = initialState, action) {
 export const storeCardDecksSelect = state => state.storeCardDecks.cardDecks;
 export const normalizedCardDecksSelect = state =>
   state.storeCardDecks.cardDecks.reduce(normalizedBy('cardDeckId'), {});
-export const storeCardDeckIdsSelect = state => {
-  const cardDeckIds = state.storeCardDecks.cardDeckIds;
-  return select.uniqueElement(cardDeckIds);
-};
-export const recentlyCardDeckIdsSelect = state => {
-  const cardDeckIds = state.storeCardDecks.cardDeckIds;
-  const uniqueCardDeckIds = select.uniqueElement(cardDeckIds);
-  replace.lastElementWhenExceedLength(
-    uniqueCardDeckIds,
-    LIMIT.RECENTLY_CARD_DECKS,
-  );
-  return uniqueCardDeckIds;
-};
+
+export const cardDeckIdsSelect = state => state.storeCardDecks.cardDeckIds;

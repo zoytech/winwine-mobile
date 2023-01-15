@@ -7,10 +7,10 @@ import {Color, ColorVariant} from 'src/themes';
 import {KEY} from 'src/constants';
 import {getItemStorage, getMultiStorage} from 'src/utils';
 import {
-  cardDeckAndCardsSelect,
   cardDecksSelect,
   loadCardDecks,
-  recentlyKeyStoresSelect,
+  recentlyIdsSelect,
+  recentlyKeysSelect,
   requestCardDecksSelect,
 } from 'src/redux/slices';
 import {
@@ -20,6 +20,7 @@ import {
 } from './components';
 import {CustomStatusBar, SectionHeader} from '../components';
 import {FilledButton, SpinnerType1} from 'src/components';
+import useSelectCardDeckByRecentlyKey from './useSelectCardDeckByRecentlyKey';
 
 const RECENTLY = 'Chơi gần đây';
 const POPULAR = 'Phổ biến';
@@ -29,12 +30,16 @@ export default function HomeScreen({navigation}) {
   });
   const dispatch = useDispatch();
   const popularCardDecks = useSelector(cardDecksSelect);
-  const requestingCardDecks = useSelector(requestCardDecksSelect);
-  const storeRecentlyKeys = useSelector(recentlyKeyStoresSelect);
+  const rqsCardDecks = useSelector(requestCardDecksSelect);
+  const storeRecentlyKeys = useSelector(recentlyKeysSelect);
+  const storedRecentCardDecks = useSelectCardDeckByRecentlyKey() || {};
+  const recentlyIds = useSelector(recentlyIdsSelect);
+  const recentlyKeys = useSelector(recentlyKeysSelect) || {};
   const [recentlyCardDecks, setRecentlyCardDecks] = useState([]);
+
   useEffect(() => {
     dispatch(loadCardDecks());
-    if (!requestingCardDecks || popularCardDecks === null) {
+    if (!rqsCardDecks || popularCardDecks === null) {
       SplashScreen.hide();
     } else if (popularCardDecks.length === 0) {
       return <SpinnerType1 />;
@@ -42,22 +47,25 @@ export default function HomeScreen({navigation}) {
   }, [dispatch]);
 
   useEffect(() => {
-    async function getMultipleCardDecks() {
-      try {
-        if (storeRecentlyKeys && storeRecentlyKeys.length !== 0) {
-          const processedCardDecks = await getMultiStorage(storeRecentlyKeys);
-          setRecentlyCardDecks(processedCardDecks);
-        } else {
-          const recentlyKeys = await getItemStorage(KEY?.RECENTLY_PLAY, []);
-          const processedCardDecks = await getMultiStorage(recentlyKeys);
-          setRecentlyCardDecks(processedCardDecks);
-        }
-      } catch (e) {
-        console.log('get main keys error: ', e);
+    async function getRecentlyCardDecks() {
+      if (recentlyKeys.length > 0) {
+        const storageRecentlyDecks = await getMultiStorage(recentlyKeys, '');
+        console.log('redux key');
+        setRecentlyCardDecks(storageRecentlyDecks);
+      } else {
+        const storageKeys = await getItemStorage(KEY?.RECENTLY_PLAY, []);
+        const storageRecentlyDecks = await getMultiStorage(storageKeys, {});
+        setRecentlyCardDecks(storageRecentlyDecks);
+        console.log('storage');
       }
     }
 
-    getMultipleCardDecks();
+    if (storedRecentCardDecks.length > 0) {
+      setRecentlyCardDecks(storedRecentCardDecks);
+      console.log('redux');
+    } else {
+      getRecentlyCardDecks();
+    }
   }, [storeRecentlyKeys]);
 
   useEffect(() => {
@@ -83,6 +91,8 @@ export default function HomeScreen({navigation}) {
       console.log('Clear recently storage get error: ', e);
     }
   }
+
+  console.log('/////////////////////////////////////');
 
   return (
     <SafeAreaView style={styles.container}>

@@ -90,19 +90,31 @@ async function setItemStorage(key, data) {
   await AsyncStorage.setItem(key, JSON.stringify(data));
 }
 
-async function getMultiStorage(key, initData) {
-  const rawDataRqs = key && (await AsyncStorage.multiGet(key));
+async function getMultiStorage(keys, initData) {
+  const rawDataRqs = await AsyncStorage.multiGet(keys);
+  const rawData = !rawDataRqs ? [] : rawDataRqs;
   const retrievedData = [];
-  rawDataRqs.forEach(item => {
-    const [, value] = item || {};
+  rawData.forEach(item => {
+    const [, value] = item || initData;
     value && retrievedData.push(JSON.parse(value));
   });
   return retrievedData;
 }
 
-function generateStorageKey(prefix, id, suffix) {
-  const concatSuffix = suffix ? `/${suffix}` : '';
-  return `${prefix}/${id}${concatSuffix}`;
+function convertIdToStorageKey(id, prefix, suffix) {
+  const customPrefix = prefix ? `${prefix}/` : '';
+  const customSuffix = suffix ? `/${suffix}` : '';
+  return `${customPrefix}${id}${customSuffix}`;
+}
+
+function convertStorageKeyToId(key, prefix, suffix) {
+  if (prefix) {
+    return key.replace(`${prefix}/`, '');
+  } else if (suffix) {
+    return key.replace(`/${suffix}`, '');
+  } else {
+    return key;
+  }
 }
 
 function processAddCounterKeyToStorage(queryKey, counterKeys = {}) {
@@ -141,7 +153,8 @@ export {
   saveKeyStoresToStorage,
   removeItemFromStorage,
   removeKeyStoresFromStorage,
-  generateStorageKey,
+  convertIdToStorageKey,
+  convertStorageKeyToId,
   getItemStorage,
   setItemStorage,
   getMultiStorage,

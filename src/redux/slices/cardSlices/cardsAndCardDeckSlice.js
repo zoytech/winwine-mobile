@@ -1,8 +1,8 @@
 import {KEY, LIMIT} from 'src/constants';
 import {CardApi, CardDeckApi} from 'src/apis';
-import {addRecentlyKeyStore, addStoreCardDecks} from 'src/redux/slices';
+import {addRecentlyKey, addStoreCardDecks} from 'src/redux/slices';
 import {
-  generateStorageKey,
+  convertIdToStorageKey,
   getItemStorage,
   processAddCounterKeyToStorage,
   replace,
@@ -36,7 +36,7 @@ export function loadCardDeckAndCardsByDeckId(cardDeckId) {
       const cardDeck = getCardDeckResp?.data;
       const cards = getCardsResp?.data;
       dispatch(fetchDbSuccess({cardDeck, cards}));
-      dispatch(addStoreCardDecks(cardDeck));
+      // dispatch(addStoreCardDecks(cardDeck));
     } catch (err) {
       dispatch(fetchDbError(err));
       console.log(

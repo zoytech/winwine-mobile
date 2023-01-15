@@ -6,8 +6,8 @@ import {
   cardDecksReducer,
   cardsReducer,
   hashtagsReducer,
-  libraryKeyStoreReducer,
-  recentlyKeyStoreReducer,
+  libraryKeysReducer,
+  recentlyReducer,
   storeCardDecksReducer,
 } from 'src/redux/slices';
 
@@ -18,8 +18,8 @@ const rootReducer = combineReducers({
   storeCardDecks: storeCardDecksReducer,
   hashtagsReducer: hashtagsReducer,
   cardDeckAndCards: cardDeckAndCardsReducer,
-  recentlyKeyStore: recentlyKeyStoreReducer,
-  libraryKeyStore: libraryKeyStoreReducer,
+  recently: recentlyReducer,
+  libraryKeys: libraryKeysReducer,
 });
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION;
 const thunkMiddleWare = applyMiddleware(thunk);

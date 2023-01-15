@@ -1,8 +1,18 @@
 import {useSelector} from 'react-redux';
-import {cardDecksSelect, recentlyKeyStoresSelect} from 'src/redux/slices';
+import {normalizedCardDecksSelect, recentlyIdsSelect} from 'src/redux/slices';
 
-export default function recentlyCardDecksSelect() {
-  const cardDecks = useSelector(cardDecksSelect);
-  const recentlyKeyStores = useSelector(recentlyKeyStoresSelect);
-  return cardDecks.filter(item => recentlyKeyStores.includes(item?.cardDeckId));
+export default function useSelectCardDeckByRecentlyKey() {
+  const normalCardDecks = useSelector(
+    normalizedCardDecksSelect,
+  )?.normalCardDecks;
+  const recentlyIds = useSelector(recentlyIdsSelect) || [];
+  // console.log('recentlyIds: ', recentlyIds);
+  return recentlyIds.map(id => {
+    if (normalCardDecks.hasOwnProperty(id)) {
+      return normalCardDecks[id];
+    }
+  });
 }
+
+const abc = [{id: 1}, {id: 2}, {id: 3}];
+const temp = [1, 3];

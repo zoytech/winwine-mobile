@@ -7,6 +7,6 @@ const KEY = {
 };
 const LIMIT = {
   LIB_CARD_DECKS: 6,
-  RECENTLY_CARD_DECKS: 3,
+  RECENTLY_CARD_DECKS: 4,
 };
 export {KEY, LIMIT};

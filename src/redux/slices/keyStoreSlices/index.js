@@ -1,2 +1,2 @@
-export * from './recentlyKeyStoreSlice';
-export * from './libraryKeyStoreSlice';
+export * from './recentlySlice';
+export * from './libraryKeySlice';

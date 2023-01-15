@@ -4,9 +4,13 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {SpinnerType1, StandardIconButton} from 'src/components';
 import {
+  addRecentlyKey,
+  cardDeckSelect,
   cardsSelect,
+  loadCardDeckByDeckId,
   loadCardsByDeckId,
-  requestCardDeckAndCardsSelect,
+  normalizedCardDecksSelect,
+  requestCardsSelect,
 } from 'src/redux/slices';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import {DECK, WIDTH} from 'src/constants';
@@ -19,6 +23,7 @@ import {
 import {SwipeableGameCard} from '../components';
 import {CustomStatusBar, EmptyInfoAnnouncement} from 'src/screens/components';
 import gamePlayStyle from './gamePlayStyle';
+import useRecentlyStorage from '../../homeScreen/useRecentlyStorage';
 
 const screenWidth = WIDTH?.SCREEN;
 const width = {
@@ -37,14 +42,28 @@ export default function GamePlayScreen({navigation, route}) {
     hashtagsParam,
   } = route.params;
   const dispatch = useDispatch();
-  const cardsRqs = useSelector(cardsSelect);
-  const requesting = useSelector(requestCardDeckAndCardsSelect);
+  const fetchedCards = useSelector(cardsSelect);
+  const normalCardDecks = useSelector(normalizedCardDecksSelect);
+  const cardsRqs = useSelector(requestCardsSelect);
   const carouselRef = useRef(null);
   const [showIndex, setShowIndex] = useState(INITIAL_INDEX);
   const [showIndicatorInfo, setShowIndicatorInfo] = useState(true);
+  const [setNewCardDeck] = useRecentlyStorage(cardDeckIdParam, {});
+  const isInStoreCardDecks = normalCardDecks.hasOwnProperty(cardDeckIdParam);
 
+  console.log('setNewCardDeck: ', typeof setNewCardDeck);
   useEffect(() => {
     dispatch(loadCardsByDeckId(cardDeckIdParam));
+
+    async function addCardDeckToStorage() {
+      await setNewCardDeck();
+    }
+
+    if (isInStoreCardDecks === false) {
+      dispatch(loadCardDeckByDeckId(cardDeckIdParam));
+      addCardDeckToStorage();
+    }
+    console.log('in use effect first: ');
   }, [dispatch, cardDeckIdParam]);
 
   useEffect(() => {
@@ -58,7 +77,7 @@ export default function GamePlayScreen({navigation, route}) {
     });
   }, [navigation]);
 
-  const dataLength = cardsRqs ? cardsRqs.length : DECK?.NUMBER_OF_CARDS;
+  const dataLength = fetchedCards ? fetchedCards.length : DECK?.NUMBER_OF_CARDS;
   const progressBarWidth = screenWidth * 0.8;
   const percentValue = dataLength !== 0 && (showIndex + 1) / dataLength;
   const indicatedPartWidth = progressBarWidth * percentValue;
@@ -144,13 +163,13 @@ export default function GamePlayScreen({navigation, route}) {
     );
   }
 
-  if (requesting) {
+  if (cardsRqs) {
     return <SpinnerType1 />;
   }
   return (
     <SafeAreaView style={defaultContainerStyle}>
       <CustomStatusBar />
-      {!cardsRqs || cardsRqs.length === 0 ? (
+      {!fetchedCards || fetchedCards.length === 0 ? (
         <EmptyInfoAnnouncement title={'Bộ bài chưa có lá bài nào.'} />
       ) : (
         <ScrollView contentContainerStyle={gamePlayStyle.scrollView}>
@@ -173,7 +192,7 @@ export default function GamePlayScreen({navigation, route}) {
             />
           </View>
           <SwipeableGameCard
-            data={cardsRqs}
+            data={fetchedCards}
             ref={carouselRef}
             style={gamePlayStyle.card}
             contentStyle={defaultContentStyle}
