@@ -21,12 +21,12 @@ function recentCardDecksReducer(
   action,
 ) {
   const {recentlyCardDeckIds = []} = state;
-  const {cardDeckId} = action?.payload;
+  const {cardDeckId} = action?.payload || {};
   switch (action?.type) {
     case RECENTLY_CARD_DECKS_ACTION_TYPE.ADD_ALL: {
       return {
         ...state,
-        recentlyCardDeckIds: action?.payload?.cardDeckIds,
+        recentlyCardDeckIds: action?.payload?.cardDeckIds || [],
       };
     }
 

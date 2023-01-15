@@ -8,7 +8,7 @@ import {KEY} from 'src/constants';
 import {getItemStorage, getMultiStorage} from 'src/utils';
 import {
   cardDecksSelect,
-  loadCardDecks,
+  loadCardDecksFromApi,
   recentlyIdsSelect,
   recentlyKeysSelect,
   requestCardDecksSelect,
@@ -22,7 +22,7 @@ import {
 } from './components';
 import {CustomStatusBar, SectionHeader} from '../components';
 import {FilledButton, SpinnerType1} from 'src/components';
-import useSelectCardDeckByRecentlyKey from './useSelectCardDeckByRecentlyKey';
+import useRecentlyCardDecks from './useRecentlyCardDecks';
 
 const RECENTLY = 'Chơi gần đây';
 const POPULAR = 'Phổ biến';
@@ -33,45 +33,16 @@ export default function HomeScreen({navigation}) {
   const dispatch = useDispatch();
   const popularCardDecks = useSelector(selectCardDeckArray);
   const rqsCardDecks = useSelector(selectGetAllCardDeckRequest);
-  const storeRecentlyKeys = useSelector(recentlyKeysSelect);
-  const storedRecentCardDecks = useSelectCardDeckByRecentlyKey() || {};
-  const recentlyIds = useSelector(recentlyIdsSelect);
-  const recentlyKeys = useSelector(recentlyKeysSelect) || {};
-  const [recentlyCardDecks, setRecentlyCardDecks] = useState([]);
+  const {recentlyCardDecks = []} = useRecentlyCardDecks();
 
   useEffect(() => {
-    dispatch(loadCardDecks());
+    dispatch(loadCardDecksFromApi());
     if (!rqsCardDecks || popularCardDecks === null) {
       SplashScreen.hide();
     } else if (popularCardDecks.length === 0) {
       return <SpinnerType1 />;
     }
   }, [dispatch]);
-
-  useEffect(() => {
-    async function getRecentlyCardDecks() {
-      if (recentlyKeys.length > 0) {
-        const storageRecentlyDecks = await getMultiStorage(recentlyKeys, '');
-        console.log('redux key');
-        setRecentlyCardDecks(storageRecentlyDecks);
-      } else {
-        const storageKeys = await getItemStorage(
-          KEY?.RECENTLY_CARD_DECK_ID_KEYS,
-          [],
-        );
-        const storageRecentlyDecks = await getMultiStorage(storageKeys, {});
-        setRecentlyCardDecks(storageRecentlyDecks);
-        console.log('storage');
-      }
-    }
-
-    if (storedRecentCardDecks.length > 0) {
-      setRecentlyCardDecks(storedRecentCardDecks);
-      console.log('redux');
-    } else {
-      getRecentlyCardDecks();
-    }
-  }, [storeRecentlyKeys]);
 
   useEffect(() => {
     navigation.setOptions({

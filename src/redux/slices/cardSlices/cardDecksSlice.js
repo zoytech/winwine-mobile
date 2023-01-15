@@ -9,15 +9,12 @@ const CARD_DECKS = {
   ADD_ALL_REQUEST: 'ADD_ALL_REQUEST',
 };
 
-function loadCardDecks() {
+function loadCardDecksFromApi() {
   return async dispatch => {
     dispatch({type: CARD_DECKS.ADD_ALL_REQUEST});
     try {
       const response = await CardDeckApi.getCardDecks();
-      dispatch({
-        type: CARD_DECKS.ADD_ALL_SUCCESS,
-        payload: {cardDecks: response?.data},
-      });
+      dispatch(loadAllCardDeckSuccess({cardDecks: response?.data}));
     } catch (error) {
       console.log('loadCardDecks error:', error);
       dispatch({
@@ -45,6 +42,10 @@ function upsertCardDeckDetail(cardDeck) {
       console.log('upsertCardDeckDetail error:', error);
     }
   };
+}
+
+function loadAllCardDeckSuccess({cardDecks}) {
+  return {type: CARD_DECKS.ADD_ALL_SUCCESS, payload: {cardDecks}};
 }
 
 const removeStoreCardDecks = cardDeck => dispatch => {
@@ -186,9 +187,10 @@ function selectCardDecksStore(state) {
 
 export {
   cardDecksReducer,
-  loadCardDecks,
+  loadCardDecksFromApi,
   upsertCardDeckDetail,
   normalizedCardDecksSelect,
+  loadAllCardDeckSuccess,
   selectGetAllCardDeckRequest,
   selectCardDeckArray,
   selectCardDeckById,
