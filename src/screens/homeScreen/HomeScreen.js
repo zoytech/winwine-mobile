@@ -55,7 +55,10 @@ export default function HomeScreen({navigation}) {
         console.log('redux key');
         setRecentlyCardDecks(storageRecentlyDecks);
       } else {
-        const storageKeys = await getItemStorage(KEY?.RECENTLY_PLAY, []);
+        const storageKeys = await getItemStorage(
+          KEY?.RECENTLY_CARD_DECK_ID_KEYS,
+          [],
+        );
         const storageRecentlyDecks = await getMultiStorage(storageKeys, {});
         setRecentlyCardDecks(storageRecentlyDecks);
         console.log('storage');
@@ -88,7 +91,7 @@ export default function HomeScreen({navigation}) {
 
   async function handleClearRecentlyStoragePress() {
     try {
-      await AsyncStorage.removeItem(KEY.RECENTLY_PLAY);
+      await AsyncStorage.removeItem(KEY.RECENTLY_CARD_DECK_ID_KEYS);
     } catch (e) {
       console.log('Clear recently storage get error: ', e);
     }

@@ -56,6 +56,7 @@ const removeStoreCardDecks = cardDeck => dispatch => {
 
 function cardDecksReducer(
   state = {
+    recentlyCardDeckIds: [],
     cardDeckIds: [],
     cardDecks: {},
     isRequestingAll: false,
@@ -179,6 +180,10 @@ function selectCardDeckById(cardDeckId, state) {
   return cardDeckIds && cardDeckIds[cardDeckId];
 }
 
+function selectCardDecksStore(state) {
+  return state?.cardDecks || {};
+}
+
 export {
   cardDecksReducer,
   loadCardDecks,
@@ -187,4 +192,5 @@ export {
   selectGetAllCardDeckRequest,
   selectCardDeckArray,
   selectCardDeckById,
+  selectCardDecksStore,
 };

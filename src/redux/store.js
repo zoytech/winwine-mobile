@@ -7,6 +7,7 @@ import {
   cardsReducer,
   hashtagsReducer,
   libraryKeysReducer,
+  recentCardDecksReducer,
   recentlyReducer,
 } from 'src/redux/slices';
 
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   cardDeckAndCards: cardDeckAndCardsReducer,
   recently: recentlyReducer,
   libraryKeys: libraryKeysReducer,
+  recentlyCardDecks: recentCardDecksReducer,
 });
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION;
 const thunkMiddleWare = applyMiddleware(thunk);
