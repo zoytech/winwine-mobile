@@ -1,5 +1,5 @@
 import {CardDeckApi} from 'src/apis';
-import {addStoreCardDecks} from './cardDecksSlice';
+import {addStoreCardDecks, upsertCardDeckDetail} from './cardDecksSlice';
 import {addRecentlyCardDeck} from '../keyStoreSlices';
 
 const FETCH_DECK = {
@@ -19,7 +19,7 @@ export function loadCardDeckByDeckId(cardDeckId) {
     try {
       const response = await CardDeckApi.getCardDeckById(cardDeckId);
       const cardDeck = response?.data;
-      console.log('card deck in redux: ', cardDeck);
+      dispatch(upsertCardDeckDetail(cardDeck));
       dispatch(fetchDeckSuccess(cardDeck));
       dispatch(addStoreCardDecks(cardDeck));
       dispatch(addRecentlyCardDeck(cardDeck));

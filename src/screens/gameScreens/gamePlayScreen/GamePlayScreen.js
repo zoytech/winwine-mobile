@@ -43,26 +43,16 @@ export default function GamePlayScreen({navigation, route}) {
   } = route.params;
   const dispatch = useDispatch();
   const fetchedCards = useSelector(cardsSelect);
-  const normalCardDecks = useSelector(normalizedCardDecksSelect);
   const cardsRqs = useSelector(requestCardsSelect);
   const carouselRef = useRef(null);
   const [showIndex, setShowIndex] = useState(INITIAL_INDEX);
   const [showIndicatorInfo, setShowIndicatorInfo] = useState(true);
   const [setNewCardDeck] = useRecentlyStorage(cardDeckIdParam, {});
-  const isInStoreCardDecks = normalCardDecks.hasOwnProperty(cardDeckIdParam);
 
   console.log('setNewCardDeck: ', typeof setNewCardDeck);
   useEffect(() => {
     dispatch(loadCardsByDeckId(cardDeckIdParam));
-
-    async function addCardDeckToStorage() {
-      await setNewCardDeck();
-    }
-
-    if (isInStoreCardDecks === false) {
-      dispatch(loadCardDeckByDeckId(cardDeckIdParam));
-      addCardDeckToStorage();
-    }
+    dispatch(loadCardDeckByDeckId(cardDeckIdParam));
     console.log('in use effect first: ');
   }, [dispatch, cardDeckIdParam]);
 

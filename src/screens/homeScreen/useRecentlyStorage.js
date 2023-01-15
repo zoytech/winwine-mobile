@@ -6,6 +6,7 @@ import {
   cardDeckSelect,
   loadCardDeckByDeckId,
   normalizedCardDecksSelect,
+  selectCardDeckById,
 } from 'src/redux/slices';
 import processingRecentlyData from './processingRecentlyData';
 import {useEffect, useState} from 'react';
@@ -13,16 +14,12 @@ import {useEffect, useState} from 'react';
 function useRecentlyStorage(cardDeckId, initValue) {
   const dispatch = useDispatch();
   const cardDeckKey = convertIdToStorageKey(cardDeckId, KEY.CARD_DECKS);
-  const fetchedCardDeck = useSelector(cardDeckSelect);
-
-  const normalCardDecks = useSelector(normalizedCardDecksSelect);
-  const isInStoreCardDecks = normalCardDecks.hasOwnProperty(cardDeckId);
-
-  const cardDeckItem =
-    isInStoreCardDecks === true ? normalCardDecks[cardDeckId] : fetchedCardDeck;
+  const cardDeckFromStore = useSelector(state =>
+    selectCardDeckById(cardDeckId, state),
+  );
 
   useEffect(() => {
-    if (isInStoreCardDecks === false) {
+    if (!cardDeckFromStore || !cardDeckFromStore?.detailed) {
       dispatch(loadCardDeckByDeckId(cardDeckId));
     }
   }, [dispatch, cardDeckId]);
@@ -46,7 +43,7 @@ function useRecentlyStorage(cardDeckId, initValue) {
         counterKeys[cardDeckKey].push(KEY.RECENTLY_PLAY);
       }
       await setItemStorage(KEY.DECK_COUNT, counterKeys);
-      await setItemStorage(cardDeckKey, cardDeckItem);
+      await setItemStorage(cardDeckKey, cardDeckFromStore);
     } catch (e) {
       console.log('Add card deck to storage cause error: ', e);
     }

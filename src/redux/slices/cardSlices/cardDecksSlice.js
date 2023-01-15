@@ -1,8 +1,9 @@
 import {CardDeckApi} from 'src/apis';
 
 const CARD_DECKS = {
-  ADD: 'ADD_CARD_DECKS',
   GET: 'GET_CARD_DECKS',
+  ADD_DETAIL: 'ADD_DETAIL',
+  UPDATE_DETAIL: 'UPDATE_DETAIL',
   ADD_ALL_SUCCESS: 'ADD_ALL_SUCCESS',
   ADD_ALL_ERROR: 'ADD_ALL_ERROR',
   ADD_ALL_REQUEST: 'ADD_ALL_REQUEST',
@@ -27,20 +28,33 @@ function loadCardDecks() {
   };
 }
 
-export const addStoreCardDecks = cardDeck => dispatch => {
-  return dispatch({
-    type: CARD_DECKS.ADD,
-    payload: cardDeck,
-  });
-};
-export const removeStoreCardDecks = cardDeck => dispatch => {
+function upsertCardDeckDetail(cardDeck) {
+  if (!cardDeck) {
+    console.log('upsertCardDeckDetail - invalid cardDeck:', cardDeck);
+    return;
+  }
+  return async (dispatch, getState) => {
+    try {
+      const prevCardDeck = selectCardDeckById(cardDeck?.cardDeckId, getState());
+      if (!prevCardDeck) {
+        dispatch({type: CARD_DECKS.ADD_DETAIL, payload: {cardDeck: cardDeck}});
+        return;
+      }
+      dispatch({type: CARD_DECKS.UPDATE_DETAIL, payload: {cardDeck: cardDeck}});
+    } catch (error) {
+      console.log('upsertCardDeckDetail error:', error);
+    }
+  };
+}
+
+const removeStoreCardDecks = cardDeck => dispatch => {
   return dispatch({
     type: CARD_DECKS.REMOVE,
     payload: cardDeck,
   });
 };
 
-export function cardDecksReducer(
+function cardDecksReducer(
   state = {
     cardDeckIds: [],
     cardDecks: {},
@@ -68,8 +82,15 @@ export function cardDecksReducer(
 
       action.payload?.cardDecks &&
         action.payload?.cardDecks.forEach(cardDeck => {
-          newCardDeckIds.push(cardDeck?.cardDeckId);
-          newCardDecks[cardDeck?.cardDeckId] = cardDeck;
+          const id = cardDeck?.cardDeckId;
+          if (!cardDeckIds.includes(id)) {
+            newCardDeckIds.push(id);
+          }
+          if (cardDecks && cardDecks[id] && cardDecks[id]?.detailed) {
+            newCardDecks[id] = cardDecks[id];
+          } else {
+            newCardDecks[id] = cardDeck;
+          }
         });
 
       return {
@@ -80,20 +101,44 @@ export function cardDecksReducer(
       };
     }
 
-    case CARD_DECKS.ADD: {
+    case CARD_DECKS.ADD_DETAIL: {
       const newCardDeck = action.payload;
-      if (cardDeckIds && cardDeckIds.includes(newCardDeck?.cardDeckId)) {
-        return state;
+      const id = newCardDeck?.cardDeckId;
+
+      let newCardDeckId = [...cardDeckIds];
+      if (!cardDeckIds.includes(id)) {
+        newCardDeckId.push(id);
       }
       return {
         ...state,
-        cardDeckIds: [newCardDeck?.cardDeckId, ...cardDeckIds],
+        cardDeckIds: newCardDeckId,
         cardDecks: {
           ...cardDecks,
-          [newCardDeck?.cardDeckId]: newCardDeck,
+          [id]: {
+            ...(cardDecks[id] || {}),
+            ...newCardDeck,
+            detailed: true,
+          },
         },
       };
     }
+
+    case CARD_DECKS.UPDATE_DETAIL: {
+      const updatingCardDeck = action.payload;
+      return {
+        ...state,
+        cardDeckIds: [updatingCardDeck?.cardDeckId, ...cardDeckIds],
+        cardDecks: {
+          ...cardDecks,
+          [updatingCardDeck?.cardDeckId]: {
+            ...cardDecks[updatingCardDeck?.cardDeckId],
+            ...updatingCardDeck,
+            detailed: true,
+          },
+        },
+      };
+    }
+
     case CARD_DECKS.REMOVE: {
       const removingCardeck = action.payload;
       const removingCardDeckIndex = cardDecks.indexOf(
@@ -129,9 +174,17 @@ function selectCardDeckArray(state) {
   });
 }
 
+function selectCardDeckById(cardDeckId, state) {
+  const {cardDeckIds = {}} = state?.cardDecks;
+  return cardDeckIds && cardDeckIds[cardDeckId];
+}
+
 export {
+  cardDecksReducer,
   loadCardDecks,
+  upsertCardDeckDetail,
   normalizedCardDecksSelect,
   selectGetAllCardDeckRequest,
   selectCardDeckArray,
+  selectCardDeckById,
 };
