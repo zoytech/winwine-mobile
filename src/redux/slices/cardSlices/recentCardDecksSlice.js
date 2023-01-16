@@ -1,5 +1,5 @@
-import {replace, select, remove} from 'src/utils';
-import processingRecentlyData from '../../../screens/homeScreen/processingRecentlyData';
+import {remove, select} from 'src/utils';
+import processingRecentlyData from 'src/screens/homeScreen/processingRecentlyData';
 
 const RECENTLY_CARD_DECKS_ACTION_TYPE = {
   ADD_ALL: '@recentCardDecksReducer/ADD_ALL',

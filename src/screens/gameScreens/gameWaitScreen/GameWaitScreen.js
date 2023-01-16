@@ -12,7 +12,6 @@ import {
 import {
   libraryKeysSelect,
   loadCardDeckByDeckId,
-  normalizedCardDecksSelect,
   requestCardDeckSelect,
   selectCardDeckById,
 } from 'src/redux/slices';
@@ -35,7 +34,7 @@ const EMPTY_CONTENT = 'Bộ bài chưa có lá bài nào.';
 
 export default function GameWaitScreen({navigation, route}) {
   const {cardDeckIdParam, cardDeckNameParam, cardDeckImageParam} = route.params;
-  const cardDeck = useSelector(state =>
+  const cardDeckFromStore = useSelector(state =>
     selectCardDeckById(state, cardDeckIdParam),
   );
   const cardDeckRqs = useSelector(requestCardDeckSelect);
@@ -48,7 +47,9 @@ export default function GameWaitScreen({navigation, route}) {
   const scrollViewRef = useRef([]);
 
   useEffect(() => {
-    dispatch(loadCardDeckByDeckId(cardDeckIdParam));
+    if (!cardDeckFromStore || !cardDeckFromStore?.detailed) {
+      dispatch(loadCardDeckByDeckId(cardDeckIdParam));
+    }
 
     async function hasItemFromStorage() {
       const hasSaveIdRqs = await hasStoreKeyInStorage(
@@ -61,8 +62,6 @@ export default function GameWaitScreen({navigation, route}) {
 
     hasItemFromStorage();
   }, [dispatch, cardDeckIdParam]);
-
-  console.log('cardDeck: ', cardDeck);
 
   useEffect(() => {
     navigation.setOptions({
@@ -77,7 +76,7 @@ export default function GameWaitScreen({navigation, route}) {
       ),
     });
   }, [navigation, imageHeight]);
-  const {cardDeckImage, numberOfCards, previewCards} = cardDeck || {};
+  const {cardDeckImage, numberOfCards, previewCards} = cardDeckFromStore || {};
   const previewCardData = previewCards
     ? getPreviewDataItem(previewCards, INITIAL_INDEX)
     : [];
@@ -134,7 +133,7 @@ export default function GameWaitScreen({navigation, route}) {
             onLayoutImage={e => handleOnLayoutImage(e)}
           />
           <HeaderInformation
-            data={cardDeck}
+            data={cardDeckFromStore}
             headStyle={Typography.headline.small}
             contentStyle={Typography.label.large}
           />
@@ -148,7 +147,7 @@ export default function GameWaitScreen({navigation, route}) {
           <>
             <HeaderButtons
               onFilledButtonPress={handlePressFilledButton}
-              data={cardDeck}
+              data={cardDeckFromStore}
               hasStoreKey={hasStorageKey}
             />
             <View style={gameWaitStyle.supportingText}>

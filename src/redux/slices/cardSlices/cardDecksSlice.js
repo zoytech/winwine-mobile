@@ -1,7 +1,6 @@
 import {CardDeckApi} from 'src/apis';
 
 const CARD_DECKS = {
-  GET: 'GET_CARD_DECKS',
   ADD_DETAIL: 'ADD_DETAIL',
   UPDATE_DETAIL: 'UPDATE_DETAIL',
   ADD_ALL_SUCCESS: 'ADD_ALL_SUCCESS',
@@ -33,7 +32,7 @@ function upsertCardDeckDetail(cardDeck) {
   return async (dispatch, getState) => {
     try {
       const prevCardDeck = selectCardDeckById(getState(), cardDeck?.cardDeckId);
-      console.log('prevCardDeck:', prevCardDeck);
+      console.log('prevCardDeckId:', prevCardDeck?.cardDeckId);
       if (!prevCardDeck) {
         dispatch({type: CARD_DECKS.ADD_DETAIL, payload: {cardDeck: cardDeck}});
         return;
@@ -105,19 +104,19 @@ function cardDecksReducer(
 
     case CARD_DECKS.ADD_DETAIL: {
       const newCardDeck = action?.payload?.cardDeck;
-      const id = newCardDeck?.cardDeckId;
+      const newCardDeckId = newCardDeck?.cardDeckId;
 
       let newCardDeckIds = [...cardDeckIds];
-      if (!cardDeckIds.includes(id)) {
-        newCardDeckIds.push(id);
+      if (!cardDeckIds.includes(newCardDeckId)) {
+        newCardDeckIds.push(newCardDeckId);
       }
       return {
         ...state,
         cardDeckIds: newCardDeckIds,
         cardDecks: {
           ...cardDecks,
-          [id]: {
-            ...(cardDecks[id] || {}),
+          [newCardDeckId]: {
+            ...(cardDecks[newCardDeckId] || {}),
             ...newCardDeck,
             detailed: true,
           },
@@ -127,12 +126,13 @@ function cardDecksReducer(
 
     case CARD_DECKS.UPDATE_DETAIL: {
       const updatingCardDeck = action.payload?.cardDeck || {};
+      const updatingCardDeckId = updatingCardDeck?.cardDeckId;
       return {
         ...state,
         cardDecks: {
           ...cardDecks,
-          [updatingCardDeck?.cardDeckId]: {
-            ...cardDecks[updatingCardDeck?.cardDeckId],
+          [updatingCardDeckId]: {
+            ...cardDecks[updatingCardDeckId],
             ...updatingCardDeck,
             detailed: true,
           },
@@ -141,9 +141,9 @@ function cardDecksReducer(
     }
 
     case CARD_DECKS.REMOVE: {
-      const removingCardeck = action.payload;
+      const removingCardDeck = action.payload;
       const removingCardDeckIndex = cardDecks.indexOf(
-        removingCardeck?.cardDeckId,
+        removingCardDeck?.cardDeckId,
       );
       return {
         ...state,
@@ -153,7 +153,7 @@ function cardDecksReducer(
         ],
         cardDecks: {
           ...cardDecks,
-          [removingCardeck?.cardDeckId]: undefined,
+          [removingCardDeck?.cardDeckId]: undefined,
         },
       };
     }
@@ -169,7 +169,7 @@ function selectGetAllCardDeckRequest(state) {
 }
 
 function selectCardDeckArray(state) {
-  const {cardDecks = [], cardDeckIds = {}} = state?.cardDecks;
+  const {cardDecks = [], cardDeckIds = []} = state?.cardDecks;
   return cardDeckIds.map(id => {
     return cardDecks[id];
   });
@@ -178,6 +178,15 @@ function selectCardDeckArray(state) {
 function selectCardDeckById(state, cardDeckId) {
   const {cardDecks = {}} = state?.cardDecks;
   return cardDecks && cardDecks[cardDeckId];
+}
+
+function selectCardDeckByIds(state, cardDeckIds) {
+  const {cardDecks = {}} = state?.cardDecks;
+  return (
+    cardDeckIds &&
+    cardDeckIds.length > 0 &&
+    cardDeckIds.map(cardDeckId => cardDecks && cardDecks[cardDeckId])
+  );
 }
 
 function selectCardDecksStore(state) {
@@ -194,4 +203,5 @@ export {
   selectCardDeckArray,
   selectCardDeckById,
   selectCardDecksStore,
+  selectCardDeckByIds,
 };

@@ -2,6 +2,7 @@ import {applyMiddleware, combineReducers, compose, createStore} from 'redux';
 import thunk from 'redux-thunk';
 import {
   cardDeckAndCardsReducer,
+  cardDeckReducer,
   cardDecksReducer,
   cardsReducer,
   hashtagsReducer,
@@ -15,7 +16,7 @@ const rootReducer = combineReducers({
   cards: cardsReducer,
   storeCardDecks: cardDecksReducer,
   hashtagsReducer: hashtagsReducer,
-  cardDeckAndCards: cardDeckAndCardsReducer,
+  cardDeck: cardDeckReducer,
   recently: recentlyReducer,
   libraryKeys: libraryKeysReducer,
   recentlyCardDecks: recentCardDecksReducer,
