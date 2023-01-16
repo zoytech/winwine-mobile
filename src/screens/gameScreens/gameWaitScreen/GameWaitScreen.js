@@ -10,11 +10,11 @@ import {
   HeaderInformation,
 } from './components';
 import {
-  cardDeckSelect,
   libraryKeysSelect,
   loadCardDeckByDeckId,
   normalizedCardDecksSelect,
   requestCardDeckSelect,
+  selectCardDeckById,
 } from 'src/redux/slices';
 import {SwipeableGameCard} from '../components';
 import {HEIGHT, KEY} from 'src/constants';
@@ -35,28 +35,21 @@ const EMPTY_CONTENT = 'Bộ bài chưa có lá bài nào.';
 
 export default function GameWaitScreen({navigation, route}) {
   const {cardDeckIdParam, cardDeckNameParam, cardDeckImageParam} = route.params;
-  const fetchedCardDeck = useSelector(cardDeckSelect);
+  const cardDeck = useSelector(state =>
+    selectCardDeckById(state, cardDeckIdParam),
+  );
   const cardDeckRqs = useSelector(requestCardDeckSelect);
   const libStorageKeys = useSelector(libraryKeysSelect);
-  const normalCardDecks = useSelector(normalizedCardDecksSelect);
   const dispatch = useDispatch();
   const [showIndex, setShowIndex] = useState(INITIAL_INDEX);
   const [imageHeight, setImageHeight] = useState(HEIGHT?.IMAGE);
   const [hasStorageKey, setHasStorageKey] = useState();
   const carouselRef = useRef(null);
   const scrollViewRef = useRef([]);
-  const isInStoreCardDecks = normalCardDecks.hasOwnProperty(cardDeckIdParam);
-  const finalCardDeck = isInStoreCardDecks
-    ? normalCardDecks[cardDeckIdParam]
-    : fetchedCardDeck;
 
   useEffect(() => {
-    if (!isInStoreCardDecks) {
-      dispatch(loadCardDeckByDeckId(cardDeckIdParam));
-    }
-  }, [dispatch, cardDeckIdParam]);
+    dispatch(loadCardDeckByDeckId(cardDeckIdParam));
 
-  useEffect(() => {
     async function hasItemFromStorage() {
       const hasSaveIdRqs = await hasStoreKeyInStorage(
         cardDeckIdParam,
@@ -67,7 +60,9 @@ export default function GameWaitScreen({navigation, route}) {
     }
 
     hasItemFromStorage();
-  }, [cardDeckIdParam]);
+  }, [dispatch, cardDeckIdParam]);
+
+  console.log('cardDeck: ', cardDeck);
 
   useEffect(() => {
     navigation.setOptions({
@@ -82,7 +77,7 @@ export default function GameWaitScreen({navigation, route}) {
       ),
     });
   }, [navigation, imageHeight]);
-  const {cardDeckImage, numberOfCards, previewCards} = finalCardDeck || {};
+  const {cardDeckImage, numberOfCards, previewCards} = cardDeck || {};
   const previewCardData = previewCards
     ? getPreviewDataItem(previewCards, INITIAL_INDEX)
     : [];
@@ -139,7 +134,7 @@ export default function GameWaitScreen({navigation, route}) {
             onLayoutImage={e => handleOnLayoutImage(e)}
           />
           <HeaderInformation
-            data={finalCardDeck}
+            data={cardDeck}
             headStyle={Typography.headline.small}
             contentStyle={Typography.label.large}
           />
@@ -153,7 +148,7 @@ export default function GameWaitScreen({navigation, route}) {
           <>
             <HeaderButtons
               onFilledButtonPress={handlePressFilledButton}
-              data={finalCardDeck}
+              data={cardDeck}
               hasStoreKey={hasStorageKey}
             />
             <View style={gameWaitStyle.supportingText}>
