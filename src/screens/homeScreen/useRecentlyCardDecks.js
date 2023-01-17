@@ -3,32 +3,40 @@ import {useDispatch, useSelector} from 'react-redux';
 import {
   convertIdToStorageKey,
   convertStorageKeyToId,
-  getDataFromStorage,
   getItemStorage,
+  getMultiStorage,
+  normalizedBy,
 } from 'src/utils';
 import {KEY} from 'src/constants';
 import {
   addAllRecentlyCardDeckIds,
   loadAllCardDeckSuccess,
+  loadCardDeckByDeckIds,
   selectCardDecksStore,
   selectRecentlyCardDeckStore,
 } from 'src/redux/slices';
+
+const testRecentlyCardDeckIds1 = ['123', '456'];
 
 function useRecentlyCardDecks() {
   const dispatch = useDispatch();
   const {recentlyCardDeckIds = []} = useSelector(selectRecentlyCardDeckStore);
   const {cardDecks = {}} = useSelector(selectCardDecksStore);
-
   const recentlyCardDecks = recentlyCardDeckIds.map(id => {
     return cardDecks[id];
   });
 
+  const testRecentlyCardDeckIds =
+    recentlyCardDeckIds && recentlyCardDeckIds.length > 0
+      ? recentlyCardDeckIds.concat(testRecentlyCardDeckIds1)
+      : [];
+
   useEffect(() => {
-    if (!recentlyCardDeckIds || recentlyCardDeckIds.length === 0) {
+    if (!testRecentlyCardDeckIds || testRecentlyCardDeckIds.length === 0) {
       warmUpRecentlyCardDeckIds();
     }
 
-    const missingCardDeckIds = recentlyCardDeckIds.filter(cardDeckId => {
+    const missingCardDeckIds = testRecentlyCardDeckIds.filter(cardDeckId => {
       return !cardDecks[cardDeckId];
     });
     if (missingCardDeckIds && missingCardDeckIds.length > 0) {
@@ -52,14 +60,30 @@ function useRecentlyCardDecks() {
   }
 
   async function warmUpMissingRecentlyCardDecks(missingCardDeckIds = []) {
-    const storedCardDecks = await getDataFromStorage(
+    const storageCardDecks = await getMultiStorage(
       missingCardDeckIds.map(cardDeckId => convertIdToStorageKey(cardDeckId)),
     );
-    dispatch(loadAllCardDeckSuccess({cardDecks: storedCardDecks}));
+    dispatch(loadAllCardDeckSuccess({cardDecks: storageCardDecks}));
+    const normalStorageCardDecks = storageCardDecks.reduce(
+      normalizedBy('cardDeckId'),
+      {},
+    );
 
-    //TODO: namnt handle this flow (call API to get missing card decks)
-    //const missingFromStorageCardDecks = storedCardDecks.filter
+    const missingIdsFromStorageCardDecks = missingCardDeckIds.filter(
+      cardDeckId => !normalStorageCardDecks[cardDeckId],
+    );
+    if (
+      missingIdsFromStorageCardDecks &&
+      missingIdsFromStorageCardDecks.length !== 0
+    ) {
+      dispatch(loadCardDeckByDeckIds(missingIdsFromStorageCardDecks));
+      dispatch(addAllRecentlyCardDeckIds(missingIdsFromStorageCardDecks));
+      //in think there is no need to save missing card decks to storage unless user enters to game play
+      // of one of them where useRecentlyCardDeck is triggered to save to storage
+    }
   }
+
+  //storageCardDecks && storageCardDecks.length !== 0
 
   return {recentlyCardDecks};
 }
