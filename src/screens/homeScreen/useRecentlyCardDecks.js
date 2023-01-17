@@ -30,8 +30,9 @@ function useRecentlyCardDecks() {
     }
 
     const missingCardDeckIds = recentlyCardDeckIds.filter(cardDeckId => {
-      return !cardDecks[cardDeckId];
+      return Object.keys(cardDecks).length !== 0 && !cardDecks[cardDeckId];
     });
+
     if (missingCardDeckIds && missingCardDeckIds.length > 0) {
       warmUpMissingRecentlyCardDecks(missingCardDeckIds);
     }
@@ -69,6 +70,7 @@ function useRecentlyCardDecks() {
       missingIdsFromStorageCardDecks &&
       missingIdsFromStorageCardDecks.length !== 0
     ) {
+      console.log('here');
       dispatch(loadCardDeckByDeckIds(missingIdsFromStorageCardDecks));
       dispatch(addAllRecentlyCardDeckIds(missingIdsFromStorageCardDecks));
       //in think there is no need to save missing card decks to storage unless user enters to game play
