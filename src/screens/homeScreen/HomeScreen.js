@@ -32,10 +32,8 @@ export default function HomeScreen({navigation}) {
 
   useEffect(() => {
     dispatch(loadCardDecksFromApi());
-    if (!rqsCardDecks || popularCardDecks === null) {
+    if (!rqsCardDecks || !popularCardDecks) {
       SplashScreen.hide();
-    } else if (popularCardDecks.length === 0) {
-      return <SpinnerType1 />;
     }
   }, [dispatch]);
 
@@ -63,6 +61,12 @@ export default function HomeScreen({navigation}) {
     }
   }
 
+  if (
+    (popularCardDecks && popularCardDecks.length === 0) ||
+    recentlyCardDecks.length === 0
+  ) {
+    return <SpinnerType1 />;
+  }
   return (
     <SafeAreaView style={styles.container}>
       <CustomStatusBar />
