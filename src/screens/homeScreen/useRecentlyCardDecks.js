@@ -16,8 +16,6 @@ import {
   selectRecentlyCardDeckStore,
 } from 'src/redux/slices';
 
-const testRecentlyCardDeckIds1 = ['123', '456'];
-
 function useRecentlyCardDecks() {
   const dispatch = useDispatch();
   const {recentlyCardDeckIds = []} = useSelector(selectRecentlyCardDeckStore);
@@ -26,17 +24,12 @@ function useRecentlyCardDecks() {
     return cardDecks[id];
   });
 
-  const testRecentlyCardDeckIds =
-    recentlyCardDeckIds && recentlyCardDeckIds.length > 0
-      ? recentlyCardDeckIds.concat(testRecentlyCardDeckIds1)
-      : [];
-
   useEffect(() => {
-    if (!testRecentlyCardDeckIds || testRecentlyCardDeckIds.length === 0) {
+    if (!recentlyCardDeckIds || recentlyCardDeckIds.length === 0) {
       warmUpRecentlyCardDeckIds();
     }
 
-    const missingCardDeckIds = testRecentlyCardDeckIds.filter(cardDeckId => {
+    const missingCardDeckIds = recentlyCardDeckIds.filter(cardDeckId => {
       return !cardDecks[cardDeckId];
     });
     if (missingCardDeckIds && missingCardDeckIds.length > 0) {
@@ -82,8 +75,6 @@ function useRecentlyCardDecks() {
       // of one of them where useRecentlyCardDeck is triggered to save to storage
     }
   }
-
-  //storageCardDecks && storageCardDecks.length !== 0
 
   return {recentlyCardDecks};
 }

@@ -8,16 +8,7 @@ const CARD_DECK = {
   ADD_SOME_ERROR: 'ADD_SOME_ERROR',
   ADD_SOME_REQUEST: 'ADD_SOME_REQUEST',
 };
-const testCardDecksAsFetchApi = [
-  {
-    cardDeckId: '123',
-    cardDeckName: '123',
-  },
-  {
-    cardDeckId: '456',
-    cardDeckName: '456',
-  },
-];
+
 const initialState = {
   requesting: false,
   data: {},
@@ -47,7 +38,7 @@ export function loadCardDeckByDeckIds(cardDeckIds) {
         cardDeckIds.map(cardDeckId => CardDeckApi.getCardDeckById(cardDeckId)),
       );
       const cardDecks = response.map(cardDeck => cardDeck?.data);
-      dispatch(loadAllCardDeckSuccess({cardDecks: testCardDecksAsFetchApi}));
+      dispatch(loadAllCardDeckSuccess({cardDecks: cardDecks}));
     } catch (error) {
       dispatch({type: CARD_DECK?.ADD_SOME_ERROR, payload: {error}});
     }
