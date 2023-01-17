@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {SafeAreaView, ScrollView, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Color, ColorVariant, Typography} from 'src/themes';
-import {SpinnerType1, StandardIconButton} from 'src/components';
+import {StandardIconButton} from 'src/components';
 import {
   cardsSelect,
   loadCardDeckByDeckId,
@@ -158,7 +158,10 @@ export default function GamePlayScreen({navigation, route}) {
     <SafeAreaView style={defaultContainerStyle}>
       <CustomStatusBar />
       {!cards || cards.length === 0 ? (
-        <EmptyInfoAnnouncement title={'Bộ bài chưa có lá bài nào.'} />
+        <EmptyInfoAnnouncement
+          title={'Bộ bài chưa có lá bài nào.'}
+          style={gamePlayStyle.emptyView}
+        />
       ) : (
         <ScrollView contentContainerStyle={gamePlayStyle.scrollView}>
           <View style={gamePlayStyle.progressBar}>
