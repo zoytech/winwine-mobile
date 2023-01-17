@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
   },
   announcement: {
     width: '100%',
+    alignItems: 'center',
   },
   subTitle: {
     width: '100%',
