@@ -14,6 +14,13 @@ function addAllRecentlyCardDeckIds(cardDeckIds) {
   };
 }
 
+function addRecentlyCardDeckIds(cardDeckIds) {
+  return {
+    type: RECENTLY_CARD_DECKS_ACTION_TYPE.ADD,
+    payload: {cardDeckIds},
+  };
+}
+
 function recentCardDecksReducer(
   state = {
     recentlyCardDeckIds: [],
@@ -73,4 +80,5 @@ export {
   selectRecentlyCardDeckStore,
   recentCardDecksReducer,
   addAllRecentlyCardDeckIds,
+  addRecentlyCardDeckIds,
 };

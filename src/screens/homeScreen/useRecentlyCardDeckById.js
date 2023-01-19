@@ -1,6 +1,11 @@
 import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {convertIdToStorageKey, getItemStorage, setItemStorage} from 'src/utils';
+import {
+  convertIdToStorageKey,
+  convertStorageKeyToId,
+  getItemStorage,
+  setItemStorage,
+} from 'src/utils';
 import {KEY} from 'src/constants';
 import {
   addAllRecentlyCardDeckIds,
@@ -36,7 +41,6 @@ function useRecentlyCardDeckById(cardDeckId) {
       );
       cardDeckKeys.unshift(cardDeckKey);
       const recentlyKeys = processingRecentlyData(cardDeckKeys);
-
       await setItemStorage(KEY.RECENTLY_CARD_DECK_ID_KEYS, recentlyKeys);
       dispatch(addAllRecentlyCardDeckIds([newCardDeck?.cardDeckId]));
 

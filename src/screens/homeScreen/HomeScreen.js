@@ -1,6 +1,7 @@
 import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import React, {useEffect, useRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import SplashScreen from 'react-native-splash-screen';
 import {Color, ColorVariant} from 'src/themes';
 import {
@@ -15,6 +16,7 @@ import {
 } from './components';
 import {CustomStatusBar, SectionHeader} from '../components';
 import useRecentlyCardDecks from './useRecentlyCardDecks';
+import {FilledButton} from '../../components';
 
 const RECENTLY = 'Chơi gần đây';
 const POPULAR = 'Phổ biến';
