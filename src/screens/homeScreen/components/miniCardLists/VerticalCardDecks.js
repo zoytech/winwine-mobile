@@ -3,6 +3,7 @@ import {StyleSheet, View} from 'react-native';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import {DECK} from 'src/constants';
 import {MiniCardItem} from 'src/screens/components';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 export default function VerticalCardDecks(props) {
   const {style, data, navigation, ...otherProps} = props;

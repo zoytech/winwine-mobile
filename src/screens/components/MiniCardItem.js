@@ -1,6 +1,10 @@
 import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
-import {OutlinedCard, StandardIconButton} from 'src/components';
+import {
+  OutlinedCard,
+  SkeletonLoading,
+  StandardIconButton,
+} from 'src/components';
 import {
   Color,
   ColorVariant,
@@ -12,12 +16,15 @@ import {DECK, KEY, WIDTH} from 'src/constants';
 import {hasStoreKeyInStorage} from '../../utils';
 import {useEffect, useState} from 'react';
 
+const itemWidth = WIDTH?.SCREEN * 0.4;
+const itemHeight = itemWidth / 0.67;
+
 export default function MiniCardItem(props) {
   const {
     data,
-    pinned,
     pinnedIds,
     liked,
+    isLoading = false,
     style,
     contentStyle,
     onPreviewPress = () => {},
@@ -25,7 +32,6 @@ export default function MiniCardItem(props) {
     onLongPress = () => {},
   } = props;
   const [hasPinId, setHasPinId] = useState(false);
-
   const {cardDeckId, cardDeckName, cardDeckImage, hashtags} = data || {};
   const deckName = cardDeckName ? cardDeckName : DECK?.NAME;
   const decktags = hashtags ? hashtags : DECK?.TAG;
@@ -122,28 +128,37 @@ export default function MiniCardItem(props) {
 
   return (
     <OutlinedCard style={[styles.container, style]}>
-      <Pressable
-        style={getContainerStyle}
-        onPress={onPlayPress}
-        onLongPress={onLongPress}>
-        <View style={styles.media}>
-          <Image source={deckImage} style={styles.image} />
-        </View>
-        <View style={styles.headline}>{renderMainContent()}</View>
-        <View style={[styles.action, {borderTopColor: borderColor}]}>
-          {renderActionComponents()}
-        </View>
-      </Pressable>
+      {isLoading ? (
+        <SkeletonLoading
+          enabled={isLoading}
+          width={itemWidth}
+          height={itemHeight}
+        />
+      ) : (
+        <Pressable
+          style={getContainerStyle}
+          onPress={onPlayPress}
+          onLongPress={onLongPress}>
+          <View style={styles.media}>
+            <Image source={deckImage} style={styles.image} />
+          </View>
+          <View style={styles.headline}>{renderMainContent()}</View>
+          <View style={[styles.action, {borderTopColor: borderColor}]}>
+            {renderActionComponents()}
+          </View>
+        </Pressable>
+      )}
     </OutlinedCard>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    width: WIDTH?.SCREEN * 0.4,
-    aspectRatio: 0.67,
+    width: itemWidth,
+    height: itemHeight,
     overflow: 'hidden',
     marginBottom: 16,
+    justifyContent: 'space-between',
   },
   media: {
     width: '100%',

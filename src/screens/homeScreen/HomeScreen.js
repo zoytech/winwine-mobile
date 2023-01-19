@@ -1,5 +1,12 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
+import {
+  Image,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -35,8 +42,6 @@ export default function HomeScreen({navigation}) {
     dispatch(loadCardDecks());
     if (!requestingCardDecks || popularCardDecks === null) {
       SplashScreen.hide();
-    } else if (popularCardDecks.length === 0) {
-      return <SpinnerType1 />;
     }
   }, [dispatch]);
 
@@ -66,21 +71,9 @@ export default function HomeScreen({navigation}) {
     });
   }, [navigation]);
 
-  async function handleClearStoragePress() {
-    try {
-      await AsyncStorage.removeItem(KEY.RECENTLY_PLAY);
-    } catch (e) {
-      console.log('Clear home storage get error: ', e);
-    }
-  }
-
   return (
     <SafeAreaView style={styles.container}>
       <CustomStatusBar />
-      <FilledButton
-        content={'clear home storage'}
-        onPress={handleClearStoragePress}
-      />
       <ScrollView
         onScroll={topBarRef.current?.onScroll}
         contentContainerStyle={styles.contentContainer}>
@@ -90,6 +83,7 @@ export default function HomeScreen({navigation}) {
             <HorizontalCardDecks
               data={recentlyCardDecks}
               navigation={navigation}
+              isLoading={popularCardDecks.length === 0}
             />
           </>
         )}
@@ -98,6 +92,7 @@ export default function HomeScreen({navigation}) {
           data={popularCardDecks}
           navigation={navigation}
           style={styles.secondView}
+          isLoading={popularCardDecks.length === 0}
         />
       </ScrollView>
     </SafeAreaView>
@@ -121,6 +116,26 @@ const styles = StyleSheet.create({
   },
   sectionHeader: {
     justifyContent: 'flex-start',
+  },
+  image: {
+    width: 65,
+    height: 65,
+  },
+  titleContainer: {
+    marginLeft: 16,
+    flex: 1,
+  },
+  title: {
+    fontSize: 20,
+    lineHeight: 22,
+  },
+  subtitle: {
+    fontSize: 14,
+    marginTop: 8,
+  },
+  container2: {
+    flexDirection: 'row',
+    marginBottom: 16,
   },
 });
 

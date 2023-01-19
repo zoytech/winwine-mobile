@@ -20,7 +20,7 @@ import {
 } from 'src/redux/slices';
 
 export default function LibraryCardDecks(props) {
-  const {style, data, selectedChip, navigation, ...otherProps} = props;
+  const {style, data, selectedChip, navigation, enabled, ...otherProps} = props;
   const dispatch = useDispatch();
   const keyStores = useSelector(libraryKeyStoreSelect);
   const [sortByTagData, setSortByTagData] = useState([]);
@@ -163,6 +163,7 @@ export default function LibraryCardDecks(props) {
           handleNavigateToActionBoard(deckId, hasPinnedId, hasLikedId)
         }
         style={itemStyle}
+        enabled={enabled}
       />
     );
   }
