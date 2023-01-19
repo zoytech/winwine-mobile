@@ -15,7 +15,7 @@ export default function VerticalCardDecks(props) {
         cardDeckIdParam: cardDeckId ? cardDeckId : '',
         cardDeckNameParam: cardDeckName ? cardDeckName : DECK?.NAME,
         cardDeckImageParam: cardDeckImage ? {uri: cardDeckImage} : DECK?.IMAGE,
-        hashtagsParam: hashtags ? hashtags : DECK?.TAG,
+        hashtagsParam: hashtags ? hashtags : DECK?.HASHTAGS,
       },
     });
   };

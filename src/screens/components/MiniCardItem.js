@@ -34,7 +34,7 @@ export default function MiniCardItem(props) {
   const [hasPinId, setHasPinId] = useState(false);
   const {cardDeckId, cardDeckName, cardDeckImage, hashtags} = data || {};
   const deckName = cardDeckName ? cardDeckName : DECK?.NAME;
-  const decktags = hashtags ? hashtags : DECK?.TAG;
+  const decktags = hashtags ? hashtags : DECK?.HASHTAGS;
   const deckImage = cardDeckImage ? {uri: cardDeckImage} : DECK?.IMAGE;
 
   useEffect(() => {

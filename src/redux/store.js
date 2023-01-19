@@ -1,23 +1,20 @@
 import {applyMiddleware, combineReducers, compose, createStore} from 'redux';
 import thunk from 'redux-thunk';
 import {
-  cardDeckAndCardsReducer,
   cardDeckReducer,
   cardDecksReducer,
   cardsReducer,
   hashtagsReducer,
   libraryKeysReducer,
   recentCardDecksReducer,
-  recentlyReducer,
 } from 'src/redux/slices';
 
 const rootReducer = combineReducers({
   cardDecks: cardDecksReducer,
   cards: cardsReducer,
   storeCardDecks: cardDecksReducer,
-  hashtagsReducer: hashtagsReducer,
+  hashtags: hashtagsReducer,
   cardDeck: cardDeckReducer,
-  recently: recentlyReducer,
   libraryKeys: libraryKeysReducer,
   recentlyCardDecks: recentCardDecksReducer,
 });
