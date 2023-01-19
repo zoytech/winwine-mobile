@@ -1,9 +1,4 @@
 apply plugin: "com.android.application"
-apply plugin: 'com.google.gms.google-services'
-
-
-
-
 
 import com.android.build.OutputFile
 import org.apache.tools.ant.taskdefs.condition.Os
@@ -285,7 +280,6 @@ dependencies {
     }
     implementation project(':react-native-splash-screen')
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.25'
-    implementation 'com.facebook.android:facebook-android-sdk:latest.release'
 
 
 
