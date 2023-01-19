@@ -10,9 +10,9 @@ import {
   HeaderInformation,
 } from './components';
 import {
-  cardDeckSelect,
   loadCardDeckByDeckId,
   requestCardDeckSelect,
+  selectCardDeckById,
 } from 'src/redux/slices';
 import {SwipeableGameCard} from '../components';
 import {HEIGHT} from 'src/constants';
@@ -23,8 +23,8 @@ import gameWaitStyle from './gameWaitStyle';
 
 const width = {
   CONTAINER: 320,
-  CARD: 250,
-  SEPARATOR: 25,
+  CARD: 275,
+  SEPARATOR: 10,
 };
 const INITIAL_INDEX = 0;
 const MAX_PREVIEW = 10;
@@ -32,8 +32,10 @@ const EMPTY_CONTENT = 'Bộ bài chưa có lá bài nào.';
 
 export default function GameWaitScreen({navigation, route}) {
   const {cardDeckIdParam, cardDeckNameParam, cardDeckImageParam} = route.params;
-  const cardDeckItem = useSelector(cardDeckSelect);
-  const requesting = useSelector(requestCardDeckSelect);
+  const cardDeckFromStore = useSelector(state =>
+    selectCardDeckById(state, cardDeckIdParam),
+  );
+  const cardDeckRqs = useSelector(requestCardDeckSelect);
   const dispatch = useDispatch();
   const [showIndex, setShowIndex] = useState(INITIAL_INDEX);
   const [imageHeight, setImageHeight] = useState(HEIGHT?.IMAGE);
@@ -41,8 +43,11 @@ export default function GameWaitScreen({navigation, route}) {
   const scrollViewRef = useRef([]);
 
   useEffect(() => {
-    dispatch(loadCardDeckByDeckId(cardDeckIdParam));
+    if (!cardDeckFromStore || !cardDeckFromStore?.detailed) {
+      dispatch(loadCardDeckByDeckId(cardDeckIdParam));
+    }
   }, [dispatch, cardDeckIdParam]);
+
   useEffect(() => {
     navigation.setOptions({
       header: () => (
@@ -56,7 +61,7 @@ export default function GameWaitScreen({navigation, route}) {
       ),
     });
   }, [navigation, imageHeight]);
-  const {cardDeckImage, numberOfCards, previewCards} = cardDeckItem || {};
+  const {cardDeckImage, numberOfCards, previewCards} = cardDeckFromStore || {};
   const previewCardData = previewCards
     ? getPreviewDataItem(previewCards, INITIAL_INDEX)
     : [];
@@ -98,7 +103,7 @@ export default function GameWaitScreen({navigation, route}) {
     });
   }
 
-  if (requesting) {
+  if (cardDeckRqs) {
     return <SpinnerType1 />;
   }
   return (
@@ -113,7 +118,7 @@ export default function GameWaitScreen({navigation, route}) {
             onLayoutImage={e => handleOnLayoutImage(e)}
           />
           <HeaderInformation
-            data={cardDeckItem}
+            data={cardDeckFromStore}
             headStyle={Typography.headline.small}
             contentStyle={Typography.label.large}
           />
@@ -125,6 +130,10 @@ export default function GameWaitScreen({navigation, route}) {
           />
         ) : (
           <>
+            <HeaderButtons
+              onFilledButtonPress={handlePressFilledButton}
+              data={cardDeckFromStore}
+            />
             <View style={gameWaitStyle.supportingText}>
               <Text style={defaultContentStyle}>{previewContent}</Text>
             </View>
@@ -139,11 +148,6 @@ export default function GameWaitScreen({navigation, route}) {
               onScrollEnd={(item, index) => handleOnScrollEnd(item, index)}
               onItemPress={handleCardItemPressed}
               initialIndex={INITIAL_INDEX}
-            />
-            <HeaderButtons
-              onFilledButtonPress={handlePressFilledButton}
-              data={cardDeckItem}
-              style={gameWaitStyle.action}
             />
           </>
         )}

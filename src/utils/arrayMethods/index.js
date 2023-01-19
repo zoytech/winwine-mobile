@@ -1,18 +1,7 @@
-import insertAndShift from './insertAndShift';
-import normalizedBy from './normalizedBy';
-import {
-  removeAllSameItem,
-  removeIdenticalItemInArray,
-  removeJustOneItem,
-} from './removedBy';
-import {getNewIntersection, getSeparateIntersection} from './getIntersection';
+import insert from './insert';
+import replace from './replace';
+import remove from './remove';
+import select from './select';
+import normalizedBy from './normalizeBy';
 
-export {
-  insertAndShift,
-  normalizedBy,
-  removeJustOneItem,
-  removeAllSameItem,
-  removeIdenticalItemInArray,
-  getNewIntersection,
-  getSeparateIntersection,
-};
+export {insert, replace, remove, select, normalizedBy};

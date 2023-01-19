@@ -1,13 +1,10 @@
-import {
-  Image,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
-import {OutlinedCard, StandardIconButton} from 'src/components';
+import {
+  OutlinedCard,
+  SkeletonLoading,
+  StandardIconButton,
+} from 'src/components';
 import {
   Color,
   ColorVariant,
@@ -17,22 +14,23 @@ import {
 } from 'src/themes';
 import {DECK, WIDTH} from 'src/constants';
 
+const itemWidth = WIDTH?.SCREEN * 0.4;
+const itemHeight = itemWidth / 0.67;
+
 export default function MiniCardItem(props) {
   const {
     data,
-    pinned,
     liked,
-    saved,
+    isLoading = false,
     style,
     contentStyle,
     onPreviewPress = () => {},
     onPlayPress = () => {},
     onLongPress = () => {},
   } = props;
-
-  const {cardDeckName, cardDeckImage, hashtags} = data || {};
+  const {cardDeckId, cardDeckName, cardDeckImage, hashtags} = data || {};
   const deckName = cardDeckName ? cardDeckName : DECK?.NAME;
-  const deckTags = hashtags ? hashtags : [DECK?.TAG];
+  const decktags = hashtags ? hashtags : DECK?.HASHTAGS;
   const deckImage = cardDeckImage ? {uri: cardDeckImage} : DECK?.IMAGE;
 
   const titleColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
@@ -67,28 +65,12 @@ export default function MiniCardItem(props) {
           {deckName}
         </Text>
         <View style={styles.tagsAndIcons}>
-          {renderIcons()}
-          {deckTags.map(item => (
+          {decktags.map(item => (
             <Text key={item} style={subTitleStyle}>
               {item}
             </Text>
           ))}
         </View>
-      </>
-    );
-  }
-
-  function renderIcons() {
-    const iconProps = {
-      size: 11,
-      color: iconColor,
-      style: {paddingHorizontal: 2},
-    };
-    return (
-      <>
-        {pinned && <Icon {...iconProps} name={'pushpin'} />}
-        {liked && <Icon {...iconProps} name={'star'} />}
-        {saved && <Icon {...iconProps} name={'downcircle'} />}
       </>
     );
   }
@@ -115,28 +97,37 @@ export default function MiniCardItem(props) {
 
   return (
     <OutlinedCard style={[styles.container, style]}>
-      <Pressable
-        style={getContainerStyle}
-        onPress={onPlayPress}
-        onLongPress={onLongPress}>
-        <View style={styles.media}>
-          <Image source={deckImage} style={styles.image} />
-        </View>
-        <View style={styles.headline}>{renderMainContent()}</View>
-        <View style={[styles.action, {borderTopColor: borderColor}]}>
-          {renderActionComponents()}
-        </View>
-      </Pressable>
+      {isLoading ? (
+        <SkeletonLoading
+          enabled={isLoading}
+          width={itemWidth}
+          height={itemHeight}
+        />
+      ) : (
+        <Pressable
+          style={getContainerStyle}
+          onPress={onPlayPress}
+          onLongPress={onLongPress}>
+          <View style={styles.media}>
+            <Image source={deckImage} style={styles.image} />
+          </View>
+          <View style={styles.headline}>{renderMainContent()}</View>
+          <View style={[styles.action, {borderTopColor: borderColor}]}>
+            {renderActionComponents()}
+          </View>
+        </Pressable>
+      )}
     </OutlinedCard>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    width: WIDTH?.SCREEN * 0.4,
-    aspectRatio: 0.67,
+    width: itemWidth,
+    height: itemHeight,
     overflow: 'hidden',
     marginBottom: 16,
+    justifyContent: 'space-between',
   },
   media: {
     width: '100%',

@@ -7,6 +7,8 @@ import {
   GameWaitScreen,
   HomeScreen,
 } from 'src/screens';
+import {useLayoutEffect} from 'react';
+import {hideBottomTabBarMethod} from './utils';
 import {
   GamePlayTopAppBar,
   GameWaitTopAppBar,
@@ -14,7 +16,7 @@ import {
 } from 'src/screens/screenTopAppBars';
 
 const HomeStack = createNativeStackNavigator();
-export default function HomeStackScreen() {
+export default function HomeStackScreen({navigation, route}) {
   const modalScreenProps = {
     presentation: 'transparentModal',
     cardOverlayEnable: false,

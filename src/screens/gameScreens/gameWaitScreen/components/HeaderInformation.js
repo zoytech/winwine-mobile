@@ -23,7 +23,7 @@ export default function HeaderInformation(props) {
     cardDeckLike,
   } = data;
   const deckName = cardDeckName ? cardDeckName : DECK?.NAME;
-  const deckTags = hashtags ? hashtags : [DECK?.TAG];
+  const deckTags = hashtags ? hashtags : DECK?.HASHTAGS;
   const totalCards = numberOfCards ? numberOfCards : DECK?.NUMBER_OF_CARDS;
   const userName = ownerName ? ownerName : OWNER?.NAME;
   const userAvatar = ownerAvatar ? ownerAvatar : OWNER?.AVATAR;

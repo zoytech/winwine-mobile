@@ -7,7 +7,7 @@ const defaultOf = {
 
 const DECK = {
   NAME: 'Bộ bài khuyết danh',
-  TAG: '#ChưaPhânLoại',
+  HASHTAGS: ['#ChưaPhânLoại'],
   IMAGE: cardDeckImg,
   NUMBER_OF_CARDS: 0,
 };

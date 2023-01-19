@@ -5,6 +5,7 @@ import {FilledButton} from 'src/components';
 export default function HeaderButtons(props) {
   const {
     data,
+    hasStoreKey,
     renderRightComponents,
     children,
     style,
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   mainAction: {
-    width: '50%',
+    width: '100%',
     alignSelf: 'center',
     flexDirection: 'row',
     justifyContent: 'center',

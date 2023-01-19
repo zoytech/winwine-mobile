@@ -5,3 +5,4 @@ export * from './error';
 export * from './defaultOf';
 export * from './dimenstion';
 export * from './content';
+export * from './localStorage';

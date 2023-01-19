@@ -12,8 +12,8 @@ const standardHeight = HEIGHT?.MIN_HEADER;
 const AnimatedCenterTopBar = withAnimated(CenterTopBar);
 
 function HomeTopAppBar(props, ref) {
-  const {navigation, style, ...otherProps} = props;
-  const greetingContent = partOfDayMethod();
+  const {navigation, avatar, style, ...otherProps} = props;
+  const greeting = partOfDayMethod();
   const reverseStandardHeight = -standardHeight;
   const scrollYContentOffsetRef = useRef(new Animated.Value(0)).current;
   const [subHeight, setSubHeight] = useState(0);
@@ -55,10 +55,14 @@ function HomeTopAppBar(props, ref) {
 
   function renderRightComponents() {
     return (
-      <AvatarSettingButton
-        navigation={navigation}
-        style={[styles.targetSize, styles.avatarDisplay]}
-      />
+      <>
+        {avatar && (
+          <AvatarSettingButton
+            navigation={navigation}
+            style={[styles.targetSize, styles.avatarDisplay]}
+          />
+        )}
+      </>
     );
   }
 
@@ -70,7 +74,7 @@ function HomeTopAppBar(props, ref) {
     <AnimatedCenterTopBar
       {...otherProps}
       style={defaultContainerStyle}
-      content={greetingContent}
+      content={greeting}
       headerTitleStyle={styles.headerTitle}
       RightComponents={renderRightComponents}
       componentStyle={topBarComponentAnimation}

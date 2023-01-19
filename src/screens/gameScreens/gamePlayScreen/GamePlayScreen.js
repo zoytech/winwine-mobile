@@ -1,12 +1,13 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {SafeAreaView, ScrollView, Text, View} from 'react-native';
+import {SafeAreaView, ScrollView, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Color, ColorVariant, Typography} from 'src/themes';
-import {SpinnerType1, StandardIconButton} from 'src/components';
+import {StandardIconButton} from 'src/components';
 import {
-  cardDeckAndCardsSelect,
-  loadCardDeckAndCardsByDeckId,
-  requestCardDeckAndCardsSelect,
+  cardsSelect,
+  loadCardDeckByDeckId,
+  loadCardsByDeckId,
+  requestCardsSelect,
 } from 'src/redux/slices';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import {DECK, WIDTH} from 'src/constants';
@@ -19,41 +20,37 @@ import {
 import {SwipeableGameCard} from '../components';
 import {CustomStatusBar, EmptyInfoAnnouncement} from 'src/screens/components';
 import gamePlayStyle from './gamePlayStyle';
+import useRecentlyCardDeckById from '../../homeScreen/useRecentlyCardDeckById';
 
 const screenWidth = WIDTH?.SCREEN;
 const width = {
   CONTAINER: 320,
-  CARD: 260,
-  SEPARATOR: 25,
+  CARD: 275,
+  SEPARATOR: 10,
 };
 
 const INITIAL_INDEX = 0;
 
 export default function GamePlayScreen({navigation, route}) {
-  const {cardDeckIdParam, cardDeckNameParam, cardDeckImageParam} = route.params;
+  const {
+    cardDeckIdParam,
+    cardDeckNameParam,
+    cardDeckImageParam,
+    hashtagsParam,
+  } = route.params;
   const dispatch = useDispatch();
-  const dataBlocks = useSelector(cardDeckAndCardsSelect);
-  const requesting = useSelector(requestCardDeckAndCardsSelect);
+
+  const fetchedCards = useSelector(cardsSelect);
+  const cardsRqs = useSelector(requestCardsSelect);
   const carouselRef = useRef(null);
   const [showIndex, setShowIndex] = useState(INITIAL_INDEX);
   const [showIndicatorInfo, setShowIndicatorInfo] = useState(true);
-  const {cardDeck: cardDeck, cards: cards} = dataBlocks;
-  const hashtags = cardDeck?.hashtags;
 
-  useEffect(() => {
-    dispatch(loadCardDeckAndCardsByDeckId(cardDeckIdParam));
-  }, [dispatch, cardDeckIdParam]);
-
-  useEffect(() => {
-    navigation.setOptions({
-      header: () => (
-        <GamePlayTopAppBar
-          content={cardDeckNameParam}
-          navigation={navigation}
-        />
-      ),
-    });
-  }, [navigation]);
+  const {cardDeck} = useRecentlyCardDeckById(cardDeckIdParam);
+  const cards =
+    fetchedCards && fetchedCards.length > 0
+      ? fetchedCards
+      : cardDeck && cardDeck?.previewCards;
 
   const dataLength = cards ? cards.length : DECK?.NUMBER_OF_CARDS;
   const progressBarWidth = screenWidth * 0.8;
@@ -72,6 +69,21 @@ export default function GamePlayScreen({navigation, route}) {
   ];
   const defaultContentStyle = [Typography.title.medium, {color: textColor}];
 
+  useEffect(() => {
+    dispatch(loadCardsByDeckId(cardDeckIdParam));
+  }, [dispatch, cardDeckIdParam]);
+
+  useEffect(() => {
+    navigation.setOptions({
+      header: () => (
+        <GamePlayTopAppBar
+          content={cardDeckNameParam}
+          navigation={navigation}
+        />
+      ),
+    });
+  }, [navigation]);
+
   function handleNavigateEndGameDialog() {
     const handleMainDialogPress = () => {
       navigation.popToTop();
@@ -80,21 +92,13 @@ export default function GamePlayScreen({navigation, route}) {
       navigation.goBack();
       carouselRef.current.resetIndex();
     };
-    const renderHashtags = item => {
-      return (
-        <View key={item} style={gamePlayStyle.hashtags}>
-          <Text style={defaultContentStyle}>{item}</Text>
-        </View>
-      );
-    };
-
     navigation.navigate({
       name: ScreenKeys.CARD_DIALOG,
       params: {
         content: (
           <EndingGameDialog
             headline={cardDeckNameParam}
-            subHeadLeft={hashtags.map(hashtag => renderHashtags(hashtag))}
+            hashtags={hashtagsParam}
             media={cardDeckImageParam}
             onMainActionPress={handleMainDialogPress}
             onSubActionPress={handleSubDialogPress}
@@ -149,14 +153,14 @@ export default function GamePlayScreen({navigation, route}) {
     );
   }
 
-  if (requesting) {
-    return <SpinnerType1 />;
-  }
   return (
     <SafeAreaView style={defaultContainerStyle}>
       <CustomStatusBar />
       {!cards || cards.length === 0 ? (
-        <EmptyInfoAnnouncement title={'Bộ bài chưa có lá bài nào.'} />
+        <EmptyInfoAnnouncement
+          title={'Bộ bài chưa có lá bài nào.'}
+          style={gamePlayStyle.emptyView}
+        />
       ) : (
         <ScrollView contentContainerStyle={gamePlayStyle.scrollView}>
           <View style={gamePlayStyle.progressBar}>
@@ -178,7 +182,7 @@ export default function GamePlayScreen({navigation, route}) {
             />
           </View>
           <SwipeableGameCard
-            data={cards}
+            data={fetchedCards}
             ref={carouselRef}
             style={gamePlayStyle.card}
             contentStyle={defaultContentStyle}
