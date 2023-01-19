@@ -1,7 +1,14 @@
 import {KEY, LIMIT} from 'src/constants';
 import {CardApi, CardDeckApi} from 'src/apis';
-import {addRecentlyKeyStore} from 'src/redux/slices';
-import {saveItemToStorage, saveKeyStoresToStorage} from 'src/utils';
+import {addRecentlyKey, addStoreCardDecks} from 'src/redux/slices';
+import {
+  convertIdToStorageKey,
+  getItemStorage,
+  processAddCounterKeyToStorage,
+  replace,
+  select,
+  setItemStorage,
+} from 'src/utils';
 
 const FETCH_DECK_AND_CARDS = {
   REQUEST: 'FETCH_DECK_AND_CARDS_ERROR',
@@ -29,14 +36,7 @@ export function loadCardDeckAndCardsByDeckId(cardDeckId) {
       const cardDeck = getCardDeckResp?.data;
       const cards = getCardsResp?.data;
       dispatch(fetchDbSuccess({cardDeck, cards}));
-      const storageKey = `${KEY?.RECENTLY_PLAY}/${cardDeckId}`;
-      await saveItemToStorage(cardDeckId, KEY?.RECENTLY_PLAY, cardDeck);
-      dispatch(addRecentlyKeyStore(storageKey));
-      await saveKeyStoresToStorage(
-        cardDeckId,
-        KEY?.RECENTLY_PLAY,
-        LIMIT.RECENTLY_CARD_DECKS,
-      );
+      // dispatch(addStoreCardDecks(cardDeck));
     } catch (err) {
       dispatch(fetchDbError(err));
       console.log(

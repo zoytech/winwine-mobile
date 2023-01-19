@@ -1,10 +1,14 @@
 import {CardDeckApi} from 'src/apis';
+import {loadAllCardDeckSuccess, upsertCardDeckDetail} from './cardDecksSlice';
 
-const FETCH_DECK = {
-  SUCCESS: 'FETCH_DECK_SUCCESS',
-  REQUEST: 'FETCH_DECK_REQUEST',
-  ERROR: 'FETCH_DECK_ERROR',
+const CARD_DECK = {
+  ADD_ALL_SUCCESS: 'ADD_ALL_SUCCESS',
+  ADD_ALL_ERROR: 'ADD_ALL_ERROR',
+  ADD_ALL_REQUEST: 'ADD_ALL_REQUEST',
+  ADD_SOME_ERROR: 'ADD_SOME_ERROR',
+  ADD_SOME_REQUEST: 'ADD_SOME_REQUEST',
 };
+
 const initialState = {
   requesting: false,
   data: {},
@@ -13,46 +17,60 @@ const initialState = {
 
 export function loadCardDeckByDeckId(cardDeckId) {
   return async dispatch => {
-    dispatch(fetchDeckRequest());
+    dispatch({type: CARD_DECK?.ADD_ALL_REQUEST});
     try {
       const response = await CardDeckApi.getCardDeckById(cardDeckId);
-      const cardDeckData = response?.data;
-      dispatch(fetchDeckSuccess(cardDeckData));
+      const cardDeck = response?.data;
+      dispatch(upsertCardDeckDetail(cardDeck));
+      dispatch({type: CARD_DECK?.ADD_ALL_SUCCESS, payload: {cardDeck}});
     } catch (error) {
-      dispatch(fetchDeckError(error));
+      dispatch({type: CARD_DECK?.ADD_ALL_ERROR, payload: {error}});
+      console.log('loadCardDeckByDeckId error: ', error);
     }
   };
 }
 
-const fetchDeckRequest = () => ({
-  type: FETCH_DECK.REQUEST,
-});
-const fetchDeckSuccess = data => {
-  return {
-    type: FETCH_DECK.SUCCESS,
-    payload: {data},
+export function loadCardDeckByDeckIds(cardDeckIds) {
+  return async dispatch => {
+    dispatch({type: CARD_DECK?.ADD_SOME_REQUEST});
+    try {
+      const response = await Promise.all(
+        cardDeckIds.map(cardDeckId => CardDeckApi.getCardDeckById(cardDeckId)),
+      );
+      const cardDecks = response.map(cardDeck => cardDeck?.data);
+      dispatch(loadAllCardDeckSuccess({cardDecks: cardDecks}));
+    } catch (error) {
+      dispatch({type: CARD_DECK?.ADD_SOME_ERROR, payload: {error}});
+    }
   };
-};
-const fetchDeckError = err => ({
-  type: FETCH_DECK.ERROR,
-  payload: {err},
-});
+}
 
 export function cardDeckReducer(state = initialState, action) {
   const {type, payload, message} = action;
   switch (type) {
-    case FETCH_DECK.REQUEST:
+    case CARD_DECK.ADD_ALL_REQUEST:
       return {
         ...state,
         requesting: true,
       };
-    case FETCH_DECK.SUCCESS:
+    case CARD_DECK.ADD_ALL_SUCCESS:
       return {
         ...state,
         requesting: false,
         data: payload?.data || {},
       };
-    case FETCH_DECK.ERROR:
+    case CARD_DECK.ADD_ALL_ERROR:
+      return {
+        ...state,
+        requesting: false,
+        error: message,
+      };
+    case CARD_DECK.ADD_SOME_REQUEST:
+      return {
+        ...state,
+        requesting: true,
+      };
+    case CARD_DECK.ADD_SOME_ERROR:
       return {
         ...state,
         requesting: false,

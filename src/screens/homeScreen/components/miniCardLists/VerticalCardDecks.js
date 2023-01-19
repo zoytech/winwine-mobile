@@ -8,18 +8,19 @@ import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 export default function VerticalCardDecks(props) {
   const {style, data, navigation, ...otherProps} = props;
   const handlePlayPress = item => {
-    const {cardDeckId, cardDeckName, cardDeckImage} = item || {};
+    const {cardDeckId, cardDeckName, cardDeckImage, hashtags} = item;
     navigation.navigate({
       name: ScreenKeys.PLAY_GAME,
       params: {
         cardDeckIdParam: cardDeckId ? cardDeckId : '',
         cardDeckNameParam: cardDeckName ? cardDeckName : DECK?.NAME,
         cardDeckImageParam: cardDeckImage ? {uri: cardDeckImage} : DECK?.IMAGE,
+        hashtagsParam: hashtags ? hashtags : DECK?.TAG,
       },
     });
   };
   const handlePreviewPress = item => {
-    const {cardDeckId, cardDeckName, cardDeckImage} = item || {};
+    const {cardDeckId, cardDeckName, cardDeckImage} = item;
     navigation.navigate({
       name: ScreenKeys.WAIT_GAME,
       params: {
@@ -30,15 +31,15 @@ export default function VerticalCardDecks(props) {
     });
   };
 
-  function renderItem(item) {
+  function renderItem(item, index) {
     const cardDeckId = item?.cardDeckId;
     return (
       <MiniCardItem
         {...otherProps}
-        key={cardDeckId}
         data={item}
         onPreviewPress={() => handlePreviewPress(item)}
         onPlayPress={() => handlePlayPress(item)}
+        key={cardDeckId}
       />
     );
   }

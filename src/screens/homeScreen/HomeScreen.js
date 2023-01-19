@@ -1,23 +1,12 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {
-  Image,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
+import React, {useEffect, useRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Color, ColorVariant} from 'src/themes';
-import {KEY, LIMIT} from 'src/constants';
-import {getDataFromStorage, getStoreKeysFromStorage} from 'src/utils';
 import {
-  cardDecksSelect,
-  loadCardDecks,
-  recentlyKeyStoresSelect,
-  requestCardDecksSelect,
+  loadCardDecksFromApi,
+  selectCardDeckArray,
+  selectGetAllCardDeckRequest,
 } from 'src/redux/slices';
 import {
   HomeTopAppBar,
@@ -25,7 +14,7 @@ import {
   VerticalCardDecks,
 } from './components';
 import {CustomStatusBar, SectionHeader} from '../components';
-import {FilledButton, SpinnerType1} from 'src/components';
+import useRecentlyCardDecks from './useRecentlyCardDecks';
 
 const RECENTLY = 'Chơi gần đây';
 const POPULAR = 'Phổ biến';
@@ -34,34 +23,16 @@ export default function HomeScreen({navigation}) {
     onScroll: () => {},
   });
   const dispatch = useDispatch();
-  const popularCardDecks = useSelector(cardDecksSelect);
-  const requestingCardDecks = useSelector(requestCardDecksSelect);
-  const keyStores = useSelector(recentlyKeyStoresSelect);
-  const [recentlyCardDecks, setRecentlyCardDecks] = useState([]);
+  const popularCardDecks = useSelector(selectCardDeckArray);
+  const rqsCardDecks = useSelector(selectGetAllCardDeckRequest);
+  const {recentlyCardDecks = []} = useRecentlyCardDecks();
+
   useEffect(() => {
-    dispatch(loadCardDecks());
-    if (!requestingCardDecks || popularCardDecks === null) {
+    dispatch(loadCardDecksFromApi());
+    if (!rqsCardDecks || !popularCardDecks) {
       SplashScreen.hide();
     }
   }, [dispatch]);
-
-  useEffect(() => {
-    async function getMultipleCardDecks() {
-      try {
-        const processedKeys = await getStoreKeysFromStorage(
-          KEY?.RECENTLY_PLAY,
-          keyStores,
-          LIMIT?.RECENTLY_CARD_DECKS,
-        );
-        const retrievedData = await getDataFromStorage(processedKeys);
-        setRecentlyCardDecks(retrievedData);
-      } catch (e) {
-        console.log('get main keys error: ', e);
-      }
-    }
-
-    getMultipleCardDecks();
-  }, [keyStores]);
 
   useEffect(() => {
     navigation.setOptions({

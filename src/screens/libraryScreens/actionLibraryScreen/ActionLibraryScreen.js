@@ -1,12 +1,6 @@
 import {StyleSheet, View} from 'react-native';
 import {Color, ColorVariant, Typography} from 'src/themes';
-import {useState} from 'react';
 import {ActionContainer, ActionItem} from './components';
-import {
-  addLibraryKeyStore,
-  removeLibraryKeyStore,
-} from '../../../redux/actions';
-import {KEY} from '../../../constants';
 
 const actions = {
   SAVE: {

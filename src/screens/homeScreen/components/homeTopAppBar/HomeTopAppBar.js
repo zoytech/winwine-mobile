@@ -11,7 +11,7 @@ const standardHeight = HEIGHT?.MIN_HEADER;
 const AnimatedCenterTopBar = withAnimated(CenterTopBar);
 
 function HomeTopAppBar(props, ref) {
-  const {navigation, style, ...otherProps} = props;
+  const {navigation, avatar, style, ...otherProps} = props;
   const {currentPart} = usePartOfDay();
 
   const reverseStandardHeight = -standardHeight;
@@ -55,10 +55,14 @@ function HomeTopAppBar(props, ref) {
 
   function renderRightComponents() {
     return (
-      <AvatarSettingButton
-        navigation={navigation}
-        style={[styles.targetSize, styles.avatarDisplay]}
-      />
+      <>
+        {avatar && (
+          <AvatarSettingButton
+            navigation={navigation}
+            style={[styles.targetSize, styles.avatarDisplay]}
+          />
+        )}
+      </>
     );
   }
 

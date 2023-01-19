@@ -8,6 +8,7 @@ import LibraryStackScreen from './LibraryStackScreen';
 
 const Tab = createBottomTabNavigator();
 
+//TODO: namnt refactor cardDeck for library screens
 export default function TabStackScreen() {
   const screenOptionsProps = {
     headerShown: false,
@@ -36,16 +37,17 @@ export default function TabStackScreen() {
           tabBarIcon: props => <TabScreenIcon {...props} name={'search1'} />,
         }}
       />
-      <Tab.Screen
-        name={ScreenKeys.LIBRARY_STACK}
-        component={LibraryStackScreen}
-        options={{
-          tabBarLabel: props => (
-            <TabScreenLabel {...props} content={'Library'} />
-          ),
-          tabBarIcon: props => <TabScreenIcon {...props} name={'switcher'} />,
-        }}
-      />
+
+      {/*<Tab.Screen*/}
+      {/*  name={ScreenKeys.LIBRARY_STACK}*/}
+      {/*  component={LibraryStackScreen}*/}
+      {/*  options={{*/}
+      {/*    tabBarLabel: props => (*/}
+      {/*      <TabScreenLabel {...props} content={'Library'} />*/}
+      {/*    ),*/}
+      {/*    tabBarIcon: props => <TabScreenIcon {...props} name={'switcher'} />,*/}
+      {/*  }}*/}
+      {/*/>*/}
     </Tab.Navigator>
   );
 }
