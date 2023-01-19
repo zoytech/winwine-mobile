@@ -58,7 +58,7 @@ export default function LibraryScreen({navigation}) {
   return (
     <SafeAreaView style={styles.container}>
       <CustomStatusBar />
-      {libraryCardDeck && libraryCardDeck.length === 0 ? (
+      {!libraryCardDeck ? (
         <EmptyInfoAnnouncement
           title={'Thư viện của bạn đang trống'}
           subTitle={
