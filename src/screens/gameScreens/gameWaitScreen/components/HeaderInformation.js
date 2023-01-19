@@ -70,14 +70,6 @@ export default function HeaderInformation(props) {
     );
   }
 
-  function renderHashtags() {
-    return (
-      <View>
-        <Text style={subContentStyle}>{deckTags}</Text>
-      </View>
-    );
-  }
-
   function renderOtherInfoComponents() {
     return (
       <View style={styles.subInfo}>

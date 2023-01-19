@@ -71,7 +71,6 @@ export default function GamePlayScreen({navigation, route}) {
 
   useEffect(() => {
     dispatch(loadCardsByDeckId(cardDeckIdParam));
-    dispatch(loadCardDeckByDeckId(cardDeckIdParam));
   }, [dispatch, cardDeckIdParam]);
 
   useEffect(() => {
