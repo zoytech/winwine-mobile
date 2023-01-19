@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
     aspectRatio: 7,
     flexDirection: 'row',
     paddingHorizontal: 8,
+    justifyContent: 'center',
   },
   mainAction: {
     width: '100%',
