@@ -64,5 +64,5 @@ export function hashtagsReducer(state = initialState, action) {
   }
 }
 
-export const hashtagsSelect = state => state.hashtagsReducer.data;
-export const requestHashtagsSelect = state => state.hashtagsReducer.requesting;
+export const hashtagsSelect = state => state.hashtags.data;
+export const requestHashtagsSelect = state => state.hashtags.requesting;

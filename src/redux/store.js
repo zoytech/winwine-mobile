@@ -12,7 +12,7 @@ const rootReducer = combineReducers({
   cardDecks: cardDecksReducer,
   cards: cardsReducer,
   storeCardDecks: cardDecksReducer,
-  hashtagsReducer: hashtagsReducer,
+  hashtags: hashtagsReducer,
   cardDeck: cardDeckReducer,
   recentlyCardDecks: recentCardDecksReducer,
 });
