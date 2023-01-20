@@ -28,17 +28,6 @@ export default function TabStackScreen() {
         }}
       />
       <Tab.Screen
-        name={ScreenKeys.AUTHENTICATION}
-        component={AuthenticStackScreen}
-        options={{
-          tabBarLabel: props => (
-            <TabScreenLabel {...props} content={'Search'} />
-          ),
-          tabBarIcon: props => <TabScreenIcon {...props} name={'search1'} />,
-        }}
-      />
-
-      <Tab.Screen
         name={ScreenKeys.LIBRARY_STACK}
         component={LibraryStackScreen}
         options={{

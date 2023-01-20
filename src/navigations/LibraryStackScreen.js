@@ -4,18 +4,14 @@ import {
   ActionLibraryScreen,
   BasicDialog,
   CardDialog,
-  CreateCardScreen,
-  CreateDeckScreen,
   GamePlayScreen,
   GameWaitScreen,
   LibraryScreen,
   SearchLibraryScreen,
-  SignInScreen,
 } from 'src/screens';
 import {useLayoutEffect} from 'react';
 import {hideBottomTabBarMethod} from './utils';
 import {
-  CreateCardTopAppBar,
   GamePlayTopAppBar,
   GameWaitTopAppBar,
   LibraryTopAppBar,
@@ -27,8 +23,6 @@ export default function LibraryStackScreen({navigation, route}) {
     const tabHiddenRoutes = [
       ScreenKeys.PLAY_GAME,
       ScreenKeys.WAIT_GAME,
-      ScreenKeys.SIGNUP_AU,
-      ScreenKeys.NAME_AU,
       ScreenKeys.CARD_DIALOG,
       ScreenKeys.BASIC_DIALOG,
       ScreenKeys.CREATE_DECK,
@@ -66,24 +60,9 @@ export default function LibraryStackScreen({navigation, route}) {
           }}
         />
         <LibraryStack.Screen
-          name={ScreenKeys.SIGNUP_AU}
-          component={SignInScreen}
-        />
-        <LibraryStack.Screen
           name={ScreenKeys.SEARCH_LIB}
           component={SearchLibraryScreen}
           options={{headerShown: false}}
-        />
-        <LibraryStack.Screen
-          name={ScreenKeys.CREATE_CARD}
-          component={CreateCardScreen}
-          options={{
-            header: () => <CreateCardTopAppBar />,
-          }}
-        />
-        <LibraryStack.Screen
-          name={ScreenKeys.CREATE_DECK}
-          component={CreateDeckScreen}
         />
       </LibraryStack.Group>
       <LibraryStack.Group screenOptions={modalScreenProps}>
