@@ -7,6 +7,8 @@ import {
   GamePlayScreen,
   GameWaitScreen,
   HomeScreen,
+  NameInputScreen,
+  SignInScreen,
 } from 'src/screens';
 import {useLayoutEffect} from 'react';
 import {hideBottomTabBarMethod} from './utils';
@@ -75,6 +77,14 @@ export default function HomeStackScreen({navigation, route}) {
         <HomeStack.Screen
           name={ScreenKeys.CARD_DIALOG}
           component={CardDialog}
+        />
+        <HomeStack.Screen
+          name={ScreenKeys.NAME_AU}
+          component={NameInputScreen}
+        />
+        <HomeStack.Screen
+          name={ScreenKeys.SIGNUP_AU}
+          component={SignInScreen}
         />
       </HomeStack.Group>
     </HomeStack.Navigator>

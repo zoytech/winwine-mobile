@@ -1,7 +1,6 @@
 import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import React, {useEffect, useRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import SplashScreen from 'react-native-splash-screen';
 import {Color, ColorVariant} from 'src/themes';
 import {
@@ -17,6 +16,7 @@ import {
 import {CustomStatusBar, SectionHeader} from '../components';
 import useRecentlyCardDecks from './useRecentlyCardDecks';
 import {FilledButton} from '../../components';
+import {ScreenKeys} from '../../navigations/ScreenKeys';
 
 const RECENTLY = 'Chơi gần đây';
 const POPULAR = 'Phổ biến';
@@ -44,12 +44,32 @@ export default function HomeScreen({navigation}) {
     });
   }, [navigation]);
 
+  function handleNavigateSignInScreen() {
+    navigation.navigate({
+      name: ScreenKeys.SIGNUP_AU,
+    });
+  }
+
+  function handleNavigateNameAuthenScreen() {
+    navigation.navigate({
+      name: ScreenKeys.NAME_AU,
+    });
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <CustomStatusBar />
       <ScrollView
         onScroll={topBarRef.current?.onScroll}
         contentContainerStyle={styles.contentContainer}>
+        <FilledButton
+          content={'Sign in'}
+          onPress={handleNavigateSignInScreen}
+        />
+        <FilledButton
+          content={'Name Authen'}
+          onPress={handleNavigateNameAuthenScreen}
+        />
         {recentlyCardDecks && recentlyCardDecks.length !== 0 && (
           <>
             <SectionHeader content={RECENTLY} style={styles.sectionHeader} />

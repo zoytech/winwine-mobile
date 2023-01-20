@@ -35,15 +35,3 @@ const styles = StyleSheet.create({
     paddingRight: 10,
   },
 });
-/*
-const handlePressOutlinedButton = () => {
-    navigation.navigate({
-      name: ScreenKeys.PLAY_GAME,
-      params: {
-        deckId: deckId || '',
-      },
-      merge: true,
-    });
-  };
-
- */
