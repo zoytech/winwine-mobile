@@ -7,7 +7,7 @@ import {CreateCardTopAppBar} from 'src/screens/screenTopAppBars';
 
 const CreateStack = createNativeStackNavigator();
 
-export default function AuthenticStackScreen({navigation, route}) {
+export default function CreateCardTypeStackScreen({navigation, route}) {
   useLayoutEffect(() => {
     const tabHiddenRoutes = [ScreenKeys.BLANK];
     hideBottomTabBarMethod({tabHiddenRoutes, navigation, route});
