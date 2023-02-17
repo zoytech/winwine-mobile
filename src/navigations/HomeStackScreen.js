@@ -3,7 +3,6 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {
   BasicDialog,
   CardDialog,
-  CreateCardScreen,
   GamePlayScreen,
   GameWaitScreen,
   HomeScreen,
@@ -11,7 +10,6 @@ import {
 import {useLayoutEffect} from 'react';
 import {hideBottomTabBarMethod} from './utils';
 import {
-  CreateCardTopAppBar,
   GamePlayTopAppBar,
   GameWaitTopAppBar,
   HomeTopAppBar,
@@ -25,7 +23,6 @@ export default function HomeStackScreen({navigation, route}) {
       ScreenKeys.WAIT_GAME,
       ScreenKeys.CARD_DIALOG,
       ScreenKeys.BASIC_DIALOG,
-      ScreenKeys.CREATE_CARD,
     ];
     hideBottomTabBarMethod({navigation, route, tabHiddenRoutes});
   }, [navigation, route]);
@@ -57,13 +54,6 @@ export default function HomeStackScreen({navigation, route}) {
           component={GamePlayScreen}
           options={{
             header: () => <GamePlayTopAppBar />,
-          }}
-        />
-        <HomeStack.Screen
-          name={ScreenKeys.CREATE_CARD}
-          component={CreateCardScreen}
-          options={{
-            header: () => <CreateCardTopAppBar />,
           }}
         />
       </HomeStack.Group>

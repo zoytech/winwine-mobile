@@ -1,30 +1,33 @@
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
-import {RegisterAnnounceDialog} from 'src/screens';
 import {StandardIconButton} from 'src/components';
+import ComingSoonDialog from './ComingSoonDialog';
 
 export default function RightButtons(props) {
   const {navigation, userToken, style, ...otherProps} = props;
 
   function navigateRegisterAnnounceDialog() {
-    const handleNavigateAuthStackPress = () => {
-      navigation.navigate({
-        name: ScreenKeys.SIGNUP_AU,
-      });
-    };
-    const handleGoBackPress = () => {
-      navigation.goBack();
-    };
     navigation.navigate({
       name: ScreenKeys.BASIC_DIALOG,
       params: {
-        content: (
-          <RegisterAnnounceDialog
-            onNavigateAuthStackPress={handleNavigateAuthStackPress}
-            onGoBackPress={handleGoBackPress}
-          />
-        ),
+        content: <ComingSoonDialog onMainActionPress={handleMainDialogPress} />,
       },
     });
+
+    function handleMainDialogPress() {
+      navigation.goBack();
+    }
+
+    // navigation.navigate({
+    //   name: ScreenKeys.BASIC_DIALOG,
+    //   params: {
+    //     content: (
+    //       <RegisterAnnounceDialog
+    //         onNavigateAuthStackPress={handleNavigateAuthStackPress}
+    //         onGoBackPress={handleGoBackPress}
+    //       />
+    //     ),
+    //   },
+    // });
   }
 
   function handleCreatePressed() {

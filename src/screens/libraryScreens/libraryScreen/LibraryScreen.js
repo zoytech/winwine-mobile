@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import {useSelector} from 'react-redux';
 import {Color, ColorVariant} from 'src/themes';
-import {libraryKeysSelect} from 'src/redux/slices';
+import {libraryKeysSelect, selectCardDeckArray} from 'src/redux/slices';
 import {KEY, LIMIT} from 'src/constants';
 import {CustomStatusBar, EmptyInfoAnnouncement} from 'src/screens/components';
 import {LibraryCardDecks, LibraryTopAppBar} from './components';
@@ -13,7 +13,8 @@ export default function LibraryScreen({navigation}) {
     onScroll: () => {},
   });
   const [selectedChip, setSelectedChip] = useState(null);
-  const [libraryCardDeck, setLibraryCardDeck] = useState(null); //empty data that get from starage
+  const [libraryCardDeck, setLibraryCardDeck] = useState(null);
+  const testLibraryCardDecks = useSelector(selectCardDeckArray);
 
   const keyStores = useSelector(libraryKeysSelect);
   useEffect(() => {
@@ -58,7 +59,7 @@ export default function LibraryScreen({navigation}) {
   return (
     <SafeAreaView style={styles.container}>
       <CustomStatusBar />
-      {!libraryCardDeck ? (
+      {!testLibraryCardDecks ? (
         <EmptyInfoAnnouncement
           title={'Thư viện của bạn đang trống'}
           subTitle={
@@ -72,10 +73,10 @@ export default function LibraryScreen({navigation}) {
           onScroll={topBarRef.current?.onScroll}
           contentContainerStyle={styles.contentContainer}>
           <LibraryCardDecks
-            data={libraryCardDeck}
+            data={testLibraryCardDecks}
             navigation={navigation}
             selectedChip={selectedChip}
-            isLoading={!libraryCardDeck}
+            isLoading={!testLibraryCardDecks}
           />
         </ScrollView>
       )}

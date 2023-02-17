@@ -2,7 +2,6 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {StyleSheet} from 'react-native';
 import {TabScreenIcon, TabScreenLabel} from './components';
 import HomeStackScreen from './HomeStackScreen';
-import AuthenticStackScreen from './AuthenticStackScreen';
 import {ScreenKeys} from './ScreenKeys';
 import LibraryStackScreen from './LibraryStackScreen';
 
