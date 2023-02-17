@@ -1,0 +1,31 @@
+import LinearGradient from 'react-native-linear-gradient';
+import {StyleSheet} from 'react-native';
+
+//TODO: unused file
+function BoxShadow(props) {
+  const {style, children} = props;
+  const white15 = 'rgba(0, 0, 0, 0.3)';
+  const white30 = 'rgba(0, 0, 0, 0.15)';
+  const boxStyle = [styles.box, style];
+
+  return (
+    <LinearGradient
+      colors={[white15, white30]}
+      useAngle={true}
+      angle={45}
+      angleCenter={{x: 0.5, y: 0.5}}
+      style={boxStyle}>
+      {children}
+    </LinearGradient>
+  );
+}
+
+const styles = StyleSheet.create({
+  box: {
+    width: 100,
+    height: 100,
+    // borderRadius: 16,
+  },
+});
+
+export default BoxShadow;

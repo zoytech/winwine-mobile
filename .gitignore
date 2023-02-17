@@ -1,7 +1,6 @@
 # OSX
 #
 .DS_Store
-
 # Xcode
 #
 build/
@@ -42,7 +41,7 @@ yarn-error.log
 buck-out/
 \.buckd/
 *.keystore
-!debug.keystore
+!android/app/debug.keystore
 
 # fastlane
 #
