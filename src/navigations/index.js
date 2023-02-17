@@ -1,11 +1,11 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import TabStackScreen from './TabStackScreen';
+import HomeStackScreen from './HomeStackScreen';
 
 export default function RootNavigator() {
   return (
     <NavigationContainer>
-      <TabStackScreen />
+      <HomeStackScreen />
     </NavigationContainer>
   );
 }

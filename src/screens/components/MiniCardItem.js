@@ -12,9 +12,7 @@ import {
   StateLayersVariant,
   Typography,
 } from 'src/themes';
-import {DECK, KEY, WIDTH} from 'src/constants';
-import {hasStoreKeyInStorage} from '../../utils';
-import {useEffect, useState} from 'react';
+import {DECK, WIDTH} from 'src/constants';
 
 const itemWidth = WIDTH?.SCREEN * 0.4;
 const itemHeight = itemWidth / 0.67;
@@ -22,7 +20,6 @@ const itemHeight = itemWidth / 0.67;
 export default function MiniCardItem(props) {
   const {
     data,
-    pinnedIds,
     liked,
     isLoading = false,
     style,
@@ -31,24 +28,11 @@ export default function MiniCardItem(props) {
     onPlayPress = () => {},
     onLongPress = () => {},
   } = props;
-  const [hasPinId, setHasPinId] = useState(false);
   const {cardDeckId, cardDeckName, cardDeckImage, hashtags} = data || {};
   const deckName = cardDeckName ? cardDeckName : DECK?.NAME;
   const decktags = hashtags ? hashtags : DECK?.HASHTAGS;
   const deckImage = cardDeckImage ? {uri: cardDeckImage} : DECK?.IMAGE;
 
-  useEffect(() => {
-    async function hasPinDeckId() {
-      const hasPinIdRqs = await hasStoreKeyInStorage(
-        cardDeckId,
-        KEY?.SAVE_PIN_DECK,
-        pinnedIds,
-      );
-      setHasPinId(hasPinIdRqs);
-    }
-
-    hasPinDeckId();
-  }, [pinnedIds]);
   const titleColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
   const subTittleColor =
     StateLayers.light[StateLayersVariant.onSurfaceVar]?.level_068;
@@ -81,27 +65,12 @@ export default function MiniCardItem(props) {
           {deckName}
         </Text>
         <View style={styles.tagsAndIcons}>
-          {renderIcons()}
           {decktags.map(item => (
             <Text key={item} style={subTitleStyle}>
               {item}
             </Text>
           ))}
         </View>
-      </>
-    );
-  }
-
-  function renderIcons() {
-    const iconProps = {
-      size: 11,
-      color: iconColor,
-      style: {paddingHorizontal: 2},
-    };
-    return (
-      <>
-        {hasPinId === true && <Icon {...iconProps} name={'pushpin'} />}
-        {liked && <Icon {...iconProps} name={'star'} />}
       </>
     );
   }

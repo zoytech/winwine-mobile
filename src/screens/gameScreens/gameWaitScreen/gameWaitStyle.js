@@ -17,14 +17,13 @@ const gameWaitStyle = {
   },
   supportingText: {
     width: '100%',
-    aspectRatio: 5,
+    aspectRatio: 7,
     alignItems: 'center',
     justifyContent: 'center',
   },
   card: {
-    aspectRatio: 0.6,
+    aspectRatio: 0.8,
     paddingVertical: 16,
-    paddingBottom: 100,
   },
   suggestingDeck: {
     width: '100%',
@@ -32,6 +31,10 @@ const gameWaitStyle = {
     flexDirection: 'column',
     justifyContent: 'space-evenly',
     alignItems: 'center',
+  },
+  action: {
+    width: '100%',
+    aspectRatio: 3,
   },
   button: {
     width: 200,

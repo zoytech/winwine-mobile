@@ -1,3 +1,4 @@
-export * from './hashtagSlices';
+import {hashtagsReducer} from './hashtagSlices/hashtagsSlice';
+
 export * from './cardSlices';
-export * from './keyStoreSlices';
+export {hashtagsReducer};
