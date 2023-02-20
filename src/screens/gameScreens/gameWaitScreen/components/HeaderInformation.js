@@ -70,20 +70,12 @@ export default function HeaderInformation(props) {
     );
   }
 
-  function renderHashtags() {
-    return (
-      <View>
-        <Text style={subContentStyle}>{deckTags}</Text>
-      </View>
-    );
-  }
-
   function renderOtherInfoComponents() {
     return (
       <View style={styles.subInfo}>
-        {deckTags.map((item, index) => (
+        {deckTags.map((hashtag, index) => (
           <Text key={index} style={subContentStyle}>
-            {item}
+            {hashtag}
           </Text>
         ))}
         {renderSeparatorLine()}
@@ -116,7 +108,7 @@ const styles = StyleSheet.create({
     width: '100%',
     aspectRatio: 2.5,
     flexDirection: 'column',
-    justifyContent: 'space-around',
+    justifyContent: 'flex-start',
     alignItems: 'flex-start',
     paddingHorizontal: 8,
   },
@@ -127,6 +119,7 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'flex-start',
+    paddingTop: 8,
   },
   subInfoSeparator: {
     paddingHorizontal: 4,
@@ -135,6 +128,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'space-around',
+    paddingTop: 8,
   },
   userAvatar: {
     width: 20,

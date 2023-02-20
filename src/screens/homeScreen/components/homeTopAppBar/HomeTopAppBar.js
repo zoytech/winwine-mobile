@@ -3,8 +3,9 @@ import {Animated, StyleSheet} from 'react-native';
 import {CenterTopBar} from 'src/components';
 import {HEIGHT} from 'src/constants';
 import {SuggestionList} from '../suggestionList';
-import {usePartOfDay, withAnimated} from 'src/utils';
+import {withAnimated} from 'src/utils';
 import {AvatarSettingButton} from 'src/screens/components';
+import partOfDayMethod from './partOfDayMethod';
 
 const CONFIG_VALUE = 100;
 const standardHeight = HEIGHT?.MIN_HEADER;
@@ -12,8 +13,7 @@ const AnimatedCenterTopBar = withAnimated(CenterTopBar);
 
 function HomeTopAppBar(props, ref) {
   const {navigation, avatar, style, ...otherProps} = props;
-  const {currentPart} = usePartOfDay();
-
+  const greeting = partOfDayMethod();
   const reverseStandardHeight = -standardHeight;
   const scrollYContentOffsetRef = useRef(new Animated.Value(0)).current;
   const [subHeight, setSubHeight] = useState(0);
@@ -74,7 +74,7 @@ function HomeTopAppBar(props, ref) {
     <AnimatedCenterTopBar
       {...otherProps}
       style={defaultContainerStyle}
-      content={currentPart.greetingContent}
+      content={greeting}
       headerTitleStyle={styles.headerTitle}
       RightComponents={renderRightComponents}
       componentStyle={topBarComponentAnimation}

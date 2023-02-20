@@ -53,6 +53,10 @@ const gamePlayStyle = {
     paddingTop: 200,
     paddingLeft: 50,
   },
+  hashtags: {
+    flexDirection: 'row',
+  },
 };
 
 export default gamePlayStyle;
+////

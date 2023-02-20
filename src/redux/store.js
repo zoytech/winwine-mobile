@@ -5,7 +5,6 @@ import {
   cardDecksReducer,
   cardsReducer,
   hashtagsReducer,
-  libraryKeysReducer,
   recentCardDecksReducer,
 } from 'src/redux/slices';
 
@@ -15,7 +14,6 @@ const rootReducer = combineReducers({
   storeCardDecks: cardDecksReducer,
   hashtags: hashtagsReducer,
   cardDeck: cardDeckReducer,
-  libraryKeys: libraryKeysReducer,
   recentlyCardDecks: recentCardDecksReducer,
 });
 
