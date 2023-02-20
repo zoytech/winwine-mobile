@@ -4,7 +4,6 @@ import {TabScreenIcon, TabScreenLabel} from './components';
 import HomeStackScreen from './HomeStackScreen';
 import CreateCardTypeStackScreen from './CreateCardTypeStackScreen';
 import {ScreenKeys} from './ScreenKeys';
-import LibraryStackScreen from './LibraryStackScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -28,7 +27,7 @@ export default function TabStackScreen() {
         }}
       />
       <Tab.Screen
-        name={ScreenKeys.AUTHENTICATION}
+        name={ScreenKeys.CREATE_CARD_TYPE_STACK}
         component={CreateCardTypeStackScreen}
         options={{
           tabBarLabel: props => (

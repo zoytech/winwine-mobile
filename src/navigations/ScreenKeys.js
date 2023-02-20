@@ -3,7 +3,7 @@ const ScreenKeys = {
   BLANK: 'BLANK',
 
   HOME_STACK: 'HomeStackScreen',
-  BLANK_STACK: 'CreateCardTypeStackScreen',
+  CREATE_CARD_TYPE_STACK: 'CreateCardTypeStackScreen',
   LIBRARY_STACK: 'LibraryStackScreen',
 
   HOME: 'HOME',
