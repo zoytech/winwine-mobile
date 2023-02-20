@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {CardDialogContent} from 'src/components';
 import TagName from '../TagName';
 
@@ -16,7 +16,7 @@ export default function EndingGameDialog(props) {
     return (
       <View style={styles.hashtagLayout}>
         {hashtags.map(hashtag => (
-          <Text key={hashtag}>{hashtag}</Text>
+          <TagName key={hashtag} content={hashtag} iconStyle={styles.icon} />
         ))}
       </View>
     );

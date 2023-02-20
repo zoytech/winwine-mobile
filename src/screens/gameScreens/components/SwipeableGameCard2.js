@@ -57,7 +57,7 @@ function SwipeableGameCard2(props, ref) {
       <Pressable onPress={onItemPress}>
         <GameCardItem
           {...otherProps}
-          content={item?.cardTitle}
+          content={item?.cardDescription}
           itemWidth={itemWidth}
           contentStyle={contentStyle}
         />

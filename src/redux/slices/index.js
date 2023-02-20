@@ -1,4 +1,3 @@
-import {hashtagsReducer} from './hashtagSlices/hashtagsSlice';
-
+export * from './hashtagSlices';
 export * from './cardSlices';
 export {hashtagsReducer};

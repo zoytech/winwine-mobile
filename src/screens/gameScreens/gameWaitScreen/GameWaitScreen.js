@@ -10,16 +10,18 @@ import {
   HeaderInformation,
 } from './components';
 import {
+  libraryKeysSelect,
   loadCardDeckByDeckId,
   requestCardDeckSelect,
   selectCardDeckById,
 } from 'src/redux/slices';
 import {SwipeableGameCard} from '../components';
-import {HEIGHT} from 'src/constants';
+import {HEIGHT, KEY} from 'src/constants';
 import {CustomStatusBar, EmptyInfoAnnouncement} from 'src/screens/components';
 import {getPreviewCardNumber, getPreviewDataItem} from './utils';
 import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import gameWaitStyle from './gameWaitStyle';
+import {hasStoreKeyInStorage} from 'src/utils';
 
 const width = {
   CONTAINER: 320,
@@ -36,9 +38,11 @@ export default function GameWaitScreen({navigation, route}) {
     selectCardDeckById(state, cardDeckIdParam),
   );
   const cardDeckRqs = useSelector(requestCardDeckSelect);
+  const libStorageKeys = useSelector(libraryKeysSelect);
   const dispatch = useDispatch();
   const [showIndex, setShowIndex] = useState(INITIAL_INDEX);
   const [imageHeight, setImageHeight] = useState(HEIGHT?.IMAGE);
+  const [hasStorageKey, setHasStorageKey] = useState();
   const carouselRef = useRef(null);
   const scrollViewRef = useRef([]);
 
@@ -46,6 +50,17 @@ export default function GameWaitScreen({navigation, route}) {
     if (!cardDeckFromStore || !cardDeckFromStore?.detailed) {
       dispatch(loadCardDeckByDeckId(cardDeckIdParam));
     }
+
+    async function hasItemFromStorage() {
+      const hasSaveIdRqs = await hasStoreKeyInStorage(
+        cardDeckIdParam,
+        KEY?.SAVE_LIB,
+        libStorageKeys,
+      );
+      setHasStorageKey(hasSaveIdRqs);
+    }
+
+    hasItemFromStorage();
   }, [dispatch, cardDeckIdParam]);
 
   useEffect(() => {
@@ -133,6 +148,7 @@ export default function GameWaitScreen({navigation, route}) {
             <HeaderButtons
               onFilledButtonPress={handlePressFilledButton}
               data={cardDeckFromStore}
+              hasStoreKey={hasStorageKey}
             />
             <View style={gameWaitStyle.supportingText}>
               <Text style={defaultContentStyle}>{previewContent}</Text>
