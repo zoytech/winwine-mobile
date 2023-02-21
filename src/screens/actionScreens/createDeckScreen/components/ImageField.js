@@ -1,8 +1,13 @@
-import {Pressable, StyleSheet, View} from 'react-native';
+import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {Color, ColorVariant} from 'src/themes';
 
 export default function ImageField(props) {
-  const {style, onNavigateChangeImageDialog = () => {}, ...otherProps} = props;
+  const {
+    name,
+    style,
+    onNavigateChangeImageDialog = () => {},
+    ...otherProps
+  } = props;
   const imageBorderColor = Color.light[ColorVariant.primary]?.onBase;
   const containerStyle = [
     styles.container,
@@ -15,12 +20,17 @@ export default function ImageField(props) {
   }
 
   return (
-    <Pressable
-      {...otherProps}
-      onPress={onNavigateChangeImageDialog}
-      style={getContainerStyle}>
-      <View style={styles.image} />
-    </Pressable>
+    <>
+      <View>
+        <Text>{name}</Text>
+      </View>
+      <Pressable
+        {...otherProps}
+        onPress={onNavigateChangeImageDialog}
+        style={getContainerStyle}>
+        <View style={styles.image} />
+      </Pressable>
+    </>
   );
 }
 const styles = StyleSheet.create({

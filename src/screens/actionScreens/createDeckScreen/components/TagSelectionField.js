@@ -1,10 +1,16 @@
 import {SuggestionChip} from 'src/components';
-import {FlatList, StyleSheet, View} from 'react-native';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {useState} from 'react';
 import {Color, ColorVariant} from 'src/themes';
 
 export default function TagSelectionField(props) {
-  const {data, style, onSelectChipOption = () => {}, ...otherProps} = props;
+  const {
+    data,
+    name,
+    style,
+    onSelectChipOption = () => {},
+    ...otherProps
+  } = props;
   const [selectedChip, setSelectedChip] = useState(null);
 
   const backgroundColor = Color.light[ColorVariant.background]?.base;
@@ -19,17 +25,16 @@ export default function TagSelectionField(props) {
   }
 
   function renderItem({item}) {
-    const {tagChipId: tagChipId, tagChipContent: content} = item || {};
     const chipStyle = [styles.chipLayout, {backgroundColor: backgroundColor}];
     return (
       <View style={chipStyle}>
         <SuggestionChip
           {...otherProps}
-          key={tagChipId}
-          content={content}
+          key={item}
+          content={item}
           style={styles.chip}
-          selected={selectedChip === tagChipId}
-          onPressOut={() => handleSelectChipId(tagChipId)}
+          selected={selectedChip === item}
+          onPressOut={() => handleSelectChipId(item)}
         />
       </View>
     );
@@ -37,6 +42,9 @@ export default function TagSelectionField(props) {
 
   return (
     <>
+      <View>
+        <Text>{name}</Text>
+      </View>
       <FlatList
         {...otherProps}
         data={data}

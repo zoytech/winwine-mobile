@@ -1,49 +1,21 @@
-import {StandardIconButton} from 'src/components';
 import {TextInputHolder} from './index';
-import {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, Text} from 'react-native';
 import {Color, ColorVariant} from '../../../../themes';
 
 export default function DescriptionField(props) {
-  const {textContainerStyle, buttonContainerStyle, contentStyle} = props;
-  const [pressDescription, setPressDescription] = useState(false);
+  const {name, style, contentStyle} = props;
   const onPrimary = Color.light[ColorVariant.primary]?.onBase;
 
-  function handleShowDescriptionField() {
-    setPressDescription(!pressDescription);
-  }
-
-  function renderDescriptionField() {
-    return (
+  return (
+    <View style={style}>
+      <Text>{name}</Text>
       <TextInputHolder
         style={styles.textHolder}
         multiline={true}
         contentStyle={contentStyle}
         selectTextOnFocus={true}
       />
-    );
-  }
-
-  function renderButton() {
-    return (
-      <StandardIconButton
-        onPressOut={handleShowDescriptionField}
-        content={'Thêm mô tả'}
-        name={'caretdown'}
-        contentStyle={contentStyle}
-        iconStyle={{color: onPrimary}}
-        style={styles.button}
-      />
-    );
-  }
-
-  return (
-    <>
-      <View style={buttonContainerStyle}>{renderButton()}</View>
-      {pressDescription && (
-        <View style={textContainerStyle}>{renderDescriptionField()}</View>
-      )}
-    </>
+    </View>
   );
 }
 const styles = StyleSheet.create({

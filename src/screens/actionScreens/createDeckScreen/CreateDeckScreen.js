@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
@@ -18,55 +18,33 @@ import {
 } from 'src/redux/slices';
 import {DECK, WIDTH} from 'src/constants';
 import {CustomStatusBar} from 'src/screens/components';
-import {ScreenKeys} from 'src/navigations/ScreenKeys';
-import {ImageField, TagSelectionField, TextInputHolder} from './components';
+import {
+  CardDeckNameField,
+  DescriptionField,
+  ImageField,
+  TagSelectionField,
+  TextInputHolder,
+} from './components';
 
 export default function CreateDeckScreen({navigation, route}) {
   const dispatch = useDispatch();
   const requesting = useSelector(requestHashtagsSelect);
   const hashtags = useSelector(hashtagsSelect);
 
-  const [title, setTitle] = useState(null);
-  const [image, setImage] = useState(null);
-  const [tag, setTag] = useState(null);
-  const [description, setDescription] = useState(null);
-  const {IMAGE, DESCRIPTION, TITLE} = DECK;
-
   useEffect(() => {
     dispatch(loadHashtags());
   }, [dispatch]);
-  const {base: primary, onBase: onPrimary} = Color.light[ColorVariant.primary];
 
+  const {base: primary, onBase: onPrimary} = Color.light[ColorVariant.primary];
   const defaultContainerStyle = [{backgroundColor: primary}, styles.container];
   const defaultContentStyle = [Typography.body.large, {color: onPrimary}];
+  let render = 0;
 
-  function handleSubmitPress() {
-    navigation.navigate({
-      name: ScreenKeys.CREATE_CARD,
-      params: {
-        deckTitleParams: title ? title : TITLE,
-        deckIdParams: 100,
-        deckDescriptionParams: description,
-        deckSourceParams: image ? {uri: image} : IMAGE,
-        deckTagParams: tag ? tag : '',
-      },
-    });
+  function onSubmitPress() {
+    alert('renderData');
   }
 
-  function renderTitleDeckField() {
-    const headlineStyle = [defaultContentStyle, Typography.title.large];
-    return (
-      <>
-        <View>
-          <Text style={headlineStyle}>{'Nhập tên bộ bài của bạn'}</Text>
-        </View>
-        <TextInputHolder
-          contentStyle={defaultContentStyle}
-          selectTextOnFocus={true}
-        />
-      </>
-    );
-  }
+  render++;
 
   if (requesting) {
     return <SpinnerType1 />;
@@ -80,19 +58,27 @@ export default function CreateDeckScreen({navigation, route}) {
         <ScrollView
           contentContainerStyle={styles.scrollView}
           showsVerticalScrollIndicator={false}>
-          <View style={styles.media}>
-            <ImageField />
+          <View>
+            <Text>{render}</Text>
           </View>
-          <View style={styles.titleDeck}>{renderTitleDeckField()}</View>
+          <View style={styles.media}>
+            <ImageField name={'Chọn hình ảnh'} />
+          </View>
+          <View style={styles.titleDeck}>
+            <CardDeckNameField name={'Thêm tên bộ bài'} />
+          </View>
+          <View style={styles.descriptionHolder}>
+            <DescriptionField name={'Thêm mô tả bộ bài'} />
+          </View>
           <View style={styles.chipSelection}>
-            <TagSelectionField data={hashtags} />
+            <TagSelectionField name={'Chọn hashtag'} data={hashtags} />
           </View>
           <View style={styles.action}>
             <TonalButton
               content={'HOÀN TẤT'}
               style={styles.button}
               contentStyle={styles.buttonContent}
-              onPress={handleSubmitPress}
+              onPress={onSubmitPress}
             />
           </View>
         </ScrollView>
