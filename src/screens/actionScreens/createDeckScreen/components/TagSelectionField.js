@@ -42,9 +42,6 @@ export default function TagSelectionField(props) {
 
   return (
     <>
-      <View>
-        <Text>{name}</Text>
-      </View>
       <FlatList
         {...otherProps}
         data={data}
@@ -52,6 +49,7 @@ export default function TagSelectionField(props) {
         horizontal={true}
         contentContainerStyle={styles.contentContainer}
         ItemSeparatorComponent={<View style={styles.separator} />}
+        showsHorizontalScrollIndicator={false}
       />
     </>
   );

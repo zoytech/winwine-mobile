@@ -19,6 +19,7 @@ import {
 import {DECK, WIDTH} from 'src/constants';
 import {CustomStatusBar} from 'src/screens/components';
 import {
+  BaseHeadline,
   CardDeckNameField,
   DescriptionField,
   ImageField,
@@ -55,23 +56,26 @@ export default function CreateDeckScreen({navigation, route}) {
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : ''}
         style={styles.view}>
-        <ScrollView
-          contentContainerStyle={styles.scrollView}
-          showsVerticalScrollIndicator={false}>
-          <View>
-            <Text>{render}</Text>
-          </View>
+        <View style={styles.scrollView}>
+          <BaseHeadline content={render} style={styles.headline} />
           <View style={styles.media}>
-            <ImageField name={'Chọn hình ảnh'} />
+            <BaseHeadline content={'Chọn hình ảnh'} style={styles.headline} />
+            <ImageField />
           </View>
           <View style={styles.titleDeck}>
-            <CardDeckNameField name={'Thêm tên bộ bài'} />
+            <BaseHeadline content={'Thêm tên bộ bài'} style={styles.headline} />
+            <CardDeckNameField />
           </View>
           <View style={styles.descriptionHolder}>
-            <DescriptionField name={'Thêm mô tả bộ bài'} />
+            <BaseHeadline
+              content={'Thêm mô tả bộ bài'}
+              style={styles.headline}
+            />
+            <DescriptionField />
           </View>
           <View style={styles.chipSelection}>
-            <TagSelectionField name={'Chọn hashtag'} data={hashtags} />
+            <BaseHeadline content={'Chọn hashtag'} style={styles.headline} />
+            <TagSelectionField data={hashtags} />
           </View>
           <View style={styles.action}>
             <TonalButton
@@ -81,7 +85,7 @@ export default function CreateDeckScreen({navigation, route}) {
               onPress={onSubmitPress}
             />
           </View>
-        </ScrollView>
+        </View>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
@@ -97,6 +101,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  headline: {
+    width: '100%',
+    aspectRatio: 10,
+  },
   media: {
     width: '100%',
     aspectRatio: 1.5,
@@ -104,17 +112,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-
   titleDeck: {
     width: '100%',
-    aspectRatio: 2.5,
+    aspectRatio: 5,
     flexDirection: 'column',
     justifyContent: 'space-evenly',
     alignItems: 'center',
     paddingTop: 24,
   },
   textInput: {
-    width: '80%',
+    width: '60%',
   },
   chipSelection: {
     width: '100%',
