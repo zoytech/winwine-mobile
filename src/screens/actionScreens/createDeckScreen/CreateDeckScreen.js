@@ -3,13 +3,12 @@ import {
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   View,
-  Text,
-  ScrollView,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {Formik} from 'formik';
+import {Formik, Field} from 'formik';
 
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {SpinnerType1, TonalButton} from 'src/components';
@@ -28,7 +27,6 @@ import {
   TagSelectionField,
 } from './components';
 import createCardDeckValidationSchema from './createCardDeckValidations';
-import ValidationText from '../components/ValidationText';
 
 export default function CreateDeckScreen({navigation, route}) {
   const dispatch = useDispatch();
@@ -56,6 +54,10 @@ export default function CreateDeckScreen({navigation, route}) {
 
   render++;
 
+  function renderBaseHeadline(content) {
+    return <BaseHeadline content={content} style={styles.headline} />;
+  }
+
   if (requesting) {
     return <SpinnerType1 />;
   }
@@ -69,57 +71,26 @@ export default function CreateDeckScreen({navigation, route}) {
           initialValues={initialValues}
           onSubmit={onSubmitPress}
           validationSchema={createCardDeckValidationSchema}>
-          {({
-            handleBlur,
-            handleChange,
-            handleSubmit,
-            values,
-            errors,
-            isValid,
-            touched,
-          }) => (
+          {({handleSubmit, isValid}) => (
             <ScrollView contentContainerStyle={styles.scrollView}>
-              <BaseHeadline content={render} style={styles.headline} />
+              {renderBaseHeadline(render)}
               <View style={styles.media}>
-                <BaseHeadline
-                  content={'Chọn hình ảnh'}
-                  style={styles.headline}
-                />
+                {renderBaseHeadline('Chọn hình ảnh')}
                 <ImageField />
               </View>
               <View style={styles.titleDeck}>
-                <BaseHeadline
-                  content={'Thêm tên bộ bài'}
-                  style={styles.headline}
-                />
-                <CardDeckNameField
-                  onBlur={handleBlur('cardDeckName')}
-                  onChangeText={handleChange('cardDeckName')}
-                  value={values.cardDeckName}
-                />
-                {errors.cardDeckName && touched.cardDeckName && (
-                  <ValidationText content={errors.cardDeckName} />
-                )}
+                {renderBaseHeadline('Thêm tên bộ bài')}
+                <Field component={CardDeckNameField} name={'cardDeckName'} />
               </View>
               <View style={styles.descriptionHolder}>
-                <BaseHeadline
-                  content={'Thêm mô tả bộ bài'}
-                  style={styles.headline}
+                {renderBaseHeadline('Thêm mô tả bộ bài')}
+                <Field
+                  component={DescriptionField}
+                  name={'cardDeckDescription'}
                 />
-                <DescriptionField
-                  onBlur={handleBlur('cardDeckDescription')}
-                  onChangeText={handleChange('cardDeckDescription')}
-                  value={values.cardDeckDescription}
-                />
-                {errors.cardDeckDescription && (
-                  <ValidationText content={errors.cardDeckDescription} />
-                )}
               </View>
               <View style={styles.chipSelection}>
-                <BaseHeadline
-                  content={'Chọn hashtag'}
-                  style={styles.headline}
-                />
+                {renderBaseHeadline('Chọn hashtag')}
                 <TagSelectionField data={hashtags} />
               </View>
               <View style={styles.action}>

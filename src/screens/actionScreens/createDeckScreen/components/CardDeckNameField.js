@@ -4,7 +4,7 @@ import {useController} from 'react-hook-form';
 import {Color, ColorVariant, Typography} from 'src/themes';
 
 export default function CardDeckNameField(props) {
-  const {name, style, contentStyle, ...otherProps} = props;
+  const {style, contentStyle, ...otherProps} = props;
   const onPrimary = Color.light[ColorVariant.primary]?.onBase;
   const headlineStyle = [contentStyle, Typography.title.large];
 

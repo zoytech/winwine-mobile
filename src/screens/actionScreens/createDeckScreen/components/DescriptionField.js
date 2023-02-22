@@ -3,7 +3,7 @@ import {StyleSheet, View, Text} from 'react-native';
 import {Color, ColorVariant} from '../../../../themes';
 
 export default function DescriptionField(props) {
-  const {name, style, contentStyle, ...otherProps} = props;
+  const {style, contentStyle, ...otherProps} = props;
   const onPrimary = Color.light[ColorVariant.primary]?.onBase;
 
   return (
