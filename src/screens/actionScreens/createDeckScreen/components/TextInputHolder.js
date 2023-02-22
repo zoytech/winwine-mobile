@@ -22,7 +22,7 @@ export default function TextInputHolder(props) {
   const hasError = errors[name] && touched[name];
 
   function handleChangeText(text) {
-    onChange(text)(name);
+    onChange(name)(text);
   }
 
   function handleBlur() {
@@ -35,11 +35,8 @@ export default function TextInputHolder(props) {
       <TextInput
         {...otherProps}
         value={value}
-        onChangeText={text => onChange(name)(text)}
-        onBlur={() => {
-          setFieldTouched(name);
-          onBlur(name);
-        }}
+        onChangeText={handleChangeText}
+        onBlur={handleBlur}
         selectionColor={onContainerColor}
         style={contentStyle}
       />

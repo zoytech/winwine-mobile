@@ -2,6 +2,7 @@ import {SuggestionChip} from 'src/components';
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {useState} from 'react';
 import {Color, ColorVariant} from 'src/themes';
+import {remove} from '../../../../utils';
 
 export default function TagSelectionField(props) {
   const {
@@ -11,16 +12,16 @@ export default function TagSelectionField(props) {
     onSelectChipOption = () => {},
     ...otherProps
   } = props;
-  const [selectedChip, setSelectedChip] = useState(null);
-
+  const [selectedHashtags, setSelectedHashtags] = useState([]);
   const backgroundColor = Color.light[ColorVariant.background]?.base;
 
   function handleSelectChipId(tagId) {
     onSelectChipOption(tagId);
-    if (tagId === selectedChip) {
-      setSelectedChip(null);
+    if (selectedHashtags.includes(tagId)) {
+      remove.elementAtMiddle(selectedHashtags, tagId);
+      setSelectedHashtags([...selectedHashtags]);
     } else {
-      setSelectedChip(tagId);
+      setSelectedHashtags([...selectedHashtags, tagId]);
     }
   }
 
@@ -33,8 +34,8 @@ export default function TagSelectionField(props) {
           key={item}
           content={item}
           style={styles.chip}
-          selected={selectedChip === item}
-          onPressOut={() => handleSelectChipId(item)}
+          selected={selectedHashtags.includes(item)}
+          onPress={() => handleSelectChipId(item)}
         />
       </View>
     );

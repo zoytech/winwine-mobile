@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {Formik, Field} from 'formik';
+import {Field, Formik} from 'formik';
 
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {SpinnerType1, TonalButton} from 'src/components';
@@ -33,7 +33,7 @@ export default function CreateDeckScreen({navigation, route}) {
   const dispatch = useDispatch();
   const requesting = useSelector(requestHashtagsSelect);
   const hashtags = useSelector(hashtagsSelect);
-  const [selectedHashtags, setSelectedHashTags] = useState([]);
+  const [selectedHashtags, setSelectedHashtags] = useState([]);
 
   useEffect(() => {
     dispatch(loadHashtags());
@@ -42,8 +42,6 @@ export default function CreateDeckScreen({navigation, route}) {
   const initialValues = {
     cardDeckName: '',
     cardDeckDescription: '',
-    cardDeckImage: DECK.IMAGE,
-    hashtags: DECK.HASHTAGS,
   };
   const {base: primary, onBase: onPrimary} = Color.light[ColorVariant.primary];
   const defaultContainerStyle = [{backgroundColor: primary}, styles.container];
@@ -51,18 +49,18 @@ export default function CreateDeckScreen({navigation, route}) {
   let render = 0;
 
   function onSubmitPress(value) {
-    console.log('render field: ', value);
-    console.log(selectedHashtags);
+    const rps = {...value, hashtags: selectedHashtags};
+    console.log('render field: ', rps);
+    // JUST FOR TEST BECAUSE AFTER SUBMIT IT NAVIGATE TO NEW SCREEN
+    setSelectedHashtags([]);
   }
 
   function handleHashTagsSelect(hashtagId) {
-    if (!selectedHashtags && selectedHashtags.length === 0) {
-      setSelectedHashTags(...DECK.HASHTAGS);
-    }
-    if (!selectedHashtags.includes(hashtagId)) {
-      setSelectedHashTags([...selectedHashtags, hashtagId]);
+    if (selectedHashtags.includes(hashtagId)) {
+      remove.elementAtMiddle(selectedHashtags, hashtagId);
+      setSelectedHashtags([...selectedHashtags]);
     } else {
-      setSelectedHashTags(remove.elementAtMiddle(selectedHashtags, hashtagId));
+      setSelectedHashtags([...selectedHashtags, hashtagId]);
     }
   }
 
