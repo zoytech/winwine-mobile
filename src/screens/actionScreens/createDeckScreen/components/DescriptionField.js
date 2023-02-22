@@ -3,19 +3,17 @@ import {StyleSheet, View, Text} from 'react-native';
 import {Color, ColorVariant} from '../../../../themes';
 
 export default function DescriptionField(props) {
-  const {name, style, contentStyle} = props;
+  const {name, style, contentStyle, ...otherProps} = props;
   const onPrimary = Color.light[ColorVariant.primary]?.onBase;
 
   return (
-    <View style={style}>
-      <Text>{name}</Text>
-      <TextInputHolder
-        style={styles.textHolder}
-        multiline={true}
-        contentStyle={contentStyle}
-        selectTextOnFocus={true}
-      />
-    </View>
+    <TextInputHolder
+      {...otherProps}
+      style={styles.textHolder}
+      multiline={true}
+      contentStyle={contentStyle}
+      selectTextOnFocus={true}
+    />
   );
 }
 const styles = StyleSheet.create({

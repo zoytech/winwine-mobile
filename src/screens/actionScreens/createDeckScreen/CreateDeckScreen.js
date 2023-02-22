@@ -3,12 +3,14 @@ import {
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
-  ScrollView,
   StyleSheet,
-  Text,
   View,
+  Text,
+  ScrollView,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
+import {Formik} from 'formik';
+
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {SpinnerType1, TonalButton} from 'src/components';
 import {
@@ -24,8 +26,9 @@ import {
   DescriptionField,
   ImageField,
   TagSelectionField,
-  TextInputHolder,
 } from './components';
+import createCardDeckValidationSchema from './createCardDeckValidations';
+import ValidationText from '../components/ValidationText';
 
 export default function CreateDeckScreen({navigation, route}) {
   const dispatch = useDispatch();
@@ -36,13 +39,19 @@ export default function CreateDeckScreen({navigation, route}) {
     dispatch(loadHashtags());
   }, [dispatch]);
 
+  const initialValues = {
+    cardDeckName: '',
+    cardDeckDescription: '',
+    cardDeckImage: DECK.IMAGE,
+    hashtags: DECK.HASHTAGS,
+  };
   const {base: primary, onBase: onPrimary} = Color.light[ColorVariant.primary];
   const defaultContainerStyle = [{backgroundColor: primary}, styles.container];
   const defaultContentStyle = [Typography.body.large, {color: onPrimary}];
   let render = 0;
 
-  function onSubmitPress() {
-    alert('renderData');
+  function onSubmitPress(value) {
+    console.log('render field: ', value);
   }
 
   render++;
@@ -56,36 +65,75 @@ export default function CreateDeckScreen({navigation, route}) {
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : ''}
         style={styles.view}>
-        <View style={styles.scrollView}>
-          <BaseHeadline content={render} style={styles.headline} />
-          <View style={styles.media}>
-            <BaseHeadline content={'Chọn hình ảnh'} style={styles.headline} />
-            <ImageField />
-          </View>
-          <View style={styles.titleDeck}>
-            <BaseHeadline content={'Thêm tên bộ bài'} style={styles.headline} />
-            <CardDeckNameField />
-          </View>
-          <View style={styles.descriptionHolder}>
-            <BaseHeadline
-              content={'Thêm mô tả bộ bài'}
-              style={styles.headline}
-            />
-            <DescriptionField />
-          </View>
-          <View style={styles.chipSelection}>
-            <BaseHeadline content={'Chọn hashtag'} style={styles.headline} />
-            <TagSelectionField data={hashtags} />
-          </View>
-          <View style={styles.action}>
-            <TonalButton
-              content={'HOÀN TẤT'}
-              style={styles.button}
-              contentStyle={styles.buttonContent}
-              onPress={onSubmitPress}
-            />
-          </View>
-        </View>
+        <Formik
+          initialValues={initialValues}
+          onSubmit={onSubmitPress}
+          validationSchema={createCardDeckValidationSchema}>
+          {({
+            handleBlur,
+            handleChange,
+            handleSubmit,
+            values,
+            errors,
+            isValid,
+            touched,
+          }) => (
+            <ScrollView contentContainerStyle={styles.scrollView}>
+              <BaseHeadline content={render} style={styles.headline} />
+              <View style={styles.media}>
+                <BaseHeadline
+                  content={'Chọn hình ảnh'}
+                  style={styles.headline}
+                />
+                <ImageField />
+              </View>
+              <View style={styles.titleDeck}>
+                <BaseHeadline
+                  content={'Thêm tên bộ bài'}
+                  style={styles.headline}
+                />
+                <CardDeckNameField
+                  onBlur={handleBlur('cardDeckName')}
+                  onChangeText={handleChange('cardDeckName')}
+                  value={values.cardDeckName}
+                />
+                {errors.cardDeckName && touched.cardDeckName && (
+                  <ValidationText content={errors.cardDeckName} />
+                )}
+              </View>
+              <View style={styles.descriptionHolder}>
+                <BaseHeadline
+                  content={'Thêm mô tả bộ bài'}
+                  style={styles.headline}
+                />
+                <DescriptionField
+                  onBlur={handleBlur('cardDeckDescription')}
+                  onChangeText={handleChange('cardDeckDescription')}
+                  value={values.cardDeckDescription}
+                />
+                {errors.cardDeckDescription && (
+                  <ValidationText content={errors.cardDeckDescription} />
+                )}
+              </View>
+              <View style={styles.chipSelection}>
+                <BaseHeadline
+                  content={'Chọn hashtag'}
+                  style={styles.headline}
+                />
+                <TagSelectionField data={hashtags} />
+              </View>
+              <View style={styles.action}>
+                <TonalButton
+                  content={'HOÀN TẤT'}
+                  style={styles.button}
+                  contentStyle={styles.buttonContent}
+                  onPress={handleSubmit}
+                  disabled={!isValid}
+                />
+              </View>
+            </ScrollView>
+          )}
+        </Formik>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
