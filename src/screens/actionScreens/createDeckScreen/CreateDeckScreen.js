@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
@@ -27,11 +27,13 @@ import {
   TagSelectionField,
 } from './components';
 import createCardDeckValidationSchema from './createCardDeckValidations';
+import {remove} from '../../../utils';
 
 export default function CreateDeckScreen({navigation, route}) {
   const dispatch = useDispatch();
   const requesting = useSelector(requestHashtagsSelect);
   const hashtags = useSelector(hashtagsSelect);
+  const [selectedHashtags, setSelectedHashTags] = useState([]);
 
   useEffect(() => {
     dispatch(loadHashtags());
@@ -50,6 +52,18 @@ export default function CreateDeckScreen({navigation, route}) {
 
   function onSubmitPress(value) {
     console.log('render field: ', value);
+    console.log(selectedHashtags);
+  }
+
+  function handleHashTagsSelect(hashtagId) {
+    if (!selectedHashtags && selectedHashtags.length === 0) {
+      setSelectedHashTags(...DECK.HASHTAGS);
+    }
+    if (!selectedHashtags.includes(hashtagId)) {
+      setSelectedHashTags([...selectedHashtags, hashtagId]);
+    } else {
+      setSelectedHashTags(remove.elementAtMiddle(selectedHashtags, hashtagId));
+    }
   }
 
   render++;
@@ -91,7 +105,10 @@ export default function CreateDeckScreen({navigation, route}) {
               </View>
               <View style={styles.chipSelection}>
                 {renderBaseHeadline('Chọn hashtag')}
-                <TagSelectionField data={hashtags} />
+                <TagSelectionField
+                  data={hashtags}
+                  onSelectChipOption={handleHashTagsSelect}
+                />
               </View>
               <View style={styles.action}>
                 <TonalButton
@@ -144,7 +161,7 @@ const styles = StyleSheet.create({
   },
   chipSelection: {
     width: '100%',
-    aspectRatio: 5,
+    aspectRatio: 4,
     paddingTop: 12,
   },
   buttonHolder: {

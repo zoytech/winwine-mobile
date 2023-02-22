@@ -45,7 +45,7 @@ export default function TagSelectionField(props) {
       <FlatList
         {...otherProps}
         data={data}
-        renderItem={({item}) => renderItem({item})}
+        renderItem={renderItem}
         horizontal={true}
         contentContainerStyle={styles.contentContainer}
         ItemSeparatorComponent={<View style={styles.separator} />}
