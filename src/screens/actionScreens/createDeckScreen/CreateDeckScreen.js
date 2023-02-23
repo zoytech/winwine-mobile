@@ -54,13 +54,13 @@ export default function CreateDeckScreen({navigation, route}) {
   const defaultContentStyle = [Typography.body.large, {color: primary}];
 
   async function onSubmitPress(value) {
-    const rps = {
+    const submittingValues = {
       ...value,
       hashtags: selectedHashtags,
       cardDeckImage: selectedImg,
     };
     const config = {
-      body: JSON.stringify(rps),
+      body: submittingValues,
     };
     try {
       await CardDeckApi.postCardDeck(config);

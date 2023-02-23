@@ -27,6 +27,7 @@ async function requestToServer({url, method = 'GET', body, headers = {}}) {
   if (response.ok) {
     try {
       json = await response.json();
+      console.log('response success: ', json);
     } catch (e) {
       return '';
     }
