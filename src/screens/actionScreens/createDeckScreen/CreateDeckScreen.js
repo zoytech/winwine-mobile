@@ -28,6 +28,7 @@ import {
 } from './components';
 import createCardDeckValidationSchema from './createCardDeckValidations';
 import {remove} from '../../../utils';
+import {CardDeckApi} from '../../../apis';
 
 export default function CreateDeckScreen({navigation, route}) {
   const dispatch = useDispatch();
@@ -52,13 +53,20 @@ export default function CreateDeckScreen({navigation, route}) {
   ];
   const defaultContentStyle = [Typography.body.large, {color: primary}];
 
-  function onSubmitPress(value) {
+  async function onSubmitPress(value) {
     const rps = {
       ...value,
       hashtags: selectedHashtags,
       cardDeckImage: selectedImg,
     };
-    console.log('render field: ', rps);
+    const config = {
+      body: JSON.stringify(rps),
+    };
+    try {
+      await CardDeckApi.postCardDeck(config);
+    } catch (e) {
+      console.log('Fail to post card deck: ', e);
+    }
     // JUST FOR TEST BECAUSE AFTER SUBMIT IT NAVIGATE TO NEW SCREEN
     setSelectedHashtags([]);
     setSelectedImg('');

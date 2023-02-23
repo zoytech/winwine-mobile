@@ -1,12 +1,10 @@
 import {Image, Pressable, StyleSheet} from 'react-native';
 import {Color, ColorVariant} from 'src/themes';
-import {useState} from 'react';
 
 export default function ImageItem(props) {
   const {item, style, selected = false, ...otherProps} = props;
   const {base: selectedBorderColor, onBase: normBorderColor} =
     Color.light[ColorVariant.primary];
-  console.log(selected);
 
   function getImageContainerStyle({pressed}) {
     return [
