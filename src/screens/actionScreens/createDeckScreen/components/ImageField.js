@@ -1,33 +1,29 @@
-import {FlatList, Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {FlatList, Image, Pressable, StyleSheet, View} from 'react-native';
 import {Color, ColorVariant} from 'src/themes';
+import {useState} from 'react';
+import ImageItem from './ImageItem';
 
 export default function ImageField(props) {
-  const {
-    data,
-    style,
-    onNavigateChangeImageDialog = () => {},
-    ...otherProps
-  } = props;
-  const imageBorderColor = Color.light[ColorVariant.primary]?.onBase;
+  const {data, style, onImageSelectPress = () => {}, ...otherProps} = props;
+  const [selectedImg, setSelectedImg] = useState('');
   const containerStyle = [styles.container, style];
 
-  function getImageContainerStyle({pressed}) {
-    return [
-      styles.imageContainer,
-      {borderColor: imageBorderColor},
-      pressed && styles.opacityPressed,
-    ];
+  function handleImageSelectPress(item) {
+    onImageSelectPress(item);
+    if (selectedImg === item) {
+      setSelectedImg(null);
+    } else {
+      setSelectedImg(item);
+    }
   }
 
   function renderImageItem({item}) {
-    console.log(item);
     return (
-      <Pressable
-        {...otherProps}
-        onPress={onNavigateChangeImageDialog}
-        style={getImageContainerStyle}>
-        <Image style={styles.image} source={{uri: item}} />
-      </Pressable>
+      <ImageItem
+        item={item}
+        selected={selectedImg === item}
+        onPress={() => handleImageSelectPress(item)}
+      />
     );
   }
 

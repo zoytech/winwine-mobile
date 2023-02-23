@@ -17,7 +17,7 @@ import {
   loadHashtags,
   requestHashtagsSelect,
 } from 'src/redux/slices';
-import {DECK, IMG_SRC, WIDTH} from 'src/constants';
+import {IMG_SRC, WIDTH} from 'src/constants';
 import {CustomStatusBar} from 'src/screens/components';
 import {
   BaseHeadline,
@@ -34,6 +34,7 @@ export default function CreateDeckScreen({navigation, route}) {
   const requesting = useSelector(requestHashtagsSelect);
   const hashtags = useSelector(hashtagsSelect);
   const [selectedHashtags, setSelectedHashtags] = useState([]);
+  const [selectedImg, setSelectedImg] = useState('');
 
   useEffect(() => {
     dispatch(loadHashtags());
@@ -45,18 +46,26 @@ export default function CreateDeckScreen({navigation, route}) {
   };
   const imgArr = Object.values(IMG_SRC);
   const {base: primary, onBase: onPrimary} = Color.light[ColorVariant.primary];
-  const defaultContainerStyle = [{backgroundColor: primary}, styles.container];
-  const defaultContentStyle = [Typography.body.large, {color: onPrimary}];
+  const defaultContainerStyle = [
+    {backgroundColor: onPrimary},
+    styles.container,
+  ];
+  const defaultContentStyle = [Typography.body.large, {color: primary}];
   let render = 0;
 
   function onSubmitPress(value) {
-    const rps = {...value, hashtags: selectedHashtags};
+    const rps = {
+      ...value,
+      hashtags: selectedHashtags,
+      cardDeckImage: selectedImg,
+    };
     console.log('render field: ', rps);
     // JUST FOR TEST BECAUSE AFTER SUBMIT IT NAVIGATE TO NEW SCREEN
     setSelectedHashtags([]);
+    setSelectedImg('');
   }
 
-  function handleHashTagsSelect(hashtagId) {
+  function handleHashtagsSelectPress(hashtagId) {
     if (selectedHashtags.includes(hashtagId)) {
       remove.elementAtMiddle(selectedHashtags, hashtagId);
       setSelectedHashtags([...selectedHashtags]);
@@ -65,10 +74,24 @@ export default function CreateDeckScreen({navigation, route}) {
     }
   }
 
+  function handleImageSelectPress(item) {
+    if (selectedImg === item) {
+      setSelectedImg(null);
+    } else {
+      setSelectedImg(item);
+    }
+  }
+
   render++;
 
   function renderBaseHeadline(content) {
-    return <BaseHeadline content={content} style={styles.headline} />;
+    return (
+      <BaseHeadline
+        content={content}
+        style={styles.headline}
+        contentStyle={defaultContentStyle}
+      />
+    );
   }
 
   if (requesting) {
@@ -89,7 +112,10 @@ export default function CreateDeckScreen({navigation, route}) {
               {renderBaseHeadline(render)}
               <View style={styles.media}>
                 {renderBaseHeadline('Chọn hình ảnh')}
-                <ImageField data={imgArr} />
+                <ImageField
+                  data={imgArr}
+                  onImageSelectPress={handleImageSelectPress}
+                />
               </View>
               <View style={styles.titleDeck}>
                 {renderBaseHeadline('Thêm tên bộ bài')}
@@ -106,7 +132,7 @@ export default function CreateDeckScreen({navigation, route}) {
                 {renderBaseHeadline('Chọn hashtag')}
                 <TagSelectionField
                   data={hashtags}
-                  onSelectChipOption={handleHashTagsSelect}
+                  onSelectChipOption={handleHashtagsSelectPress}
                 />
               </View>
               <View style={styles.action}>
