@@ -51,7 +51,6 @@ export default function CreateDeckScreen({navigation, route}) {
     styles.container,
   ];
   const defaultContentStyle = [Typography.body.large, {color: primary}];
-  let render = 0;
 
   function onSubmitPress(value) {
     const rps = {
@@ -82,8 +81,6 @@ export default function CreateDeckScreen({navigation, route}) {
     }
   }
 
-  render++;
-
   function renderBaseHeadline(content) {
     return (
       <BaseHeadline
@@ -109,7 +106,6 @@ export default function CreateDeckScreen({navigation, route}) {
           validationSchema={createCardDeckValidationSchema}>
           {({handleSubmit, isValid}) => (
             <ScrollView contentContainerStyle={styles.scrollView}>
-              {renderBaseHeadline(render)}
               <View style={styles.media}>
                 {renderBaseHeadline('Chọn hình ảnh')}
                 <ImageField

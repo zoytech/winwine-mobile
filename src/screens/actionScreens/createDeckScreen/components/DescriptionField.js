@@ -9,7 +9,6 @@ export default function DescriptionField(props) {
   return (
     <TextInputHolder
       {...otherProps}
-      style={styles.textHolder}
       multiline={true}
       contentStyle={contentStyle}
       selectTextOnFocus={true}
@@ -19,10 +18,5 @@ export default function DescriptionField(props) {
 const styles = StyleSheet.create({
   textHolder: {
     borderWidth: 0.5,
-  },
-  button: {
-    borderRadius: 0,
-    width: 180,
-    justifyContent: 'space-evenly',
   },
 });

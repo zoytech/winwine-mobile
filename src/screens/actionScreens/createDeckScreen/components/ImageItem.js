@@ -11,7 +11,10 @@ export default function ImageItem(props) {
   function getImageContainerStyle({pressed}) {
     return [
       styles.imageContainer,
-      {borderColor: selected ? selectedBorderColor : normBorderColor},
+      {
+        borderColor: selected ? selectedBorderColor : normBorderColor,
+        borderWidth: selected ? 3 : 0.5,
+      },
       pressed && styles.opacityPressed,
     ];
   }

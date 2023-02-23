@@ -3,8 +3,8 @@ const error = {
 };
 
 const limit = {
-  cardDeckName: 5,
-  cardDeckDescription: 5,
+  cardDeckName: 120,
+  cardDeckDescription: 250,
   cardTitle: 200,
 };
 

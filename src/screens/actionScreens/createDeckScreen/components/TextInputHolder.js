@@ -11,12 +11,12 @@ export default function TextInputHolder(props) {
     ...otherProps
   } = props;
 
-  const {onBase: onPrimaryColor, onContainer: onContainerColor} =
+  const {base: primaryColor, onContainer: onContainerColor} =
     Color.light[ColorVariant.primary];
 
   const containerStyle = [
     styles.container,
-    {borderBottomColor: onPrimaryColor},
+    {borderBottomColor: primaryColor},
     style,
   ];
   const hasError = errors[name] && touched[name];
@@ -31,17 +31,19 @@ export default function TextInputHolder(props) {
   }
 
   return (
-    <View style={containerStyle}>
-      <TextInput
-        {...otherProps}
-        value={value}
-        onChangeText={handleChangeText}
-        onBlur={handleBlur}
-        selectionColor={onContainerColor}
-        style={contentStyle}
-      />
+    <>
+      <View style={containerStyle}>
+        <TextInput
+          {...otherProps}
+          value={value}
+          onChangeText={handleChangeText}
+          onBlur={handleBlur}
+          selectionColor={onContainerColor}
+          style={contentStyle}
+        />
+      </View>
       {hasError && <ValidationText content={errors[name]} />}
-    </View>
+    </>
   );
 }
 

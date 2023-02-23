@@ -7,7 +7,7 @@ export default function ValidationText(props) {
   const containerStyle = [styles.container, style];
   const defaultContentStyle = [
     styles.content,
-    {color: onBase},
+    {color: base},
     Typography.label.medium,
     contentStyle,
   ];
