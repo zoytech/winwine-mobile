@@ -17,7 +17,7 @@ import {
   loadHashtags,
   requestHashtagsSelect,
 } from 'src/redux/slices';
-import {DECK, WIDTH} from 'src/constants';
+import {DECK, IMG_SRC, WIDTH} from 'src/constants';
 import {CustomStatusBar} from 'src/screens/components';
 import {
   BaseHeadline,
@@ -43,6 +43,7 @@ export default function CreateDeckScreen({navigation, route}) {
     cardDeckName: '',
     cardDeckDescription: '',
   };
+  const imgArr = Object.values(IMG_SRC);
   const {base: primary, onBase: onPrimary} = Color.light[ColorVariant.primary];
   const defaultContainerStyle = [{backgroundColor: primary}, styles.container];
   const defaultContentStyle = [Typography.body.large, {color: onPrimary}];
@@ -88,7 +89,7 @@ export default function CreateDeckScreen({navigation, route}) {
               {renderBaseHeadline(render)}
               <View style={styles.media}>
                 {renderBaseHeadline('Chọn hình ảnh')}
-                <ImageField />
+                <ImageField data={imgArr} />
               </View>
               <View style={styles.titleDeck}>
                 {renderBaseHeadline('Thêm tên bộ bài')}

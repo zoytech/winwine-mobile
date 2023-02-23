@@ -1,41 +1,59 @@
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {FlatList, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import {Color, ColorVariant} from 'src/themes';
 
 export default function ImageField(props) {
   const {
-    name,
+    data,
     style,
     onNavigateChangeImageDialog = () => {},
     ...otherProps
   } = props;
   const imageBorderColor = Color.light[ColorVariant.primary]?.onBase;
-  const containerStyle = [
-    styles.container,
-    {borderColor: imageBorderColor},
-    style,
-  ];
+  const containerStyle = [styles.container, style];
 
-  function getContainerStyle({pressed}) {
-    return [containerStyle, pressed && styles.opacityPressed];
+  function getImageContainerStyle({pressed}) {
+    return [
+      styles.imageContainer,
+      {borderColor: imageBorderColor},
+      pressed && styles.opacityPressed,
+    ];
+  }
+
+  function renderImageItem({item}) {
+    console.log(item);
+    return (
+      <Pressable
+        {...otherProps}
+        onPress={onNavigateChangeImageDialog}
+        style={getImageContainerStyle}>
+        <Image style={styles.image} source={{uri: item}} />
+      </Pressable>
+    );
   }
 
   return (
     <>
-      <View>
-        <Text>{name}</Text>
-      </View>
-      <Pressable
+      <FlatList
         {...otherProps}
-        onPress={onNavigateChangeImageDialog}
-        style={getContainerStyle}>
-        <View style={styles.image} />
-      </Pressable>
+        data={data}
+        style={containerStyle}
+        renderItem={renderImageItem}
+        horizontal={true}
+        contentContainerStyle={styles.contentContainer}
+        ItemSeparatorComponent={<View style={styles.separator} />}
+        showsHorizontalScrollIndicator={false}
+      />
     </>
   );
 }
 const styles = StyleSheet.create({
-  container: {
-    width: '50%',
+  container: {},
+  contentContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  imageContainer: {
+    width: 120,
     aspectRatio: 1,
     borderWidth: 1,
     borderRadius: 5,
@@ -46,10 +64,12 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     resizeMode: 'cover',
-    backgroundColor: 'violet',
   },
   opacityPressed: {
     opacity: 0.75,
     color: Color.light[ColorVariant.primary]?.base,
+  },
+  separator: {
+    width: 12,
   },
 });
