@@ -2,6 +2,14 @@
   "migIndex": 1,
   "data": [
     {
+      "path": "src/assets/fonts/Great_Vibes/GreatVibes-Regular.ttf",
+      "sha1": "4dd3bad8fb151d31eedee2676488f94f831bf515"
+    },
+    {
+      "path": "src/assets/fonts/Great_Vibes/OFL.txt",
+      "sha1": "039af90ef1b6b1a06f8b172ea7165f35df5069bd"
+    },
+    {
       "path": "src/assets/fonts/Icon-fonts/AntDesign.ttf",
       "sha1": "4e77868439280fb434d4697c7b911271406c81f3"
     },
