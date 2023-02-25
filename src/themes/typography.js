@@ -1,24 +1,26 @@
-const baseStyle = {
-  fontFamily: 'Roboto',
+const fontFamily = {
+  roboto: 'Roboto',
+  greatVibes: 'GreatVibes-Regular',
 };
+
 const Typography = {
   display: {
     large: {
-      ...baseStyle,
+      fontFamily: fontFamily?.roboto,
       fontSize: 57,
       lineHeight: 64,
       letterSpacing: 0,
       fontWeight: 400,
     },
     medium: {
-      ...baseStyle,
+      fontFamily: fontFamily?.roboto,
       fontSize: 45,
       lineHeight: 52,
       letterSpacing: 0,
       fontWeight: 400,
     },
     small: {
-      ...baseStyle,
+      fontFamily: fontFamily?.roboto,
       fontSize: 36,
       lineHeight: 44,
       letterSpacing: 0,
@@ -27,21 +29,21 @@ const Typography = {
   },
   headline: {
     large: {
-      ...baseStyle,
+      fontFamily: fontFamily?.roboto,
       fontSize: 32,
       lineHeight: 40,
       letterSpacing: 0,
       fontWeight: 400,
     },
     medium: {
-      ...baseStyle,
+      fontFamily: fontFamily?.roboto,
       fontSize: 28,
       lineHeight: 36,
       letterSpacing: 0,
       fontWeight: 400,
     },
     small: {
-      ...baseStyle,
+      fontFamily: fontFamily?.roboto,
       fontSize: 24,
       lineHeight: 32,
       letterSpacing: 0,
@@ -50,21 +52,21 @@ const Typography = {
   },
   heading: {
     large: {
-      ...baseStyle,
+      fontFamily: fontFamily?.roboto,
       fontSize: 24,
       lineHeight: 32,
       letterSpacing: 0,
       fontWeight: 400,
     },
     medium: {
-      ...baseStyle,
+      fontFamily: fontFamily?.roboto,
       fontSize: 20,
       lineHeight: 26,
       letterSpacing: 0,
       fontWeight: 400,
     },
     small: {
-      ...baseStyle,
+      fontFamily: fontFamily?.roboto,
       fontSize: 18,
       lineHeight: 25,
       letterSpacing: 0,
@@ -73,20 +75,20 @@ const Typography = {
   },
   title: {
     large: {
-      ...baseStyle,
+      fontFamily: fontFamily?.roboto,
       fontSize: 22,
       lineHeight: 28,
       fontWeight: 400,
     },
     medium: {
-      ...baseStyle,
+      fontFamily: fontFamily?.roboto,
       fontSize: 16,
       lineHeight: 24,
       letterSpacing: 0.15,
       fontWeight: 500,
     },
     small: {
-      ...baseStyle,
+      fontFamily: fontFamily?.roboto,
       fontSize: 14,
       lineHeight: 20,
       letterSpacing: 0.1,
@@ -95,21 +97,21 @@ const Typography = {
   },
   label: {
     large: {
-      ...baseStyle,
+      fontFamily: fontFamily?.roboto,
       fontSize: 16,
       lineHeight: 24,
       letterSpacing: 0.15,
       fontWeight: 500,
     },
     medium: {
-      ...baseStyle,
+      fontFamily: fontFamily?.roboto,
       fontSize: 14,
       lineHeight: 20,
       letterSpacing: 0.1,
       fontWeight: 500,
     },
     small: {
-      ...baseStyle,
+      fontFamily: fontFamily?.roboto,
       fontSize: 12,
       lineHeight: 16,
       letterSpacing: 0.5,
@@ -118,21 +120,21 @@ const Typography = {
   },
   body: {
     large: {
-      ...baseStyle,
+      fontFamily: fontFamily?.roboto,
       fontSize: 16,
       lineHeight: 24,
       letterSpacing: 0.5,
       fontWeight: 400,
     },
     medium: {
-      ...baseStyle,
+      fontFamily: fontFamily?.roboto,
       fontSize: 14,
       lineHeight: 20,
       letterSpacing: 0.25,
       fontWeight: 400,
     },
     small: {
-      ...baseStyle,
+      fontFamily: fontFamily?.roboto,
       fontSize: 12,
       lineHeight: 16,
       letterSpacing: 0.4,
@@ -140,14 +142,14 @@ const Typography = {
     },
     subHead: {
       large: {
-        ...baseStyle,
+        fontFamily: fontFamily?.roboto,
         fontSize: 14,
         lineHeight: 20,
         letterSpacing: 0.1,
         fontWeight: 500,
       },
       small: {
-        ...baseStyle,
+        fontFamily: fontFamily?.roboto,
         fontSize: 12,
         lineHeight: 16,
         letterSpacing: 0.4,
@@ -155,7 +157,7 @@ const Typography = {
       },
     },
     caption: {
-      ...baseStyle,
+      fontFamily: fontFamily?.roboto,
       fontSize: 12,
       lineHeight: 16,
       letterSpacing: 0.4,
@@ -163,42 +165,42 @@ const Typography = {
     },
     other: {
       headingLarge: {
-        ...baseStyle,
+        fontFamily: fontFamily?.roboto,
         fontSize: 32,
         lineHeight: 40,
         letterSpacing: 0,
         fontWeight: 700,
       },
       headingMedium: {
-        ...baseStyle,
+        fontFamily: fontFamily?.roboto,
         fontSize: 18,
         lineHeight: 25,
         letterSpacing: 0.15,
         fontWeight: 500,
       },
       headingSmall: {
-        ...baseStyle,
+        fontFamily: fontFamily?.roboto,
         fontSize: 12,
         lineHeight: 16,
         letterSpacing: 0.4,
         fontWeight: 500,
       },
       subHeadLarge: {
-        fontFamily: '',
+        fontFamily: fontFamily?.greatVibes,
         fontSize: 32,
         lineHeight: 40,
         letterSpacing: 0,
         fontWeight: 400,
       },
       subHeadSmall: {
-        fontFamily: '',
+        fontFamily: fontFamily?.greatVibes,
         fontSize: 20,
         lineHeight: 26,
         letterSpacing: 0,
         fontWeight: 400,
       },
       caption: {
-        ...baseStyle,
+        fontFamily: fontFamily?.roboto,
         fontSize: 11,
         lineHeight: 16,
         letterSpacing: 0.5,
