@@ -17,7 +17,7 @@ import {
   loadHashtags,
   requestHashtagsSelect,
 } from 'src/redux/slices';
-import {IMG_SRC, WIDTH} from 'src/constants';
+import {DECK, IMG_SRC, WIDTH} from 'src/constants';
 import {CustomStatusBar} from 'src/screens/components';
 import {
   BaseHeadline,
@@ -29,6 +29,7 @@ import {
 import createCardDeckValidationSchema from './createCardDeckValidations';
 import {remove} from '../../../utils';
 import {CardDeckApi} from '../../../apis';
+import {ScreenKeys} from '../../../navigations/ScreenKeys';
 
 export default function CreateDeckScreen({navigation, route}) {
   const dispatch = useDispatch();
@@ -63,7 +64,8 @@ export default function CreateDeckScreen({navigation, route}) {
       body: submittingValues,
     };
     try {
-      await CardDeckApi.postCardDeck(config);
+      const response = await CardDeckApi.postCardDeck(config);
+      handleNavigateCreateCardScreen(response?.data);
     } catch (e) {
       console.log('Fail to post card deck: ', e);
     }
@@ -87,6 +89,26 @@ export default function CreateDeckScreen({navigation, route}) {
     } else {
       setSelectedImg(item);
     }
+  }
+
+  function handleNavigateCreateCardScreen(values) {
+    const {
+      cardDeckId,
+      cardDeckName,
+      cardDeckImage,
+      cardDeckDescription,
+      hashtags: deckHashtags,
+    } = values;
+    navigation.navigate({
+      name: ScreenKeys.CREATE_CARD,
+      params: {
+        cardDeckIdParam: cardDeckId,
+        cardDeckNameParam: cardDeckName ? cardDeckName : DECK?.NAME,
+        cardDeckImageParam: cardDeckImage ? {uri: cardDeckImage} : DECK?.IMAGE,
+        cardDeckDescriptionParam: cardDeckDescription,
+        hashtagsParam: deckHashtags ? deckHashtags : DECK?.HASHTAGS,
+      },
+    });
   }
 
   function renderBaseHeadline(content) {

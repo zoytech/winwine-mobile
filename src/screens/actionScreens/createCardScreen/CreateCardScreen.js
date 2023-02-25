@@ -1,65 +1,50 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
+import {Field, Formik} from 'formik';
 import {Color, ColorVariant, Typography} from 'src/themes';
-import {FilledButton, SpinnerType1} from 'src/components';
-import {
-  cardDeckSelect,
-  loadCardDeckByDeckId,
-  requestCardDeckSelect,
-} from 'src/redux/slices';
-import {defaultOf, HEIGHT, WIDTH} from 'src/constants';
+import {FilledButton} from 'src/components';
+import {HEIGHT, WIDTH} from 'src/constants';
 import {CustomStatusBar} from 'src/screens/components';
-import {
-  CreateActionHeader,
-  CreateCardTopAppBar,
-  RecommendedTaskList,
-} from './components';
+import {CreateActionHeader, CreateCardTopAppBar} from './components';
 import {TextInputHolder} from '../createDeckScreen/components';
+import ApiInstance from '../../../apis/ApiInstance';
+import {CardApi} from '../../../apis';
+import TaskInputHolder from './components/TaskInputHolder';
 
 const width = {
   CONTAINER: 320,
   CARD: 320 * 0.85,
   SEPARATOR: 10,
 };
-const actions = {
-  TASKS: {
-    ADD: 'Thêm thử thách',
-  },
-};
 
 export default function CreateCardScreen({navigation, route}) {
-  const {deckTitle, deckId, deckDescription, deckSource, deckTag} =
-    route.params;
-  const cardDeckItem = useSelector(cardDeckSelect);
-  const requesting = useSelector(requestCardDeckSelect);
-  const dispatch = useDispatch();
+  const {
+    cardDeckIdParam,
+    cardDeckNameParam,
+    cardDeckImageParam,
+    cardDeckDescriptionParam,
+    hashtagsParam,
+  } = route.params;
+  const initialValues = {
+    cardTitle: '',
+    cardDescription: '',
+    cardImage: '',
+  };
   const [imageHeight, setImageHeight] = useState(HEIGHT?.IMAGE);
-  const [taskItem, setTaskItem] = useState(null);
-  const [openTaskInput, setOpenTaskInput] = useState(true);
+  const submittingValues = [];
 
   const scrollViewRef = useRef([]);
-  const {cardDeck, tag, uri, tasks} = cardDeckItem || {};
-  const recommendedTasks = tasks || [];
-  const dataLength = recommendedTasks
-    ? recommendedTasks.length
-    : defaultOf?.initDataLength;
   const baseColor = Color.light[ColorVariant.surface]?.base;
   const textColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
   const primaryColor = Color.light[ColorVariant.primary]?.base;
-
-  const recommendedDeckId = 1;
-  useEffect(() => {
-    dispatch(loadCardDeckByDeckId(recommendedDeckId));
-  }, [dispatch, recommendedDeckId]);
 
   useEffect(() => {
     navigation.setOptions({
       header: () => (
         <CreateCardTopAppBar
           navigation={navigation}
-          content={deckTitle}
-          source={deckSource}
+          content={cardDeckNameParam}
+          source={cardDeckImageParam}
           ref={scrollViewRef}
           imageHeight={imageHeight}
         />
@@ -77,64 +62,55 @@ export default function CreateCardScreen({navigation, route}) {
     setImageHeight(event.nativeEvent.layout.height);
   }
 
-  function handleCardItemPressed() {
-    console.log('some action here');
+  async function onSubmitPress(values, actions) {
+    const processedCardInfo = {...values};
+    submittingValues.push(processedCardInfo);
+    const config = {
+      body: submittingValues,
+    };
+    try {
+      const response = await CardApi.postCardByCardDeckId(
+        cardDeckIdParam,
+        config,
+      );
+      console.log('response: ', response);
+      // if (response) {
+      //   await actions.setSubmitting(false);
+      // }
+    } catch (e) {
+      console.log('Fail to create card: ', e);
+    }
   }
 
-  function handleOpenTaskInput() {
-    setOpenTaskInput(!openTaskInput);
-  }
-
-  function renderTaskInput() {
-    const borderStyle = {borderBottomColor: primaryColor};
-    return (
-      <>
-        {openTaskInput && (
-          <TextInputHolder
-            style={borderStyle}
-            contentStyle={defaultContentStyle}
-            selectTextOnFocus={true}
-          />
-        )}
-      </>
-    );
-  }
-
-  if (requesting) {
-    return <SpinnerType1 />;
-  }
   return (
     <SafeAreaView style={defaultContainerStyle}>
       <CustomStatusBar />
-      <ScrollView
-        contentContainerStyle={styles.scrollView}
-        onScroll={scrollViewRef.current.onScroll}>
-        <CreateActionHeader
-          style={styles.header}
-          navigation={navigation}
-          cardDeckInfo={{deckTitle, deckTag, deckSource, deckDescription}}
-          dataLength={dataLength}
-          onLayoutImage={event => handleOnLayoutImage(event)}
-        />
-        <View style={styles.buttonContainer}>
-          <FilledButton
-            content={actions.TASKS.ADD}
-            onPress={handleOpenTaskInput}
-          />
-        </View>
-        <View style={styles.taskInput}>{renderTaskInput()}</View>
-        <View style={styles.supportingText}>
-          <Text style={defaultContentStyle}>
-            {'goi y cac thu thach tham khao'}
-          </Text>
-        </View>
-        <RecommendedTaskList
-          data={recommendedTasks}
-          style={styles.card}
-          onItemPress={handleCardItemPressed}
-          contentStyle={defaultContentStyle}
-        />
-      </ScrollView>
+      <Formik initialValues={initialValues} onSubmit={onSubmitPress}>
+        {({handleSubmit, isValid}) => (
+          <ScrollView
+            contentContainerStyle={styles.scrollView}
+            onScroll={scrollViewRef.current.onScroll}>
+            <CreateActionHeader
+              style={styles.header}
+              navigation={navigation}
+              cardDeckInfo={{
+                cardDeckNameParam,
+                hashtagsParam,
+                cardDeckImageParam,
+                cardDeckDescriptionParam,
+              }}
+              onLayoutImage={event => handleOnLayoutImage(event)}
+            />
+            <View style={styles.taskInput}>
+              <Field component={TaskInputHolder} name={'cardTitle'} />
+            </View>
+            <View style={styles.buttonContainer}>
+              <FilledButton content={'Tiếp'} onPress={handleSubmit} />
+              <FilledButton content={'Tạo bộ bài'} onPress={handleSubmit} />
+            </View>
+          </ScrollView>
+        )}
+      </Formik>
     </SafeAreaView>
   );
 }
@@ -156,12 +132,14 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     width: '100%',
-    aspectRatio: 7,
+    // aspectRatio: ,
     flexDirection: 'row',
     paddingHorizontal: 8,
+    paddingBottom: 200,
   },
   taskInput: {
     width: '80%',
+    aspectRatio: 0.9,
   },
   supportingText: {
     width: '100%',
@@ -195,3 +173,12 @@ const styles = StyleSheet.create({
     minHeight: 48,
   },
 });
+
+/*
+<RecommendedTaskList
+    data={recommendedTasks}
+    style={styles.card}
+    onItemPress={handleCardItemPressed}
+    contentStyle={defaultContentStyle}
+/>
+*/

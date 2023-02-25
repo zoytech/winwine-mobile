@@ -27,7 +27,6 @@ async function requestToServer({url, method = 'GET', body, headers = {}}) {
   if (response.ok) {
     try {
       json = await response.json();
-      console.log('response success: ', json);
     } catch (e) {
       return '';
     }
@@ -65,6 +64,7 @@ function getRequest(endPoint, config = {}) {
 
 function postRequest(endPoint, config = {}) {
   const {params = {}, body} = config;
+  console.log(body);
   const searchParams = params ? new URLSearchParams(params).toString() : '';
   return requestToServer({
     url: `${PREFIX_URL}${endPoint}?${searchParams}`,

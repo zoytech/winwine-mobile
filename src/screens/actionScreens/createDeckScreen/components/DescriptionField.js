@@ -1,6 +1,6 @@
-import {TextInputHolder} from './index';
-import {StyleSheet, View, Text} from 'react-native';
-import {Color, ColorVariant} from '../../../../themes';
+import {StyleSheet} from 'react-native';
+import {Color, ColorVariant} from 'src/themes';
+import {TextInputHolder} from 'src/screens/actionScreens/components';
 
 export default function DescriptionField(props) {
   const {style, contentStyle, ...otherProps} = props;

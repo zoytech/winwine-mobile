@@ -1,6 +1,6 @@
 import {StyleSheet, TextInput, View} from 'react-native';
 import {Color, ColorVariant} from 'src/themes';
-import ValidationText from '../../components/ValidationText';
+import ValidationText from './ValidationText';
 
 export default function TextInputHolder(props) {
   const {

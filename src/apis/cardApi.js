@@ -4,4 +4,8 @@ function getCardsByCardDeckId(cardDeckId) {
   return ApiInstance.getRequest(`/card-decks/${cardDeckId}/cards`);
 }
 
-export default {getCardsByCardDeckId};
+function postCardByCardDeckId(cardDeckId, config) {
+  return ApiInstance.postRequest(`/card-decks/${cardDeckId}/cards`, config);
+}
+
+export default {getCardsByCardDeckId, postCardByCardDeckId};

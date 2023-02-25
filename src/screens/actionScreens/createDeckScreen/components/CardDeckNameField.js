@@ -1,7 +1,6 @@
-import {TextInputHolder} from './index';
-import {StyleSheet, Text, View} from 'react-native';
-import {useController} from 'react-hook-form';
-import {Color, ColorVariant, Typography} from 'src/themes';
+import {StyleSheet} from 'react-native';
+import {Color, ColorVariant} from 'src/themes';
+import {TextInputHolder} from 'src/screens/actionScreens/components';
 
 export default function CardDeckNameField(props) {
   const {style, contentStyle, ...otherProps} = props;
