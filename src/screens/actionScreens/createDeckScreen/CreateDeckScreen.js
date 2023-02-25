@@ -23,6 +23,7 @@ import {
   BaseHeadline,
   CardDeckNameField,
   DescriptionField,
+  HeaderActionButtons,
   ImageField,
   TagSelectionField,
 } from './components';
@@ -136,6 +137,7 @@ export default function CreateDeckScreen({navigation, route}) {
           validationSchema={createCardDeckValidationSchema}>
           {({handleSubmit, isValid}) => (
             <ScrollView contentContainerStyle={styles.scrollView}>
+              <HeaderActionButtons style={styles.headerAction} />
               <View style={styles.media}>
                 {renderBaseHeadline('Chọn hình ảnh')}
                 <ImageField
@@ -187,6 +189,10 @@ const styles = StyleSheet.create({
   scrollView: {
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  headerAction: {
+    width: '100%',
+    aspectRatio: 9,
   },
   headline: {
     width: '100%',
