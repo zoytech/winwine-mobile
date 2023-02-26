@@ -45,6 +45,29 @@ const Typography = {
       fontFamily: 'Roboto',
     },
   },
+  heading: {
+    large: {
+      fontSize: 24,
+      fontWeight: 'normal',
+      lineHeight: 32,
+      letterSpacing: 0,
+      fontFamily: 'Roboto',
+    },
+    medium: {
+      fontSize: 20,
+      fontWeight: 'normal',
+      lineHeight: 26,
+      letterSpacing: 0,
+      fontFamily: 'Roboto',
+    },
+    small: {
+      fontSize: 18,
+      fontWeight: 'normal',
+      lineHeight: 25,
+      letterSpacing: 0.15,
+      fontFamily: 'Roboto',
+    },
+  },
   title: {
     large: {
       fontSize: 22,
