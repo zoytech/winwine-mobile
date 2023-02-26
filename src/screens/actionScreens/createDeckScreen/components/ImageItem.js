@@ -14,6 +14,7 @@ export default function ImageItem(props) {
         borderWidth: selected ? 3 : 0.5,
       },
       pressed && styles.opacityPressed,
+      style,
     ];
   }
 
@@ -26,12 +27,9 @@ export default function ImageItem(props) {
 
 const styles = StyleSheet.create({
   imageContainer: {
-    width: 120,
+    width: 86,
     aspectRatio: 1,
     borderWidth: 1,
-    borderRadius: 5,
-    overflow: 'hidden',
-    elevation: 5,
   },
   image: {
     width: '100%',

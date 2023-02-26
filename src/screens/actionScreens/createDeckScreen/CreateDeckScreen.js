@@ -17,7 +17,7 @@ import {
   loadHashtags,
   requestHashtagsSelect,
 } from 'src/redux/slices';
-import {DECK, IMG_SRC, WIDTH} from 'src/constants';
+import {DECK, IMG_SRC, LIMIT, LimitInput, WIDTH} from 'src/constants';
 import {CustomStatusBar} from 'src/screens/components';
 import {
   BaseHeadline,
@@ -31,6 +31,7 @@ import createCardDeckValidationSchema from './createCardDeckValidations';
 import {remove} from '../../../utils';
 import {CardDeckApi} from '../../../apis';
 import {ScreenKeys} from '../../../navigations/ScreenKeys';
+import {TextInputHolder} from '../components';
 
 export default function CreateDeckScreen({navigation, route}) {
   const dispatch = useDispatch();
@@ -38,6 +39,8 @@ export default function CreateDeckScreen({navigation, route}) {
   const hashtags = useSelector(hashtagsSelect);
   const [selectedHashtags, setSelectedHashtags] = useState([]);
   const [selectedImg, setSelectedImg] = useState('');
+  const [descriptionCharCount, setDescriptionCharCount] = useState(0);
+  const [nameCharCount, setNameCharCount] = useState(0);
 
   useEffect(() => {
     dispatch(loadHashtags());
@@ -113,13 +116,7 @@ export default function CreateDeckScreen({navigation, route}) {
   }
 
   function renderBaseHeadline(content) {
-    return (
-      <BaseHeadline
-        content={content}
-        style={styles.headline}
-        contentStyle={defaultContentStyle}
-      />
-    );
+    return <BaseHeadline content={content} style={styles.headline} />;
   }
 
   if (requesting) {
@@ -138,31 +135,34 @@ export default function CreateDeckScreen({navigation, route}) {
           {({handleSubmit, isValid}) => (
             <ScrollView contentContainerStyle={styles.scrollView}>
               <HeaderActionButtons style={styles.headerAction} />
-              <View style={styles.media}>
-                {renderBaseHeadline('Chọn hình ảnh')}
-                <ImageField
-                  data={imgArr}
-                  onImageSelectPress={handleImageSelectPress}
-                />
-              </View>
-              <View style={styles.titleDeck}>
-                {renderBaseHeadline('Thêm tên bộ bài')}
-                <Field component={CardDeckNameField} name={'cardDeckName'} />
-              </View>
-              <View style={styles.descriptionHolder}>
-                {renderBaseHeadline('Thêm mô tả bộ bài')}
-                <Field
-                  component={DescriptionField}
-                  name={'cardDeckDescription'}
-                />
-              </View>
-              <View style={styles.chipSelection}>
-                {renderBaseHeadline('Chọn hashtag')}
-                <TagSelectionField
-                  data={hashtags}
-                  onSelectChipOption={handleHashtagsSelectPress}
-                />
-              </View>
+              <ImageField
+                data={imgArr}
+                content={'Chọn hình ảnh'}
+                onImageSelectPress={handleImageSelectPress}
+                style={styles.media}
+              />
+              {renderBaseHeadline('Tên bộ bài')}
+              <Field
+                component={TextInputHolder}
+                name={'cardDeckName'}
+                style={styles.cardDeckInput}
+                leftContent={'Tên bộ bài'}
+                rightContent={`(${nameCharCount}/${LimitInput.CARD_DECK_NAME})`}
+              />
+              {renderBaseHeadline('Mô tả bộ bài')}
+              <Field
+                component={TextInputHolder}
+                name={'cardDeckDescription'}
+                style={styles.cardDeckInput}
+                leftContent={'Mô tả'}
+                rightContent={`(${descriptionCharCount}/${LimitInput.CARD_DECK_DESCRIPTION})`}
+              />
+              {renderBaseHeadline('Chọn hashtag')}
+              <TagSelectionField
+                style={styles.chipSelection}
+                data={hashtags}
+                onSelectChipOption={handleHashtagsSelectPress}
+              />
               <View style={styles.action}>
                 <TonalButton
                   content={'HOÀN TẤT'}
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
   container: {
     width: WIDTH?.SCREEN,
     flexDirection: 'column',
-    paddingHorizontal: 12,
+    paddingHorizontal: 16,
   },
   scrollView: {
     justifyContent: 'center',
@@ -196,25 +196,15 @@ const styles = StyleSheet.create({
   },
   headline: {
     width: '100%',
-    aspectRatio: 10,
+    aspectRatio: 7.8,
+    marginTop: 16,
+    paddingVertical: 6,
   },
   media: {
-    width: '100%',
-    aspectRatio: 1.5,
-    paddingTop: 24,
-    justifyContent: 'center',
-    alignItems: 'center',
+    height: 221,
   },
-  titleDeck: {
+  cardDeckInput: {
     width: '100%',
-    aspectRatio: 5,
-    flexDirection: 'column',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-    paddingTop: 24,
-  },
-  textInput: {
-    width: '60%',
   },
   chipSelection: {
     width: '100%',
@@ -226,7 +216,7 @@ const styles = StyleSheet.create({
     aspectRatio: 5,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 12, // backgroundColor: 'gold',
+    paddingTop: 12,
   },
   descriptionHolder: {
     width: '100%',
@@ -252,5 +242,18 @@ const styles = StyleSheet.create({
     ...Typography.title.medium,
     textTransform: 'uppercase',
     fontWeight: 'bold',
+  },
+  imageContainer: {
+    width: 120,
+    aspectRatio: 1,
+    borderWidth: 1,
+    borderRadius: 5,
+    overflow: 'hidden',
+    elevation: 5,
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
   },
 });
