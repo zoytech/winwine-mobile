@@ -5,11 +5,9 @@ import {Color, ColorVariant, Typography} from 'src/themes';
 import {FilledButton} from 'src/components';
 import {HEIGHT, WIDTH} from 'src/constants';
 import {CustomStatusBar} from 'src/screens/components';
-import {CreateActionHeader, CreateCardTopAppBar} from './components';
-import {TextInputHolder} from '../createDeckScreen/components';
-import ApiInstance from '../../../apis/ApiInstance';
-import {CardApi} from '../../../apis';
-import TaskInputHolder from './components/TaskInputHolder';
+import {CreateCardTopAppBar} from './components';
+import {TextInputHolder} from '../components';
+import {CardApi} from 'src/apis';
 
 const width = {
   CONTAINER: 320,
@@ -90,19 +88,8 @@ export default function CreateCardScreen({navigation, route}) {
           <ScrollView
             contentContainerStyle={styles.scrollView}
             onScroll={scrollViewRef.current.onScroll}>
-            <CreateActionHeader
-              style={styles.header}
-              navigation={navigation}
-              cardDeckInfo={{
-                cardDeckNameParam,
-                hashtagsParam,
-                cardDeckImageParam,
-                cardDeckDescriptionParam,
-              }}
-              onLayoutImage={event => handleOnLayoutImage(event)}
-            />
             <View style={styles.taskInput}>
-              <Field component={TaskInputHolder} name={'cardTitle'} />
+              <Field component={TextInputHolder} name={'cardTitle'} />
             </View>
             <View style={styles.buttonContainer}>
               <FilledButton content={'Tiếp'} onPress={handleSubmit} />

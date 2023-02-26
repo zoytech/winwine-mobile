@@ -1,6 +1,5 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Flatlist} from 'react-native';
 import {TextInputHolder} from 'src/screens/actionScreens/components';
-import {Carousel} from 'src/utils';
 import {FilledCard} from '../../../../components';
 
 const width = {
@@ -12,27 +11,16 @@ export default function TaskInputHolder(props) {
   const {style, contentStyle, ...otherProps} = props;
   const data = [1, 2, 3, 4, 5, 6, 7];
 
-  function renderTaskInputItem() {
-    return (
-      <FilledCard>
-        <TextInputHolder
-          {...otherProps}
-          multiline={true}
-          contentStyle={contentStyle}
-          selectTextOnFocus={true}
-        />
-      </FilledCard>
-    );
+  function renderTaskInputItem({item, index}) {
+    return <FilledCard key={index} />;
   }
 
   return (
-    <Carousel
-      data={data}
-      renderItem={renderTaskInputItem}
-      itemWidth={width.CARD}
-      containerWidth={width.CONTAINER}
-      separatorWidth={width.SEPARATOR}
-      style={[style, styles.container]}
+    <TextInputHolder
+      {...otherProps}
+      multiline={true}
+      contentStyle={contentStyle}
+      selectTextOnFocus={true}
     />
   );
 }

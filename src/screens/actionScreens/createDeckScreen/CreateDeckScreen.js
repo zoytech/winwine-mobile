@@ -11,7 +11,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Field, Formik} from 'formik';
 
 import {Color, ColorVariant, Typography} from 'src/themes';
-import {SpinnerType1, TonalButton} from 'src/components';
+import {FilledButton, SpinnerType1, TonalButton} from 'src/components';
 import {
   hashtagsSelect,
   loadHashtags,
@@ -164,6 +164,10 @@ export default function CreateDeckScreen({navigation, route}) {
                 onSelectChipOption={handleHashtagsSelectPress}
               />
               {renderBaseHeadline('Thêm lá bài')}
+              <FilledButton
+                onPress={handleNavigateCreateCardScreen}
+                content={'Create card'}
+              />
             </ScrollView>
           )}
         </Formik>
