@@ -3,12 +3,12 @@ import {Color, ColorVariant, Typography} from 'src/themes';
 
 export default function BaseHeadline(props) {
   const {content, style, contentStyle, ...otherProps} = props;
-  const onBasePrimary = Color.light[ColorVariant.primary]?.onBase;
+  const onBackgroundColor = Color.light[ColorVariant.background]?.onBase;
   const containerStyle = [styles.container, style];
   const defaultContentStyle = [
+    Typography.heading.small,
+    {color: onBackgroundColor},
     styles.content,
-    {color: onBasePrimary},
-    Typography.title.medium,
     contentStyle,
   ];
   return (
@@ -20,6 +20,7 @@ export default function BaseHeadline(props) {
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
+    alignItems: 'flex-start',
   },
   content: {
     textAlign: 'center',
