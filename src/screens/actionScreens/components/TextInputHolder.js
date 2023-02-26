@@ -6,7 +6,7 @@ export default function TextInputHolder(props) {
   const {
     field: {name, onBlur, onChange, value},
     form: {errors, touched, setFieldTouched},
-    rightContent,
+    limitContent,
     leftContent,
     style,
     contentStyle,
@@ -19,6 +19,7 @@ export default function TextInputHolder(props) {
 
   const containerStyle = [styles.container, {borderColor: outlineColor}, style];
   const hasError = errors[name] && touched[name];
+  const rightContent = `(${value?.length}/${limitContent})`;
 
   function handleChangeText(text) {
     onChange(name)(text);

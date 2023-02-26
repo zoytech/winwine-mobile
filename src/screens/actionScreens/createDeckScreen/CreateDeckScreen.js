@@ -17,20 +17,18 @@ import {
   loadHashtags,
   requestHashtagsSelect,
 } from 'src/redux/slices';
-import {DECK, IMG_SRC, LIMIT, LimitInput, WIDTH} from 'src/constants';
+import {DECK, IMG_SRC, LimitInput, WIDTH} from 'src/constants';
 import {CustomStatusBar} from 'src/screens/components';
 import {
   BaseHeadline,
-  CardDeckNameField,
-  DescriptionField,
   HeaderActionButtons,
   ImageField,
   TagSelectionField,
 } from './components';
 import createCardDeckValidationSchema from './createCardDeckValidations';
-import {remove} from '../../../utils';
-import {CardDeckApi} from '../../../apis';
-import {ScreenKeys} from '../../../navigations/ScreenKeys';
+import {remove} from 'src/utils';
+import {CardDeckApi} from 'src/apis';
+import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import {TextInputHolder} from '../components';
 
 export default function CreateDeckScreen({navigation, route}) {
@@ -39,8 +37,6 @@ export default function CreateDeckScreen({navigation, route}) {
   const hashtags = useSelector(hashtagsSelect);
   const [selectedHashtags, setSelectedHashtags] = useState([]);
   const [selectedImg, setSelectedImg] = useState('');
-  const [descriptionCharCount, setDescriptionCharCount] = useState(0);
-  const [nameCharCount, setNameCharCount] = useState(0);
 
   useEffect(() => {
     dispatch(loadHashtags());
@@ -134,44 +130,40 @@ export default function CreateDeckScreen({navigation, route}) {
           validationSchema={createCardDeckValidationSchema}>
           {({handleSubmit, isValid}) => (
             <ScrollView contentContainerStyle={styles.scrollView}>
-              <HeaderActionButtons style={styles.headerAction} />
+              <HeaderActionButtons
+                style={styles.headerAction}
+                onSubmit={handleSubmit}
+                disabled={!isValid}
+              />
               <ImageField
                 data={imgArr}
                 content={'Chọn hình ảnh'}
                 onImageSelectPress={handleImageSelectPress}
                 style={styles.media}
               />
-              {renderBaseHeadline('Tên bộ bài')}
+              {renderBaseHeadline('Nhập tên bộ bài')}
               <Field
                 component={TextInputHolder}
                 name={'cardDeckName'}
                 style={styles.cardDeckInput}
                 leftContent={'Tên bộ bài'}
-                rightContent={`(${nameCharCount}/${LimitInput.CARD_DECK_NAME})`}
+                limitContent={LimitInput.CARD_DECK_NAME}
               />
-              {renderBaseHeadline('Mô tả bộ bài')}
+              {renderBaseHeadline('Nhập mô tả')}
               <Field
                 component={TextInputHolder}
                 name={'cardDeckDescription'}
                 style={styles.cardDeckInput}
                 leftContent={'Mô tả'}
-                rightContent={`(${descriptionCharCount}/${LimitInput.CARD_DECK_DESCRIPTION})`}
+                limitContent={LimitInput.CARD_DECK_DESCRIPTION}
               />
-              {renderBaseHeadline('Chọn hashtag')}
+              {renderBaseHeadline('Phân loại hashtag')}
               <TagSelectionField
                 style={styles.chipSelection}
                 data={hashtags}
                 onSelectChipOption={handleHashtagsSelectPress}
               />
-              <View style={styles.action}>
-                <TonalButton
-                  content={'HOÀN TẤT'}
-                  style={styles.button}
-                  contentStyle={styles.buttonContent}
-                  onPress={handleSubmit}
-                  disabled={!isValid}
-                />
-              </View>
+              {renderBaseHeadline('Thêm lá bài')}
             </ScrollView>
           )}
         </Formik>

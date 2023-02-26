@@ -12,8 +12,9 @@ export default function HeaderActionButtons(props) {
   const {
     style,
     contentStyle,
+    disabled = false,
+    onSubmit = () => {},
     onStopPress = () => {},
-    onSavePress = () => {},
     ...otherProps
   } = props;
   const defaultContainerStyle = [styles.container, style];
@@ -49,8 +50,9 @@ export default function HeaderActionButtons(props) {
       </View>
       <TextButton
         content={CONTENT.SAVE}
-        onPress={onSavePress}
         contentStyle={rightButtonStyle}
+        disabled={disabled}
+        onPress={onSubmit}
       />
     </View>
   );

@@ -1,5 +1,5 @@
 import {SuggestionChip} from 'src/components';
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 import {useState} from 'react';
 import {Color, ColorVariant} from 'src/themes';
 import {remove} from '../../../../utils';
