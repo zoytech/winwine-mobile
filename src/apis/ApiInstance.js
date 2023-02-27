@@ -36,6 +36,8 @@ async function requestToServer({url, method = 'GET', body, headers = {}}) {
   let message = `Failed api request to ${url}`;
   try {
     const responseText = await response.text();
+    console.log('responseText: ', responseText);
+
     if (responseText) {
       message += responseText;
     }

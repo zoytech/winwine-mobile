@@ -5,13 +5,12 @@ import {
   SafeAreaView,
   ScrollView,
   StyleSheet,
-  View,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Field, Formik} from 'formik';
 
 import {Color, ColorVariant, Typography} from 'src/themes';
-import {FilledButton, SpinnerType1, TonalButton} from 'src/components';
+import {FilledButton, SpinnerType1} from 'src/components';
 import {
   hashtagsSelect,
   loadHashtags,
