@@ -1,5 +1,5 @@
 const api = {
-  HOST: 'http://winwinewebapp-env.eba-guiiiyuk.ap-southeast-1.elasticbeanstalk.com',
+  HOST: 'http://winwine.zoytech.com',
   PATH: 'winwine/web-app/apis/v1',
 };
 
