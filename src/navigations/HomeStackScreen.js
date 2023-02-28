@@ -59,13 +59,6 @@ export default function HomeStackScreen({navigation, route}) {
             header: () => <GamePlayTopAppBar />,
           }}
         />
-        <HomeStack.Screen
-          name={ScreenKeys.CREATE_CARD}
-          component={CreateCardScreen}
-          options={{
-            header: () => <CreateCardTopAppBar />,
-          }}
-        />
       </HomeStack.Group>
       <HomeStack.Group screenOptions={modalScreenProps}>
         <HomeStack.Screen
