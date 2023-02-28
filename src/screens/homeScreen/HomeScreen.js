@@ -1,4 +1,4 @@
-import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
+import {SafeAreaView, ScrollView, StyleSheet, Text} from 'react-native';
 import React, {useEffect, useRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
@@ -15,6 +15,7 @@ import {
 } from './components';
 import {CustomStatusBar, SectionHeader} from '../components';
 import useRecentlyCardDecks from './useRecentlyCardDecks';
+import {Typography} from '../../themes';
 
 const RECENTLY = 'Chơi gần đây';
 const POPULAR = 'Phổ biến';
