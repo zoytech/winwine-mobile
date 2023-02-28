@@ -13,32 +13,32 @@ const ColorVariant = {
 const Color = {
   light: {
     [ColorVariant.primary]: {
-      base: '#9B3F5A',
+      base: '#BA005E',
       onBase: '#FFFFFF',
-      container: '#FFD9E0',
-      onContainer: '#3F0018',
+      container: '#FFD9E1',
+      onContainer: '#3F001B',
     },
     [ColorVariant.secondary]: {
-      base: '#75565C',
+      base: '#A62D75',
       onBase: '#FFFFFF',
-      container: '#FFD9E0',
-      onContainer: '#2B151A',
+      container: '#FFD8E7',
+      onContainer: '#3D0027',
     },
     [ColorVariant.tertiary]: {
-      base: '#7B5733',
+      base: '#754B9C',
       onBase: '#FFFFFF',
-      container: '#FFDCBE',
-      onContainer: '#2C1600',
+      container: '#F1DBFF',
+      onContainer: '#2D0050',
     },
     [ColorVariant.error]: {
-      base: '#BA1A1A',
+      base: '#C00001',
       onBase: '#FFFFFF',
-      container: '#FFDAD6',
-      onContainer: '#410002',
+      container: '#FFDAD4',
+      onContainer: '#410000',
     },
     [ColorVariant.background]: {
       base: '#FFFBFF',
-      onBase: '#1D1B1A',
+      onBase: '#201A1C',
     },
     [ColorVariant.surface]: {
       base: '#FFFBFF',
@@ -46,13 +46,13 @@ const Color = {
     },
     [ColorVariant.surfaceVariant]: {
       base: '#F3DDE0',
-      onBase: '#4A4643',
+      onBase: '#514346',
     },
-    [ColorVariant.outline]: {base: '#817568'},
+    [ColorVariant.outline]: {base: '#837376'},
     [ColorVariant.inverse]: {
       surface: '#352F30', //20
-      onSurface: '#FAEEEF', //95
-      primary: '#FFB1C0', //80
+      onSurface: '#FAEEF0', //95
+      primary: '#FFB1C6', //8 0
     },
   },
   dark: {
