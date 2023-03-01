@@ -1,3 +1,3 @@
-import CreateCardScreen from './CreateCardScreen';
+import CreateCardBottomSheet from './CreateCardBottomSheet';
 
-export default CreateCardScreen;
+export {CreateCardBottomSheet};

@@ -1,5 +1,5 @@
-import {StyleSheet, TextInput, View, Text} from 'react-native';
-import {Color, ColorVariant} from 'src/themes';
+import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {Typography, Color, ColorVariant} from 'src/themes';
 import ValidationText from './ValidationText';
 
 export default function TextInputHolder(props) {
@@ -8,6 +8,7 @@ export default function TextInputHolder(props) {
     form: {errors, touched, setFieldTouched},
     limitContent,
     leftContent,
+    required = false,
     style,
     contentStyle,
     ...otherProps
@@ -16,10 +17,13 @@ export default function TextInputHolder(props) {
   const {base: backgroundColor, onContainer: onBackgroundColor} =
     Color.light[ColorVariant.background];
   const outlineColor = Color.light[ColorVariant.outline]?.base;
+  const onSurfaceVarColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
 
   const containerStyle = [styles.container, {borderColor: outlineColor}, style];
+  const requiredStyle = [{color: onSurfaceVarColor}, Typography.body.small];
   const hasError = errors[name] && touched[name];
-  const rightContent = `(${value?.length}/${limitContent})`;
+  const rightContent = `${value?.length}/${limitContent}`;
+  const requiredSymbol = required ? '*' : '';
 
   function handleChangeText(text) {
     onChange(name)(text);
@@ -28,6 +32,21 @@ export default function TextInputHolder(props) {
   function handleBlur() {
     setFieldTouched(name);
     onBlur(name);
+  }
+
+  function renderSubDescriptionText() {
+    return (
+      <View style={styles.subDescriptionContainer}>
+        {hasError ? (
+          <ValidationText content={errors[name]} />
+        ) : (
+          <View>
+            {required && <Text style={requiredStyle}>{'Yêu cầu'}</Text>}
+          </View>
+        )}
+        {limitContent && <Text style={requiredStyle}>{rightContent}</Text>}
+      </View>
+    );
   }
 
   return (
@@ -39,16 +58,15 @@ export default function TextInputHolder(props) {
             value={value}
             onChangeText={handleChangeText}
             onBlur={handleBlur}
-            placeholder={leftContent}
+            placeholder={`${leftContent}${requiredSymbol}`}
             selectionColor={onBackgroundColor}
             style={contentStyle}
             selectTextOnFocus={true}
             multiline={true}
           />
         </View>
-        <Text style={contentStyle}>{rightContent}</Text>
       </View>
-      {hasError && <ValidationText content={errors[name]} />}
+      {renderSubDescriptionText()}
     </>
   );
 }
@@ -65,5 +83,13 @@ const styles = StyleSheet.create({
   },
   textInputContainer: {
     width: 226,
+  },
+  subDescriptionContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 4,
+    paddingHorizontal: 16,
   },
 });

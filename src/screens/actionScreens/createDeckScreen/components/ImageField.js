@@ -9,12 +9,14 @@ export default function ImageField(props) {
   const {
     data,
     content,
+    initialImage,
     style,
     onImageSelectPress = () => {},
     ...otherProps
   } = props;
-  const [selectedImg, setSelectedImg] = useState('');
+  const [selectedImg, setSelectedImg] = useState(initialImage);
   const containerStyle = [styles.container, style];
+  const blankImgColor = Color.light[ColorVariant.inverse]?.primary;
 
   function handleImageSelectPress(item) {
     onImageSelectPress(item);
@@ -48,7 +50,9 @@ export default function ImageField(props) {
             style={styles.previewImage}
           />
         ) : (
-          <View style={[styles.previewImage, {backgroundColor: 'coral'}]} />
+          <View
+            style={[styles.previewImage, {backgroundColor: blankImgColor}]}
+          />
         )}
       </View>
       <View style={styles.selectionContainer}>

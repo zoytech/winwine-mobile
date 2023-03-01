@@ -1,4 +1,2 @@
-import CreateDeckScreen from './createDeckScreen';
-import CreateCardScreen from './createCardScreen';
-
-export {CreateDeckScreen, CreateCardScreen};
+export * from './createDeckScreen';
+export * from './createCardScreen';

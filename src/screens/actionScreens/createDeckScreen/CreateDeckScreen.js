@@ -5,10 +5,10 @@ import {
   SafeAreaView,
   ScrollView,
   StyleSheet,
+  View,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Field, Formik} from 'formik';
-
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {FilledButton, SpinnerType1} from 'src/components';
 import {
@@ -16,7 +16,7 @@ import {
   loadHashtags,
   requestHashtagsSelect,
 } from 'src/redux/slices';
-import {DECK, IMG_SRC, LimitInput, WIDTH} from 'src/constants';
+import {IMG_SRC, LimitInput, WIDTH} from 'src/constants';
 import {CustomStatusBar} from 'src/screens/components';
 import {
   BaseHeadline,
@@ -27,16 +27,18 @@ import {
 import createCardDeckValidationSchema from './createCardDeckValidations';
 import {remove} from 'src/utils';
 import {CardDeckApi} from 'src/apis';
-import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import {TextInputHolder} from '../components';
+import {ScreenKeys} from 'src/navigations/ScreenKeys';
+import CreateCardBottomSheet from '../createCardScreen/CreateCardBottomSheet';
 
 export default function CreateDeckScreen({navigation, route}) {
   const dispatch = useDispatch();
   const requesting = useSelector(requestHashtagsSelect);
   const hashtags = useSelector(hashtagsSelect);
+  const initialImage = IMG_SRC[1];
   const [selectedHashtags, setSelectedHashtags] = useState([]);
-  const [selectedImg, setSelectedImg] = useState('');
-
+  const [selectedImg, setSelectedImg] = useState(initialImage);
+  const [isOpenModal, setIsOpenModal] = useState(false);
   useEffect(() => {
     dispatch(loadHashtags());
   }, [dispatch]);
@@ -64,7 +66,7 @@ export default function CreateDeckScreen({navigation, route}) {
     };
     try {
       const response = await CardDeckApi.postCardDeck(config);
-      handleNavigateCreateCardScreen(response?.data);
+      handleOpenCreateCardBottomSheet(response?.data);
     } catch (e) {
       console.log('Fail to post card deck: ', e);
     }
@@ -90,23 +92,9 @@ export default function CreateDeckScreen({navigation, route}) {
     }
   }
 
-  function handleNavigateCreateCardScreen(values) {
-    const {
-      cardDeckId,
-      cardDeckName,
-      cardDeckImage,
-      cardDeckDescription,
-      hashtags: deckHashtags,
-    } = values;
+  function handleOpenCreateCardBottomSheet({cardDeckId}) {
     navigation.navigate({
       name: ScreenKeys.CREATE_CARD,
-      params: {
-        cardDeckIdParam: cardDeckId,
-        cardDeckNameParam: cardDeckName ? cardDeckName : DECK?.NAME,
-        cardDeckImageParam: cardDeckImage ? {uri: cardDeckImage} : DECK?.IMAGE,
-        cardDeckDescriptionParam: cardDeckDescription,
-        hashtagsParam: deckHashtags ? deckHashtags : DECK?.HASHTAGS,
-      },
     });
   }
 
@@ -137,6 +125,7 @@ export default function CreateDeckScreen({navigation, route}) {
               <ImageField
                 data={imgArr}
                 content={'Chọn hình ảnh'}
+                initialImage={initialImage}
                 onImageSelectPress={handleImageSelectPress}
                 style={styles.media}
               />
@@ -147,6 +136,7 @@ export default function CreateDeckScreen({navigation, route}) {
                 style={styles.cardDeckInput}
                 leftContent={'Tên bộ bài'}
                 limitContent={LimitInput.CARD_DECK_NAME}
+                required={true}
               />
               {renderBaseHeadline('Nhập mô tả')}
               <Field
@@ -163,10 +153,13 @@ export default function CreateDeckScreen({navigation, route}) {
                 onSelectChipOption={handleHashtagsSelectPress}
               />
               {renderBaseHeadline('Thêm lá bài')}
-              <FilledButton
-                onPress={handleNavigateCreateCardScreen}
-                content={'Create card'}
-              />
+              <View style={styles.action}>
+                <FilledButton
+                  onPress={handleOpenCreateCardBottomSheet}
+                  content={'Create card'}
+                  style={{width: 150, height: 50}}
+                />
+              </View>
             </ScrollView>
           )}
         </Formik>
@@ -226,7 +219,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingTop: 100,
-    paddingBottom: 180,
+    paddingBottom: 300,
   },
   button: {
     width: 200,

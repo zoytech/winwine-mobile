@@ -13,12 +13,14 @@ export default function ValidationText(props) {
   ];
   return (
     <View {...otherProps} style={containerStyle}>
-      <Text style={defaultContentStyle}>{content}</Text>
+      {content && <Text style={defaultContentStyle}>{content}</Text>}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    flexDirection: 'row',
+  },
   content: {},
 });

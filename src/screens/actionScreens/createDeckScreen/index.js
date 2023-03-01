@@ -1,3 +1,3 @@
 import CreateDeckScreen from './CreateDeckScreen';
 
-export default CreateDeckScreen;
+export {CreateDeckScreen};

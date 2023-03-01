@@ -50,9 +50,9 @@ const Color = {
     },
     [ColorVariant.outline]: {base: '#837376'},
     [ColorVariant.inverse]: {
-      surface: '#352F30', //20
-      onSurface: '#FAEEF0', //95
-      primary: '#FFB1C6', //8 0
+      surface: '#352F30',
+      onSurface: '#FAEEF0',
+      primary: '#FFB1C6',
     },
   },
   dark: {
