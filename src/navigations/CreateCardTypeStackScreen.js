@@ -7,6 +7,7 @@ import {
   CreateCardBottomSheet,
   BasicDialog,
 } from 'src/screens';
+import CreateProviderScreen from '../screens/actionScreens/CreateProviderScreen';
 
 const CreateStack = createNativeStackNavigator();
 
@@ -18,13 +19,13 @@ export default function CreateCardTypeStackScreen({navigation, route}) {
   return (
     <CreateStack.Navigator>
       <CreateStack.Screen
-        name={ScreenKeys.CREATE_DECK}
-        component={CreateDeckScreen}
+        name={ScreenKeys.CREATE_CARD}
+        component={CreateProviderScreen}
         options={{headerShown: false}}
       />
       <CreateStack.Screen
-        name={ScreenKeys.CREATE_CARD}
-        component={CreateCardBottomSheet}
+        name={ScreenKeys.CREATE_DECK}
+        component={CreateDeckScreen}
         options={{headerShown: false}}
       />
 

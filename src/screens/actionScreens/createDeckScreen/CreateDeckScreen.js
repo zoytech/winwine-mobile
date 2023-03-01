@@ -28,17 +28,19 @@ import createCardDeckValidationSchema from './createCardDeckValidations';
 import {remove} from 'src/utils';
 import {CardDeckApi} from 'src/apis';
 import {TextInputHolder} from '../components';
-import {ScreenKeys} from 'src/navigations/ScreenKeys';
-import CreateCardBottomSheet from '../createCardScreen/CreateCardBottomSheet';
 
-export default function CreateDeckScreen({navigation, route}) {
+export default function CreateDeckScreen(props) {
+  const {navigation, route, onOpenModal = () => {}} = props;
+  const cardsParam = route.params?.cardsParam;
+
   const dispatch = useDispatch();
   const requesting = useSelector(requestHashtagsSelect);
   const hashtags = useSelector(hashtagsSelect);
+
   const initialImage = IMG_SRC[1];
   const [selectedHashtags, setSelectedHashtags] = useState([]);
   const [selectedImg, setSelectedImg] = useState(initialImage);
-  const [isOpenModal, setIsOpenModal] = useState(false);
+
   useEffect(() => {
     dispatch(loadHashtags());
   }, [dispatch]);
@@ -46,6 +48,7 @@ export default function CreateDeckScreen({navigation, route}) {
   const initialValues = {
     cardDeckName: '',
     cardDeckDescription: '',
+    cards: [],
   };
   const imgArr = Object.values(IMG_SRC);
   const {base: primary, onBase: onPrimary} = Color.light[ColorVariant.primary];
@@ -60,7 +63,9 @@ export default function CreateDeckScreen({navigation, route}) {
       ...value,
       hashtags: selectedHashtags,
       cardDeckImage: selectedImg,
+      cards: cardsParam,
     };
+    console.log('submittingValues: ', submittingValues);
     const config = {
       body: submittingValues,
     };
@@ -93,9 +98,7 @@ export default function CreateDeckScreen({navigation, route}) {
   }
 
   function handleOpenCreateCardBottomSheet({cardDeckId}) {
-    navigation.navigate({
-      name: ScreenKeys.CREATE_CARD,
-    });
+    onOpenModal();
   }
 
   function renderBaseHeadline(content) {
@@ -106,65 +109,60 @@ export default function CreateDeckScreen({navigation, route}) {
     return <SpinnerType1 />;
   }
   return (
-    <SafeAreaView style={defaultContainerStyle}>
-      <CustomStatusBar />
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : ''}
-        style={styles.view}>
-        <Formik
-          initialValues={initialValues}
-          onSubmit={onSubmitPress}
-          validationSchema={createCardDeckValidationSchema}>
-          {({handleSubmit, isValid}) => (
-            <ScrollView contentContainerStyle={styles.scrollView}>
-              <HeaderActionButtons
-                style={styles.headerAction}
-                onSubmit={handleSubmit}
-                disabled={!isValid}
-              />
-              <ImageField
-                data={imgArr}
-                content={'Chọn hình ảnh'}
-                initialImage={initialImage}
-                onImageSelectPress={handleImageSelectPress}
-                style={styles.media}
-              />
-              {renderBaseHeadline('Nhập tên bộ bài')}
-              <Field
-                component={TextInputHolder}
-                name={'cardDeckName'}
-                style={styles.cardDeckInput}
-                mainContent={'Tên bộ bài'}
-                limitContent={LimitInput.CARD_DECK_NAME}
-                required={true}
-              />
-              {renderBaseHeadline('Nhập mô tả')}
-              <Field
-                component={TextInputHolder}
-                name={'cardDeckDescription'}
-                style={styles.cardDeckInput}
-                mainContent={'Mô tả'}
-                limitContent={LimitInput.CARD_DECK_DESCRIPTION}
-              />
-              {renderBaseHeadline('Phân loại hashtag')}
-              <TagSelectionField
-                style={styles.chipSelection}
-                data={hashtags}
-                onSelectChipOption={handleHashtagsSelectPress}
-              />
-              {renderBaseHeadline('Thêm lá bài')}
-              <View style={styles.action}>
-                <FilledButton
-                  onPress={handleOpenCreateCardBottomSheet}
-                  content={'Create card'}
-                  style={{width: 150, height: 50}}
-                />
-              </View>
-            </ScrollView>
-          )}
-        </Formik>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+    <Formik
+      initialValues={initialValues}
+      onSubmit={onSubmitPress}
+      validationSchema={createCardDeckValidationSchema}>
+      {({handleSubmit, isValid}) => (
+        <ScrollView
+          contentContainerStyle={styles.scrollView}
+          style={defaultContainerStyle}>
+          <HeaderActionButtons
+            style={styles.headerAction}
+            onSubmit={handleSubmit}
+            disabled={!isValid}
+          />
+          <ImageField
+            data={imgArr}
+            content={'Chọn hình ảnh'}
+            initialImage={initialImage}
+            onImageSelectPress={handleImageSelectPress}
+            style={styles.media}
+          />
+          {renderBaseHeadline('Nhập tên bộ bài')}
+          <Field
+            component={TextInputHolder}
+            name={'cardDeckName'}
+            style={styles.cardDeckInput}
+            mainContent={'Tên bộ bài'}
+            limitContent={LimitInput.CARD_DECK_NAME}
+            required={true}
+          />
+          {renderBaseHeadline('Nhập mô tả')}
+          <Field
+            component={TextInputHolder}
+            name={'cardDeckDescription'}
+            style={styles.cardDeckInput}
+            mainContent={'Mô tả'}
+            limitContent={LimitInput.CARD_DECK_DESCRIPTION}
+          />
+          {renderBaseHeadline('Phân loại hashtag')}
+          <TagSelectionField
+            style={styles.chipSelection}
+            data={hashtags}
+            onSelectChipOption={handleHashtagsSelectPress}
+          />
+          {renderBaseHeadline('Thêm lá bài')}
+          <View style={styles.action}>
+            <FilledButton
+              onPress={handleOpenCreateCardBottomSheet}
+              content={'Create card'}
+              style={{width: 150, height: 50}}
+            />
+          </View>
+        </ScrollView>
+      )}
+    </Formik>
   );
 }
 

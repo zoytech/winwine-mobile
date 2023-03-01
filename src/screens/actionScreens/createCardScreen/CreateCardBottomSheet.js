@@ -1,6 +1,7 @@
-import BottomSheet, {
+import {
   BottomSheetFlatList,
-  BottomSheetBackdrop,
+  BottomSheetModalProvider,
+  BottomSheetModal,
 } from '@gorhom/bottom-sheet';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {useCallback, useMemo, useRef, useState} from 'react';
@@ -17,35 +18,22 @@ import {
 } from 'src/themes';
 import {CreateDeckScreen} from '../createDeckScreen';
 import {WIDTH} from 'src/constants';
+import {ScreenKeys} from '../../../navigations/ScreenKeys';
 
 export default function CreateCardBottomSheet(props) {
-  const {navigation, route} = props;
+  const {navigation, route, onCloseModal} = props;
   const initialValues = {
     cardTitle: '',
     cardDescription: '',
     cardImage: '',
   };
   const [creatingCards, setCreatingCards] = useState([]);
-  const bottomSheetRef = useRef(null);
-  const snapPoints = useMemo(() => ['75%'], []);
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log('handleSheetChanges', index);
-  }, []);
-  const renderBackdrop = useCallback(
-    props => renderBackdropComponent(props),
-    [],
-  );
 
   function onSubmitPress(values, {resetForm}) {
     if (values.cardTitle.length > 0) {
       setCreatingCards([...creatingCards, values]);
       resetForm();
     }
-  }
-
-  function handleClosePress() {
-    bottomSheetRef.current.close();
-    navigation.goBack();
   }
 
   function renderCardItemComponent({item, index}) {
@@ -59,24 +47,8 @@ export default function CreateCardBottomSheet(props) {
     );
   }
 
-  function renderBackdropComponent(backdropProps) {
-    return (
-      <Pressable
-        {...backdropProps}
-        style={styles.backdropContainer}
-        onPress={handleClosePress}>
-        <CreateDeckScreen />
-      </Pressable>
-    );
-  }
-
   return (
-    <BottomSheet
-      ref={bottomSheetRef}
-      snapPoints={snapPoints}
-      onChange={handleSheetChanges}
-      backdropComponent={renderBackdrop}
-      overDragResistanceFactor={0}>
+    <>
       <View style={styles.container}>
         <Formik initialValues={initialValues} onSubmit={onSubmitPress}>
           {({handleSubmit, isValid}) => (
@@ -90,7 +62,7 @@ export default function CreateCardBottomSheet(props) {
               </View>
               <View style={styles.buttonContainer}>
                 <FilledButton content={'Thêm mới'} onPress={handleSubmit} />
-                <FilledButton content={'Lưu'} onPress={handleClosePress} />
+                <FilledButton content={'Lưu'} onPress={onCloseModal} />
               </View>
             </View>
           )}
@@ -99,15 +71,15 @@ export default function CreateCardBottomSheet(props) {
           <BaseHeadline content={'Các lá bài khác'} />
         </View>
       </View>
-      <BottomSheetFlatList
-        data={creatingCards}
-        renderItem={renderCardItemComponent}
-        horizontal={true}
-        ItemSeparatorComponent={<View style={{width: 16}} />}
-        style={styles.cardList}
-        contentContainerStyle={styles.contentContainer}
-      />
-    </BottomSheet>
+      {/*<BottomSheetFlatList*/}
+      {/*  data={creatingCards}*/}
+      {/*  renderItem={renderCardItemComponent}*/}
+      {/*  horizontal={true}*/}
+      {/*  ItemSeparatorComponent={<View style={{width: 16}} />}*/}
+      {/*  style={styles.cardList}*/}
+      {/*  contentContainerStyle={styles.contentContainer}*/}
+      {/*/>*/}
+    </>
   );
 }
 const styles = StyleSheet.create({
