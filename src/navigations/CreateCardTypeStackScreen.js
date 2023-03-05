@@ -13,7 +13,7 @@ const CreateStack = createNativeStackNavigator();
 
 export default function CreateCardTypeStackScreen({navigation, route}) {
   useLayoutEffect(() => {
-    const tabHiddenRoutes = [ScreenKeys.BLANK];
+    const tabHiddenRoutes = [ScreenKeys.CREATE_CARD];
     hideBottomTabBarMethod({tabHiddenRoutes, navigation, route});
   }, [navigation, route]);
   return (
@@ -21,17 +21,6 @@ export default function CreateCardTypeStackScreen({navigation, route}) {
       <CreateStack.Screen
         name={ScreenKeys.CREATE_CARD}
         component={CreateProviderScreen}
-        options={{headerShown: false}}
-      />
-      <CreateStack.Screen
-        name={ScreenKeys.CREATE_DECK}
-        component={CreateDeckScreen}
-        options={{headerShown: false}}
-      />
-
-      <CreateStack.Screen
-        name={ScreenKeys.BASIC_DIALOG}
-        component={BasicDialog}
         options={{headerShown: false}}
       />
     </CreateStack.Navigator>
