@@ -7,7 +7,7 @@ export default function TextInputHolder(props) {
     field: {name, onBlur, onChange, value},
     form: {errors, touched, setFieldTouched},
     limitContent,
-    mainContent = '',
+    placeholder = '',
     required = false,
     style,
     contentStyle,
@@ -37,8 +37,12 @@ export default function TextInputHolder(props) {
   function renderSubDescriptionText() {
     return (
       <View style={styles.subDescriptionContainer}>
-        {hasError && <ValidationText content={errors[name]} />}
-        {limitContent && <Text style={requiredStyle}>{rightContent}</Text>}
+        <View style={styles.subDescriptionItem}>
+          {hasError && <ValidationText content={errors[name]} />}
+        </View>
+        <View style={styles.subDescriptionItem}>
+          {limitContent && <Text style={requiredStyle}>{rightContent}</Text>}
+        </View>
       </View>
     );
   }
@@ -52,7 +56,7 @@ export default function TextInputHolder(props) {
             value={value}
             onChangeText={handleChangeText}
             onBlur={handleBlur}
-            placeholder={`${mainContent}${requiredSymbol}`}
+            placeholder={`${placeholder}${requiredSymbol}`}
             selectionColor={onBackgroundColor}
             style={contentStyle}
             selectTextOnFocus={true}
@@ -77,6 +81,9 @@ const styles = StyleSheet.create({
   },
   textInputContainer: {
     width: 226,
+  },
+  subDescriptionItem: {
+    alignSelf: 'flex-end',
   },
   subDescriptionContainer: {
     width: '100%',

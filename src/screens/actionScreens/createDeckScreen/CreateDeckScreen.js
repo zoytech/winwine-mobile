@@ -131,7 +131,7 @@ export default function CreateDeckScreen(props) {
             component={TextInputHolder}
             name={'cardDeckName'}
             style={styles.cardDeckInput}
-            mainContent={'Tên bộ bài'}
+            placeholder={'Tên bộ bài'}
             limitContent={LimitInput.CARD_DECK_NAME}
             required={true}
           />
@@ -140,7 +140,7 @@ export default function CreateDeckScreen(props) {
             component={TextInputHolder}
             name={'cardDeckDescription'}
             style={styles.cardDeckInput}
-            mainContent={'Mô tả'}
+            placeholder={'Mô tả'}
             limitContent={LimitInput.CARD_DECK_DESCRIPTION}
           />
           {renderBaseHeadline('Phân loại hashtag')}
