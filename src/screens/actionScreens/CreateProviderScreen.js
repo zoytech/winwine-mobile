@@ -1,14 +1,10 @@
 import {BottomSheetModal, BottomSheetModalProvider} from '@gorhom/bottom-sheet';
+import {KeyboardAvoidingView, Platform, StyleSheet} from 'react-native';
+import {useCallback, useMemo, useRef} from 'react';
 import {CustomStatusBar} from '../components';
-import {
-  KeyboardAvoidingView,
-  Platform,
-  SafeAreaViewComponent,
-  StyleSheet,
-} from 'react-native';
+import {Color, ColorVariant} from '../../themes';
 import {CreateDeckScreen} from './createDeckScreen';
 import {CreateCardBottomSheet} from './createCardScreen';
-import {useCallback, useMemo, useRef} from 'react';
 
 export default function CreateProviderScreen({navigation, route}) {
   const bottomSheetModalRef = useRef(null);
@@ -31,26 +27,47 @@ export default function CreateProviderScreen({navigation, route}) {
     // });
   }
 
+  const primaryColor = Color.light[ColorVariant.tertiary]?.base;
+
   return (
     <BottomSheetModalProvider>
-      <SafeAreaViewComponent>
-        <CustomStatusBar />
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : ''}
-          style={styles.view}
-        />
-        <CreateDeckScreen onOpenModal={handlePresentModalPress} />
-        <BottomSheetModal
-          ref={bottomSheetModalRef}
-          snapPoints={snapPoints}
-          onChange={handleSheetChanges}
-          overDragResistanceFactor={0}
-          onCloseModal={handleClosePress}>
-          <CreateCardBottomSheet />
-        </BottomSheetModal>
-      </SafeAreaViewComponent>
+      <CustomStatusBar />
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : ''}
+        style={styles.view}
+      />
+      <CreateDeckScreen
+        onOpenModal={handlePresentModalPress}
+        navigation={navigation}
+        route={route}
+      />
+      <BottomSheetModal
+        ref={bottomSheetModalRef}
+        snapPoints={snapPoints}
+        onChange={handleSheetChanges}
+        overDragResistanceFactor={0}
+        onCloseModal={handleClosePress}>
+        <CreateCardBottomSheet navigation={navigation} route={route} />
+      </BottomSheetModal>
     </BottomSheetModalProvider>
   );
 }
 
 const styles = StyleSheet.create({});
+
+// <SafeAreaViewComponent>
+//   <CustomStatusBar />
+//   <KeyboardAvoidingView
+//     behavior={Platform.OS === 'ios' ? 'padding' : ''}
+//     style={styles.view}
+//   />
+//   <CreateDeckScreen onOpenModal={handlePresentModalPress} />
+//   <BottomSheetModal
+//     ref={bottomSheetModalRef}
+//     snapPoints={snapPoints}
+//     onChange={handleSheetChanges}
+//     overDragResistanceFactor={0}
+//     onCloseModal={handleClosePress} >
+//     <CreateCardBottomSheet />
+//   </BottomSheetModal>
+// </SafeAreaViewComponent>

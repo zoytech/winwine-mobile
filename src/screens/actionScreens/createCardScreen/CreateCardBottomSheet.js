@@ -21,7 +21,7 @@ import {WIDTH} from 'src/constants';
 import {ScreenKeys} from '../../../navigations/ScreenKeys';
 
 export default function CreateCardBottomSheet(props) {
-  const {navigation, route, onCloseModal} = props;
+  const {navigation, route, onCloseModal = () => {}, ...otherProps} = props;
   const initialValues = {
     cardTitle: '',
     cardDescription: '',
@@ -53,13 +53,12 @@ export default function CreateCardBottomSheet(props) {
         <Formik initialValues={initialValues} onSubmit={onSubmitPress}>
           {({handleSubmit, isValid}) => (
             <View style={styles.scrollView}>
-              <View style={styles.taskInput}>
-                <Field
-                  component={TextInputHolder}
-                  name={'cardTitle'}
-                  autoFocus={true}
-                />
-              </View>
+              <BaseHeadline content={'Thêm nội dung lá bài'} />
+              <Field
+                component={TextInputHolder}
+                name={'cardTitle'}
+                autoFocus={true}
+              />
               <View style={styles.buttonContainer}>
                 <FilledButton content={'Thêm mới'} onPress={handleSubmit} />
                 <FilledButton content={'Lưu'} onPress={onCloseModal} />
