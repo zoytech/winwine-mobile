@@ -11,12 +11,15 @@ export default function ImageField(props) {
     content,
     initialImage,
     style,
+    BaseHeadlineComponent,
     onImageSelectPress = () => {},
     ...otherProps
   } = props;
   const [selectedImg, setSelectedImg] = useState(initialImage);
   const containerStyle = [styles.container, style];
   const blankImgColor = Color.light[ColorVariant.inverse]?.primary;
+
+  console.log('BaseHeadlineComponent: ', BaseHeadlineComponent);
 
   function handleImageSelectPress(item) {
     onImageSelectPress(item);
@@ -26,8 +29,6 @@ export default function ImageField(props) {
       setSelectedImg(item);
     }
   }
-
-  function handleChangeNewImage() {}
 
   function renderImageItem(item, index) {
     return (
@@ -40,15 +41,15 @@ export default function ImageField(props) {
     );
   }
 
+  function renderBaseHeadline() {
+    return BaseHeadlineComponent;
+  }
+
   return (
     <View {...otherProps} style={containerStyle}>
       <View style={styles.previewImageContainer}>
         {selectedImg ? (
-          <Image
-            source={{uri: selectedImg}}
-            onPress={handleChangeNewImage}
-            style={styles.previewImage}
-          />
+          <Image source={{uri: selectedImg}} style={styles.previewImage} />
         ) : (
           <View
             style={[styles.previewImage, {backgroundColor: blankImgColor}]}
@@ -56,7 +57,7 @@ export default function ImageField(props) {
         )}
       </View>
       <View style={styles.selectionContainer}>
-        <BaseHeadline content={content} style={styles.headlineContainer} />
+        {renderBaseHeadline()}
         <ScrollView
           horizontal={true}
           style={styles.imageListContainer}

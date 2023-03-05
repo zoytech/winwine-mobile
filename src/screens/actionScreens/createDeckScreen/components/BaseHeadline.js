@@ -19,8 +19,10 @@ export default function BaseHeadline(props) {
 }
 const styles = StyleSheet.create({
   container: {
+    height: 46,
     justifyContent: 'center',
     alignItems: 'flex-start',
+    paddingVertical: 10,
   },
   content: {
     textAlign: 'center',

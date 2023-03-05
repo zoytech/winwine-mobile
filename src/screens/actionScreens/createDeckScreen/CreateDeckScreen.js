@@ -1,12 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {
-  KeyboardAvoidingView,
-  Platform,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  View,
-} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Field, Formik} from 'formik';
 import {Color, ColorVariant, Typography} from 'src/themes';
@@ -17,7 +10,6 @@ import {
   requestHashtagsSelect,
 } from 'src/redux/slices';
 import {IMG_SRC, LimitInput, WIDTH} from 'src/constants';
-import {CustomStatusBar} from 'src/screens/components';
 import {
   BaseHeadline,
   HeaderActionButtons,
@@ -124,10 +116,15 @@ export default function CreateDeckScreen(props) {
           />
           <ImageField
             data={imgArr}
-            content={'Chọn hình ảnh'}
             initialImage={initialImage}
             onImageSelectPress={handleImageSelectPress}
             style={styles.media}
+            BaseHeadlineComponent={
+              <BaseHeadline
+                content={'Thêm hình ảnh'}
+                style={styles.imageHeadline}
+              />
+            }
           />
           {renderBaseHeadline('Nhập tên bộ bài')}
           <Field
@@ -181,13 +178,14 @@ const styles = StyleSheet.create({
     aspectRatio: 9,
   },
   headline: {
-    width: '100%',
-    aspectRatio: 7.8,
     marginTop: 16,
-    paddingVertical: 6,
+    alignSelf: 'flex-start',
   },
   media: {
     height: 221,
+  },
+  imageHeadline: {
+    paddingHorizontal: 30,
   },
   cardDeckInput: {
     width: '100%',
