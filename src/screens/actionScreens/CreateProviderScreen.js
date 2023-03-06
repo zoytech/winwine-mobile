@@ -8,7 +8,7 @@ import {CreateCardBottomSheet} from './createCardScreen';
 
 export default function CreateProviderScreen({navigation, route}) {
   const bottomSheetModalRef = useRef(null);
-  const snapPoints = useMemo(() => ['75%'], []);
+  const snapPoints = useMemo(() => ['90%'], []);
   const handleSheetChanges = useCallback((index: number) => {
     console.log('handleSheetChanges', index);
   }, []);
@@ -33,27 +33,31 @@ export default function CreateProviderScreen({navigation, route}) {
     <BottomSheetModalProvider>
       <CustomStatusBar />
       <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : ''}
-        style={styles.view}
-      />
-      <CreateDeckScreen
-        onOpenModal={handlePresentModalPress}
-        navigation={navigation}
-        route={route}
-      />
-      <BottomSheetModal
-        ref={bottomSheetModalRef}
-        snapPoints={snapPoints}
-        onChange={handleSheetChanges}
-        overDragResistanceFactor={0}
-        onCloseModal={handleClosePress}>
-        <CreateCardBottomSheet navigation={navigation} route={route} />
-      </BottomSheetModal>
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.container}>
+        <CreateDeckScreen
+          onOpenModal={handlePresentModalPress}
+          navigation={navigation}
+          route={route}
+        />
+        <BottomSheetModal
+          ref={bottomSheetModalRef}
+          snapPoints={snapPoints}
+          onChange={handleSheetChanges}
+          overDragResistanceFactor={0}
+          onCloseModal={handleClosePress}>
+          <CreateCardBottomSheet navigation={navigation} route={route} />
+        </BottomSheetModal>
+      </KeyboardAvoidingView>
     </BottomSheetModalProvider>
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
 
 // <SafeAreaViewComponent>
 //   <CustomStatusBar />

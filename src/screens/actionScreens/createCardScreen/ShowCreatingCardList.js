@@ -1,19 +1,14 @@
-import {FlatList, StyleSheet, Text, View} from 'react-native';
-import {BottomSheetFlatList} from '@gorhom/bottom-sheet';
+import {FlatList, StyleSheet, View} from 'react-native';
 import {BaseHeadline} from '../createDeckScreen/components';
-import {FilledCard} from 'src/components';
 import {Color, ColorVariant, Typography} from 'src/themes';
+import CreatingCardList from './CreatingCardItem';
 
 export default function ShowCreatingCardList(props) {
   const {data, ...otherProps} = props;
 
   function renderCreatingCardItem({item, index}) {
-    const {cardTitle, cardDescription} = item || {};
-    return (
-      <FilledCard key={index} style={styles.cardContainer}>
-        <Text style={styles.cardContent}>{cardTitle}</Text>
-      </FilledCard>
-    );
+    const cardTitle = item?.cardTitle;
+    return <CreatingCardList content={cardTitle} />;
   }
 
   return (

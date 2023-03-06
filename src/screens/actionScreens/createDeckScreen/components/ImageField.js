@@ -2,8 +2,7 @@ import {Image, ScrollView, StyleSheet, View} from 'react-native';
 import {Color, ColorVariant} from 'src/themes';
 import {WIDTH} from 'src/constants';
 import {useState} from 'react';
-import ImageItem from './ImageItem';
-import BaseHeadline from './BaseHeadline';
+import {SelectedPlaceholder} from '../../components';
 
 export default function ImageField(props) {
   const {
@@ -19,8 +18,6 @@ export default function ImageField(props) {
   const containerStyle = [styles.container, style];
   const blankImgColor = Color.light[ColorVariant.inverse]?.primary;
 
-  console.log('BaseHeadlineComponent: ', BaseHeadlineComponent);
-
   function handleImageSelectPress(item) {
     onImageSelectPress(item);
     if (selectedImg === item) {
@@ -32,12 +29,15 @@ export default function ImageField(props) {
 
   function renderImageItem(item, index) {
     return (
-      <ImageItem
-        key={index}
-        item={item}
-        selected={selectedImg === item}
+      <SelectedPlaceholder
         onPress={() => handleImageSelectPress(item)}
-      />
+        selected={selectedImg === item}
+        key={index}
+        style={styles.imageOutline}>
+        <View style={styles.imageContainer}>
+          <Image style={styles.image} source={{uri: item}} />
+        </View>
+      </SelectedPlaceholder>
     );
   }
 
@@ -103,6 +103,19 @@ const styles = StyleSheet.create({
   contentContainer: {
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
+  },
+  imageOutline: {
+    width: 86,
+    aspectRatio: 1,
+  },
+  imageContainer: {
+    width: '100%',
+    height: '100%',
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
   },
 
   opacityPressed: {
