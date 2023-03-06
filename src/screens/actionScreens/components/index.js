@@ -1,4 +1,5 @@
 import TextInputHolder from './TextInputHolder';
+import ValidationText from './ValidationText';
+import SelectedPlaceholder from './SelectedPlaceholder';
 
-export * from './ValidationText';
-export {TextInputHolder};
+export {TextInputHolder, ValidationText, SelectedPlaceholder};
