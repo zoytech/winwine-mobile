@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
   },
   headerAction: {
     width: '100%',
-    aspectRatio: 9,
+    aspectRatio: 8,
   },
   headline: {
     marginTop: 16,

@@ -18,7 +18,6 @@ export default function CreateCardBottomSheet(props) {
   };
   const [creatingCards, setCreatingCards] = useState([]);
   const [currentCardContent, setCurrentCardContent] = useState({});
-  const [currentCardId, setCurrentCardId] = useState(0);
   const [selectedCardId, setSelectedCardId] = useState(0);
   const cardNumber = creatingCards.length;
 
@@ -29,7 +28,6 @@ export default function CreateCardBottomSheet(props) {
       const creatingCardId = cardNumber + 1;
       setCurrentCardContent(values);
       setCreatingCards([...creatingCards, {id: creatingCardId, ...values}]);
-      setCurrentCardId(creatingCardId);
       setSelectedCardId(creatingCardId);
       resetForm();
     }
@@ -66,7 +64,7 @@ export default function CreateCardBottomSheet(props) {
       />
       <Formik initialValues={initialValues} onSubmit={onSubmitPress}>
         {({handleSubmit, isValid}) => (
-          <View>
+          <>
             <View style={styles.formContainer}>
               <BaseHeadline content={'Thêm nội dung lá bài'} />
               <Field
@@ -103,7 +101,7 @@ export default function CreateCardBottomSheet(props) {
                 iconStyle={styles.fabIcon}
               />
             </View>
-          </View>
+          </>
         )}
       </Formik>
     </View>
