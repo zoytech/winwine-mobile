@@ -22,7 +22,12 @@ import {CardDeckApi} from 'src/apis';
 import {TextInputHolder} from '../components';
 
 export default function CreateDeckScreen(props) {
-  const {navigation, route, onOpenModal = () => {}} = props;
+  const {
+    navigation,
+    route,
+    scrollEnabled = true,
+    onOpenModal = () => {},
+  } = props;
   const cardsParam = route.params?.cardsParam;
 
   const dispatch = useDispatch();
@@ -107,6 +112,7 @@ export default function CreateDeckScreen(props) {
       validationSchema={createCardDeckValidationSchema}>
       {({handleSubmit, isValid}) => (
         <ScrollView
+          scrollEnabled={scrollEnabled}
           contentContainerStyle={styles.scrollView}
           style={defaultContainerStyle}>
           <HeaderActionButtons
