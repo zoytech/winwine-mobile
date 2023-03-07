@@ -10,12 +10,12 @@ import {
   BottomSheetModalProvider,
   BottomSheetBackdrop,
 } from '@gorhom/bottom-sheet';
-import {Color, ColorVariant} from 'src/themes';
 import {CustomStatusBar} from '../components';
 import {CreateDeckScreen} from './createDeckScreen';
 import {CreateCardBottomSheet} from './createCardScreen';
 
 export default function CreateProviderScreen({navigation, route}) {
+  const [currentCardData, setCurrentCardData] = useState([]);
   const bottomSheetModalRef = useRef(null);
   const snapPoints = useMemo(() => ['90%'], []);
   const handleSheetChanges = useCallback((index: number) => {
@@ -25,9 +25,15 @@ export default function CreateProviderScreen({navigation, route}) {
     bottomSheetModalRef.current.present();
   }, []);
 
-  const handleCloseModalPress = useCallback(() => {
-    bottomSheetModalRef.current.close();
-  }, []);
+  const handleCloseModalPress = useCallback(() => {}, []);
+
+  function handleReceiveCardContents(cardContents) {
+    console.log('cardContents: ', cardContents);
+    if (cardContents.length > 0) {
+      setCurrentCardData(cardContents);
+    }
+  }
+
   const renderBackdrop = useCallback(
     props => renderBackdropComponent(props),
     [],
@@ -53,7 +59,7 @@ export default function CreateProviderScreen({navigation, route}) {
           onOpenModal={handlePresentModalPress}
           navigation={navigation}
           route={route}
-          onCloseModal={handleCloseModalPress}
+          createdCards={currentCardData}
         />
         <BottomSheetModal
           ref={bottomSheetModalRef}
@@ -61,7 +67,11 @@ export default function CreateProviderScreen({navigation, route}) {
           onChange={handleSheetChanges}
           backdropComponent={renderBackdrop}
           overDragResistanceFactor={0}>
-          <CreateCardBottomSheet navigation={navigation} route={route} />
+          <CreateCardBottomSheet
+            navigation={navigation}
+            route={route}
+            onReceiveCardContents={handleReceiveCardContents}
+          />
         </BottomSheetModal>
       </KeyboardAvoidingView>
     </BottomSheetModalProvider>

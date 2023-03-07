@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Field, Formik} from 'formik';
@@ -36,10 +36,14 @@ export default function CreateDeckScreen(props) {
   const selectedHashtags = useRef([]);
 
   console.log('re-render: ', (count += 1));
-
+  console.log('currentCardData: ', currentCardData);
   useEffect(() => {
     dispatch(loadHashtags());
-    setCurrentCardData(createdCards);
+    const processedCreatedCards = createdCards.map(
+      ({id, ...otherFields}) => otherFields,
+    );
+    console.log('processedCreatedCards: ', processedCreatedCards);
+    setCurrentCardData(processedCreatedCards);
   }, [dispatch, createdCards]);
 
   const initialValues = {

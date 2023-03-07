@@ -1,8 +1,8 @@
-import {Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
-import {useState} from 'react';
+import {StyleSheet, View} from 'react-native';
+import {useState, useEffect} from 'react';
 import {Field, Formik} from 'formik';
-import {BottomSheetFlatList, useBottomSheetModal} from '@gorhom/bottom-sheet';
-import {FilledCard, FilledIconButton} from 'src/components';
+import {BottomSheetFlatList} from '@gorhom/bottom-sheet';
+import {FilledIconButton} from 'src/components';
 import {SelectedPlaceholder, TextInputHolder} from '../components';
 import {BaseHeadline} from '../createDeckScreen/components';
 import CreatingCardItem from './CreatingCardItem';
@@ -10,8 +10,12 @@ import {Color, ColorVariant, Typography} from 'src/themes';
 import {HEIGHT, LimitInput, WIDTH} from 'src/constants';
 
 export default function CreateCardBottomSheet(props) {
-  const {navigation, route, onCloseModal = () => {}, ...otherProps} = props;
-  const {dismiss, dismissAll} = useBottomSheetModal();
+  const {
+    navigation,
+    route,
+    onReceiveCardContents = () => {},
+    ...otherProps
+  } = props;
 
   const initialValues = {
     cardTitle: '',
@@ -22,8 +26,10 @@ export default function CreateCardBottomSheet(props) {
   const [currentCardContent, setCurrentCardContent] = useState({});
   const [selectedCardId, setSelectedCardId] = useState(0);
   const cardNumber = creatingCards.length;
-
   console.log('creatingCards: ', creatingCards);
+  useEffect(() => {
+    onReceiveCardContents(creatingCards);
+  }, []);
 
   function onSubmitPress(values, {resetForm}) {
     if (values.cardTitle.length > 0) {
@@ -58,7 +64,7 @@ export default function CreateCardBottomSheet(props) {
   }
 
   return (
-    <View style={styles.container}>
+    <View {...otherProps} style={styles.container}>
       <CreatingCardItem
         style={styles.currentCard}
         content={currentCardContent?.cardTitle}
@@ -92,7 +98,6 @@ export default function CreateCardBottomSheet(props) {
                   renderItem={renderCardItemComponent}
                   horizontal={true}
                   ItemSeparatorComponent={<View style={{width: 16}} />}
-                  style={styles.cardList}
                   contentContainerStyle={styles.contentContainer}
                 />
               )}
