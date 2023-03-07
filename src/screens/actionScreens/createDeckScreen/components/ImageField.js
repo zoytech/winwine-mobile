@@ -117,9 +117,4 @@ const styles = StyleSheet.create({
     height: '100%',
     resizeMode: 'cover',
   },
-
-  opacityPressed: {
-    opacity: 0.75,
-    color: Color.light[ColorVariant.primary]?.base,
-  },
 });

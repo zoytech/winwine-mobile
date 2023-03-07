@@ -1,7 +1,7 @@
 import {Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {useState} from 'react';
 import {Field, Formik} from 'formik';
-import {BottomSheetFlatList} from '@gorhom/bottom-sheet';
+import {BottomSheetFlatList, useBottomSheetModal} from '@gorhom/bottom-sheet';
 import {FilledCard, FilledIconButton} from 'src/components';
 import {SelectedPlaceholder, TextInputHolder} from '../components';
 import {BaseHeadline} from '../createDeckScreen/components';
@@ -11,6 +11,8 @@ import {HEIGHT, LimitInput, WIDTH} from 'src/constants';
 
 export default function CreateCardBottomSheet(props) {
   const {navigation, route, onCloseModal = () => {}, ...otherProps} = props;
+  const {dismiss, dismissAll} = useBottomSheetModal();
+
   const initialValues = {
     cardTitle: '',
     cardDescription: '',

@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {Pressable, ScrollView, StyleSheet, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Field, Formik} from 'formik';
+import {useBottomSheetModal} from '@gorhom/bottom-sheet';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {FilledButton, SpinnerType1} from 'src/components';
 import {
@@ -25,11 +26,12 @@ export default function CreateDeckScreen(props) {
   const {
     navigation,
     route,
-    scrollEnabled = true,
+    scrollEnabled,
     onOpenModal = () => {},
+    onCloseModal = () => {},
   } = props;
   const cardsParam = route.params?.cardsParam;
-
+  const {dismiss, dismissAll} = useBottomSheetModal();
   const dispatch = useDispatch();
   const requesting = useSelector(requestHashtagsSelect);
   const hashtags = useSelector(hashtagsSelect);
@@ -50,7 +52,9 @@ export default function CreateDeckScreen(props) {
   const imgArr = Object.values(IMG_SRC);
   const {base: primary, onBase: onPrimary} = Color.light[ColorVariant.primary];
   const defaultContainerStyle = [
-    {backgroundColor: onPrimary},
+    {
+      backgroundColor: onPrimary,
+    },
     styles.container,
   ];
   const defaultContentStyle = [Typography.body.large, {color: primary}];
@@ -98,6 +102,11 @@ export default function CreateDeckScreen(props) {
     onOpenModal();
   }
 
+  function handleCloseModalPress() {
+    dismissAll();
+    onCloseModal();
+  }
+
   function renderBaseHeadline(content) {
     return <BaseHeadline content={content} style={styles.headline} />;
   }
@@ -112,9 +121,9 @@ export default function CreateDeckScreen(props) {
       validationSchema={createCardDeckValidationSchema}>
       {({handleSubmit, isValid}) => (
         <ScrollView
-          scrollEnabled={scrollEnabled}
           contentContainerStyle={styles.scrollView}
-          style={defaultContainerStyle}>
+          style={defaultContainerStyle}
+          scrollEnabled={scrollEnabled}>
           <HeaderActionButtons
             style={styles.headerAction}
             onSubmit={handleSubmit}

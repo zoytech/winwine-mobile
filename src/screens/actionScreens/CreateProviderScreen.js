@@ -1,10 +1,16 @@
 import {BottomSheetModal, BottomSheetModalProvider} from '@gorhom/bottom-sheet';
-import {KeyboardAvoidingView, Platform, StyleSheet} from 'react-native';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  StyleSheet,
+} from 'react-native';
 import {useCallback, useMemo, useRef, useState} from 'react';
 import {CustomStatusBar} from '../components';
 import {Color, ColorVariant} from '../../themes';
 import {CreateDeckScreen} from './createDeckScreen';
 import {CreateCardBottomSheet} from './createCardScreen';
+import BottomSheetBackdrop from './BottomSheetBackdrop';
 
 export default function CreateProviderScreen({navigation, route}) {
   const [isScrolled, setIsScrolled] = useState(true);
@@ -18,18 +24,24 @@ export default function CreateProviderScreen({navigation, route}) {
     setIsScrolled(false);
   }, []);
 
-  function handleClosePress() {
-    bottomSheetModalRef.current.dismiss();
-    // navigation.navigate({
-    //   name: ScreenKeys.CREATE_DECK,
-    //   params: {
-    //     cardsParam: creatingCards || [],
-    //   },
-    //   merge: true,
-    // });
-  }
+  const handleCloseModalPress = useCallback(() => {
+    setIsScrolled(true);
+  }, []);
+  const renderBackdrop = useCallback(
+    props => renderBackdropComponent(props),
+    [],
+  );
 
-  const primaryColor = Color.light[ColorVariant.tertiary]?.base;
+  function renderBackdropComponent(props) {
+    return (
+      <BottomSheetBackdrop
+        {...props}
+        opacity={0.5}
+        style={{backgroundColor: 'coral'}}
+        pressBehavior={'close'}
+      />
+    );
+  }
 
   return (
     <BottomSheetModalProvider>
@@ -41,15 +53,16 @@ export default function CreateProviderScreen({navigation, route}) {
           onOpenModal={handlePresentModalPress}
           navigation={navigation}
           route={route}
+          onCloseModal={handleCloseModalPress}
           scrollEnabled={isScrolled}
         />
         <BottomSheetModal
           ref={bottomSheetModalRef}
           snapPoints={snapPoints}
           onChange={handleSheetChanges}
-          overDragResistanceFactor={0}
           enablePanDownToClose={false}
-          onCloseModal={handleClosePress}>
+          backdropComponent={renderBackdrop}
+          overDragResistanceFactor={0}>
           <CreateCardBottomSheet navigation={navigation} route={route} />
         </BottomSheetModal>
       </KeyboardAvoidingView>
@@ -60,6 +73,10 @@ export default function CreateProviderScreen({navigation, route}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  opacityPressed: {
+    // opacity: 0.75,
+    color: Color.light[ColorVariant.primary]?.base,
   },
 });
 
