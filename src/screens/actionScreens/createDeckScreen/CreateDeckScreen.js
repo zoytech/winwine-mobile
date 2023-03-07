@@ -25,7 +25,7 @@ import {ScreenKeys} from '../../../navigations/ScreenKeys';
 let count = 0;
 export default function CreateDeckScreen(props) {
   const {navigation, route, createdCards, onOpenModal = () => {}} = props;
-  // const [currentCardData, setCurrentCardData] = useState([]);
+  const [currentCardData, setCurrentCardData] = useState([]);
   const dispatch = useDispatch();
   const requesting = useSelector(requestHashtagsSelect);
   const hashtags = useSelector(hashtagsSelect);
@@ -35,21 +35,23 @@ export default function CreateDeckScreen(props) {
   const selectedImg = useRef(initialImage);
   const selectedHashtags = useRef([]);
   const mounted = useRef(false);
-  // console.log('mounted: ', mounted.current);
-  // useEffect(() => {
-  //   mounted.current = true;
-  //   return () => {
-  //     mounted.current = false;
-  //   };
-  // }, []);
+  console.log('mounted: ', mounted.current);
+  useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
 
   console.log('re-render: ', (count += 1));
-  const processedCreatedCards = createdCards.map(
-    ({id, ...otherFields}) => otherFields,
-  );
-  console.log('processedCreatedCards: ', processedCreatedCards);
+
   useEffect(() => {
     dispatch(loadHashtags());
+    const processedCreatedCards = createdCards.map(
+      ({id, ...otherFields}) => otherFields,
+    );
+    console.log('processedCreatedCards: ', processedCreatedCards);
+    setCurrentCardData(processedCreatedCards);
   }, [dispatch]);
 
   const initialValues = {
@@ -72,8 +74,10 @@ export default function CreateDeckScreen(props) {
       ...value,
       hashtags: selectedHashtags.current,
       cardDeckImage: selectedImg.current,
-      cards: processedCreatedCards,
+      cards: currentCardData,
     };
+    selectedHashtags.current = [];
+    selectedImg.current = '';
     const config = {
       body: submittingValues,
     };
@@ -84,9 +88,7 @@ export default function CreateDeckScreen(props) {
     } catch (e) {
       console.log('Fail to post card deck: ', e);
     } finally {
-      selectedHashtags.current = [];
-      selectedImg.current = '';
-      navigation.navigate({name: ScreenKeys.HOME});
+      navigation.replace(ScreenKeys.CREATE_CARD);
     }
     // JUST FOR TEST BECAUSE AFTER SUBMIT IT NAVIGATE TO NEW SCREEN
   }
