@@ -141,7 +141,7 @@ export default function CreateDeckScreen(props) {
             name={'cardDeckName'}
             style={styles.cardDeckInput}
             placeholder={'Tên bộ bài'}
-            limitContent={LimitInput.CARD_DECK_NAME}
+            maxLength={LimitInput.CARD_DECK_NAME}
             required={true}
           />
           {renderBaseHeadline('Nhập mô tả')}
@@ -150,7 +150,7 @@ export default function CreateDeckScreen(props) {
             name={'cardDeckDescription'}
             style={styles.cardDeckInput}
             placeholder={'Mô tả'}
-            limitContent={LimitInput.CARD_DECK_DESCRIPTION}
+            maxLength={LimitInput.CARD_DECK_DESCRIPTION}
           />
           {renderBaseHeadline('Phân loại hashtag')}
           <TagSelectionField

@@ -1,7 +1,7 @@
-import {StyleSheet, View} from 'react-native';
-import {useState, useEffect, useRef} from 'react';
+import {ScrollView, StyleSheet, View} from 'react-native';
+import {useEffect, useState} from 'react';
 import {Field, Formik} from 'formik';
-import {BottomSheetFlatList} from '@gorhom/bottom-sheet';
+import {BottomSheetFlatList, BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import {FilledIconButton} from 'src/components';
 import {SelectedPlaceholder, TextInputHolder} from '../components';
 import {BaseHeadline} from '../createDeckScreen/components';
@@ -65,7 +65,10 @@ export default function CreateCardBottomSheet(props) {
   }
 
   return (
-    <View {...otherProps} style={styles.container}>
+    <BottomSheetScrollView
+      {...otherProps}
+      style={styles.container}
+      scrollEnabled={true}>
       <CreatingCardItem
         style={styles.currentCard}
         content={currentCardContent?.cardTitle}
@@ -81,7 +84,7 @@ export default function CreateCardBottomSheet(props) {
                 name={'cardTitle'}
                 autoFocus={true}
                 placeholder={'Nội dung lá bài'}
-                limitContent={LimitInput.CARD_TITLE}
+                maxLength={LimitInput.CARD_TITLE}
               />
             </View>
             <BaseHeadline
@@ -107,12 +110,13 @@ export default function CreateCardBottomSheet(props) {
                 onPress={handleSubmit}
                 style={styles.fabContainer}
                 iconStyle={styles.fabIcon}
+                disabled={!isValid}
               />
             </View>
           </>
         )}
       </Formik>
-    </View>
+    </BottomSheetScrollView>
   );
 }
 const styles = StyleSheet.create({

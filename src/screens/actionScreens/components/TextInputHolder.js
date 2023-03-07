@@ -6,7 +6,7 @@ export default function TextInputHolder(props) {
   const {
     field: {name, onBlur, onChange, value},
     form: {errors, touched, setFieldTouched},
-    limitContent,
+    maxLength,
     placeholder = '',
     required = false,
     style,
@@ -22,7 +22,7 @@ export default function TextInputHolder(props) {
   const containerStyle = [styles.container, {borderColor: outlineColor}, style];
   const requiredStyle = [{color: onSurfaceVarColor}, Typography.body.small];
   const hasError = errors[name] && touched[name];
-  const rightContent = `${value?.length}/${limitContent}`;
+  const rightContent = `${value?.length}/${maxLength}`;
   const requiredSymbol = required ? '*' : '';
 
   function handleChangeText(text) {
@@ -41,7 +41,7 @@ export default function TextInputHolder(props) {
           {hasError && <ValidationText content={errors[name]} />}
         </View>
         <View style={styles.subDescriptionItem}>
-          {limitContent && <Text style={requiredStyle}>{rightContent}</Text>}
+          {maxLength && <Text style={requiredStyle}>{rightContent}</Text>}
         </View>
       </View>
     );
@@ -61,6 +61,7 @@ export default function TextInputHolder(props) {
             style={contentStyle}
             selectTextOnFocus={true}
             multiline={true}
+            maxLength={maxLength}
           />
         </View>
       </View>
