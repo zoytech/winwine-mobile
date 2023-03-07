@@ -2,11 +2,6 @@ import {ScreenKeys} from './ScreenKeys';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import hideBottomTabBarMethod from './utils/hideBottomTabBarMethod';
 import {useLayoutEffect} from 'react';
-import {
-  CreateDeckScreen,
-  CreateCardBottomSheet,
-  BasicDialog,
-} from 'src/screens';
 import CreateProviderScreen from '../screens/actionScreens/CreateProviderScreen';
 
 const CreateStack = createNativeStackNavigator();

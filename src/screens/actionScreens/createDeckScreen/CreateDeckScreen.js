@@ -34,23 +34,12 @@ export default function CreateDeckScreen(props) {
   // const [selectedImg, setSelectedImg] = useState(initialImage);
   const selectedImg = useRef(initialImage);
   const selectedHashtags = useRef([]);
-  const mounted = useRef(false);
-  console.log('mounted: ', mounted.current);
-  useEffect(() => {
-    mounted.current = true;
-    return () => {
-      mounted.current = false;
-    };
-  }, []);
-
-  console.log('re-render: ', (count += 1));
 
   useEffect(() => {
     dispatch(loadHashtags());
     const processedCreatedCards = createdCards.map(
       ({id, ...otherFields}) => otherFields,
     );
-    console.log('processedCreatedCards: ', processedCreatedCards);
     setCurrentCardData(processedCreatedCards);
   }, [dispatch]);
 

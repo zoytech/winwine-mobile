@@ -1,5 +1,5 @@
 import {StyleSheet, View} from 'react-native';
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useRef} from 'react';
 import {Field, Formik} from 'formik';
 import {BottomSheetFlatList} from '@gorhom/bottom-sheet';
 import {FilledIconButton} from 'src/components';
@@ -13,6 +13,7 @@ export default function CreateCardBottomSheet(props) {
   const {
     navigation,
     route,
+    createdCards = [],
     onReceiveCardContents = () => {},
     ...otherProps
   } = props;
@@ -22,10 +23,11 @@ export default function CreateCardBottomSheet(props) {
     cardDescription: '',
     cardImage: '',
   };
-  const [creatingCards, setCreatingCards] = useState([]);
+  const [creatingCards, setCreatingCards] = useState(createdCards);
   const [currentCardContent, setCurrentCardContent] = useState({});
   const [selectedCardId, setSelectedCardId] = useState(0);
   const cardNumber = creatingCards.length;
+
   useEffect(() => {
     onReceiveCardContents(creatingCards);
   }, [creatingCards]);

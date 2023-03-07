@@ -71,6 +71,7 @@ export default function CreateProviderScreen({navigation, route}) {
             navigation={navigation}
             route={route}
             onReceiveCardContents={handleReceiveCardContents}
+            createdCards={currentCardData}
           />
         </BottomSheetModal>
       </KeyboardAvoidingView>
