@@ -1,15 +1,15 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {FlatList, ScrollView, StyleSheet, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Field, Formik} from 'formik';
 import {Color, ColorVariant, Typography} from 'src/themes';
-import {FilledButton, SpinnerType1} from 'src/components';
+import {FilledButton, FilledIconButton, SpinnerType1} from 'src/components';
 import {
   hashtagsSelect,
   loadHashtags,
   requestHashtagsSelect,
 } from 'src/redux/slices';
-import {IMG_SRC, LimitInput, WIDTH} from 'src/constants';
+import {HEIGHT, IMG_SRC, LimitInput, WIDTH} from 'src/constants';
 import {
   BaseHeadline,
   HeaderActionButtons,
@@ -21,6 +21,7 @@ import {remove} from 'src/utils';
 import {CardDeckApi} from 'src/apis';
 import {TextInputHolder} from '../components';
 import {ScreenKeys} from '../../../navigations/ScreenKeys';
+import CreatingCardItem from '../createCardScreen/CreatingCardItem';
 
 let count = 0;
 export default function CreateDeckScreen(props) {
@@ -98,12 +99,26 @@ export default function CreateDeckScreen(props) {
     }
   }
 
-  function handleOpenCreateCardBottomSheet({cardDeckId}) {
+  function handleOpenCreateCardBottomSheet() {
     onOpenModal();
   }
 
   function renderBaseHeadline(content) {
     return <BaseHeadline content={content} style={styles.headline} />;
+  }
+
+  console.log('createdCards: ', createdCards);
+
+  function renderCardItem(item, index) {
+    const cardTitle = item?.cardTitle;
+    return (
+      <CreatingCardItem
+        key={index}
+        content={cardTitle}
+        style={styles.cardContainer}
+        contentStyle={styles.cardContent}
+      />
+    );
   }
 
   if (requesting) {
@@ -115,58 +130,63 @@ export default function CreateDeckScreen(props) {
       onSubmit={onSubmitPress}
       validationSchema={createCardDeckValidationSchema}>
       {({handleSubmit, isValid}) => (
-        <ScrollView
-          contentContainerStyle={styles.scrollView}
-          style={defaultContainerStyle}>
-          <HeaderActionButtons
-            style={styles.headerAction}
-            onSubmit={handleSubmit}
-            disabled={!isValid}
-          />
-          <ImageField
-            data={imgArr}
-            initialImage={initialImage}
-            onImageSelectPress={handleImageSelectPress}
-            style={styles.media}
-            BaseHeadlineComponent={
-              <BaseHeadline
-                content={'Thêm hình ảnh'}
-                style={styles.imageHeadline}
-              />
-            }
-          />
-          {renderBaseHeadline('Nhập tên bộ bài')}
-          <Field
-            component={TextInputHolder}
-            name={'cardDeckName'}
-            style={styles.cardDeckInput}
-            placeholder={'Tên bộ bài'}
-            maxLength={LimitInput.CARD_DECK_NAME}
-            required={true}
-          />
-          {renderBaseHeadline('Nhập mô tả')}
-          <Field
-            component={TextInputHolder}
-            name={'cardDeckDescription'}
-            style={styles.cardDeckInput}
-            placeholder={'Mô tả'}
-            maxLength={LimitInput.CARD_DECK_DESCRIPTION}
-          />
-          {renderBaseHeadline('Phân loại hashtag')}
-          <TagSelectionField
-            style={styles.chipSelection}
-            data={hashtags}
-            onSelectChipOption={handleHashtagsSelectPress}
-          />
-          {renderBaseHeadline('Thêm lá bài')}
-          <View style={styles.action}>
-            <FilledButton
-              onPress={handleOpenCreateCardBottomSheet}
-              content={'Create card'}
-              style={{width: 150, height: 50}}
+        <>
+          <ScrollView
+            contentContainerStyle={styles.scrollView}
+            style={defaultContainerStyle}>
+            <HeaderActionButtons
+              style={styles.headerAction}
+              onSubmit={handleSubmit}
+              disabled={!isValid}
             />
-          </View>
-        </ScrollView>
+            <ImageField
+              data={imgArr}
+              initialImage={initialImage}
+              onImageSelectPress={handleImageSelectPress}
+              style={styles.media}
+              BaseHeadlineComponent={
+                <BaseHeadline
+                  content={'Thêm hình ảnh'}
+                  style={styles.imageHeadline}
+                />
+              }
+            />
+            {renderBaseHeadline('Nhập tên bộ bài')}
+            <Field
+              component={TextInputHolder}
+              name={'cardDeckName'}
+              style={styles.cardDeckInput}
+              placeholder={'Tên bộ bài'}
+              maxLength={LimitInput.CARD_DECK_NAME}
+              required={true}
+            />
+            {renderBaseHeadline('Nhập mô tả')}
+            <Field
+              component={TextInputHolder}
+              name={'cardDeckDescription'}
+              style={styles.cardDeckInput}
+              placeholder={'Mô tả'}
+              maxLength={LimitInput.CARD_DECK_DESCRIPTION}
+            />
+            {renderBaseHeadline('Phân loại hashtag')}
+            <TagSelectionField
+              style={styles.chipSelection}
+              data={hashtags}
+              onSelectChipOption={handleHashtagsSelectPress}
+            />
+            {renderBaseHeadline('Thêm lá bài')}
+            <View style={styles.action}>
+              {createdCards.map(renderCardItem)}
+            </View>
+          </ScrollView>
+          <FilledIconButton
+            onPress={handleOpenCreateCardBottomSheet}
+            content={'Thêm thẻ bài'}
+            style={styles.button}
+            name={'plus'}
+            contentStyle={styles.buttonContent}
+          />
+        </>
       )}
     </Formik>
   );
@@ -223,18 +243,20 @@ const styles = StyleSheet.create({
     aspectRatio: 5,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 100,
-    paddingBottom: 300,
+    paddingTop: 32,
+    paddingBottom: 100,
   },
   button: {
-    width: 200,
-    height: 50,
-    borderRadius: 20,
+    width: 156,
+    height: 44,
+    borderRadius: 12,
+    position: 'absolute',
+    right: 34,
+    bottom: 46 + HEIGHT.BOTTOM_BAR,
   },
   buttonContent: {
-    ...Typography.title.medium,
-    textTransform: 'uppercase',
-    fontWeight: 'bold',
+    ...Typography.label.large,
+    marginLeft: 8,
   },
   imageContainer: {
     width: 120,
