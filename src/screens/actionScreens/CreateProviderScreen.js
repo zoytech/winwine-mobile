@@ -66,7 +66,9 @@ export default function CreateProviderScreen({navigation, route}) {
           snapPoints={snapPoints}
           onChange={handleSheetChanges}
           backdropComponent={renderBackdrop}
-          overDragResistanceFactor={0}>
+          enablePanDownToClose={false}
+          handleIndicatorStyle={{backgroundColor: 'transparent'}}
+          overDragResistanceFactor={1}>
           <CreateCardBottomSheet
             navigation={navigation}
             route={route}
