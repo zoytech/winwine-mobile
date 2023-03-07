@@ -1,19 +1,21 @@
-import {BottomSheetModal, BottomSheetModalProvider} from '@gorhom/bottom-sheet';
+import {useCallback, useMemo, useRef, useState} from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
   Pressable,
   StyleSheet,
 } from 'react-native';
-import {useCallback, useMemo, useRef, useState} from 'react';
+import {
+  BottomSheetModal,
+  BottomSheetModalProvider,
+  BottomSheetBackdrop,
+} from '@gorhom/bottom-sheet';
+import {Color, ColorVariant} from 'src/themes';
 import {CustomStatusBar} from '../components';
-import {Color, ColorVariant} from '../../themes';
 import {CreateDeckScreen} from './createDeckScreen';
 import {CreateCardBottomSheet} from './createCardScreen';
-import BottomSheetBackdrop from './BottomSheetBackdrop';
 
 export default function CreateProviderScreen({navigation, route}) {
-  const [isScrolled, setIsScrolled] = useState(true);
   const bottomSheetModalRef = useRef(null);
   const snapPoints = useMemo(() => ['90%'], []);
   const handleSheetChanges = useCallback((index: number) => {
@@ -21,11 +23,10 @@ export default function CreateProviderScreen({navigation, route}) {
   }, []);
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current.present();
-    setIsScrolled(false);
   }, []);
 
   const handleCloseModalPress = useCallback(() => {
-    setIsScrolled(true);
+    bottomSheetModalRef.current.close();
   }, []);
   const renderBackdrop = useCallback(
     props => renderBackdropComponent(props),
@@ -33,7 +34,13 @@ export default function CreateProviderScreen({navigation, route}) {
   );
 
   function renderBackdropComponent(props) {
-      return (<BottomSheetBackdrop onPress={()=> bottomSheetModalRef.current.close()}/>);
+    return (
+      <BottomSheetBackdrop
+        {...props}
+        appearsOnIndex={0}
+        disappearsOnIndex={-1}
+      />
+    );
   }
 
   return (
@@ -47,7 +54,6 @@ export default function CreateProviderScreen({navigation, route}) {
           navigation={navigation}
           route={route}
           onCloseModal={handleCloseModalPress}
-          scrollEnabled={isScrolled}
         />
         <BottomSheetModal
           ref={bottomSheetModalRef}
@@ -66,25 +72,4 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  opacityPressed: {
-    // opacity: 0.75,
-    color: Color.light[ColorVariant.primary]?.base,
-  },
 });
-
-// <SafeAreaViewComponent>
-//   <CustomStatusBar />
-//   <KeyboardAvoidingView
-//     behavior={Platform.OS === 'ios' ? 'padding' : ''}
-//     style={styles.view}
-//   />
-//   <CreateDeckScreen onOpenModal={handlePresentModalPress} />
-//   <BottomSheetModal
-//     ref={bottomSheetModalRef}
-//     snapPoints={snapPoints}
-//     onChange={handleSheetChanges}
-//     overDragResistanceFactor={0}
-//     onCloseModal={handleClosePress} >
-//     <CreateCardBottomSheet />
-//   </BottomSheetModal>
-// </SafeAreaViewComponent>
