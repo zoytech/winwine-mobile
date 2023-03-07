@@ -33,14 +33,7 @@ export default function CreateProviderScreen({navigation, route}) {
   );
 
   function renderBackdropComponent(props) {
-    return (
-      <BottomSheetBackdrop
-        {...props}
-        opacity={0.5}
-        style={{backgroundColor: 'coral'}}
-        pressBehavior={'close'}
-      />
-    );
+      return (<BottomSheetBackdrop onPress={()=> bottomSheetModalRef.current.close()}/>);
   }
 
   return (
@@ -60,7 +53,6 @@ export default function CreateProviderScreen({navigation, route}) {
           ref={bottomSheetModalRef}
           snapPoints={snapPoints}
           onChange={handleSheetChanges}
-          enablePanDownToClose={false}
           backdropComponent={renderBackdrop}
           overDragResistanceFactor={0}>
           <CreateCardBottomSheet navigation={navigation} route={route} />
