@@ -26,10 +26,9 @@ export default function CreateCardBottomSheet(props) {
   const [currentCardContent, setCurrentCardContent] = useState({});
   const [selectedCardId, setSelectedCardId] = useState(0);
   const cardNumber = creatingCards.length;
-  console.log('creatingCards: ', creatingCards);
   useEffect(() => {
     onReceiveCardContents(creatingCards);
-  }, []);
+  }, [creatingCards]);
 
   function onSubmitPress(values, {resetForm}) {
     if (values.cardTitle.length > 0) {

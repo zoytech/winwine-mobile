@@ -25,7 +25,7 @@ import {ScreenKeys} from '../../../navigations/ScreenKeys';
 let count = 0;
 export default function CreateDeckScreen(props) {
   const {navigation, route, createdCards, onOpenModal = () => {}} = props;
-  const [currentCardData, setCurrentCardData] = useState([]);
+  // const [currentCardData, setCurrentCardData] = useState([]);
   const dispatch = useDispatch();
   const requesting = useSelector(requestHashtagsSelect);
   const hashtags = useSelector(hashtagsSelect);
@@ -34,17 +34,23 @@ export default function CreateDeckScreen(props) {
   // const [selectedImg, setSelectedImg] = useState(initialImage);
   const selectedImg = useRef(initialImage);
   const selectedHashtags = useRef([]);
+  const mounted = useRef(false);
+  // console.log('mounted: ', mounted.current);
+  // useEffect(() => {
+  //   mounted.current = true;
+  //   return () => {
+  //     mounted.current = false;
+  //   };
+  // }, []);
 
   console.log('re-render: ', (count += 1));
-  console.log('currentCardData: ', currentCardData);
+  const processedCreatedCards = createdCards.map(
+    ({id, ...otherFields}) => otherFields,
+  );
+  console.log('processedCreatedCards: ', processedCreatedCards);
   useEffect(() => {
     dispatch(loadHashtags());
-    const processedCreatedCards = createdCards.map(
-      ({id, ...otherFields}) => otherFields,
-    );
-    console.log('processedCreatedCards: ', processedCreatedCards);
-    setCurrentCardData(processedCreatedCards);
-  }, [dispatch, createdCards]);
+  }, [dispatch]);
 
   const initialValues = {
     cardDeckName: '',
@@ -66,7 +72,7 @@ export default function CreateDeckScreen(props) {
       ...value,
       hashtags: selectedHashtags.current,
       cardDeckImage: selectedImg.current,
-      cards: currentCardData,
+      cards: processedCreatedCards,
     };
     const config = {
       body: submittingValues,
