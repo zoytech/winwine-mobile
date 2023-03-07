@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Field, Formik} from 'formik';
@@ -20,21 +20,27 @@ import createCardDeckValidationSchema from './createCardDeckValidations';
 import {remove} from 'src/utils';
 import {CardDeckApi} from 'src/apis';
 import {TextInputHolder} from '../components';
+import {ScreenKeys} from '../../../navigations/ScreenKeys';
 
+let count = 0;
 export default function CreateDeckScreen(props) {
-  const {navigation, route, onOpenModal = () => {}} = props;
-  const cardsParam = route.params?.cardsParam;
+  const {navigation, route, createdCards, onOpenModal = () => {}} = props;
+  const [currentCardData, setCurrentCardData] = useState([]);
   const dispatch = useDispatch();
   const requesting = useSelector(requestHashtagsSelect);
   const hashtags = useSelector(hashtagsSelect);
-
   const initialImage = IMG_SRC[1];
-  const [selectedHashtags, setSelectedHashtags] = useState([]);
-  const [selectedImg, setSelectedImg] = useState(initialImage);
+  // const [selectedHashtags, setSelectedHashtags] = useState([]);
+  // const [selectedImg, setSelectedImg] = useState(initialImage);
+  const selectedImg = useRef(initialImage);
+  const selectedHashtags = useRef([]);
+
+  console.log('re-render: ', (count += 1));
 
   useEffect(() => {
     dispatch(loadHashtags());
-  }, [dispatch]);
+    setCurrentCardData(createdCards);
+  }, [dispatch, createdCards]);
 
   const initialValues = {
     cardDeckName: '',
@@ -54,39 +60,40 @@ export default function CreateDeckScreen(props) {
   async function onSubmitPress(value) {
     const submittingValues = {
       ...value,
-      hashtags: selectedHashtags,
-      cardDeckImage: selectedImg,
-      cards: cardsParam,
+      hashtags: selectedHashtags.current,
+      cardDeckImage: selectedImg.current,
+      cards: currentCardData,
     };
-    console.log('submittingValues: ', submittingValues);
     const config = {
       body: submittingValues,
     };
     try {
       const response = await CardDeckApi.postCardDeck(config);
       handleOpenCreateCardBottomSheet(response?.data);
+      console.log('response: ', response);
     } catch (e) {
       console.log('Fail to post card deck: ', e);
+    } finally {
+      selectedHashtags.current = [];
+      selectedImg.current = '';
+      navigation.navigate({name: ScreenKeys.HOME});
     }
     // JUST FOR TEST BECAUSE AFTER SUBMIT IT NAVIGATE TO NEW SCREEN
-    setSelectedHashtags([]);
-    setSelectedImg('');
   }
 
   function handleHashtagsSelectPress(hashtagId) {
-    if (selectedHashtags.includes(hashtagId)) {
-      remove.elementAtMiddle(selectedHashtags, hashtagId);
-      setSelectedHashtags([...selectedHashtags]);
+    if (selectedHashtags.current.includes(hashtagId)) {
+      remove.elementAtMiddle(selectedHashtags.current, hashtagId);
     } else {
-      setSelectedHashtags([...selectedHashtags, hashtagId]);
+      selectedHashtags.current.push(hashtagId);
     }
   }
 
   function handleImageSelectPress(item) {
     if (selectedImg === item) {
-      setSelectedImg(null);
+      selectedImg.current = null;
     } else {
-      setSelectedImg(item);
+      selectedImg.current = item;
     }
   }
 
