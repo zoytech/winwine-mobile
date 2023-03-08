@@ -1,13 +1,14 @@
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {useEffect, useState} from 'react';
 import {Field, Formik} from 'formik';
 import {BottomSheetFlatList, BottomSheetScrollView} from '@gorhom/bottom-sheet';
-import {FilledIconButton} from 'src/components';
+
 import {SelectedPlaceholder, TextInputHolder} from '../components';
 import {BaseHeadline} from '../createDeckScreen/components';
 import CreatingCardItem from './CreatingCardItem';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {HEIGHT, LimitInput, WIDTH} from 'src/constants';
+import BottomSheetButton from './BottomSheetButton';
 
 export default function CreateCardBottomSheet(props) {
   const {
@@ -17,7 +18,6 @@ export default function CreateCardBottomSheet(props) {
     onReceiveCardContents = () => {},
     ...otherProps
   } = props;
-
   const initialValues = {
     cardTitle: '',
     cardDescription: '',
@@ -27,6 +27,7 @@ export default function CreateCardBottomSheet(props) {
   const [currentCardContent, setCurrentCardContent] = useState({});
   const [selectedCardId, setSelectedCardId] = useState(0);
   const cardNumber = creatingCards.length;
+  const HIT_SLOP = {top: 20, bottom: 20, right: 20, left: 20};
 
   useEffect(() => {
     onReceiveCardContents(creatingCards);
@@ -74,6 +75,7 @@ export default function CreateCardBottomSheet(props) {
         content={currentCardContent?.cardTitle}
         contentStyle={styles.cardContent}
       />
+
       <Formik initialValues={initialValues} onSubmit={onSubmitPress}>
         {({handleSubmit, isValid}) => (
           <>
@@ -86,16 +88,14 @@ export default function CreateCardBottomSheet(props) {
                 placeholder={'Nội dung lá bài'}
                 maxLength={LimitInput.CARD_TITLE}
               />
-            </View>
-            <BaseHeadline
-              content={'Các lá bài khác'}
-              style={styles.baseHeadlineContainer}
-            />
-            <View style={styles.cardAndFabContainer}>
+              <BaseHeadline
+                content={'Các lá bài khác'}
+                style={styles.baseHeadlineContainer}
+              />
               {cardNumber === 0 ? (
-                <CreatingCardItem
-                  style={[styles.cardContainer, styles.cardOutline]}
-                />
+                <View style={styles.contentContainer}>
+                  <CreatingCardItem style={styles.cardOutline} />
+                </View>
               ) : (
                 <BottomSheetFlatList
                   data={creatingCards}
@@ -105,14 +105,13 @@ export default function CreateCardBottomSheet(props) {
                   contentContainerStyle={styles.contentContainer}
                 />
               )}
-              <FilledIconButton
-                name={'plus'}
-                onPress={handleSubmit}
-                style={styles.fabContainer}
-                iconStyle={styles.fabIcon}
-                disabled={!isValid}
-              />
             </View>
+            <BottomSheetButton
+              onPress={handleSubmit}
+              disabled={!isValid}
+              hitSlop={HIT_SLOP}
+              icon={'plus'}
+            />
           </>
         )}
       </Formik>
@@ -137,16 +136,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   baseHeadlineContainer: {
-    paddingHorizontal: 16,
+    // paddingHorizontal: 16,
   },
   contentContainer: {
-    alignItems: 'center',
-    paddingHorizontal: 16,
+    alignItems: 'flex-start', // paddingHorizontal: 16,
     paddingBottom: 60,
   },
   cardAndFabContainer: {
-    flexDirection: 'row',
-    paddingHorizontal: 10,
+    flexDirection: 'row', // paddingHorizontal: 10,
   },
   cardOutline: {
     width: 114,
@@ -164,12 +161,17 @@ const styles = StyleSheet.create({
     color: Color.light[ColorVariant.primary]?.onContainer,
   },
   fabContainer: {
-    position: 'absolute',
     width: 44,
     height: 44,
     borderRadius: 12,
+    backgroundColor: 'coral',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  fabPosition: {
+    position: 'absolute',
     right: 34,
-    bottom: 46 + HEIGHT.BOTTOM_BAR,
+    bottom: 32 + HEIGHT.BOTTOM_BAR,
   },
   fabIcon: {
     size: 44 / 2,
@@ -177,8 +179,12 @@ const styles = StyleSheet.create({
 });
 
 /*
-  <View style={styles.buttonContainer}>
-                <FilledButton content={'Thêm mới'} onPress={handleSubmit} />
-                <FilledButton content={'Lưu'} onPress={onCloseModal} />
-              </View>
+<FilledIconButton
+              name={'plus'}
+              onPress={handleSubmit}
+              style={styles.fabContainer}
+              iconStyle={styles.fabIcon}
+              disabled={!isValid}
+              hitSlop={HIT_SLOP}
+            />
  */

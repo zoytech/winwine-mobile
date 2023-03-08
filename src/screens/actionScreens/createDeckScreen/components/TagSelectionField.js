@@ -28,10 +28,9 @@ export default function TagSelectionField(props) {
   function renderItem(item) {
     const chipStyle = [styles.chipLayout, {backgroundColor: backgroundColor}];
     return (
-      <View style={chipStyle}>
+      <View style={chipStyle} key={item}>
         <SuggestionChip
           {...otherProps}
-          key={item}
           content={item}
           style={styles.chip}
           selected={selectedHashtags.includes(item)}
