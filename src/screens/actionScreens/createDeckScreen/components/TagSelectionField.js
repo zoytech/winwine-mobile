@@ -25,7 +25,7 @@ export default function TagSelectionField(props) {
     }
   }
 
-  function renderItem({item}) {
+  function renderItem(item) {
     const chipStyle = [styles.chipLayout, {backgroundColor: backgroundColor}];
     return (
       <View style={chipStyle}>
@@ -42,23 +42,26 @@ export default function TagSelectionField(props) {
   }
 
   return (
-    <>
-      <FlatList
-        {...otherProps}
-        data={data}
-        renderItem={renderItem}
-        horizontal={true}
-        contentContainerStyle={styles.contentContainer}
-        ItemSeparatorComponent={<View style={styles.separator} />}
-        showsHorizontalScrollIndicator={false}
-      />
-    </>
+    <View style={styles.container}>
+      {data.map(renderItem)}
+      {/*<FlatList*/}
+      {/*  {...otherProps}*/}
+      {/*  data={data}*/}
+      {/*  renderItem={renderItem}*/}
+      {/*  horizontal={true}*/}
+      {/*  contentContainerStyle={styles.contentContainer}*/}
+      {/*  ItemSeparatorComponent={<View style={styles.separator} />}*/}
+      {/*  showsHorizontalScrollIndicator={false}*/}
+      {/*/>*/}
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  contentContainer: {
-    justifyContent: 'center',
+  container: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
     alignItems: 'center',
   },
   separator: {
@@ -66,5 +69,7 @@ const styles = StyleSheet.create({
   },
   chipLayout: {
     borderRadius: 8,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
   },
 });

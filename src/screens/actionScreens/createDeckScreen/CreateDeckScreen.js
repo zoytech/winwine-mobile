@@ -107,8 +107,6 @@ export default function CreateDeckScreen(props) {
     return <BaseHeadline content={content} style={styles.headline} />;
   }
 
-  console.log('createdCards: ', createdCards);
-
   function renderCardItem(item, index) {
     const cardTitle = item?.cardTitle;
     return (
@@ -146,12 +144,12 @@ export default function CreateDeckScreen(props) {
               style={styles.media}
               BaseHeadlineComponent={
                 <BaseHeadline
-                  content={'Thêm hình ảnh'}
+                  content={'Chọn hình ảnh'}
                   style={styles.imageHeadline}
                 />
               }
             />
-            {renderBaseHeadline('Nhập tên bộ bài')}
+            {renderBaseHeadline('Tên bộ bài')}
             <Field
               component={TextInputHolder}
               name={'cardDeckName'}
@@ -160,19 +158,19 @@ export default function CreateDeckScreen(props) {
               maxLength={LimitInput.CARD_DECK_NAME}
               required={true}
             />
-            {renderBaseHeadline('Nhập mô tả')}
+            {renderBaseHeadline('Hashtag')}
+            <TagSelectionField
+              style={styles.chipSelection}
+              data={hashtags}
+              onSelectChipOption={handleHashtagsSelectPress}
+            />
+            {renderBaseHeadline('Mô tả')}
             <Field
               component={TextInputHolder}
               name={'cardDeckDescription'}
               style={styles.cardDeckInput}
               placeholder={'Mô tả'}
               maxLength={LimitInput.CARD_DECK_DESCRIPTION}
-            />
-            {renderBaseHeadline('Phân loại hashtag')}
-            <TagSelectionField
-              style={styles.chipSelection}
-              data={hashtags}
-              onSelectChipOption={handleHashtagsSelectPress}
             />
             {renderBaseHeadline('Thêm lá bài')}
             <View style={styles.action}>
@@ -240,7 +238,6 @@ const styles = StyleSheet.create({
   },
   action: {
     width: '100%',
-    aspectRatio: 5,
     justifyContent: 'center',
     alignItems: 'center',
     paddingTop: 32,
@@ -270,5 +267,16 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     resizeMode: 'cover',
+  },
+  cardContainer: {
+    width: 114,
+    aspectRatio: 0.85,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  cardContent: {
+    ...Typography.heading.small,
+    color: Color.light[ColorVariant.primary]?.onContainer,
   },
 });
