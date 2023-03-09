@@ -24,7 +24,7 @@ function getStateStyles(disabled) {
   };
 }
 
-export default function BottomSheetButton(props) {
+export default function BottomSheetFilledButton(props) {
   const {
     content,
     style,

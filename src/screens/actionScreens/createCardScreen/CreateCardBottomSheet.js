@@ -6,21 +6,19 @@ import {BottomSheetFlatList, BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import {SelectedPlaceholder, TextInputHolder} from '../components';
 import {BaseHeadline} from '../createDeckScreen/components';
 import CreatingCardItem from './CreatingCardItem';
-import {
-  Color,
-  ColorVariant,
-  StateLayers,
-  StateLayersVariant,
-  Typography,
-} from 'src/themes';
+import {Color, ColorVariant, Typography} from 'src/themes';
 import {HEIGHT, LimitInput, WIDTH} from 'src/constants';
-import BottomSheetButton from './BottomSheetButton';
+import BottomSheetFilledButton from './BottomSheetFilledButton';
+import {StandardIconButton} from '../../../components';
+import BottomSheetStandardButton from './BottomSheetStandardButton';
+import {remove} from 'src/utils';
 
 export default function CreateCardBottomSheet(props) {
   const {
     navigation,
     route,
     createdCards = [],
+    contentStyle,
     onReceiveCardContents = () => {},
     ...otherProps
   } = props;
@@ -32,8 +30,21 @@ export default function CreateCardBottomSheet(props) {
   const [creatingCards, setCreatingCards] = useState(createdCards);
   const [currentCardContent, setCurrentCardContent] = useState({});
   const [selectedCardId, setSelectedCardId] = useState(0);
+  const [removedCardId, setRemoveCardId] = useState(0);
+
   const cardNumber = creatingCards.length;
   const HIT_SLOP = {top: 20, bottom: 20, right: 20, left: 20};
+  const onPrimaryColor = Color.light[ColorVariant.primary]?.onContainer;
+  const currentContentStyle = [
+    Typography.body.medium,
+    {color: onPrimaryColor},
+    contentStyle,
+  ];
+  const listContentStyle = [
+    Typography.body.small,
+    {color: onPrimaryColor},
+    contentStyle,
+  ];
 
   useEffect(() => {
     onReceiveCardContents(creatingCards);
@@ -54,6 +65,11 @@ export default function CreateCardBottomSheet(props) {
     setCurrentCardContent(item);
   }
 
+  function handleDeleteCardItem(item) {
+    const removedCards = [...remove.elementAtMiddle(creatingCards, item)];
+    setCurrentCardContent(removedCards);
+  }
+
   function renderCardItemComponent({item, index}) {
     const {cardTitle, id} = item || {};
     return (
@@ -65,7 +81,12 @@ export default function CreateCardBottomSheet(props) {
         <CreatingCardItem
           content={cardTitle}
           style={styles.cardContainer}
-          contentStyle={styles.cardContent}
+          contentStyle={listContentStyle}
+        />
+        <BottomSheetStandardButton
+          onPress={() => handleDeleteCardItem(item, id)}
+          hitSlop={HIT_SLOP}
+          icon={'close'}
         />
       </SelectedPlaceholder>
     );
@@ -79,7 +100,7 @@ export default function CreateCardBottomSheet(props) {
       <CreatingCardItem
         style={styles.currentCard}
         content={currentCardContent?.cardTitle}
-        contentStyle={styles.cardContent}
+        contentStyle={currentContentStyle}
       />
 
       <Formik initialValues={initialValues} onSubmit={onSubmitPress}>
@@ -112,7 +133,7 @@ export default function CreateCardBottomSheet(props) {
                 />
               )}
             </View>
-            <BottomSheetButton
+            <BottomSheetFilledButton
               onPress={handleSubmit}
               disabled={!isValid}
               hitSlop={HIT_SLOP}
@@ -140,31 +161,29 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     paddingHorizontal: 16,
+    backgroundColor: 'coral',
+    paddingBottom: 100,
   },
   baseHeadlineContainer: {
     // paddingHorizontal: 16,
   },
   contentContainer: {
-    alignItems: 'flex-start', // paddingHorizontal: 16,
-    paddingBottom: 60,
+    alignItems: 'flex-start',
   },
   cardAndFabContainer: {
-    flexDirection: 'row', // paddingHorizontal: 10,
+    flexDirection: 'row',
   },
   cardOutline: {
     width: 114,
     aspectRatio: 0.85,
-    borderRadius: 12,
+    borderRadius: 3,
   },
   cardContainer: {
     width: '100%',
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  cardContent: {
-    ...Typography.heading.small,
-    color: Color.light[ColorVariant.primary]?.onContainer,
+    borderRadius: 3,
   },
   fabContainer: {
     width: 44,
