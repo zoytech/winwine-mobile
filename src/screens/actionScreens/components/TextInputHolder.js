@@ -1,6 +1,6 @@
 import {StyleSheet, Text, TextInput, View} from 'react-native';
-import {Typography, Color, ColorVariant} from 'src/themes';
-import ValidationText from './ValidationText';
+import Icon from 'react-native-vector-icons/AntDesign';
+import {Color, ColorVariant, Typography} from 'src/themes';
 
 export default function TextInputHolder(props) {
   const {
@@ -14,16 +14,39 @@ export default function TextInputHolder(props) {
     ...otherProps
   } = props;
 
-  const {base: backgroundColor, onContainer: onBackgroundColor} =
-    Color.light[ColorVariant.background];
-  const outlineColor = Color.light[ColorVariant.outline]?.base;
-  const onSurfaceVarColor = Color.light[ColorVariant.surfaceVariant]?.onBase;
-
-  const containerStyle = [styles.container, {borderColor: outlineColor}, style];
-  const requiredStyle = [{color: onSurfaceVarColor}, Typography.body.small];
   const hasError = errors[name] && touched[name];
   const rightContent = `${value?.length}/${maxLength}`;
   const requiredSymbol = required ? '*' : '';
+  const errorColor = Color.light[ColorVariant.error]?.base;
+  const backgroundColor = Color.light[ColorVariant.background]?.base;
+  const {base: surfaceVarColor, onBase: onSurfaceVarColor} =
+    Color.light[ColorVariant.surfaceVariant];
+  const outlineColor = Color.light[ColorVariant.outline]?.base;
+
+  const iconProps = {
+    name: 'exclamationcircle',
+    size: 24,
+    color: errorColor,
+  };
+  const containerStyle = [
+    styles.textInputContainer,
+    {
+      borderColor: hasError ? errorColor : outlineColor,
+      backgroundColor: backgroundColor,
+    },
+  ];
+  const labelTextContainerStyle = [
+    styles.labelTextContainer,
+    {backgroundColor: backgroundColor},
+  ];
+
+  const defaultContentStyle = [
+    styles.content,
+    {color: hasError ? errorColor : onSurfaceVarColor},
+    contentStyle,
+  ];
+  const mainTextStyle = [defaultContentStyle, {color: onSurfaceVarColor}];
+  const subDescriptionStyle = [defaultContentStyle, Typography.body.small];
 
   function handleChangeText(text) {
     onChange(name)(text);
@@ -38,10 +61,10 @@ export default function TextInputHolder(props) {
     return (
       <View style={styles.subDescriptionContainer}>
         <View style={styles.subDescriptionItem}>
-          {hasError && <ValidationText content={errors[name]} />}
+          {hasError && <Text style={subDescriptionStyle}>{errors[name]}</Text>}
         </View>
         <View style={styles.subDescriptionItem}>
-          {maxLength && <Text style={requiredStyle}>{rightContent}</Text>}
+          {maxLength && <Text style={subDescriptionStyle}>{rightContent}</Text>}
         </View>
       </View>
     );
@@ -50,20 +73,31 @@ export default function TextInputHolder(props) {
   return (
     <>
       <View style={containerStyle}>
-        <View style={styles.textInputContainer}>
+        {hasError && (
+          <View style={labelTextContainerStyle}>
+            <Text style={subDescriptionStyle}>{placeholder}</Text>
+          </View>
+        )}
+        <View style={styles.textContainer}>
           <TextInput
             {...otherProps}
             value={value}
             onChangeText={handleChangeText}
             onBlur={handleBlur}
             placeholder={`${placeholder}${requiredSymbol}`}
-            selectionColor={onBackgroundColor}
-            style={contentStyle}
+            placeholderTextColor={onSurfaceVarColor}
+            style={[mainTextStyle, Typography.body.large]}
             selectTextOnFocus={true}
-            multiline={true}
             maxLength={maxLength}
+            selectionColor={surfaceVarColor}
+            cursorColor={onSurfaceVarColor}
           />
         </View>
+        {hasError && (
+          <View style={styles.iconContainer}>
+            <Icon {...iconProps} />
+          </View>
+        )}
       </View>
       {renderSubDescriptionText()}
     </>
@@ -71,17 +105,25 @@ export default function TextInputHolder(props) {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  container: {},
+  textInputContainer: {
     borderWidth: 0.5,
-    width: '100%',
+    width: 328,
+    aspectRatio: 5.75,
     borderRadius: 4,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 16,
   },
-  textInputContainer: {
-    width: 226,
+  labelTextContainer: {
+    top: -8,
+    left: 16,
+    position: 'absolute',
+    paddingHorizontal: 4,
+  },
+  textContainer: {
+    width: '90%',
   },
   subDescriptionItem: {
     alignSelf: 'flex-end',
@@ -94,4 +136,5 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     paddingHorizontal: 16,
   },
+  iconContainer: {},
 });

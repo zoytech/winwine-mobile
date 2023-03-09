@@ -1,5 +1,5 @@
 const LimitInput = {
-  CARD_DECK_NAME: 120,
+  CARD_DECK_NAME: 5,
   CARD_DECK_DESCRIPTION: 250,
   CARD_TITLE: 200,
 };
