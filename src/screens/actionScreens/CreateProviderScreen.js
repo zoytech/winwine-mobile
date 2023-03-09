@@ -28,7 +28,6 @@ export default function CreateProviderScreen({navigation, route}) {
   const handleCloseModalPress = useCallback(() => {}, []);
 
   function handleReceiveCardContents(cardContents) {
-    console.log('cardContents: ', cardContents);
     if (cardContents.length > 0) {
       setCurrentCardData(cardContents);
     }

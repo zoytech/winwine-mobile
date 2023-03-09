@@ -34,9 +34,6 @@ export default function CreateCardBottomSheet(props) {
   const [selectedCardId, setSelectedCardId] = useState(0);
   const cardNumber = creatingCards.length;
   const HIT_SLOP = {top: 20, bottom: 20, right: 20, left: 20};
-  const backgroundModalColor =
-    StateLayers.light[StateLayersVariant.primary]?.level_008;
-  const containerColor = Color.light[ColorVariant.primary]?.container;
 
   useEffect(() => {
     onReceiveCardContents(creatingCards);

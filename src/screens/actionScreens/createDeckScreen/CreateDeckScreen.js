@@ -20,28 +20,25 @@ import createCardDeckValidationSchema from './createCardDeckValidations';
 import {remove} from 'src/utils';
 import {CardDeckApi} from 'src/apis';
 import {TextInputHolder} from '../components';
-import {ScreenKeys} from '../../../navigations/ScreenKeys';
+import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import CreatingCardItem from '../createCardScreen/CreatingCardItem';
+import CreateCardList from './CreateCardList';
 
 let count = 0;
 export default function CreateDeckScreen(props) {
   const {navigation, route, createdCards, onOpenModal = () => {}} = props;
-  const [currentCardData, setCurrentCardData] = useState([]);
+  // const [currentCardData, setCurrentCardData] = useState([]);
   const dispatch = useDispatch();
   const requesting = useSelector(requestHashtagsSelect);
   const hashtags = useSelector(hashtagsSelect);
   const initialImage = IMG_SRC[1];
-  // const [selectedHashtags, setSelectedHashtags] = useState([]);
-  // const [selectedImg, setSelectedImg] = useState(initialImage);
   const selectedImg = useRef(initialImage);
   const selectedHashtags = useRef([]);
-
+  const processedCreatedCards = createdCards.map(
+    ({id, ...otherFields}) => otherFields,
+  );
   useEffect(() => {
     dispatch(loadHashtags());
-    const processedCreatedCards = createdCards.map(
-      ({id, ...otherFields}) => otherFields,
-    );
-    setCurrentCardData(processedCreatedCards);
   }, [dispatch]);
 
   const initialValues = {
@@ -57,14 +54,13 @@ export default function CreateDeckScreen(props) {
     },
     styles.container,
   ];
-  const defaultContentStyle = [Typography.body.large, {color: primary}];
 
   async function onSubmitPress(value) {
     const submittingValues = {
       ...value,
       hashtags: selectedHashtags.current,
       cardDeckImage: selectedImg.current,
-      cards: currentCardData,
+      cards: processedCreatedCards,
     };
     selectedHashtags.current = [];
     selectedImg.current = '';
@@ -173,9 +169,10 @@ export default function CreateDeckScreen(props) {
               maxLength={LimitInput.CARD_DECK_DESCRIPTION}
             />
             {renderBaseHeadline('Thêm lá bài')}
-            <View style={styles.action}>
-              {createdCards.map(renderCardItem)}
-            </View>
+            <CreateCardList
+              data={createdCards}
+              style={styles.cardListContainer}
+            />
           </ScrollView>
           <FilledIconButton
             onPress={handleOpenCreateCardBottomSheet}
@@ -278,5 +275,10 @@ const styles = StyleSheet.create({
   cardContent: {
     ...Typography.heading.small,
     color: Color.light[ColorVariant.primary]?.onContainer,
+  },
+  cardListContainer: {
+    width: '100%',
+    backgroundColor: 'coral',
+    paddingBottom: 100,
   },
 });
