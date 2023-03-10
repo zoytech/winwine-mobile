@@ -5,7 +5,6 @@ import {StandardIconButton} from '../../../components';
 export default function CreateCardList(props) {
   const {data, style, contentStyle, iconStyle, ...otherProps} = props;
   const defaultContainerStyle = [styles.container, style];
-  console.log('data: ', data);
 
   function renderCardItem({cardTitle}, index) {
     return (

@@ -7,11 +7,10 @@ import {SelectedPlaceholder, TextInputHolder} from '../components';
 import {BaseHeadline} from '../createDeckScreen/components';
 import CreatingCardItem from './CreatingCardItem';
 import {Color, ColorVariant, Typography} from 'src/themes';
-import {HEIGHT, LimitInput, WIDTH} from 'src/constants';
+import {LimitInput} from 'src/constants';
 import BottomSheetFilledButton from './BottomSheetFilledButton';
-import {StandardIconButton} from '../../../components';
 import BottomSheetStandardButton from './BottomSheetStandardButton';
-import {normalizedBy, remove} from 'src/utils';
+import {remove} from 'src/utils';
 
 export default function CreateCardBottomSheet(props) {
   const {
@@ -63,13 +62,12 @@ export default function CreateCardBottomSheet(props) {
     setCurrentCardContent(item);
   }
 
-  function handleDeleteCardItem(item, key) {
+  function handleRemoveCardItem(item, key) {
     remove.elementAtMiddle(creatingCards, item);
+    creatingCards.forEach((card, index) => (card.cardId = index + 1));
     const removedCards = [...creatingCards];
-    if (item?.cardId === selectedCardId) {
-      setSelectedCardId(0);
-      setCurrentCardContent('');
-    }
+    setSelectedCardId(0);
+    setCurrentCardContent('');
     setCreatingCards(removedCards);
   }
 
@@ -93,7 +91,7 @@ export default function CreateCardBottomSheet(props) {
           />
         </SelectedPlaceholder>
         <BottomSheetStandardButton
-          onPress={() => handleDeleteCardItem(item, cardId)}
+          onPress={() => handleRemoveCardItem(item, cardId)}
           hitSlop={HIT_SLOP}
           icon={'close'}
           isFab={true}
@@ -191,8 +189,7 @@ const styles = StyleSheet.create({
     paddingTop: 0,
   },
   contentContainer: {
-    alignItems: 'flex-start',
-    // justifyContent: 'flex-start',
+    alignItems: 'flex-start', // justifyContent: 'flex-start',
   },
   cardOutline: {
     width: 114,
