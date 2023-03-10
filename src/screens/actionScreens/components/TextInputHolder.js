@@ -22,7 +22,6 @@ export default function TextInputHolder(props) {
   const {base: surfaceVarColor, onBase: onSurfaceVarColor} =
     Color.light[ColorVariant.surfaceVariant];
   const outlineColor = Color.light[ColorVariant.outline]?.base;
-
   const iconProps = {
     name: 'exclamationcircle',
     size: 24,
@@ -34,6 +33,7 @@ export default function TextInputHolder(props) {
       borderColor: hasError ? errorColor : outlineColor,
       backgroundColor: backgroundColor,
     },
+    style,
   ];
   const labelTextContainerStyle = [
     styles.labelTextContainer,
@@ -85,12 +85,13 @@ export default function TextInputHolder(props) {
             onChangeText={handleChangeText}
             onBlur={handleBlur}
             placeholder={`${placeholder}${requiredSymbol}`}
-            placeholderTextColor={onSurfaceVarColor}
+            placeholderTextColor={hasError ? 'transparent' : onSurfaceVarColor}
             style={[mainTextStyle, Typography.body.large]}
             selectTextOnFocus={true}
             maxLength={maxLength}
             selectionColor={surfaceVarColor}
             cursorColor={onSurfaceVarColor}
+            textAlign={'left'}
           />
         </View>
         {hasError && (
@@ -109,7 +110,6 @@ const styles = StyleSheet.create({
   textInputContainer: {
     borderWidth: 0.5,
     width: 328,
-    aspectRatio: 5.75,
     borderRadius: 4,
     flexDirection: 'row',
     justifyContent: 'space-between',

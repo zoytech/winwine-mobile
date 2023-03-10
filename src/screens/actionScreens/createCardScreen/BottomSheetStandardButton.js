@@ -36,6 +36,7 @@ export default function BottomSheetStandardButton(props) {
     iconStyle,
     icon,
     disabled,
+    isFab,
     ...otherProps
   } = props;
 
@@ -47,18 +48,18 @@ export default function BottomSheetStandardButton(props) {
     getStateStyles(disabled)?.containerStyle,
     style,
   ];
+  const fabPositionStyle = isFab && styles.fabPosition;
 
   const {contentStyle, iconColor} = getStateStyles(disabled);
   const iconProps = {
     name: icon,
     color: iconColor,
-    size: 44 / 2,
-    ...styles.fabIcon,
+    size: 16,
     ...iconStyle,
   };
 
   return (
-    <View style={styles.fabPosition}>
+    <View style={fabPositionStyle}>
       <TouchableHighlight
         {...otherProps}
         disabled={!!disabled}
@@ -87,7 +88,7 @@ const styles = StyleSheet.create({
   },
   fabPosition: {
     position: 'absolute',
-    left: 68,
+    left: 88,
     top: 1,
   },
 });

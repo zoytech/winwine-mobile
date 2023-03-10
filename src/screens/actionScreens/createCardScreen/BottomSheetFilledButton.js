@@ -49,7 +49,6 @@ export default function BottomSheetFilledButton(props) {
     name: icon,
     color: iconColor,
     size: 44 / 2,
-    ...styles.fabIcon,
     ...iconStyle,
   };
 
@@ -84,6 +83,6 @@ const styles = StyleSheet.create({
   fabPosition: {
     position: 'absolute',
     right: 34,
-    bottom: 32 + HEIGHT.BOTTOM_BAR,
+    bottom: 50 + HEIGHT.BOTTOM_BAR,
   },
 });

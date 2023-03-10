@@ -11,7 +11,7 @@ import {HEIGHT, LimitInput, WIDTH} from 'src/constants';
 import BottomSheetFilledButton from './BottomSheetFilledButton';
 import {StandardIconButton} from '../../../components';
 import BottomSheetStandardButton from './BottomSheetStandardButton';
-import {remove} from 'src/utils';
+import {normalizedBy, remove} from 'src/utils';
 
 export default function CreateCardBottomSheet(props) {
   const {
@@ -30,10 +30,8 @@ export default function CreateCardBottomSheet(props) {
   const [creatingCards, setCreatingCards] = useState(createdCards);
   const [currentCardContent, setCurrentCardContent] = useState({});
   const [selectedCardId, setSelectedCardId] = useState(0);
-  const [removedCardId, setRemoveCardId] = useState(0);
-
-  const cardNumber = creatingCards.length;
   const HIT_SLOP = {top: 20, bottom: 20, right: 20, left: 20};
+  const currentCardsLength = creatingCards.length;
   const onPrimaryColor = Color.light[ColorVariant.primary]?.onContainer;
   const currentContentStyle = [
     Typography.body.medium,
@@ -52,43 +50,56 @@ export default function CreateCardBottomSheet(props) {
 
   function onSubmitPress(values, {resetForm}) {
     if (values.cardTitle.length > 0) {
-      const creatingCardId = cardNumber + 1;
+      const generateId = currentCardsLength + 1;
       setCurrentCardContent(values);
-      setCreatingCards([...creatingCards, {id: creatingCardId, ...values}]);
-      setSelectedCardId(creatingCardId);
+      setCreatingCards([...creatingCards, {cardId: generateId, ...values}]);
+      setSelectedCardId(generateId);
       resetForm();
     }
   }
 
-  function handleSelectCardItem(item) {
-    setSelectedCardId(item?.id);
+  function handleSelectCardItem(item, key) {
+    setSelectedCardId(item?.cardId);
     setCurrentCardContent(item);
   }
 
-  function handleDeleteCardItem(item) {
-    const removedCards = [...remove.elementAtMiddle(creatingCards, item)];
-    setCurrentCardContent(removedCards);
+  function handleDeleteCardItem(item, key) {
+    remove.elementAtMiddle(creatingCards, item);
+    const removedCards = [...creatingCards];
+    if (item?.cardId === selectedCardId) {
+      setSelectedCardId(0);
+      setCurrentCardContent('');
+    }
+    setCreatingCards(removedCards);
   }
 
   function renderCardItemComponent({item, index}) {
-    const {cardTitle, id} = item || {};
+    const {cardTitle, cardId} = item || {};
     return (
-      <SelectedPlaceholder
-        onPress={() => handleSelectCardItem(item)}
-        key={index}
-        selected={selectedCardId === id}
-        style={styles.cardOutline}>
-        <CreatingCardItem
-          content={cardTitle}
-          style={styles.cardContainer}
-          contentStyle={listContentStyle}
-        />
+      <>
+        <SelectedPlaceholder
+          onPress={() => handleSelectCardItem(item, cardId)}
+          key={index}
+          selected={selectedCardId === cardId}
+          style={styles.cardOutline}>
+          <CreatingCardItem
+            content={cardTitle}
+            style={styles.cardContainer}
+            contentStyle={listContentStyle}
+            numberOfLines={6}
+            ellipsizeMode={'tail'}
+            upperStyle={styles.upperCardItem}
+            id={cardId}
+          />
+        </SelectedPlaceholder>
         <BottomSheetStandardButton
-          onPress={() => handleDeleteCardItem(item, id)}
+          onPress={() => handleDeleteCardItem(item, cardId)}
           hitSlop={HIT_SLOP}
           icon={'close'}
+          isFab={true}
+          style={styles.removeButton}
         />
-      </SelectedPlaceholder>
+      </>
     );
   }
 
@@ -100,7 +111,12 @@ export default function CreateCardBottomSheet(props) {
       <CreatingCardItem
         style={styles.currentCard}
         content={currentCardContent?.cardTitle}
-        contentStyle={currentContentStyle}
+        contentStyle={[currentContentStyle, styles.currentText]}
+        contentContainerStyle={styles.currentContentContainer}
+        upperStyle={styles.upperCurrentCard}
+        id={selectedCardId > 0 && selectedCardId}
+        numberOfLines={9}
+        ellipsizeMode={'tail'}
       />
 
       <Formik initialValues={initialValues} onSubmit={onSubmitPress}>
@@ -114,12 +130,13 @@ export default function CreateCardBottomSheet(props) {
                 autoFocus={true}
                 placeholder={'Nội dung lá bài'}
                 maxLength={LimitInput.CARD_TITLE}
+                multiline={true}
               />
               <BaseHeadline
                 content={'Các lá bài khác'}
-                style={styles.baseHeadlineContainer}
+                style={styles.baseHeadline}
               />
-              {cardNumber === 0 ? (
+              {creatingCards.length === 0 ? (
                 <View style={styles.contentContainer}>
                   <CreatingCardItem style={styles.cardOutline} />
                 </View>
@@ -130,6 +147,7 @@ export default function CreateCardBottomSheet(props) {
                   horizontal={true}
                   ItemSeparatorComponent={<View style={{width: 16}} />}
                   contentContainerStyle={styles.contentContainer}
+                  showsHorizontalScrollIndicator={false}
                 />
               )}
             </View>
@@ -147,31 +165,34 @@ export default function CreateCardBottomSheet(props) {
 }
 const styles = StyleSheet.create({
   container: {},
-  backdropContainer: {
-    width: WIDTH.SCREEN,
-    aspectRatio: 9 / 18,
-    opacity: 0.5,
-  },
   currentCard: {
     width: 156,
     aspectRatio: 0.66,
-    marginHorizontal: 102,
+    alignSelf: 'center',
+    padding: 7,
+  },
+  upperCurrentCard: {
+    height: '10%',
+  },
+  currentContentContainer: {
+    height: '90%',
     justifyContent: 'center',
     alignItems: 'center',
   },
+  currentText: {
+    textAlign: 'center',
+  },
   formContainer: {
     paddingHorizontal: 16,
-    backgroundColor: 'coral',
     paddingBottom: 100,
   },
-  baseHeadlineContainer: {
-    // paddingHorizontal: 16,
+  baseHeadline: {
+    height: 35,
+    paddingTop: 0,
   },
   contentContainer: {
     alignItems: 'flex-start',
-  },
-  cardAndFabContainer: {
-    flexDirection: 'row',
+    // justifyContent: 'flex-start',
   },
   cardOutline: {
     width: 114,
@@ -181,35 +202,17 @@ const styles = StyleSheet.create({
   cardContainer: {
     width: '100%',
     height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
     borderRadius: 3,
+    padding: 4,
   },
-  fabContainer: {
-    width: 44,
-    height: 44,
-    borderRadius: 12,
-    backgroundColor: 'coral',
-    justifyContent: 'center',
-    alignItems: 'center',
+  upperCardItem: {
+    height: '20%',
   },
-  fabPosition: {
-    position: 'absolute',
-    right: 34,
-    bottom: 32 + HEIGHT.BOTTOM_BAR,
-  },
-  fabIcon: {
-    size: 44 / 2,
+  removeButton: {
+    width: 24,
+    height: 24,
+    borderRadius: 0,
+    paddingHorizontal: 4,
+    paddingVertical: 4,
   },
 });
-
-/*
-<FilledIconButton
-              name={'plus'}
-              onPress={handleSubmit}
-              style={styles.fabContainer}
-              iconStyle={styles.fabIcon}
-              disabled={!isValid}
-              hitSlop={HIT_SLOP}
-            />
- */

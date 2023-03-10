@@ -27,7 +27,6 @@ import CreateCardList from './CreateCardList';
 let count = 0;
 export default function CreateDeckScreen(props) {
   const {navigation, route, createdCards, onOpenModal = () => {}} = props;
-  // const [currentCardData, setCurrentCardData] = useState([]);
   const dispatch = useDispatch();
   const requesting = useSelector(requestHashtagsSelect);
   const hashtags = useSelector(hashtagsSelect);
@@ -35,7 +34,7 @@ export default function CreateDeckScreen(props) {
   const selectedImg = useRef(initialImage);
   const selectedHashtags = useRef([]);
   const processedCreatedCards = createdCards.map(
-    ({id, ...otherFields}) => otherFields,
+    ({cardId, ...otherFields}) => otherFields,
   );
   useEffect(() => {
     dispatch(loadHashtags());
