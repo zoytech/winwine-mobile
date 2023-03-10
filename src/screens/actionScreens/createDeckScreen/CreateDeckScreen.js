@@ -24,7 +24,6 @@ import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import CreatingCardItem from '../createCardScreen/CreatingCardItem';
 import CreateCardList from './CreateCardList';
 
-let count = 0;
 export default function CreateDeckScreen(props) {
   const {navigation, route, createdCards, onOpenModal = () => {}} = props;
   const dispatch = useDispatch();
@@ -75,7 +74,6 @@ export default function CreateDeckScreen(props) {
     } finally {
       navigation.replace(ScreenKeys.CREATE_CARD);
     }
-    // JUST FOR TEST BECAUSE AFTER SUBMIT IT NAVIGATE TO NEW SCREEN
   }
 
   function handleHashtagsSelectPress(hashtagId) {
@@ -100,18 +98,6 @@ export default function CreateDeckScreen(props) {
 
   function renderBaseHeadline(content) {
     return <BaseHeadline content={content} style={styles.headline} />;
-  }
-
-  function renderCardItem(item, index) {
-    const cardTitle = item?.cardTitle;
-    return (
-      <CreatingCardItem
-        key={index}
-        content={cardTitle}
-        style={styles.cardContainer}
-        contentStyle={styles.cardContent}
-      />
-    );
   }
 
   if (requesting) {
@@ -277,7 +263,6 @@ const styles = StyleSheet.create({
   },
   cardListContainer: {
     width: '100%',
-    backgroundColor: 'coral',
     paddingBottom: 100,
   },
 });
