@@ -25,8 +25,6 @@ export default function CreateProviderScreen({navigation, route}) {
     bottomSheetModalRef.current.present();
   }, []);
 
-  const handleCloseModalPress = useCallback(() => {}, []);
-
   function handleReceiveCardContents(cardContents) {
     if (cardContents.length > 0) {
       setCurrentCardData(cardContents);

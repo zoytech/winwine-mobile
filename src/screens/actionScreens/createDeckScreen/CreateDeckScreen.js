@@ -24,17 +24,31 @@ import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import CreatingCardItem from '../createCardScreen/CreatingCardItem';
 import CreateCardList from './CreateCardList';
 
+let count = 0;
 export default function CreateDeckScreen(props) {
   const {navigation, route, createdCards, onOpenModal = () => {}} = props;
   const dispatch = useDispatch();
   const requesting = useSelector(requestHashtagsSelect);
   const hashtags = useSelector(hashtagsSelect);
+  const [receivedCards, setReceivedCards] = useState(createdCards);
   const initialImage = IMG_SRC[1];
   const selectedImg = useRef(initialImage);
   const selectedHashtags = useRef([]);
   const processedCreatedCards = createdCards.map(
     ({cardId, ...otherFields}) => otherFields,
   );
+
+  const isMounted = useRef(false);
+  console.log('isMounted: ', isMounted);
+  useEffect(() => {
+    isMounted.current = true;
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+  useEffect(() => {
+    setReceivedCards(createdCards);
+  }, [createdCards]);
   useEffect(() => {
     dispatch(loadHashtags());
   }, [dispatch]);
@@ -62,6 +76,8 @@ export default function CreateDeckScreen(props) {
     };
     selectedHashtags.current = [];
     selectedImg.current = '';
+    console.log('processedCreatedCards: ', processedCreatedCards, (count += 1));
+
     const config = {
       body: submittingValues,
     };
@@ -94,6 +110,13 @@ export default function CreateDeckScreen(props) {
 
   function handleOpenCreateCardBottomSheet() {
     onOpenModal();
+  }
+
+  function handleRemoveCardItem(cardItem, cardId) {
+    remove.elementAtMiddle(createdCards, cardItem);
+    createdCards.forEach((card, index) => (card.cardId = index + 1));
+    console.log([...createdCards]);
+    setReceivedCards([...createdCards]);
   }
 
   function renderBaseHeadline(content) {
@@ -155,8 +178,9 @@ export default function CreateDeckScreen(props) {
             />
             {renderBaseHeadline('Thêm lá bài')}
             <CreateCardList
-              data={createdCards}
+              data={receivedCards}
               style={styles.cardListContainer}
+              onRemoveCardItem={handleRemoveCardItem}
             />
           </ScrollView>
           <FilledIconButton

@@ -2,13 +2,18 @@ import {StyleSheet, Text, View} from 'react-native';
 import CreatingCardItem from '../createCardScreen/CreatingCardItem';
 import {StandardIconButton} from '../../../components';
 import {Color, ColorVariant, Typography} from '../../../themes';
+import {useEffect, useState} from 'react';
+import {remove} from '../../../utils';
 
 export default function CreateCardList(props) {
-  const {data, style, contentStyle, iconStyle, ...otherProps} = props;
-  // const [creatingCards, setCreatingCards] = useState(data);
-  // useEffect(() => {
-  //   onReceiveCardContents(creatingCards);
-  // }, [creatingCards]);
+  const {
+    data,
+    style,
+    contentStyle,
+    iconStyle,
+    onRemoveCardItem = () => {},
+    ...otherProps
+  } = props;
   const onPrimeContainerColor = Color.light[ColorVariant.primary]?.onContainer;
   const outlineColor = Color.light[ColorVariant.outline]?.base;
   const defaultContainerStyle = [styles.container, style];
@@ -21,12 +26,6 @@ export default function CreateCardList(props) {
     styles.itemContainer,
     {borderColor: outlineColor},
   ];
-
-  // function handleRemoveCardItem(cardItem, cardId) {
-  //   remove.elementAtMiddle(creatingCards, item);
-  //   creatingCards.forEach((card, index) => (card.cardId = index + 1));
-  //   const removedCards = [...creatingCards];
-  // }
 
   function renderCardItem(item, index) {
     const {cardTitle, cardId} = item || {};
@@ -46,7 +45,7 @@ export default function CreateCardList(props) {
         <View style={styles.fabContainer}>
           <StandardIconButton
             name={'close'}
-            // onPress={() => handleRemoveCardItem(item, cardId)}
+            onPress={() => onRemoveCardItem(item, cardId)}
           />
         </View>
       </View>
