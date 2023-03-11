@@ -83,6 +83,10 @@ export default function CreateDeckScreen(props) {
     }
   }
 
+  function handleNavigateBack() {
+    navigation.goBack();
+  }
+
   function handleHashtagsSelectPress(hashtagId) {
     if (selectedHashtags.current.includes(hashtagId)) {
       remove.elementAtMiddle(selectedHashtags.current, hashtagId);
@@ -131,6 +135,7 @@ export default function CreateDeckScreen(props) {
               style={styles.headerAction}
               onSubmit={handleSubmit}
               disabled={!isValid}
+              onStopPress={handleNavigateBack}
             />
             <ImageField
               data={imgArr}
