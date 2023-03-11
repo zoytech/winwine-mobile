@@ -7,7 +7,7 @@ import {SelectedPlaceholder, TextInputHolder} from '../components';
 import {BaseHeadline} from '../createDeckScreen/components';
 import CreatingCardItem from './CreatingCardItem';
 import {Color, ColorVariant, Typography} from 'src/themes';
-import {LimitInput} from 'src/constants';
+import {LimitInput, LimitRender} from 'src/constants';
 import BottomSheetFilledButton from './BottomSheetFilledButton';
 import BottomSheetStandardButton from './BottomSheetStandardButton';
 import {remove} from 'src/utils';
@@ -48,7 +48,9 @@ export default function CreateCardBottomSheet(props) {
   }, [creatingCards]);
 
   function onSubmitPress(values, {resetForm}) {
-    if (values.cardTitle.length > 0) {
+    if (currentCardsLength === LimitRender.CREATE_ABLE_CARDS) {
+      alert('Excess number of card');
+    } else if (values.cardTitle.length > 0) {
       const generateId = currentCardsLength + 1;
       setCurrentCardContent(values);
       setCreatingCards([...creatingCards, {cardId: generateId, ...values}]);
