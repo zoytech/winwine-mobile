@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {FlatList, ScrollView, StyleSheet, View} from 'react-native';
+import {FlatList, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Field, Formik} from 'formik';
 import {Color, ColorVariant, Typography} from 'src/themes';
@@ -9,7 +9,7 @@ import {
   loadHashtags,
   requestHashtagsSelect,
 } from 'src/redux/slices';
-import {HEIGHT, IMG_SRC, LimitInput, WIDTH} from 'src/constants';
+import {HEIGHT, IMG_SRC, LimitInput, LimitRender, WIDTH} from 'src/constants';
 import {
   BaseHeadline,
   HeaderActionButtons,
@@ -37,15 +37,6 @@ export default function CreateDeckScreen(props) {
   const processedCreatedCards = createdCards.map(
     ({cardId, ...otherFields}) => otherFields,
   );
-
-  const isMounted = useRef(false);
-  console.log('isMounted: ', isMounted);
-  useEffect(() => {
-    isMounted.current = true;
-    return () => {
-      isMounted.current = false;
-    };
-  }, []);
   useEffect(() => {
     setReceivedCards(createdCards);
   }, [createdCards]);
@@ -176,7 +167,19 @@ export default function CreateDeckScreen(props) {
               placeholder={'Mô tả'}
               maxLength={LimitInput.CARD_DECK_DESCRIPTION}
             />
-            {renderBaseHeadline('Thêm lá bài')}
+            <View style={styles.cardHeadlineContainer}>
+              <BaseHeadline
+                content={'Lá bài'}
+                style={[styles.headline, {marginTop: 0}]}
+              />
+              <View style={styles.cardCounterContainer}>
+                <Text
+                  style={[
+                    styles.cardCounter,
+                    Typography.body.small,
+                  ]}>{`(${receivedCards.length}/${LimitRender?.CREATE_ABLE_CARDS})`}</Text>
+              </View>
+            </View>
             <CreateCardList
               data={receivedCards}
               style={styles.cardListContainer}
@@ -273,6 +276,21 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     resizeMode: 'cover',
+  },
+  cardHeadlineContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    alignSelf: 'flex-start',
+  },
+  cardCounterContainer: {
+    marginLeft: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  cardCounter: {
+    textAlign: 'center',
   },
   cardContainer: {
     width: 114,

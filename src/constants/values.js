@@ -6,5 +6,6 @@ const LimitInput = {
 const LimitRender = {
   LIB_CARD_DECKS: 6,
   RECENTLY_CARD_DECKS: 4,
+  CREATE_ABLE_CARDS: 50,
 };
 export {LimitInput, LimitRender};
