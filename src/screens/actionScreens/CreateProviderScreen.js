@@ -26,9 +26,7 @@ export default function CreateProviderScreen({navigation, route}) {
   }, []);
 
   function handleReceiveCardContents(cardContents) {
-    if (cardContents.length > 0) {
-      setCurrentCardData(cardContents);
-    }
+    setCurrentCardData(cardContents);
   }
 
   const renderBackdrop = useCallback(
