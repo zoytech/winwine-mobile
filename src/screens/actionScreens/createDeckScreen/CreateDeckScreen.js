@@ -2,6 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {FlatList, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Field, Formik} from 'formik';
+import Snackbar from 'react-native-snackbar';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {FilledButton, FilledIconButton, SpinnerType1} from 'src/components';
 import {
@@ -51,12 +52,20 @@ export default function CreateDeckScreen(props) {
   };
   const imgArr = Object.values(IMG_SRC);
   const {base: primary, onBase: onPrimary} = Color.light[ColorVariant.primary];
+  const {surface: surfaceColor, onSurface: onSurfaceColor} =
+    Color.light[ColorVariant.inverse];
+
   const defaultContainerStyle = [
     {
       backgroundColor: onPrimary,
     },
     styles.container,
   ];
+  const snackbarProps = {
+    textColor: onSurfaceColor,
+    backgroundColor: surfaceColor,
+    duration: Snackbar.LENGTH_SHORT,
+  };
 
   async function onSubmitPress(value) {
     const submittingValues = {
@@ -74,10 +83,16 @@ export default function CreateDeckScreen(props) {
     };
     try {
       const response = await CardDeckApi.postCardDeck(config);
-      handleOpenCreateCardBottomSheet(response?.data);
-      console.log('response: ', response);
+      // handleOpenCreateCardBottomSheet(response?.data);
+      console.log('response?.data: ', response?.data);
+      if (response?.data) {
+        handleSuccessSubmitSnackbar();
+      } else {
+        handleFailSubmitSnackbar();
+      }
     } catch (e) {
       console.log('Fail to post card deck: ', e);
+      handleFailSubmitSnackbar();
     } finally {
       navigation.replace(ScreenKeys.CREATE_CARD);
     }
@@ -105,6 +120,20 @@ export default function CreateDeckScreen(props) {
 
   function handleOpenCreateCardBottomSheet() {
     onOpenModal();
+  }
+
+  function handleSuccessSubmitSnackbar() {
+    Snackbar.show({
+      text: 'Tạo bộ bài thành công',
+      ...snackbarProps,
+    });
+  }
+
+  function handleFailSubmitSnackbar() {
+    Snackbar.show({
+      text: 'Tạo bộ bài thất bại',
+      ...snackbarProps,
+    });
   }
 
   function handleRemoveCardItem(cardItem, cardId) {
@@ -136,6 +165,10 @@ export default function CreateDeckScreen(props) {
               onSubmit={handleSubmit}
               disabled={!isValid}
               onStopPress={handleNavigateBack}
+            />
+            <FilledButton
+              content={'snack bar'}
+              onPress={handleSuccessSubmitSnackbar}
             />
             <ImageField
               data={imgArr}
