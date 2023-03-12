@@ -2,15 +2,16 @@ import {StyleSheet, View} from 'react-native';
 import {useEffect, useState} from 'react';
 import {Field, Formik} from 'formik';
 import {BottomSheetFlatList, BottomSheetScrollView} from '@gorhom/bottom-sheet';
-
-import {SelectedPlaceholder, TextInputHolder} from '../components';
-import {BaseHeadline} from '../createDeckScreen/components';
-import CreatingCardItem from './CreatingCardItem';
 import {Color, ColorVariant, Typography} from 'src/themes';
 import {LimitInput, LimitRender} from 'src/constants';
-import BottomSheetFilledButton from './BottomSheetFilledButton';
-import BottomSheetStandardButton from './BottomSheetStandardButton';
 import {remove} from 'src/utils';
+import {BottomSheetFilledButton, BottomSheetStandardButton} from './components';
+import {
+  SelectedPlaceholder,
+  TextInputHolder,
+  CreatingCardItem,
+  BaseHeadline,
+} from '../components';
 
 export default function CreateCardBottomSheet(props) {
   const {

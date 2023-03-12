@@ -1,6 +1,5 @@
-import {FilledCard} from 'src/components';
 import {StyleSheet, Text, View} from 'react-native';
-import BottomSheetStandardButton from './BottomSheetStandardButton';
+import {FilledCard} from 'src/components';
 
 export default function CreatingCardItem(props) {
   const {

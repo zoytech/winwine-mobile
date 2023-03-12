@@ -1,5 +1,6 @@
 import TextInputHolder from './TextInputHolder';
-import ValidationText from './ValidationText';
+import CreatingCardItem from './CreatingCardItem';
 import SelectedPlaceholder from './SelectedPlaceholder';
+import BaseHeadline from './BaseHeadline';
 
-export {TextInputHolder, ValidationText, SelectedPlaceholder};
+export {TextInputHolder, CreatingCardItem, SelectedPlaceholder, BaseHeadline};

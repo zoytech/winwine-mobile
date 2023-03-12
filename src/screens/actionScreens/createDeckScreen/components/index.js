@@ -1,6 +1,6 @@
 import HeaderActionButtons from './HeaderActionButtons';
 import TagSelectionField from './TagSelectionField';
 import ImageField from './ImageField';
-import BaseHeadline from './BaseHeadline';
+import CreateCardList from './CreateCardList';
 
-export {HeaderActionButtons, TagSelectionField, ImageField, BaseHeadline};
+export {HeaderActionButtons, TagSelectionField, ImageField, CreateCardList};

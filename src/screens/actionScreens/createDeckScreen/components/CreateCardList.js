@@ -1,9 +1,7 @@
 import {StyleSheet, Text, View} from 'react-native';
-import CreatingCardItem from '../createCardScreen/CreatingCardItem';
-import {StandardIconButton} from '../../../components';
-import {Color, ColorVariant, Typography} from '../../../themes';
-import {useEffect, useState} from 'react';
-import {remove} from '../../../utils';
+import {StandardIconButton} from 'src/components';
+import {Color, ColorVariant, Typography} from 'src/themes';
+import {CreatingCardItem} from '../../components';
 
 export default function CreateCardList(props) {
   const {

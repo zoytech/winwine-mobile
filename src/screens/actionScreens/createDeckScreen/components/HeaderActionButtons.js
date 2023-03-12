@@ -1,5 +1,5 @@
-import {TextButton} from 'src/components';
 import {StyleSheet, Text, View} from 'react-native';
+import {TextButton} from 'src/components';
 import {Color, ColorVariant, Typography} from 'src/themes';
 
 const CONTENT = {

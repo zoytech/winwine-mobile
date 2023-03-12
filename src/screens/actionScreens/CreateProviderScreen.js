@@ -1,10 +1,5 @@
 import {useCallback, useMemo, useRef, useState} from 'react';
-import {
-  KeyboardAvoidingView,
-  Platform,
-  Pressable,
-  StyleSheet,
-} from 'react-native';
+import {KeyboardAvoidingView, Platform, StyleSheet} from 'react-native';
 import {
   BottomSheetModal,
   BottomSheetModalProvider,

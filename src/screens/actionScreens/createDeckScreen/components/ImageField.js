@@ -1,7 +1,7 @@
+import {useState} from 'react';
 import {Image, ScrollView, StyleSheet, View} from 'react-native';
 import {Color, ColorVariant} from 'src/themes';
 import {WIDTH} from 'src/constants';
-import {useState} from 'react';
 import {SelectedPlaceholder} from '../../components';
 
 export default function ImageField(props) {

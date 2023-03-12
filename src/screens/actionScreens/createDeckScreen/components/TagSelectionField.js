@@ -1,8 +1,8 @@
-import {SuggestionChip} from 'src/components';
-import {FlatList, StyleSheet, View} from 'react-native';
 import {useState} from 'react';
+import {StyleSheet, View} from 'react-native';
+import {SuggestionChip} from 'src/components';
 import {Color, ColorVariant} from 'src/themes';
-import {remove} from '../../../../utils';
+import {remove} from 'src/utils';
 
 export default function TagSelectionField(props) {
   const {
@@ -40,20 +40,7 @@ export default function TagSelectionField(props) {
     );
   }
 
-  return (
-    <View style={styles.container}>
-      {data.map(renderItem)}
-      {/*<FlatList*/}
-      {/*  {...otherProps}*/}
-      {/*  data={data}*/}
-      {/*  renderItem={renderItem}*/}
-      {/*  horizontal={true}*/}
-      {/*  contentContainerStyle={styles.contentContainer}*/}
-      {/*  ItemSeparatorComponent={<View style={styles.separator} />}*/}
-      {/*  showsHorizontalScrollIndicator={false}*/}
-      {/*/>*/}
-    </View>
-  );
+  return <View style={styles.container}>{data.map(renderItem)}</View>;
 }
 
 const styles = StyleSheet.create({

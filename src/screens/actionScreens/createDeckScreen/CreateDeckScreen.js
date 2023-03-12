@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {FlatList, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Field, Formik} from 'formik';
 import Snackbar from 'react-native-snackbar';
@@ -11,19 +11,13 @@ import {
   requestHashtagsSelect,
 } from 'src/redux/slices';
 import {HEIGHT, IMG_SRC, LimitInput, LimitRender, WIDTH} from 'src/constants';
-import {
-  BaseHeadline,
-  HeaderActionButtons,
-  ImageField,
-  TagSelectionField,
-} from './components';
-import createCardDeckValidationSchema from './createCardDeckValidations';
+import {ScreenKeys} from 'src/navigations/ScreenKeys';
 import {remove} from 'src/utils';
 import {CardDeckApi} from 'src/apis';
-import {TextInputHolder} from '../components';
-import {ScreenKeys} from 'src/navigations/ScreenKeys';
-import CreatingCardItem from '../createCardScreen/CreatingCardItem';
-import CreateCardList from './CreateCardList';
+import {HeaderActionButtons, ImageField, TagSelectionField} from './components';
+import createCardDeckValidationSchema from './createCardDeckValidations';
+import {TextInputHolder, BaseHeadline} from '../components';
+import {CreateCardList} from './components/';
 
 let count = 0;
 export default function CreateDeckScreen(props) {
@@ -165,10 +159,6 @@ export default function CreateDeckScreen(props) {
               onSubmit={handleSubmit}
               disabled={!isValid}
               onStopPress={handleNavigateBack}
-            />
-            <FilledButton
-              content={'snack bar'}
-              onPress={handleSuccessSubmitSnackbar}
             />
             <ImageField
               data={imgArr}
