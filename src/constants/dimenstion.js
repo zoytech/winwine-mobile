@@ -1,10 +1,17 @@
-import {Dimensions} from 'react-native';
+import {Dimensions, StatusBar} from 'react-native';
+
+const {width: screenWidth, height: screenHeight} = Dimensions.get('screen');
+const statusBarHeight = StatusBar?.currentHeight || 24;
+const {width: windowWidth, height: windowHeight} = Dimensions.get('window');
 
 const WIDTH = {
-  SCREEN: Dimensions.get('screen')?.width,
+  SCREEN: screenWidth,
 };
 const HEIGHT = {
-  SCREEN: Dimensions.get('screen')?.height,
+  SCREEN: screenHeight,
+  STATUS_BAR: statusBarHeight,
+  WINDOW: windowHeight,
+  BOTTOM_BAR: screenHeight - statusBarHeight - windowHeight,
   IMAGE: 210,
   MIN_HEADER: 64,
 };

@@ -7,6 +7,7 @@ LogBox.ignoreLogs([
 
 export default function BasicDialog({route}) {
   const {content} = route.params;
+
   return (
     <BasicDialogContainer style={styles.layout}>{content}</BasicDialogContainer>
   );

@@ -36,6 +36,8 @@ async function requestToServer({url, method = 'GET', body, headers = {}}) {
   let message = `Failed api request to ${url}`;
   try {
     const responseText = await response.text();
+    console.log('responseText: ', responseText);
+
     if (responseText) {
       message += responseText;
     }
@@ -64,6 +66,7 @@ function getRequest(endPoint, config = {}) {
 
 function postRequest(endPoint, config = {}) {
   const {params = {}, body} = config;
+  console.log(body);
   const searchParams = params ? new URLSearchParams(params).toString() : '';
   return requestToServer({
     url: `${PREFIX_URL}${endPoint}?${searchParams}`,

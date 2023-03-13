@@ -49,8 +49,9 @@ const gamePlayStyle = {
   },
   emptyView: {
     width: '100%',
-    aspectRatio: 7 / 16,
-    paddingVertical: 100,
+    aspectRatio: 7 / 12,
+    paddingTop: 200,
+    paddingLeft: 50,
   },
   hashtags: {
     flexDirection: 'row',

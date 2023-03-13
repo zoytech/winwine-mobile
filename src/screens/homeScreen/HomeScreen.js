@@ -1,4 +1,4 @@
-import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
+import {SafeAreaView, ScrollView, StyleSheet, View, Text} from 'react-native';
 import React, {useEffect, useRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
